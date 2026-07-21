@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Checkout | Peppy Fashion</title>
+
+<meta name="description" content="Complete your order at Peppy Fashion">
+
+<link rel="stylesheet" href="assets/css/style.css">
+
+</head>
+
+<body>
+
+<!-- HEADER -->
+
+<header>
+
+<div class="logo">
+<h1>Peppy Fashion</h1>
+</div>
+
+<nav>
+
+<a href="index.html">Home</a>
+<a href="shop.html">Shop</a>
+<a href="contact.html">Contact</a>
+
+</nav>
+
+</header>
+
+
+<!-- PAGE TITLE -->
+
+<section class="shop-banner">
+
+<h2>Checkout</h2>
+
+<p>Complete your order below</p>
+
+</section>
+
+
+<!-- CHECKOUT -->
+
+<section>
+
+<div class="checkout-container">
+
+<div class="checkout-left">
+
+<h2 class="section-title">
+Product Information
+</h2>
+
+
+<div class="checkout-product">
+
+<img
+id="productImage"
+src="assets/images/product1.jpg"
+alt="Product">
+
+<div>
+
+<h3 id="productName">
+Product Name
+</h3>
+
+<p class="price" id="productPrice">
+৳0
+</p>
+
+</div>
+
+</div>
+
+
+<hr><br>
+
+<h2 class="section-title">
+Order Details
+</h2>
+
+
+<label>Quantity</label>
+
+<input
+type="number"
+id="quantity"
+value="1"
+min="1">
+
+
+<label>Colour</label>
+
+<select id="colour">
+
+<option value="Black">Black</option>
+<option value="White">White</option>
+<option value="Blue">Blue</option>
+<option value="Red">Red</option>
+
+</select>
+
+
+<label>Size</label>
+
+<select id="size">
+
+<option>S</option>
+<option>M</option>
+<option>L</option>
+<option>XL</option>
+<option>XXL</option>
+
+</select>
+
+
+<br><br>
+
+<h2 class="section-title">
+Promo Code
+</h2>
+
+<input
+type="text"
+id="promoCode"
+placeholder="Enter Promo Code">
+
+<button
+class="btn"
+type="button"
+onclick="applyPromo()">
+
+Apply Promo
+
+</button>
+
+
+<br><br>
+
+<h2 class="section-title">
+Customer Details
+</h2>
+
+<input
+type="text"
+id="customerName"
+placeholder="Full Name">
+
+<input
+type="text"
+id="customerPhone"
+placeholder="Phone Number">
+
+<textarea
+id="customerAddress"
+rows="4"
+placeholder="Full Delivery Address"></textarea>
+
+
+<br>
+
+<h2 class="section-title">
+Payment Method
+</h2>
+
+<label class="payment-option">
+<input
+type="radio"
+name="payment"
+value="Cash on Delivery"
+checked>
+
+Cash on Delivery
+</label>
+
+<label class="payment-option">
+<input
+type="radio"
+name="payment"
+value="bKash">
+
+bKash
+</label>
+
+<label class="payment-option">
+<input
+type="radio"
+name="payment"
+value="Nagad">
+
+Nagad
+</label>
+
+<label class="payment-option">
+<input
+type="radio"
+name="payment"
+value="Rocket">
+
+Rocket
+</label>
+
+<label class="payment-option">
+<input
+type="radio"
+name="payment"
+value="Visa / MasterCard">
+
+Visa / MasterCard
+</label>
+
+</div>
+
+
+<div class="checkout-right">
+
+<h2 class="section-title">
+Order Summary
+</h2>
+
+<div class="summary-box">
+
+<p>
+
+Product Price
+
+<span id="summaryPrice">
+
+৳0
+
+</span>
+
+</p>
+
+<p>
+
+Quantity
+
+<span id="summaryQuantity">
+
+1
+
+</span>
+
+</p>
+
+<p>
+
+Discount
+
+<span id="summaryDiscount">
+
+৳0
+
+</span>
+
+</p>
+
+<p>
+
+Delivery Charge
+
+<span id="deliveryCharge">
+
+৳80
+
+</span>
+
+</p>
+
+<hr>
+
+<h3>
+
+Grand Total
+
+<span id="grandTotal">
+
+৳0
+
+</span>
+
+</h3>
+
+<hr>
+
+<h2 class="section-title">
+Delivery
+</h2>
+
+<select id="deliveryLocation">
+
+<option value="80">
+Inside Panchagarh (৳80)
+</option>
+
+<option value="120">
+Outside Panchagarh (৳120)
+</option>
+
+</select>
+
+<br><br>
+
+<button
+class="btn"
+style="width:100%;"
+onclick="placeOrder()">
+
+Place Order
+
+</button>
+
+</div>
+
+</div>
+
+</section>
+
+<footer>
+
+<h3>
+Peppy Fashion
+</h3>
+
+<p>
+Fashion for Everyone, Every Day
+</p>
+
+<p>
+© 2026 Peppy Fashion
+</p>
+
+</footer>
+
+<a
+class="whatsapp"
+href="https://wa.me/8801710868775"
+target="_blank">
+
+WhatsApp Chat
+
+</a>
+
+<script src="assets/js/script.js"></script>
+
+<script>
+
+/* Load Product */
+
+const product =
+JSON.parse(
+localStorage.getItem("checkoutProduct")
+);
+
+if(product){
+
+document.getElementById("productName").innerHTML =
+product.name;
+
+document.getElementById("productPrice").innerHTML =
+"৳"+product.price;
+
+document.getElementById("summaryPrice").innerHTML =
+"৳"+product.price;
+
+document.getElementById("productImage").src =
+product.image;
+
+updateTotal();
+
+}
+
+/* Quantity */
+
+document
+.getElementById("quantity")
+.addEventListener(
+"input",
+updateTotal
+);
+
+/* Delivery */
+
+document
+.getElementById("deliveryLocation")
+.addEventListener(
+"change",
+updateTotal
+);
+
+function updateTotal(){
+
+let qty =
+parseInt(
+document.getElementById("quantity").value
+)||1;
+
+document.getElementById("summaryQuantity").innerHTML =
+qty;
+
+let price =
+product ? product.price : 0;
+
+let delivery =
+parseInt(
+document.getElementById("deliveryLocation").value
+);
+
+let discount =
+parseInt(
+document.getElementById("summaryDiscount").innerHTML.replace("৳","")
+)||0;
+
+document.getElementById("deliveryCharge").innerHTML =
+"৳"+delivery;
+
+let total =
+(price*qty)-discount+delivery;
+
+document.getElementById("grandTotal").innerHTML =
+"৳"+total;
+
+}
+
+/* Promo Code */
+
+function applyPromo(){
+
+let code =
+document
+.getElementById("promoCode")
+.value
+.trim()
+.toUpperCase();
+
+let discount=0;
+
+if(product){
+
+if(code=="PEPPY10"){
+
+discount =
+Math.round(product.price*0.10);
+
+}
+
+if(code=="EID20"){
+
+discount =
+Math.round(product.price*0.20);
+
+}
+
+}
+
+document.getElementById("summaryDiscount").innerHTML =
+"৳"+discount;
+
+updateTotal();
+
+}
+
+/* Place Order */
+
+function placeOrder(){
+
+let payment =
+document.querySelector(
+'input[name="payment"]:checked'
+).value;
+
+let msg =
+`🛍️ New Order
+
+Product:
+${document.getElementById("productName").innerText}
+
+Price:
+${document.getElementById("productPrice").innerText}
+
+Quantity:
+${document.getElementById("quantity").value}
+
+Colour:
+${document.getElementById("colour").value}
+
+Size:
+${document.getElementById("size").value}
+
+Promo:
+${document.getElementById("promoCode").value}
+
+Discount:
+${document.getElementById("summaryDiscount").innerText}
+
+Delivery:
+${document.getElementById("deliveryCharge").innerText}
+
+Grand Total:
+${document.getElementById("grandTotal").innerText}
+
+Customer:
+${document.getElementById("customerName").value}
+
+Phone:
+${document.getElementById("customerPhone").value}
+
+Address:
+${document.getElementById("customerAddress").value}
+
+Payment:
+${payment}`;
+
+window.open(
+"https://wa.me/8801710868775?text="+
+encodeURIComponent(msg),
+"_blank"
+);
+
+}
+
+</script>
+
+</body>
+
+</html>
