@@ -1,535 +1,1344 @@
 <!DOCTYPE html>
+
 <html lang="en">
+
 
 <head>
 
+
 <meta charset="UTF-8">
+
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 
 <title>Checkout | Peppy Fashion</title>
 
-<meta name="description" content="Complete your order at Peppy Fashion">
+
 
 <link rel="stylesheet" href="assets/css/style.css">
 
+
 </head>
+
+
 
 <body>
 
+
+
+
+
 <!-- HEADER -->
+
 
 <header>
 
+
+<div class="container header-container">
+
+
 <div class="logo">
-<h1>Peppy Fashion</h1>
-</div>
-
-<nav>
-
-<a href="index.html">Home</a>
-<a href="shop.html">Shop</a>
-<a href="contact.html">Contact</a>
-
-</nav>
-
-</header>
 
 
-<!-- PAGE TITLE -->
+<img src="assets/images/logo/logo.png"
 
-<section class="shop-banner">
+alt="Peppy Fashion Logo">
 
-<h2>Checkout</h2>
-
-<p>Complete your order below</p>
-
-</section>
-
-
-<!-- CHECKOUT -->
-
-<section>
-
-<div class="checkout-container">
-
-<div class="checkout-left">
-
-<h2 class="section-title">
-Product Information
-</h2>
-
-
-<div class="checkout-product">
-
-<img
-id="productImage"
-src="assets/images/product1.jpg"
-alt="Product">
-
-<div>
-
-<h3 id="productName">
-Product Name
-</h3>
-
-<p class="price" id="productPrice">
-৳0
-</p>
-
-</div>
 
 </div>
 
 
-<hr><br>
-
-<h2 class="section-title">
-Order Details
-</h2>
 
 
-<label>Quantity</label>
-
-<input
-type="number"
-id="quantity"
-value="1"
-min="1">
-
-
-<label>Colour</label>
-
-<select id="colour">
-
-<option value="Black">Black</option>
-<option value="White">White</option>
-<option value="Blue">Blue</option>
-<option value="Red">Red</option>
-
-</select>
-
-
-<label>Size</label>
-
-<select id="size">
-
-<option>S</option>
-<option>M</option>
-<option>L</option>
-<option>XL</option>
-<option>XXL</option>
-
-</select>
-
-
-<br><br>
-
-<h2 class="section-title">
-Promo Code
-</h2>
-
-<input
-type="text"
-id="promoCode"
-placeholder="Enter Promo Code">
 
 <button
-class="btn"
-type="button"
-onclick="applyPromo()">
 
-Apply Promo
+class="menu-btn"
+
+onclick="toggleMenu()">
+
+
+☰
+
 
 </button>
 
 
-<br><br>
-
-<h2 class="section-title">
-Customer Details
-</h2>
-
-<input
-type="text"
-id="customerName"
-placeholder="Full Name">
-
-<input
-type="text"
-id="customerPhone"
-placeholder="Phone Number">
-
-<textarea
-id="customerAddress"
-rows="4"
-placeholder="Full Delivery Address"></textarea>
 
 
-<br>
 
-<h2 class="section-title">
-Payment Method
-</h2>
+<nav class="navbar">
 
-<label class="payment-option">
-<input
-type="radio"
-name="payment"
-value="Cash on Delivery"
-checked>
 
-Cash on Delivery
-</label>
+<a href="index.html">
 
-<label class="payment-option">
-<input
-type="radio"
-name="payment"
-value="bKash">
+Home
 
-bKash
-</label>
+</a>
 
-<label class="payment-option">
-<input
-type="radio"
-name="payment"
-value="Nagad">
 
-Nagad
-</label>
 
-<label class="payment-option">
-<input
-type="radio"
-name="payment"
-value="Rocket">
+<a href="shop.html">
 
-Rocket
-</label>
+Shop
 
-<label class="payment-option">
-<input
-type="radio"
-name="payment"
-value="Visa / MasterCard">
+</a>
 
-Visa / MasterCard
-</label>
+
+
+<a href="cart.html">
+
+Cart
+
+(<span id="cartCount">0</span>)
+
+</a>
+
+
+
+<a href="contact.html">
+
+Contact
+
+</a>
+
+
+
+</nav>
+
+
 
 </div>
 
 
-<div class="checkout-right">
+</header>
 
-<h2 class="section-title">
+
+
+
+
+
+
+
+<!-- CHECKOUT -->
+
+
+<section class="section">
+
+
+<div class="container checkout-container">
+
+
+
+<h1 class="section-title">
+
+Checkout
+
+</h1>
+
+
+
+
+
+
+<form id="checkoutForm">
+
+
+
+
+
+<div class="form-group">
+
+
+<label>
+
+Full Name
+
+</label>
+
+
+<input
+
+type="text"
+
+id="customerName"
+
+class="form-control"
+
+placeholder="Enter your name"
+
+required>
+
+
+</div>
+
+
+
+
+
+
+
+<div class="form-group">
+
+
+<label>
+
+Phone Number
+
+</label>
+
+
+<input
+
+type="tel"
+
+id="customerPhone"
+
+class="form-control"
+
+placeholder="01XXXXXXXXX"
+
+required>
+
+
+</div>
+
+
+
+
+
+
+
+<div class="form-group">
+
+
+<label>
+
+Full Address
+
+</label>
+
+
+<textarea
+
+id="customerAddress"
+
+class="form-control"
+
+placeholder="Village, Union, Upazila, District"
+
+required></textarea>
+
+
+</div>
+
+
+
+
+
+
+<!-- DELIVERY AREA -->
+
+
+<div class="form-group">
+
+
+<label>
+
+Delivery Area
+
+</label>
+
+
+
+<select
+
+id="deliveryArea"
+
+class="form-control"
+
+onchange="calculateCheckout()">
+
+
+<option value="120">
+
+Inside Panchagarh - ৳120
+
+</option>
+
+
+
+<option value="180">
+
+Outside Panchagarh - ৳180
+
+</option>
+
+
+</select>
+
+
+</div>
+
+
+
+
+
+
+
+<!-- PROMO CODE -->
+
+
+<div class="form-group">
+
+
+<label>
+
+Promo Code
+
+</label>
+
+
+
+<input
+
+type="text"
+
+id="promoCode"
+
+class="form-control"
+
+placeholder="Enter promo code">
+
+
+
+
+
+<button
+
+type="button"
+
+class="btn"
+
+onclick="applyPromo()">
+
+
+Apply
+
+
+</button>
+
+
+</div>
+
+
+
+
+
+
+
+
+<!-- ORDER SUMMARY -->
+
+
+<h2>
+
 Order Summary
+
 </h2>
 
-<div class="summary-box">
 
-<p>
 
-Product Price
 
-<span id="summaryPrice">
+
+<div id="checkoutItems">
+
+
+</div>
+
+
+
+
+
+
+
+<div class="cart-summary">
+
+
+
+
+
+<div class="summary-row">
+
+
+<span>
+
+Subtotal
+
+</span>
+
+
+<strong id="checkoutSubtotal">
 
 ৳0
 
-</span>
+</strong>
 
-</p>
 
-<p>
+</div>
 
-Quantity
 
-<span id="summaryQuantity">
 
-1
 
-</span>
 
-</p>
 
-<p>
+
+<div class="summary-row">
+
+
+<span>
 
 Discount
 
-<span id="summaryDiscount">
+</span>
+
+
+<strong id="checkoutDiscount">
 
 ৳0
 
-</span>
+</strong>
 
-</p>
 
-<p>
+</div>
+
+
+
+
+
+
+
+
+<div class="summary-row">
+
+
+<span>
 
 Delivery Charge
 
-<span id="deliveryCharge">
-
-৳80
-
 </span>
 
-</p>
 
-<hr>
+<strong id="checkoutDelivery">
+
+৳120
+
+</strong>
+
+
+</div>
+
+
+
+
+
+
+
+<div class="summary-row">
+
 
 <h3>
 
 Grand Total
 
-<span id="grandTotal">
+</h3>
+
+
+<h3 id="checkoutTotal">
 
 ৳0
 
-</span>
-
 </h3>
 
-<hr>
 
-<h2 class="section-title">
-Delivery
-</h2>
+</div>
 
-<select id="deliveryLocation">
 
-<option value="80">
-Inside Panchagarh (৳80)
+
+
+
+</div>
+
+
+
+
+
+
+
+
+<!-- PAYMENT METHOD -->
+
+
+<div class="form-group">
+
+
+<label>
+
+Payment Method
+
+</label>
+
+
+
+<select
+
+id="paymentMethod"
+
+class="form-control">
+
+
+<option>
+
+Cash On Delivery
+
 </option>
 
-<option value="120">
-Outside Panchagarh (৳120)
+
+
+<option>
+
+bKash
+
 </option>
+
+
+
+<option>
+
+Nagad
+
+</option>
+
+
+
+<option>
+
+Rocket
+
+</option>
+
 
 </select>
 
-<br><br>
+
+
+</div>
+
+
+
+
+
+<!-- ORDER BUTTON -->
+
 
 <button
+
+type="button"
+
 class="btn"
+
 style="width:100%;"
+
 onclick="placeOrder()">
+
 
 Place Order
 
+
 </button>
 
-</div>
+
+
+
+
+<br><br>
+
+
+
+
+
+<button
+
+type="button"
+
+class="btn"
+
+style="width:100%;"
+
+onclick="orderViaWhatsApp()">
+
+
+Order Via WhatsApp
+
+
+</button>
+
+
+
+
+
+</form>
+
 
 </div>
+
+
+</div>
+
 
 </section>
 
+
+
+
+
+
+
+
+<!-- FOOTER -->
+
+
 <footer>
 
+
+<div class="container footer-grid">
+
+
+
+<div>
+
+
 <h3>
+
 Peppy Fashion
+
 </h3>
 
-<p>
-Fashion for Everyone, Every Day
-</p>
 
 <p>
-© 2026 Peppy Fashion
+
+Your trusted online fashion store.
+
 </p>
 
-</footer>
 
-<a
-class="whatsapp"
-href="https://wa.me/8801710868775"
-target="_blank">
+</div>
 
-WhatsApp Chat
+
+
+
+
+<div>
+
+
+<h3>
+
+Quick Links
+
+</h3>
+
+
+<p>
+
+<a href="index.html">
+
+Home
 
 </a>
 
+</p>
+
+
+<p>
+
+<a href="shop.html">
+
+Shop
+
+</a>
+
+</p>
+
+
+<p>
+
+<a href="cart.html">
+
+Cart
+
+</a>
+
+</p>
+
+
+</div>
+
+
+
+
+
+<div>
+
+
+<h3>
+
+Contact
+
+</h3>
+
+
+
+<p>
+
+📍 Shalbahan, Tetulia, Panchagarh
+
+</p>
+
+
+
+
+<p>
+
+📞 WhatsApp: +8801710868775
+
+</p>
+
+
+
+
+<p>
+
+✉ Email: peppyfashionbd@gmail.com
+
+</p>
+
+
+
+</div>
+
+
+
+</div>
+
+
+</footer>
+
+
+
+
+
+
+
+<script src="assets/js/products.js"></script>
+
+<script src="assets/js/cart.js"></script>
+
 <script src="assets/js/script.js"></script>
+
+
+
+
+
 
 <script>
 
-/* Load Product */
 
-const product =
-JSON.parse(
-localStorage.getItem("checkoutProduct")
-);
+const GOOGLE_SCRIPT_URL =
 
-if(product){
+"https://script.google.com/macros/s/AKfycbyxsUBUSGLL-P4dz0Y5e7kbvEYv73PU7WFmB0ureIk8lqiDK4Frb5gYQDJH1tEERIL/exec";
 
-document.getElementById("productName").innerHTML =
-product.name;
 
-document.getElementById("productPrice").innerHTML =
-"৳"+product.price;
 
-document.getElementById("summaryPrice").innerHTML =
-"৳"+product.price;
 
-document.getElementById("productImage").src =
-product.image;
+let discountAmount = 0;
 
-updateTotal();
+
+
+
+
+
+
+function loadCheckout(){
+
+
+
+let cart = getCart();
+
+
+
+let area =
+
+document.getElementById("checkoutItems");
+
+
+
+
+
+if(!area){
+
+return;
 
 }
 
-/* Quantity */
 
-document
-.getElementById("quantity")
-.addEventListener(
-"input",
-updateTotal
+
+
+
+area.innerHTML = "";
+
+
+
+
+
+if(cart.length === 0){
+
+
+
+area.innerHTML =
+
+"<p>Your cart is empty</p>";
+
+
+
+calculateCheckout();
+
+
+return;
+
+
+}
+
+
+
+
+
+
+
+cart.forEach(item=>{
+
+
+
+area.innerHTML += `
+
+
+
+<div class="summary-row">
+
+
+<span>
+
+
+${item.name}
+
+<br>
+
+Size: ${item.size}
+
+<br>
+
+Qty: ${item.quantity}
+
+
+</span>
+
+
+
+
+
+<strong>
+
+৳${item.price * item.quantity}
+
+</strong>
+
+
+
+</div>
+
+
+
+`;
+
+
+
+});
+
+
+
+
+
+calculateCheckout();
+
+
+
+}
+
+
+
+
+
+
+
+
+
+function calculateCheckout(){
+
+
+
+let cart = getCart();
+
+
+
+let subtotal = 0;
+
+
+
+
+
+cart.forEach(item=>{
+
+
+
+subtotal += item.price * item.quantity;
+
+
+
+});
+
+
+
+
+
+
+
+let delivery = Number(
+
+document.getElementById("deliveryArea").value
+
 );
 
-/* Delivery */
 
-document
-.getElementById("deliveryLocation")
-.addEventListener(
-"change",
-updateTotal
-);
 
-function updateTotal(){
 
-let qty =
-parseInt(
-document.getElementById("quantity").value
-)||1;
-
-document.getElementById("summaryQuantity").innerHTML =
-qty;
-
-let price =
-product ? product.price : 0;
-
-let delivery =
-parseInt(
-document.getElementById("deliveryLocation").value
-);
-
-let discount =
-parseInt(
-document.getElementById("summaryDiscount").innerHTML.replace("৳","")
-)||0;
-
-document.getElementById("deliveryCharge").innerHTML =
-"৳"+delivery;
 
 let total =
-(price*qty)-discount+delivery;
 
-document.getElementById("grandTotal").innerHTML =
-"৳"+total;
+subtotal - discountAmount + delivery;
+
+
+
+
+
+
+document.getElementById("checkoutSubtotal").innerText =
+
+"৳" + subtotal;
+
+
+
+
+
+document.getElementById("checkoutDiscount").innerText =
+
+"৳" + discountAmount;
+
+
+
+
+
+document.getElementById("checkoutDelivery").innerText =
+
+"৳" + delivery;
+
+
+
+
+
+document.getElementById("checkoutTotal").innerText =
+
+"৳" + total;
+
+
 
 }
 
-/* Promo Code */
+
+
+
+
+
+
+
 
 function applyPromo(){
 
+
+
 let code =
-document
-.getElementById("promoCode")
-.value
-.trim()
-.toUpperCase();
 
-let discount=0;
+document.getElementById("promoCode").value;
 
-if(product){
 
-if(code=="PEPPY10"){
 
-discount =
-Math.round(product.price*0.10);
 
-}
 
-if(code=="EID20"){
+if(code.toUpperCase()=="PEPPY10"){
 
-discount =
-Math.round(product.price*0.20);
+
+
+discountAmount = 100;
+
+
+
+alert("Promo Code Applied");
+
 
 }
 
+else{
+
+
+discountAmount = 0;
+
+
+alert("Invalid Promo Code");
+
+
 }
 
-document.getElementById("summaryDiscount").innerHTML =
-"৳"+discount;
 
-updateTotal();
+
+
+
+calculateCheckout();
+
+
 
 }
 
-/* Place Order */
 
-function placeOrder(){
 
-let payment =
-document.querySelector(
-'input[name="payment"]:checked'
-).value;
 
-let msg =
-`🛍️ New Order
 
-Product:
-${document.getElementById("productName").innerText}
 
-Price:
-${document.getElementById("productPrice").innerText}
 
-Quantity:
-${document.getElementById("quantity").value}
 
-Colour:
-${document.getElementById("colour").value}
 
-Size:
-${document.getElementById("size").value}
+async function placeOrder(){
 
-Promo:
-${document.getElementById("promoCode").value}
 
-Discount:
-${document.getElementById("summaryDiscount").innerText}
 
-Delivery:
-${document.getElementById("deliveryCharge").innerText}
+let cart = getCart();
 
-Grand Total:
-${document.getElementById("grandTotal").innerText}
 
-Customer:
-${document.getElementById("customerName").value}
 
-Phone:
-${document.getElementById("customerPhone").value}
 
-Address:
-${document.getElementById("customerAddress").value}
 
-Payment:
-${payment}`;
+if(cart.length===0){
 
-window.open(
-"https://wa.me/8801710868775?text="+
-encodeURIComponent(msg),
-"_blank"
+
+
+alert("Your cart is empty");
+
+return;
+
+
+}
+
+
+
+
+
+
+
+let order = {
+
+
+
+orderId:
+
+"PF" + Date.now(),
+
+
+
+
+
+name:
+
+document.getElementById("customerName").value,
+
+
+
+
+
+phone:
+
+document.getElementById("customerPhone").value,
+
+
+
+
+
+address:
+
+document.getElementById("customerAddress").value,
+
+
+
+
+
+items:
+
+JSON.stringify(cart),
+
+
+
+
+
+payment:
+
+document.getElementById("paymentMethod").value,
+
+
+
+
+
+subtotal:
+
+document.getElementById("checkoutSubtotal").innerText,
+
+
+
+
+
+delivery:
+
+document.getElementById("checkoutDelivery").innerText,
+
+
+
+
+
+total:
+
+document.getElementById("checkoutTotal").innerText
+
+
+
+};
+
+
+
+
+
+
+
+
+if(!order.name || !order.phone || !order.address){
+
+
+
+alert("Please fill customer information");
+
+return;
+
+
+}
+
+
+
+
+
+
+
+fetch(GOOGLE_SCRIPT_URL,{
+
+
+
+method:"POST",
+
+
+
+body:JSON.stringify(order)
+
+
+
+})
+
+
+
+.then(response=>response.json())
+
+
+
+.then(data=>{
+
+
+
+alert(
+
+"Order Successfully Placed\nOrder ID: "
+
++ order.orderId
+
 );
 
+
+
+clearCart();
+
+
+
+window.location.href="index.html";
+
+
+
+})
+
+
+
+.catch(error=>{
+
+
+
+alert(
+
+"Order failed. Please try again."
+
+);
+
+
+
+});
+
+
+
 }
+
+
+
+
+
+
+
+
+
+function orderViaWhatsApp(){
+
+
+
+let cart = getCart();
+
+
+
+let message =
+
+"New Peppy Fashion Order%0A%0A";
+
+
+
+
+
+cart.forEach(item=>{
+
+
+
+message +=
+
+item.name +
+
+" Size: " +
+
+item.size +
+
+" Qty: " +
+
+item.quantity +
+
+"%0A";
+
+
+
+});
+
+
+
+
+
+message +=
+
+"%0ATotal: "
+
++
+
+document.getElementById("checkoutTotal").innerText;
+
+
+
+
+
+
+window.open(
+
+"https://wa.me/8801710868775?text=" + message,
+
+"_blank"
+
+);
+
+
+
+}
+
+
+
+
+
+
+
+
+
+document.addEventListener(
+
+"DOMContentLoaded",
+
+function(){
+
+
+
+loadCheckout();
+
+
+
+updateCartCount();
+
+
+
+}
+
+);
+
+
 
 </script>
 
+
+
+
+
+
 </body>
+
 
 </html>

@@ -1,24 +1,149 @@
 /* =====================================
-   PEPPY FASHION WEBSITE JAVASCRIPT
+   PEPPY FASHION V3
+   MAIN JAVASCRIPT
 ===================================== */
 
 
 
-// ===============================
-// MOBILE MENU
-// ===============================
+/* DISPLAY PRODUCTS */
 
 
-function toggleMenu(){
-
-    let menu = document.getElementById("navMenu");
+function displayProducts(productList = products){
 
 
-    if(menu){
+    let container =
+    document.getElementById("productContainer");
 
-        menu.classList.toggle("active");
+
+
+    if(!container){
+
+        return;
 
     }
+
+
+
+
+
+    container.innerHTML = "";
+
+
+
+
+
+    productList.forEach(product => {
+
+
+
+        container.innerHTML += `
+
+
+
+        <div class="product-card">
+
+
+
+            <div class="product-image">
+
+
+                <img 
+                src="${product.image}" 
+                alt="${product.name}">
+
+
+            </div>
+
+
+
+
+
+            <div class="product-info">
+
+
+
+                <span class="badge">
+
+                ${product.badge}
+
+                </span>
+
+
+
+
+
+                <h3>
+
+                ${product.name}
+
+                </h3>
+
+
+
+
+
+                <p>
+
+                ${product.category}
+
+                </p>
+
+
+
+
+
+                <h3 class="price">
+
+                ৳${product.price}
+
+                </h3>
+
+
+
+
+
+                <button
+
+                class="btn"
+
+                onclick="addToCart(${product.id})">
+
+
+                Add To Cart
+
+
+                </button>
+
+
+
+
+
+                <a
+
+                href="product.html?id=${product.id}"
+
+                class="btn btn-secondary">
+
+
+                View
+
+
+                </a>
+
+
+
+            </div>
+
+
+        </div>
+
+
+
+        `;
+
+
+    });
+
 
 }
 
@@ -27,319 +152,323 @@ function toggleMenu(){
 
 
 
-// ===============================
-// PRODUCT SEARCH
-// ===============================
+
+
+/* PRODUCT DETAILS PAGE */
+
+
+function loadSingleProduct(){
+
+
+
+    let area =
+    document.getElementById("productDetails");
+
+
+
+    if(!area){
+
+        return;
+
+    }
+
+
+
+
+
+    let params =
+    new URLSearchParams(
+        window.location.search
+    );
+
+
+
+    let id =
+    params.get("id");
+
+
+
+
+
+    let product =
+    getProductById(id);
+
+
+
+
+
+    if(!product){
+
+
+        area.innerHTML =
+        "<h2>Product not found</h2>";
+
+
+        return;
+
+
+    }
+
+
+
+
+
+    let sizeOptions = "";
+
+
+
+
+
+    if(product.sizes){
+
+
+
+        product.sizes.forEach(size => {
+
+
+            sizeOptions += `
+
+
+            <option value="${size}">
+
+            ${size}
+
+            </option>
+
+
+            `;
+
+
+        });
+
+
+    }
+
+
+
+
+
+
+
+    area.innerHTML = `
+
+
+
+
+    <div class="product-single">
+
+
+
+
+
+        <div>
+
+
+            <img
+
+            src="${product.image}"
+
+            alt="${product.name}">
+
+
+        </div>
+
+
+
+
+
+
+
+        <div>
+
+
+
+            <h2>
+
+            ${product.name}
+
+            </h2>
+
+
+
+
+
+            <h3 class="price">
+
+            ৳${product.price}
+
+            </h3>
+
+
+
+
+
+            <p>
+
+            ${product.description}
+
+            </p>
+
+
+
+
+
+            <br>
+
+
+
+
+
+            <label>
+
+            Select Size:
+
+            </label>
+
+
+
+            <select
+
+            id="selectedSize"
+
+            class="form-control">
+
+
+            ${sizeOptions}
+
+
+            </select>
+
+
+
+
+
+            <br>
+
+
+
+
+
+            <button
+
+            class="btn"
+
+            onclick="addProductWithSize(${product.id})">
+
+
+            Add To Cart
+
+
+            </button>
+
+
+
+
+
+        </div>
+
+
+
+    </div>
+
+
+
+
+    `;
+
+
+
+}
+
+
+
+
+
+
+
+
+/* ADD PRODUCT WITH SIZE */
+
+
+function addProductWithSize(productId){
+
+
+
+    let size =
+    document.getElementById("selectedSize").value;
+
+
+
+    addToCart(
+
+        productId,
+
+        size
+
+    );
+
+
+}
+
+
+
+
+
+
+
+
+/* SEARCH */
 
 
 function searchProducts(){
 
 
-    let searchBox = document.getElementById("searchBox");
+
+    let search =
+    document.getElementById("searchInput");
 
 
-    if(!searchBox){
+
+    if(!search){
+
         return;
+
     }
 
 
 
-    let value = searchBox.value.toLowerCase();
 
 
+    let value =
+    search.value.toLowerCase();
 
-    let products = document.querySelectorAll(".product-card");
 
 
 
-    products.forEach(function(product){
 
+    let filtered =
+    products.filter(product =>
 
 
-        let text = product.innerText.toLowerCase();
 
+        product.name
 
+        .toLowerCase()
 
-        if(text.includes(value)){
+        .includes(value)
 
 
-            product.style.display="block";
 
-
-        }
-
-        else{
-
-
-            product.style.display="none";
-
-
-        }
-
-
-
-    });
-
-
-
-}
-
-
-
-
-
-
-
-
-// ===============================
-// PRODUCT CATEGORY FILTER
-// ===============================
-
-
-function filterProducts(category){
-
-
-
-    let products =
-    document.querySelectorAll(".product-card");
-
-
-
-    products.forEach(function(product){
-
-
-
-        if(category === "all"){
-
-
-            product.style.display="block";
-
-
-        }
-
-
-        else if(product.classList.contains(category)){
-
-
-            product.style.display="block";
-
-
-        }
-
-
-        else{
-
-
-            product.style.display="none";
-
-
-        }
-
-
-
-    });
-
-
-
-}
-
-
-
-
-
-
-
-
-// ===============================
-// WHATSAPP PRODUCT ORDER
-// ===============================
-
-
-function orderWhatsApp(productName){
-
-
-
-    let phone =
-    "8801710868775";
-
-
-
-    let message =
-
-    "Hello Peppy Fashion,%0A%0A"
-
-    +
-
-    "I want to order:%0A"
-
-    +
-
-    productName;
-
-
-
-    let link =
-
-    "https://wa.me/"
-
-    +
-
-    phone
-
-    +
-
-    "?text="
-
-    +
-
-    message;
-
-
-
-    window.open(link,"_blank");
-
-
-
-}
-
-
-
-
-
-
-
-
-// ===============================
-// ORDER FORM TO WHATSAPP
-// ===============================
-
-
-function sendOrder(){
-
-
-
-    let name =
-    document.getElementById("name")?.value;
-
-
-
-    let phone =
-    document.getElementById("phone")?.value;
-
-
-
-    let address =
-    document.getElementById("address")?.value;
-
-
-
-    let product =
-    document.getElementById("product")?.value;
-
-
-
-    let quantity =
-    document.getElementById("quantity")?.value;
-
-
-
-    let message =
-    document.getElementById("message")?.value;
-
-
-
-
-
-    let whatsappNumber =
-    "8801710868775";
-
-
-
-
-
-    let orderMessage =
-
-
-    "New Order - Peppy Fashion%0A%0A"
-
-    +
-
-    "Customer Name: "
-    +
-    name
-
-    +
-
-    "%0APhone: "
-
-    +
-
-    phone
-
-    +
-
-    "%0AAddress: "
-
-    +
-
-    address
-
-    +
-
-    "%0AProduct: "
-
-    +
-
-    product
-
-    +
-
-    "%0AQuantity: "
-
-    +
-
-    quantity
-
-    +
-
-    "%0AMessage: "
-
-    +
-
-    message;
-
-
-
-
-
-    let whatsappURL =
-
-
-    "https://wa.me/"
-
-    +
-
-    whatsappNumber
-
-    +
-
-    "?text="
-
-    +
-
-    orderMessage;
-
-
-
-
-
-    window.open(
-        whatsappURL,
-        "_blank"
     );
 
 
 
+
+
+    displayProducts(filtered);
+
+
+
 }
 
 
@@ -349,52 +478,170 @@ function sendOrder(){
 
 
 
-// ===============================
-// SMOOTH SCROLL
-// ===============================
+/* CATEGORY FILTER */
 
 
-document
-.querySelectorAll('a[href^="#"]')
-.forEach(function(link){
+function filterCategory(category){
 
 
 
-    link.addEventListener(
-    "click",
-    function(event){
+    let filtered =
+    getProductsByCategory(category);
 
 
 
-        let target =
-        document.querySelector(
-        this.getAttribute("href")
+    displayProducts(filtered);
+
+
+
+}
+
+
+
+
+
+
+
+
+/* SORT PRODUCTS */
+
+
+function sortProducts(){
+
+
+
+    let select =
+    document.getElementById("sortProducts");
+
+
+
+    if(!select){
+
+        return;
+
+    }
+
+
+
+
+
+    let value =
+    select.value;
+
+
+
+
+
+    let sorted =
+    [...products];
+
+
+
+
+
+    if(value === "low"){
+
+
+        sorted.sort(
+            (a,b)=>a.price-b.price
         );
 
 
-
-        if(target){
-
-
-
-            event.preventDefault();
+    }
 
 
 
-            target.scrollIntoView({
-
-                behavior:"smooth"
-
-            });
 
 
-
-        }
-
+    if(value === "high"){
 
 
-    });
+        sorted.sort(
+            (a,b)=>b.price-a.price
+        );
+
+
+    }
 
 
 
-});
+
+
+    displayProducts(sorted);
+
+
+
+}
+
+
+
+
+
+
+
+
+/* MOBILE MENU */
+
+
+function toggleMenu(){
+
+
+
+    let menu =
+    document.querySelector(".navbar");
+
+
+
+    if(menu){
+
+
+
+        menu.style.display =
+
+        menu.style.display === "flex"
+
+        ? "none"
+
+        : "flex";
+
+
+
+    }
+
+
+
+}
+
+
+
+
+
+
+
+
+/* PAGE LOAD */
+
+
+document.addEventListener(
+
+"DOMContentLoaded",
+
+function(){
+
+
+
+    displayProducts();
+
+
+
+    loadSingleProduct();
+
+
+
+    updateCartCount();
+
+
+
+}
+
+);
