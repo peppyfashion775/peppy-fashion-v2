@@ -1,250 +1,575 @@
 /* =====================================
-   PEPPY FASHION V3
+   PEPPY FASHION V4
    PRODUCT DATABASE
 ===================================== */
 
 
 const products = [
 
-    {
-        id: 1,
 
-        name: "Premium Cotton Shirt",
 
-        category: "Men",
+{
+    id: 1,
 
-        price: 1200,
+    name: "Premium Cotton Shirt",
 
-        oldPrice: 1500,
+    category: "Men",
 
-        image: "assets/images/products/shirt-1.jpg",
+    collection: "Summer Collection",
 
-        badge: "New",
+    price: 1200,
 
-        stock: 10,
+    oldPrice: 1500,
 
-        sizes: [
-            "S",
-            "M",
-            "L",
-            "XL",
-            "XXL"
-        ],
 
-        description:
-        "Premium quality cotton shirt with comfortable fitting."
-    },
+    image: "assets/images/products/shirt-1.jpg",
 
 
+    badge: "New",
 
-    {
-        id: 2,
 
-        name: "Casual T-Shirt",
+    stock: 10,
 
-        category: "Men",
 
-        price: 700,
 
-        oldPrice: 900,
+    colors: [
 
-        image: "assets/images/products/tshirt-1.jpg",
+        "White",
 
-        badge: "Sale",
+        "Black",
 
-        stock: 15,
+        "Blue"
 
-        sizes: [
-            "S",
-            "M",
-            "L",
-            "XL",
-            "XXL"
-        ],
+    ],
 
-        description:
-        "Soft and comfortable everyday casual t-shirt."
-    },
 
 
+    sizes: [
 
-    {
-        id: 3,
+        "S",
 
-        name: "Women's Fashion Dress",
+        "M",
 
-        category: "Women",
+        "L",
 
-        price: 1800,
+        "XL",
 
-        oldPrice: 2200,
+        "XXL"
 
-        image: "assets/images/products/dress-1.jpg",
+    ],
 
-        badge: "Popular",
 
-        stock: 8,
 
-        sizes: [
-            "S",
-            "M",
-            "L",
-            "XL"
-        ],
+    description:
 
-        description:
-        "Elegant fashion dress for modern women."
-    },
+    "Premium quality cotton shirt with comfortable fitting."
 
+},
 
 
-    {
-        id: 4,
 
-        name: "Kids Fashion Wear",
 
-        category: "Kids",
 
-        price: 1000,
+{
+    id: 2,
 
-        oldPrice: 1300,
 
-        image: "assets/images/products/kids-1.jpg",
+    name: "Casual T-Shirt",
 
-        badge: "New",
 
-        stock: 12,
+    category: "Men",
 
-        sizes: [
-            "2Y",
-            "4Y",
-            "6Y",
-            "8Y",
-            "10Y"
-        ],
 
-        description:
-        "Comfortable and stylish kids clothing."
-    },
+    collection: "Summer Collection",
 
 
+    price: 700,
 
-    {
-        id: 5,
 
-        name: "Sports Jersey",
+    oldPrice: 900,
 
-        category: "Sports",
 
-        price: 850,
 
-        oldPrice: 1100,
+    image:
 
-        image: "assets/images/products/jersey-1.jpg",
+    "assets/images/products/tshirt-1.jpg",
 
-        badge: "Trending",
 
-        stock: 20,
 
-        sizes: [
-            "S",
-            "M",
-            "L",
-            "XL",
-            "XXL"
-        ],
+    badge:
 
-        description:
-        "High quality sports jersey."
-    },
+    "Sale",
 
 
 
-    {
-        id: 6,
+    stock:15,
 
-        name: "Running Shoes",
 
-        category: "Sports",
 
-        price: 2500,
+    colors:[
 
-        oldPrice: 3000,
+        "Black",
 
-        image: "assets/images/products/shoes-1.jpg",
+        "White",
 
-        badge: "Best Seller",
+        "Red"
 
-        stock: 6,
+    ],
 
-        sizes: [
-            "39",
-            "40",
-            "41",
-            "42",
-            "43"
-        ],
 
-        description:
-        "Comfortable running shoes for daily use."
-    },
 
+    sizes:[
 
+        "S",
 
-    {
-        id: 7,
+        "M",
 
-        name: "Premium Hoodie",
+        "L",
 
-        category: "Men",
+        "XL",
 
-        price: 1600,
+        "XXL"
 
-        oldPrice: 2000,
+    ],
 
-        image: "assets/images/products/hoodie-1.jpg",
 
-        badge: "Winter",
 
-        stock: 9,
+    description:
 
-        sizes: [
-            "M",
-            "L",
-            "XL",
-            "XXL"
-        ],
+    "Soft and comfortable everyday casual t-shirt."
 
-        description:
-        "Warm premium hoodie collection."
-    },
+},
 
 
 
-    {
-        id: 8,
 
-        name: "Fashion Bag",
 
-        category: "Women",
+{
+    id:3,
 
-        price: 1400,
 
-        oldPrice: 1700,
+    name:"Women's Fashion Dress",
 
-        image: "assets/images/products/bag-1.jpg",
 
-        badge: "New",
+    category:"Women",
 
-        stock: 7,
 
-        sizes: [
-            "Free Size"
-        ],
+    collection:"Eid Collection",
 
-        description:
-        "Stylish handbag for women."
-    }
+
+    price:1800,
+
+
+    oldPrice:2200,
+
+
+
+    image:
+
+    "assets/images/products/dress-1.jpg",
+
+
+
+    badge:
+
+    "Popular",
+
+
+
+    stock:8,
+
+
+
+    colors:[
+
+        "Pink",
+
+        "Black",
+
+        "Blue"
+
+    ],
+
+
+
+    sizes:[
+
+        "S",
+
+        "M",
+
+        "L",
+
+        "XL"
+
+    ],
+
+
+
+    description:
+
+    "Elegant fashion dress for modern women."
+
+},
+
+{
+
+    id:4,
+
+
+    name:"Kids Fashion Wear",
+
+
+    category:"Kids",
+
+
+    collection:"Winter Collection",
+
+
+    price:1000,
+
+
+    oldPrice:1300,
+
+
+
+    image:
+
+    "assets/images/products/kids-1.jpg",
+
+
+
+    badge:
+
+    "New",
+
+
+
+    stock:12,
+
+
+
+    colors:[
+
+        "Blue",
+
+        "Pink",
+
+        "Yellow"
+
+    ],
+
+
+
+    sizes:[
+
+        "2Y",
+
+        "4Y",
+
+        "6Y",
+
+        "8Y",
+
+        "10Y"
+
+    ],
+
+
+
+    description:
+
+    "Comfortable and stylish kids clothing."
+
+},
+
+
+
+
+
+{
+
+    id:5,
+
+
+    name:"Sports Jersey",
+
+
+    category:"Sports",
+
+
+    collection:"Sports Collection",
+
+
+    price:850,
+
+
+    oldPrice:1100,
+
+
+
+    image:
+
+    "assets/images/products/jersey-1.jpg",
+
+
+
+    badge:
+
+    "Trending",
+
+
+
+    stock:20,
+
+
+
+    colors:[
+
+        "Red",
+
+        "Blue",
+
+        "Black"
+
+    ],
+
+
+
+    sizes:[
+
+        "S",
+
+        "M",
+
+        "L",
+
+        "XL",
+
+        "XXL"
+
+    ],
+
+
+
+    description:
+
+    "High quality sports jersey."
+
+},
+
+
+
+
+
+{
+
+    id:6,
+
+
+    name:"Running Shoes",
+
+
+    category:"Sports",
+
+
+    collection:"Sports Collection",
+
+
+    price:2500,
+
+
+    oldPrice:3000,
+
+
+
+    image:
+
+    "assets/images/products/shoes-1.jpg",
+
+
+
+    badge:
+
+    "Best Seller",
+
+
+
+    stock:6,
+
+
+
+    colors:[
+
+        "Black",
+
+        "White",
+
+        "Grey"
+
+    ],
+
+
+
+    sizes:[
+
+        "39",
+
+        "40",
+
+        "41",
+
+        "42",
+
+        "43"
+
+    ],
+
+
+
+    description:
+
+    "Comfortable running shoes for daily use."
+
+},
+
+{
+
+    id:7,
+
+
+    name:"Premium Hoodie",
+
+
+    category:"Men",
+
+
+    collection:"Winter Collection",
+
+
+    price:1600,
+
+
+    oldPrice:2000,
+
+
+
+    image:
+
+    "assets/images/products/hoodie-1.jpg",
+
+
+
+    badge:
+
+    "Winter",
+
+
+
+    stock:9,
+
+
+
+    colors:[
+
+        "Black",
+
+        "Grey",
+
+        "Blue"
+
+    ],
+
+
+
+    sizes:[
+
+        "M",
+
+        "L",
+
+        "XL",
+
+        "XXL"
+
+    ],
+
+
+
+    description:
+
+    "Warm premium hoodie collection."
+
+},
+
+
+
+
+
+{
+
+    id:8,
+
+
+    name:"Fashion Bag",
+
+
+    category:"Women",
+
+
+    collection:"Occasional Collection",
+
+
+    price:1400,
+
+
+    oldPrice:1700,
+
+
+
+    image:
+
+    "assets/images/products/bag-1.jpg",
+
+
+
+    badge:
+
+    "New",
+
+
+
+    stock:7,
+
+
+
+    colors:[
+
+        "Black",
+
+        "Brown",
+
+        "Pink"
+
+    ],
+
+
+
+    sizes:[
+
+        "Free Size"
+
+    ],
+
+
+
+    description:
+
+    "Stylish handbag for women."
+
+}
+
+
 
 ];
 
@@ -252,13 +577,22 @@ const products = [
 
 
 
+
+
+
+
 /* GET SINGLE PRODUCT */
+
 
 function getProductById(id){
 
-    return products.find(product => 
+
+    return products.find(product =>
+
         product.id == id
+
     );
+
 
 }
 
@@ -266,21 +600,60 @@ function getProductById(id){
 
 
 
+
+
+
+
 /* GET CATEGORY PRODUCTS */
+
 
 function getProductsByCategory(category){
 
 
+
     if(category === "All"){
 
+
         return products;
+
 
     }
 
 
+
+
+
     return products.filter(product =>
 
+
         product.category === category
+
+
+    );
+
+
+}
+
+
+
+
+
+
+
+
+
+/* GET COLLECTION PRODUCTS */
+
+
+function getProductsByCollection(collection){
+
+
+
+    return products.filter(product =>
+
+
+        product.collection === collection
+
 
     );
 

@@ -1,5 +1,5 @@
 /* =====================================
-   PEPPY FASHION V3
+   PEPPY FASHION V4
    CART SYSTEM
 ===================================== */
 
@@ -43,8 +43,7 @@ function saveCart(cart){
 
 /* ADD TO CART */
 
-
-function addToCart(productId, selectedSize = ""){
+function addToCart(productId, selectedSize = "", selectedColor = ""){
 
 
     let cart = getCart();
@@ -64,24 +63,14 @@ function addToCart(productId, selectedSize = ""){
 
 
 
-    let size = selectedSize;
-
-
-
-    if(product.sizes && product.sizes.length > 0 && !size){
-
-        size = product.sizes[0];
-
-    }
-
-
-
-
 
     let existing = cart.find(item =>
 
         item.id === productId &&
-        item.size === size
+
+        item.size === selectedSize &&
+
+        item.color === selectedColor
 
     );
 
@@ -115,7 +104,10 @@ function addToCart(productId, selectedSize = ""){
             image: product.image,
 
 
-            size: size,
+            size: selectedSize,
+
+
+            color: selectedColor,
 
 
             quantity: 1
@@ -141,21 +133,17 @@ function addToCart(productId, selectedSize = ""){
     alert(
 
         product.name +
+
         " added to cart"
 
     );
 
 
 }
-
-
-
-
-
 /* REMOVE FROM CART */
 
 
-function removeFromCart(productId, size){
+function removeFromCart(productId, size, color){
 
 
     let cart = getCart();
@@ -166,7 +154,10 @@ function removeFromCart(productId, size){
     cart = cart.filter(item => !(
 
         item.id === productId &&
-        (item.size === size || !item.size)
+
+        item.size === size &&
+
+        item.color === color
 
     ));
 
@@ -185,7 +176,10 @@ function removeFromCart(productId, size){
     updateCartCount();
 
 
+
 }
+
+
 
 
 
@@ -194,7 +188,7 @@ function removeFromCart(productId, size){
 /* CHANGE QUANTITY */
 
 
-function changeQuantity(productId, size, action){
+function changeQuantity(productId, size, color, action){
 
 
     let cart = getCart();
@@ -204,7 +198,10 @@ function changeQuantity(productId, size, action){
     let item = cart.find(product =>
 
         product.id === productId &&
-        product.size === size
+
+        product.size === size &&
+
+        product.color === color
 
     );
 
@@ -217,6 +214,7 @@ function changeQuantity(productId, size, action){
         return;
 
     }
+
 
 
 
@@ -260,7 +258,14 @@ function changeQuantity(productId, size, action){
     updateCartCount();
 
 
+
 }
+
+
+
+
+
+
 
 /* DISPLAY CART */
 
@@ -342,8 +347,6 @@ function displayCart(){
 
 
 
-
-
     cart.forEach(item => {
 
 
@@ -383,6 +386,15 @@ function displayCart(){
 
 
 
+
+                <p>
+
+                Color: ${item.color}
+
+                </p>
+
+
+
                 <p>
 
                 Price: ৳${item.price}
@@ -397,7 +409,7 @@ function displayCart(){
 
 
                     <button 
-                    onclick="changeQuantity(${item.id}, '${item.size}', 'minus')">
+                    onclick="changeQuantity(${item.id}, '${item.size}', '${item.color}', 'minus')">
 
                     -
 
@@ -418,7 +430,7 @@ function displayCart(){
 
 
                     <button 
-                    onclick="changeQuantity(${item.id}, '${item.size}', 'plus')">
+                    onclick="changeQuantity(${item.id}, '${item.size}', '${item.color}', 'plus')">
 
                     +
 
@@ -431,8 +443,6 @@ function displayCart(){
 
 
             </div>
-
-
 
 
 
@@ -456,7 +466,7 @@ function displayCart(){
 
                 class="btn"
 
-                onclick="removeFromCart(${item.id}, '${item.size}')">
+                onclick="removeFromCart(${item.id}, '${item.size}', '${item.color}')">
 
 
                 Remove
@@ -489,14 +499,9 @@ function displayCart(){
 
 }
 
-
-
-
-
-
-
-
-/* CART TOTAL */
+/* =====================================
+   CART TOTAL
+===================================== */
 
 
 function updateCartTotal(){
@@ -526,6 +531,7 @@ function updateCartTotal(){
 
 
 
+
     let subtotal =
     document.getElementById("cartSubtotal");
 
@@ -535,24 +541,7 @@ function updateCartTotal(){
 
 
         subtotal.innerText =
-        "৳" + total;
 
-
-    }
-
-
-
-
-
-    let checkoutTotal =
-    document.getElementById("checkoutTotal");
-
-
-
-    if(checkoutTotal){
-
-
-        checkoutTotal.innerText =
         "৳" + total;
 
 
@@ -661,6 +650,7 @@ document.addEventListener(
 "DOMContentLoaded",
 
 function(){
+
 
 
     displayCart();
