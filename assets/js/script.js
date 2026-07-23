@@ -1,6 +1,11 @@
 /* =====================================
-   DISPLAY PRODUCTS
+   PEPPY FASHION V3
+   MAIN JAVASCRIPT
 ===================================== */
+
+
+
+/* DISPLAY PRODUCTS */
 
 
 function displayProducts(productList = products){
@@ -87,16 +92,6 @@ function displayProducts(productList = products){
 
 
 
-                <p>
-
-                ${product.collection}
-
-                </p>
-
-
-
-
-
                 <h3 class="price">
 
                 ৳${product.price}
@@ -107,14 +102,30 @@ function displayProducts(productList = products){
 
 
 
+                <button
+
+                class="btn"
+
+                onclick="addToCart(${product.id})">
+
+
+                Add To Cart
+
+
+                </button>
+
+
+
+
+
                 <a
 
                 href="product.html?id=${product.id}"
 
-                class="btn">
+                class="btn btn-secondary">
 
 
-                Select Options
+                View
 
 
                 </a>
@@ -136,12 +147,18 @@ function displayProducts(productList = products){
 
 }
 
-/* =====================================
-   PRODUCT DETAILS PAGE
-===================================== */
+
+
+
+
+
+
+
+/* PRODUCT DETAILS PAGE */
 
 
 function loadSingleProduct(){
+
 
 
     let area =
@@ -200,7 +217,10 @@ function loadSingleProduct(){
 
 
 
+
+
     if(product.sizes){
+
 
 
         product.sizes.forEach(size => {
@@ -212,38 +232,6 @@ function loadSingleProduct(){
             <option value="${size}">
 
             ${size}
-
-            </option>
-
-
-            `;
-
-
-        });
-
-
-    }
-
-
-
-
-
-    let colorOptions = "";
-
-
-
-    if(product.colors){
-
-
-        product.colors.forEach(color => {
-
-
-            colorOptions += `
-
-
-            <option value="${color}">
-
-            ${color}
 
             </option>
 
@@ -346,13 +334,6 @@ function loadSingleProduct(){
             class="form-control">
 
 
-            <option value="">
-
-            Choose Size
-
-            </option>
-
-
             ${sizeOptions}
 
 
@@ -368,50 +349,11 @@ function loadSingleProduct(){
 
 
 
-            <label>
-
-            Select Color:
-
-            </label>
-
-
-
-            <select
-
-            id="selectedColor"
-
-            class="form-control">
-
-
-            <option value="">
-
-            Choose Color
-
-            </option>
-
-
-            ${colorOptions}
-
-
-            </select>
-
-
-
-
-
-
-
-            <br>
-
-
-
-
-
             <button
 
             class="btn"
 
-            onclick="addProductWithOptions(${product.id})">
+            onclick="addProductWithSize(${product.id})">
 
 
             Add To Cart
@@ -438,12 +380,18 @@ function loadSingleProduct(){
 
 }
 
-/* =====================================
-   ADD PRODUCT WITH OPTIONS
-===================================== */
 
 
-function addProductWithOptions(productId){
+
+
+
+
+
+/* ADD PRODUCT WITH SIZE */
+
+
+function addProductWithSize(productId){
+
 
 
     let size =
@@ -451,79 +399,249 @@ function addProductWithOptions(productId){
 
 
 
-    let color =
-    document.getElementById("selectedColor").value;
-
-
-
-
-
-    if(!size){
-
-
-        alert("Please select size");
-
-
-        return;
-
-
-    }
-
-
-
-
-
-    if(!color){
-
-
-        alert("Please select color");
-
-
-        return;
-
-
-    }
-
-
-
-
-
     addToCart(
 
         productId,
 
-        size,
-
-        color
+        size
 
     );
 
 
 }
 
-/* =====================================
-   CATEGORY FILTER
-===================================== */
+
+
+
+
+
+
+
+/* SEARCH */
+
+
+function searchProducts(){
+
+
+
+    let search =
+    document.getElementById("searchInput");
+
+
+
+    if(!search){
+
+        return;
+
+    }
+
+
+
+
+
+    let value =
+    search.value.toLowerCase();
+
+
+
+
+
+    let filtered =
+    products.filter(product =>
+
+
+
+        product.name
+
+        .toLowerCase()
+
+        .includes(value)
+
+
+
+    );
+
+
+
+
+
+    displayProducts(filtered);
+
+
+
+}
+
+
+
+
+
+
+
+
+/* CATEGORY FILTER */
+
 
 function filterCategory(category){
+
+
 
     let filtered =
     getProductsByCategory(category);
 
 
+
     displayProducts(filtered);
+
+
 
 }
 
+
+
+
+
+
+
+
+/* SORT PRODUCTS */
+
+
+function sortProducts(){
+
+
+
+    let select =
+    document.getElementById("sortProducts");
+
+
+
+    if(!select){
+
+        return;
+
+    }
+
+
+
+
+
+    let value =
+    select.value;
+
+
+
+
+
+    let sorted =
+    [...products];
+
+
+
+
+
+    if(value === "low"){
+
+
+        sorted.sort(
+            (a,b)=>a.price-b.price
+        );
+
+
+    }
+
+
+
+
+
+    if(value === "high"){
+
+
+        sorted.sort(
+            (a,b)=>b.price-a.price
+        );
+
+
+    }
+
+
+
+
+
+    displayProducts(sorted);
+
+
+
+}
+
+
+
+
+
+
+
+
+/* MOBILE MENU */
+
+
+function toggleMenu(){
+
+
+
+    let menu =
+    document.querySelector(".navbar");
+
+
+
+    if(menu){
+
+
+
+        menu.style.display =
+
+        menu.style.display === "flex"
+
+        ? "none"
+
+        : "flex";
+
+
+
+    }
+
+
+
+}
+
+
+
+
+
+
+
+
+/* PAGE LOAD */
+
+
 document.addEventListener(
+
 "DOMContentLoaded",
+
 function(){
+
+
 
     displayProducts();
 
+
+
     loadSingleProduct();
+
+
 
     updateCartCount();
 
+
+
 }
+
 );

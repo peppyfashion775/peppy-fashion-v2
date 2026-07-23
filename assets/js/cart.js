@@ -1,5 +1,5 @@
 /* =====================================
-   PEPPY FASHION V4
+   PEPPY FASHION V3
    CART SYSTEM
 ===================================== */
 
@@ -43,7 +43,8 @@ function saveCart(cart){
 
 /* ADD TO CART */
 
-function addToCart(productId, selectedSize = "", selectedColor = ""){
+
+function addToCart(productId, selectedSize = ""){
 
 
     let cart = getCart();
@@ -63,14 +64,24 @@ function addToCart(productId, selectedSize = "", selectedColor = ""){
 
 
 
+    let size = selectedSize;
+
+
+
+    if(product.sizes && product.sizes.length > 0 && !size){
+
+        size = product.sizes[0];
+
+    }
+
+
+
+
 
     let existing = cart.find(item =>
 
         item.id === productId &&
-
-        item.size === selectedSize &&
-
-        item.color === selectedColor
+        item.size === size
 
     );
 
@@ -104,10 +115,7 @@ function addToCart(productId, selectedSize = "", selectedColor = ""){
             image: product.image,
 
 
-            size: selectedSize,
-
-
-            color: selectedColor,
+            size: size,
 
 
             quantity: 1
@@ -133,17 +141,21 @@ function addToCart(productId, selectedSize = "", selectedColor = ""){
     alert(
 
         product.name +
-
         " added to cart"
 
     );
 
 
 }
+
+
+
+
+
 /* REMOVE FROM CART */
 
 
-function removeFromCart(productId, size, color){
+function removeFromCart(productId, size){
 
 
     let cart = getCart();
@@ -154,10 +166,7 @@ function removeFromCart(productId, size, color){
     cart = cart.filter(item => !(
 
         item.id === productId &&
-
-        item.size === size &&
-
-        item.color === color
+        (item.size === size || !item.size)
 
     ));
 
@@ -176,10 +185,7 @@ function removeFromCart(productId, size, color){
     updateCartCount();
 
 
-
 }
-
-
 
 
 
@@ -188,7 +194,7 @@ function removeFromCart(productId, size, color){
 /* CHANGE QUANTITY */
 
 
-function changeQuantity(productId, size, color, action){
+function changeQuantity(productId, size, action){
 
 
     let cart = getCart();
@@ -198,10 +204,7 @@ function changeQuantity(productId, size, color, action){
     let item = cart.find(product =>
 
         product.id === productId &&
-
-        product.size === size &&
-
-        product.color === color
+        product.size === size
 
     );
 
@@ -214,7 +217,6 @@ function changeQuantity(productId, size, color, action){
         return;
 
     }
-
 
 
 
@@ -258,14 +260,7 @@ function changeQuantity(productId, size, color, action){
     updateCartCount();
 
 
-
 }
-
-
-
-
-
-
 
 /* DISPLAY CART */
 
@@ -347,6 +342,8 @@ function displayCart(){
 
 
 
+
+
     cart.forEach(item => {
 
 
@@ -386,15 +383,6 @@ function displayCart(){
 
 
 
-
-                <p>
-
-                Color: ${item.color}
-
-                </p>
-
-
-
                 <p>
 
                 Price: ৳${item.price}
@@ -409,7 +397,7 @@ function displayCart(){
 
 
                     <button 
-                    onclick="changeQuantity(${item.id}, '${item.size}', '${item.color}', 'minus')">
+                    onclick="changeQuantity(${item.id}, '${item.size}', 'minus')">
 
                     -
 
@@ -430,7 +418,7 @@ function displayCart(){
 
 
                     <button 
-                    onclick="changeQuantity(${item.id}, '${item.size}', '${item.color}', 'plus')">
+                    onclick="changeQuantity(${item.id}, '${item.size}', 'plus')">
 
                     +
 
@@ -443,6 +431,8 @@ function displayCart(){
 
 
             </div>
+
+
 
 
 
@@ -466,7 +456,7 @@ function displayCart(){
 
                 class="btn"
 
-                onclick="removeFromCart(${item.id}, '${item.size}', '${item.color}')">
+                onclick="removeFromCart(${item.id}, '${item.size}')">
 
 
                 Remove
@@ -499,9 +489,14 @@ function displayCart(){
 
 }
 
-/* =====================================
-   CART TOTAL
-===================================== */
+
+
+
+
+
+
+
+/* CART TOTAL */
 
 
 function updateCartTotal(){
@@ -531,7 +526,6 @@ function updateCartTotal(){
 
 
 
-
     let subtotal =
     document.getElementById("cartSubtotal");
 
@@ -541,7 +535,24 @@ function updateCartTotal(){
 
 
         subtotal.innerText =
+        "৳" + total;
 
+
+    }
+
+
+
+
+
+    let checkoutTotal =
+    document.getElementById("checkoutTotal");
+
+
+
+    if(checkoutTotal){
+
+
+        checkoutTotal.innerText =
         "৳" + total;
 
 
@@ -650,7 +661,6 @@ document.addEventListener(
 "DOMContentLoaded",
 
 function(){
-
 
 
     displayCart();

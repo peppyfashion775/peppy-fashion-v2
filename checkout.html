@@ -2,20 +2,30 @@
 
 <html lang="en">
 
+
 <head>
+
 
 <meta charset="UTF-8">
 
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 
 <title>Checkout | Peppy Fashion</title>
 
+
+
 <link rel="stylesheet" href="assets/css/style.css">
+
 
 </head>
 
 
+
 <body>
+
+
 
 
 
@@ -94,6 +104,7 @@ Contact
 </a>
 
 
+
 </nav>
 
 
@@ -163,57 +174,6 @@ required>
 </div>
 
 
-<div class="form-group">
-
-<label>
-
-Email Address
-
-</label>
-
-
-<input
-
-type="email"
-
-id="customerEmail"
-
-class="form-control"
-
-placeholder="Enter your email"
-
-required>
-
-
-</div>
-
-
-
-
-<div class="form-group">
-
-
-<label>
-
-Email Address
-
-</label>
-
-
-<input
-
-type="email"
-
-id="customerEmail"
-
-class="form-control"
-
-placeholder="Enter your email">
-
-
-</div>
-
-
 
 
 
@@ -273,6 +233,11 @@ required></textarea>
 
 </div>
 
+
+
+
+
+
 <!-- DELIVERY AREA -->
 
 
@@ -296,7 +261,6 @@ class="form-control"
 onchange="calculateCheckout()">
 
 
-
 <option value="120">
 
 Inside Panchagarh - ৳120
@@ -312,12 +276,10 @@ Outside Panchagarh - ৳180
 </option>
 
 
-
 </select>
 
 
 </div>
-
 
 
 
@@ -362,9 +324,7 @@ class="btn"
 onclick="applyPromo()">
 
 
-
 Apply
-
 
 
 </button>
@@ -387,7 +347,6 @@ Apply
 Order Summary
 
 </h2>
-
 
 
 
@@ -460,6 +419,7 @@ Discount
 
 
 
+
 <div class="summary-row">
 
 
@@ -508,8 +468,14 @@ Grand Total
 
 
 
-
 </div>
+
+
+
+
+
+
+
 
 <!-- PAYMENT METHOD -->
 
@@ -530,7 +496,6 @@ Payment Method
 id="paymentMethod"
 
 class="form-control">
-
 
 
 <option>
@@ -564,31 +529,11 @@ Rocket
 </option>
 
 
-
-<option>
-
-Visa Card
-
-</option>
-
-
-
-<option>
-
-Credit Card
-
-</option>
-
-
-
 </select>
 
 
 
 </div>
-
-
-
 
 
 
@@ -608,9 +553,7 @@ style="width:100%;"
 onclick="placeOrder()">
 
 
-
 Place Order
-
 
 
 </button>
@@ -619,12 +562,7 @@ Place Order
 
 
 
-
-
 <br><br>
-
-
-
 
 
 
@@ -641,14 +579,10 @@ style="width:100%;"
 onclick="orderViaWhatsApp()">
 
 
-
 Order Via WhatsApp
 
 
-
 </button>
-
-
 
 
 
@@ -660,8 +594,10 @@ Order Via WhatsApp
 </div>
 
 
-</section>
+</div>
 
+
+</section>
 
 
 
@@ -703,8 +639,6 @@ Your trusted online fashion store.
 
 
 
-
-
 <div>
 
 
@@ -713,7 +647,6 @@ Your trusted online fashion store.
 Quick Links
 
 </h3>
-
 
 
 <p>
@@ -727,8 +660,6 @@ Home
 </p>
 
 
-
-
 <p>
 
 <a href="shop.html">
@@ -738,8 +669,6 @@ Shop
 </a>
 
 </p>
-
-
 
 
 <p>
@@ -753,10 +682,7 @@ Cart
 </p>
 
 
-
 </div>
-
-
 
 
 
@@ -782,13 +708,11 @@ Contact
 
 
 
-
 <p>
 
 📞 WhatsApp: +8801710868775
 
 </p>
-
 
 
 
@@ -810,6 +734,12 @@ Contact
 
 </footer>
 
+
+
+
+
+
+
 <script src="assets/js/products.js"></script>
 
 <script src="assets/js/cart.js"></script>
@@ -818,21 +748,20 @@ Contact
 
 
 
+
+
+
 <script>
 
 
 const GOOGLE_SCRIPT_URL =
 
-const GOOGLE_SCRIPT_URL =
-
-"https://script.google.com/macros/s/AKfycbwL42O65-DmJGVKw-amgnYsSBOnIsbVVNhl6Ryo57yb2Tjna6ZwxodXgEQ0SSzjfz26jg/exec";
-
+"https://script.google.com/macros/s/AKfycbyxsUBUSGLL-P4dz0Y5e7kbvEYv73PU7WFmB0ureIk8lqiDK4Frb5gYQDJH1tEERIL/exec";
 
 
 
 
 let discountAmount = 0;
-
 
 
 
@@ -866,10 +795,7 @@ return;
 
 
 
-
 area.innerHTML = "";
-
-
 
 
 
@@ -899,7 +825,6 @@ return;
 
 
 
-
 cart.forEach(item=>{
 
 
@@ -919,10 +844,6 @@ ${item.name}
 <br>
 
 Size: ${item.size}
-
-<br>
-
-Color: ${item.color}
 
 <br>
 
@@ -952,7 +873,6 @@ Qty: ${item.quantity}
 
 
 });
-
 
 
 
@@ -1012,13 +932,9 @@ document.getElementById("deliveryArea").value
 
 
 
-
-
 let total =
 
 subtotal - discountAmount + delivery;
-
-
 
 
 
@@ -1033,8 +949,6 @@ document.getElementById("checkoutSubtotal").innerText =
 
 
 
-
-
 document.getElementById("checkoutDiscount").innerText =
 
 "৳" + discountAmount;
@@ -1043,13 +957,9 @@ document.getElementById("checkoutDiscount").innerText =
 
 
 
-
-
 document.getElementById("checkoutDelivery").innerText =
 
 "৳" + delivery;
-
-
 
 
 
@@ -1077,34 +987,7 @@ function applyPromo(){
 
 let code =
 
-document.getElementById("promoCode").value.trim();
-
-
-
-
-
-
-
-let cart = getCart();
-
-
-
-let subtotal = 0;
-
-
-
-
-
-cart.forEach(item=>{
-
-
-subtotal += item.price * item.quantity;
-
-
-});
-
-
-
+document.getElementById("promoCode").value;
 
 
 
@@ -1114,16 +997,11 @@ if(code.toUpperCase()=="PEPPY10"){
 
 
 
-discountAmount = Math.round(subtotal * 0.10);
+discountAmount = 100;
 
 
 
-alert(
-
-"10% Discount Applied"
-
-);
-
+alert("Promo Code Applied");
 
 
 }
@@ -1131,21 +1009,13 @@ alert(
 else{
 
 
-
 discountAmount = 0;
 
 
-
-alert(
-
-"Invalid Promo Code"
-
-);
-
+alert("Invalid Promo Code");
 
 
 }
-
 
 
 
@@ -1192,8 +1062,6 @@ return;
 
 
 
-
-
 let order = {
 
 
@@ -1201,7 +1069,6 @@ let order = {
 orderId:
 
 "PF" + Date.now(),
-
 
 
 
@@ -1215,20 +1082,9 @@ document.getElementById("customerName").value,
 
 
 
-
-email:
-
-document.getElementById("customerEmail").value,
-
-
-
-
-
-
 phone:
 
 document.getElementById("customerPhone").value,
-
 
 
 
@@ -1242,11 +1098,9 @@ document.getElementById("customerAddress").value,
 
 
 
-
 items:
 
 JSON.stringify(cart),
-
 
 
 
@@ -1260,7 +1114,6 @@ document.getElementById("paymentMethod").value,
 
 
 
-
 subtotal:
 
 document.getElementById("checkoutSubtotal").innerText,
@@ -1269,20 +1122,9 @@ document.getElementById("checkoutSubtotal").innerText,
 
 
 
-
 delivery:
 
 document.getElementById("checkoutDelivery").innerText,
-
-
-
-
-
-
-discount:
-
-document.getElementById("checkoutDiscount").innerText,
-
 
 
 
@@ -1303,24 +1145,16 @@ document.getElementById("checkoutTotal").innerText
 
 
 
-
 if(!order.name || !order.phone || !order.address){
 
 
 
-alert(
-
-"Please fill customer information"
-
-);
-
+alert("Please fill customer information");
 
 return;
 
 
 }
-
-
 
 
 
@@ -1362,12 +1196,7 @@ alert(
 
 
 
-
-
-
 clearCart();
-
-
 
 
 
@@ -1415,9 +1244,7 @@ let cart = getCart();
 
 let message =
 
-"New Peppy Fashion Order%0A%0/";
-
-
+"New Peppy Fashion Order%0A%0A";
 
 
 
@@ -1431,19 +1258,15 @@ message +=
 
 item.name +
 
-"%0ASize: " +
+" Size: " +
 
 item.size +
 
-"%0AColor: " +
-
-item.color +
-
-"%0AQty: " +
+" Qty: " +
 
 item.quantity +
 
-"%0A%0A";
+"%0A";
 
 
 
@@ -1453,14 +1276,13 @@ item.quantity +
 
 
 
-
-
 message +=
 
-"Total: " +
+"%0ATotal: "
+
++
 
 document.getElementById("checkoutTotal").innerText;
-
 
 
 
@@ -1508,4 +1330,15 @@ updateCartCount();
 );
 
 
+
 </script>
+
+
+
+
+
+
+</body>
+
+
+</html>
