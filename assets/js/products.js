@@ -1,288 +1,40 @@
 /* =====================================
    PEPPY FASHION V3
-   PRODUCT DATABASE
+   DYNAMIC GOOGLE SHEETS PRODUCT LOADER
 ===================================== */
 
-
-const products = [
-
-    {
-        id: 1,
-
-        name: "Premium Cotton Shirt",
-
-        category: "Men",
-
-        price: 1200,
-
-        oldPrice: 1500,
-
-        image: "assets/images/products/shirt-1.jpg",
-
-        badge: "New",
-
-        stock: 10,
-
-        sizes: [
-            "S",
-            "M",
-            "L",
-            "XL",
-            "XXL"
-        ],
-
-        description:
-        "Premium quality cotton shirt with comfortable fitting."
-    },
-
-
-
-    {
-        id: 2,
-
-        name: "Casual T-Shirt",
-
-        category: "Men",
-
-        price: 700,
-
-        oldPrice: 900,
-
-        image: "assets/images/products/tshirt-1.jpg",
-
-        badge: "Sale",
-
-        stock: 15,
-
-        sizes: [
-            "S",
-            "M",
-            "L",
-            "XL",
-            "XXL"
-        ],
-
-        description:
-        "Soft and comfortable everyday casual t-shirt."
-    },
-
-
-
-    {
-        id: 3,
-
-        name: "Women's Fashion Dress",
-
-        category: "Women",
-
-        price: 1800,
-
-        oldPrice: 2200,
-
-        image: "assets/images/products/dress-1.jpg",
-
-        badge: "Popular",
-
-        stock: 8,
-
-        sizes: [
-            "S",
-            "M",
-            "L",
-            "XL"
-        ],
-
-        description:
-        "Elegant fashion dress for modern women."
-    },
-
-
-
-    {
-        id: 4,
-
-        name: "Kids Fashion Wear",
-
-        category: "Kids",
-
-        price: 1000,
-
-        oldPrice: 1300,
-
-        image: "assets/images/products/kids-1.jpg",
-
-        badge: "New",
-
-        stock: 12,
-
-        sizes: [
-            "2Y",
-            "4Y",
-            "6Y",
-            "8Y",
-            "10Y"
-        ],
-
-        description:
-        "Comfortable and stylish kids clothing."
-    },
-
-
-
-    {
-        id: 5,
-
-        name: "Sports Jersey",
-
-        category: "Sports",
-
-        price: 850,
-
-        oldPrice: 1100,
-
-        image: "assets/images/products/jersey-1.jpg",
-
-        badge: "Trending",
-
-        stock: 20,
-
-        sizes: [
-            "S",
-            "M",
-            "L",
-            "XL",
-            "XXL"
-        ],
-
-        description:
-        "High quality sports jersey."
-    },
-
-
-
-    {
-        id: 6,
-
-        name: "Running Shoes",
-
-        category: "Sports",
-
-        price: 2500,
-
-        oldPrice: 3000,
-
-        image: "assets/images/products/shoes-1.jpg",
-
-        badge: "Best Seller",
-
-        stock: 6,
-
-        sizes: [
-            "39",
-            "40",
-            "41",
-            "42",
-            "43"
-        ],
-
-        description:
-        "Comfortable running shoes for daily use."
-    },
-
-
-
-    {
-        id: 7,
-
-        name: "Premium Hoodie",
-
-        category: "Men",
-
-        price: 1600,
-
-        oldPrice: 2000,
-
-        image: "assets/images/products/hoodie-1.jpg",
-
-        badge: "Winter",
-
-        stock: 9,
-
-        sizes: [
-            "M",
-            "L",
-            "XL",
-            "XXL"
-        ],
-
-        description:
-        "Warm premium hoodie collection."
-    },
-
-
-
-    {
-        id: 8,
-
-        name: "Fashion Bag",
-
-        category: "Women",
-
-        price: 1400,
-
-        oldPrice: 1700,
-
-        image: "assets/images/products/bag-1.jpg",
-
-        badge: "New",
-
-        stock: 7,
-
-        sizes: [
-            "Free Size"
-        ],
-
-        description:
-        "Stylish handbag for women."
+const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwbHxHS5GuRH4Lr-L5wTs8aRjXbdgK60CyM0muAjRvhUKZ-1IzeFBGq7y6an9d0Kmg_/exec";
+
+let products = [];
+
+// Fetch products live from Google Sheets
+async function fetchProductsFromSheet() {
+    try {
+        const response = await fetch(GOOGLE_SCRIPT_URL);
+        const data = await response.json();
+        
+        if (data.success && data.products) {
+            products = data.products;
+            
+            // Trigger UI updates if functions exist
+            if (typeof displayProducts === "function") displayProducts();
+            if (typeof loadSingleProduct === "function") loadSingleProduct();
+        }
+    } catch (error) {
+        console.error("Error loading products from Google Sheet:", error);
     }
-
-];
-
-
-
-
+}
 
 /* GET SINGLE PRODUCT */
-
-function getProductById(id){
-
-    return products.find(product => 
-        product.id == id
-    );
-
+function getProductById(id) {
+    return products.find(product => product.id == id);
 }
-
-
-
-
 
 /* GET CATEGORY PRODUCTS */
-
-function getProductsByCategory(category){
-
-
-    if(category === "All"){
-
-        return products;
-
-    }
-
-
-    return products.filter(product =>
-
-        product.category === category
-
-    );
-
-
+function getProductsByCategory(category) {
+    if (category === "All") return products;
+    return products.filter(product => product.category === category);
 }
+
+// Automatically load products on page load
+document.addEventListener("DOMContentLoaded", fetchProductsFromSheet);
