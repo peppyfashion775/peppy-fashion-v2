@@ -2,85 +2,57 @@
 
 <html lang="en">
 
-
 <head>
-
 
 <meta charset="UTF-8">
 
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 
 <title>Peppy Fashion | Home</title>
 
-
-
 <link rel="stylesheet" href="assets/css/style.css">
-
 
 </head>
 
-
-
-
 <body>
 
-
-
-
-
-<!-- HEADER -->
-
+<!-- ===========================
+HEADER
+=========================== -->
 
 <header>
 
-
 <div class="container header-container">
-
-
 
 <div class="logo">
 
+<a href="index.html">
 
-<img src="assets/images/logo/logo.png"
-
+<img
+src="assets/images/logo/logo.png"
 alt="Peppy Fashion Logo">
 
+</a>
 
 </div>
 
-
-
-
-
 <button
-
 class="menu-btn"
-
 onclick="toggleMenu()">
-
 
 ☰
 
-
 </button>
-
-
-
-
-
 
 <nav class="navbar">
 
-
-<a href="index.html">
+<a
+href="index.html"
+class="active">
 
 Home
 
 </a>
-
-
 
 <a href="shop.html">
 
@@ -88,17 +60,11 @@ Shop
 
 </a>
 
-
-
 <a href="cart.html">
 
-Cart
-
-(<span id="cartCount">0</span>)
+Cart (<span id="cartCount">0</span>)
 
 </a>
-
-
 
 <a href="contact.html">
 
@@ -106,35 +72,35 @@ Contact
 
 </a>
 
-
-
 </nav>
-
-
 
 </div>
 
-
 </header>
 
+<!-- ===========================
+HOME BANNER
+=========================== -->
 
+<section class="shop-banner">
 
+<img
+src="assets/images/banners/banner.jpg"
+alt="Peppy Fashion Banner">
 
+</section>
 
-
-
-<!-- HERO BANNER -->
-
+<!-- ===========================
+HERO
+=========================== -->
 
 <section class="hero">
 
-
 <div class="container">
-
 
 <div class="hero-content">
 
-
+<div class="hero-text">
 
 <h1>
 
@@ -142,47 +108,43 @@ Style That Matches You
 
 </h1>
 
-
-
 <p>
 
 Premium fashion collection at affordable prices.
 
 </p>
 
-
-
-
-<a href="shop.html" class="btn">
+<a
+href="shop.html"
+class="btn">
 
 Shop Now
 
 </a>
 
+</div>
 
+<div class="hero-image">
+
+<img
+src="assets/images/banners/banner.jpg"
+alt="Fashion Banner">
 
 </div>
 
-
 </div>
 
+</div>
 
 </section>
 
-
-
-
-
-
-
-<!-- CATEGORY SECTION -->
-
+<!-- ===========================
+CATEGORY SECTION
+=========================== -->
 
 <section class="section">
 
-
 <div class="container">
-
 
 <h2 class="section-title">
 
@@ -190,15 +152,9 @@ Shop Categories
 
 </h2>
 
-
-
-
 <div class="category-grid">
 
-
-
 <div class="category-card">
-
 
 <h3>
 
@@ -206,22 +162,15 @@ Men
 
 </h3>
 
-
 <a href="shop.html">
 
 View Collection
 
 </a>
 
-
 </div>
 
-
-
-
-
 <div class="category-card">
-
 
 <h3>
 
@@ -229,22 +178,15 @@ Women
 
 </h3>
 
-
 <a href="shop.html">
 
 View Collection
 
 </a>
 
-
 </div>
 
-
-
-
-
 <div class="category-card">
-
 
 <h3>
 
@@ -252,6 +194,21 @@ Kids
 
 </h3>
 
+<a href="shop.html">
+
+View Collection
+
+</a>
+
+</div>
+
+<div class="category-card">
+
+<h3>
+
+Sports
+
+</h3>
 
 <a href="shop.html">
 
@@ -259,32 +216,21 @@ View Collection
 
 </a>
 
+</div>
 
 </div>
 
-
-
-
 </div>
-
-
-</div>
-
 
 </section>
 
-
-
-
-
-<!-- FEATURED PRODUCTS -->
-
+<!-- ===========================
+FEATURED PRODUCTS
+=========================== -->
 
 <section class="section">
 
-
 <div class="container">
-
 
 <h2 class="section-title">
 
@@ -292,54 +238,37 @@ Featured Products
 
 </h2>
 
+<div
+id="productContainer"
+class="product-grid">
 
+<div class="loading-products">
 
-
-<div 
-
-class="product-grid"
-
-id="productContainer">
-
+Loading Products...
 
 </div>
 
-
-
 </div>
 
+</div>
 
 </section>
 
-
-
-
-
-
-
-
-<!-- ABOUT SECTION -->
-
+<!-- ===========================
+ABOUT
+=========================== -->
 
 <section class="section">
 
-
 <div class="container">
 
-
-
 <div class="contact-box">
-
-
 
 <h2>
 
 Peppy Fashion
 
 </h2>
-
-
-
 
 <p>
 
@@ -349,18 +278,13 @@ We provide quality clothing with easy ordering options.
 
 </p>
 
-
-
 <br>
-
-
 
 <p>
 
-📍 Shop Location:
+📍 Shop Location
 
 </p>
-
 
 <p>
 
@@ -368,38 +292,21 @@ Shalbahan, Tetulia, Panchagarh, Bangladesh
 
 </p>
 
-
-
-
 </div>
 
-
-
 </div>
-
 
 </section>
 
-
-
-
-
-
-
-
-
-<!-- FOOTER -->
-
+<!-- ===========================
+FOOTER
+=========================== -->
 
 <footer>
 
-
 <div class="container footer-grid">
 
-
-
 <div>
-
 
 <h3>
 
@@ -407,22 +314,15 @@ Peppy Fashion
 
 </h3>
 
-
 <p>
 
 Modern fashion for everyone.
 
 </p>
 
-
 </div>
 
-
-
-
-
 <div>
-
 
 <h3>
 
@@ -430,54 +330,17 @@ Quick Links
 
 </h3>
 
+<p><a href="index.html">Home</a></p>
 
+<p><a href="shop.html">Shop</a></p>
 
-<p>
+<p><a href="cart.html">Cart</a></p>
 
-<a href="index.html">
-
-Home
-
-</a>
-
-</p>
-
-
-
-
-<p>
-
-<a href="shop.html">
-
-Shop
-
-</a>
-
-</p>
-
-
-
-
-<p>
-
-<a href="cart.html">
-
-Cart
-
-</a>
-
-</p>
-
-
+<p><a href="contact.html">Contact</a></p>
 
 </div>
 
-
-
-
-
 <div>
-
 
 <h3>
 
@@ -485,55 +348,29 @@ Contact
 
 </h3>
 
-
-
-
 <p>
 
 📍 Shalbahan, Tetulia, Panchagarh
 
 </p>
 
-
-
-
-
 <p>
 
-📞 WhatsApp:
-
-+8801710868775
+📞 WhatsApp: +8801710868775
 
 </p>
 
-
-
-
-
 <p>
 
-✉ Email:
-
-peppyfashionbd@gmail.com
+✉ peppyfashionbd@gmail.com
 
 </p>
 
-
-
 </div>
 
-
-
 </div>
-
 
 </footer>
-
-
-
-
-
-
 
 <script src="assets/js/products.js"></script>
 
@@ -541,11 +378,6 @@ peppyfashionbd@gmail.com
 
 <script src="assets/js/script.js"></script>
 
-
-
-
-
 </body>
-
 
 </html>

@@ -1,77 +1,48 @@
 <!DOCTYPE html>
-
 <html lang="en">
-
 
 <head>
 
-
 <meta charset="UTF-8">
-
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 
 <title>Shop | Peppy Fashion</title>
 
-
-
 <link rel="stylesheet" href="assets/css/style.css">
-
 
 </head>
 
-
-
-
 <body>
 
-
-
-
-
-<!-- HEADER -->
-
+<!-- ===========================
+HEADER
+=========================== -->
 
 <header>
 
-
 <div class="container header-container">
-
-
 
 <div class="logo">
 
+<a href="index.html">
 
-<img src="assets/images/logo/logo.png"
+<img
+src="assets/images/logo/logo.png"
+alt="Peppy Fashion">
 
-alt="Peppy Fashion Logo">
-
+</a>
 
 </div>
 
-
-
-
-
 <button
-
 class="menu-btn"
-
 onclick="toggleMenu()">
-
 
 ☰
 
-
 </button>
 
-
-
-
-
 <nav class="navbar">
-
 
 <a href="index.html">
 
@@ -79,25 +50,19 @@ Home
 
 </a>
 
-
-
-<a href="shop.html">
+<a
+href="shop.html"
+class="active">
 
 Shop
 
 </a>
 
-
-
 <a href="cart.html">
 
-Cart
-
-(<span id="cartCount">0</span>)
+Cart (<span id="cartCount">0</span>)
 
 </a>
-
-
 
 <a href="contact.html">
 
@@ -105,139 +70,116 @@ Contact
 
 </a>
 
-
-
 </nav>
 
-
-
 </div>
-
 
 </header>
 
+<!-- ===========================
+SHOP BANNER
+=========================== -->
 
+<section class="shop-banner">
 
+<img
+src="assets/images/banners/banner.jpg"
+alt="Peppy Fashion Banner">
 
+</section>
 
-
-
-
-<!-- SHOP SECTION -->
-
+<!-- ===========================
+SHOP
+=========================== -->
 
 <section class="section">
 
-
 <div class="container">
-
-
 
 <h1 class="section-title">
 
-Our Collection
+Shop Collection
 
 </h1>
 
+<p class="section-subtitle">
 
+Browse all fashion collections
 
-
-
+</p>
 
 <!-- SEARCH -->
 
-
 <div class="search-box">
 
-
 <input
-
 type="text"
-
 id="searchInput"
-
 class="form-control"
-
-placeholder="Search product..."
-
+placeholder="Search products..."
 onkeyup="searchProducts()">
-
-
 
 </div>
 
+<!-- MAIN CATEGORY -->
 
-
-
-
-
-
-<!-- FILTER BUTTONS -->
-
-
-<div class="category-filter">
-
-
+<div class="main-category">
 
 <button
-
-class="btn"
-
-onclick="filterCategory('All')">
+class="category-btn active"
+onclick="changeCategory('All',this)">
 
 All
 
 </button>
 
-
-
 <button
-
-class="btn"
-
-onclick="filterCategory('Men')">
+class="category-btn"
+onclick="changeCategory('Men',this)">
 
 Men
 
 </button>
 
-
-
 <button
-
-class="btn"
-
-onclick="filterCategory('Women')">
+class="category-btn"
+onclick="changeCategory('Women',this)">
 
 Women
 
 </button>
 
-
-
 <button
-
-class="btn"
-
-onclick="filterCategory('Kids')">
+class="category-btn"
+onclick="changeCategory('Kids',this)">
 
 Kids
 
 </button>
 
+<button
+class="category-btn"
+onclick="changeCategory('Sports',this)">
 
+Sports
+
+</button>
 
 </div>
 
+<!-- SUB CATEGORY -->
 
+<div
+id="subCategoryContainer"
+class="sub-category">
 
+</div>
 
+<!-- SHOP TOOLBAR -->
 
-<!-- SORT -->
-
+<div class="shop-toolbar">
 
 <div class="form-group">
-
 
 <label>
 
@@ -245,17 +187,10 @@ Sort Products
 
 </label>
 
-
-
 <select
-
 id="sortProducts"
-
 class="form-control"
-
 onchange="sortProducts()">
-
-
 
 <option value="default">
 
@@ -263,75 +198,78 @@ Default
 
 </option>
 
-
-
 <option value="low">
 
-Price Low To High
+Price Low → High
 
 </option>
-
-
 
 <option value="high">
 
-Price High To Low
+Price High → Low
 
 </option>
 
+<option value="name">
 
+A → Z
+
+</option>
 
 </select>
 
-
-
 </div>
 
-
-
-
-
-
+</div>
 
 <!-- PRODUCT GRID -->
 
+<div
+id="productContainer"
+class="product-grid">
+
+<div class="loading-products">
+
+Loading Products...
+
+</div>
+
+</div>
+
+<!-- NO PRODUCT -->
 
 <div
+id="noProducts"
+class="no-products"
+style="display:none;">
 
-class="product-grid"
+<h3>
 
-id="productContainer">
+No Products Found
 
+</h3>
+
+<p>
+
+Try another category or search keyword.
+
+</p>
 
 </div>
 
-
-
-
-
 </div>
-
 
 </section>
 
-
-
-
-
-
-
-<!-- FOOTER -->
-
+<!-- ===========================
+FOOTER
+=========================== -->
 
 <footer>
 
-
 <div class="container footer-grid">
 
-
-
 <div>
-
 
 <h3>
 
@@ -339,30 +277,21 @@ Peppy Fashion
 
 </h3>
 
-
 <p>
 
 Quality fashion at affordable prices.
 
 </p>
 
-
 </div>
 
-
-
-
-
 <div>
-
 
 <h3>
 
 Quick Links
 
 </h3>
-
-
 
 <p>
 
@@ -374,9 +303,6 @@ Home
 
 </p>
 
-
-
-
 <p>
 
 <a href="shop.html">
@@ -386,9 +312,6 @@ Shop
 </a>
 
 </p>
-
-
-
 
 <p>
 
@@ -400,16 +323,19 @@ Cart
 
 </p>
 
+<p>
 
+<a href="contact.html">
+
+Contact
+
+</a>
+
+</p>
 
 </div>
 
-
-
-
-
 <div>
-
 
 <h3>
 
@@ -417,56 +343,29 @@ Contact
 
 </h3>
 
-
-
-
 <p>
 
 📍 Shalbahan, Tetulia, Panchagarh
 
 </p>
 
-
-
-
-
 <p>
 
-📞 WhatsApp:
-
-+8801710868775
+📞 +8801710868775
 
 </p>
 
-
-
-
-
 <p>
 
-✉ Email:
-
-peppyfashionbd@gmail.com
+✉ peppyfashionbd@gmail.com
 
 </p>
 
-
-
 </div>
 
-
-
 </div>
-
 
 </footer>
-
-
-
-
-
-
-
 
 <script src="assets/js/products.js"></script>
 
@@ -474,11 +373,6 @@ peppyfashionbd@gmail.com
 
 <script src="assets/js/script.js"></script>
 
-
-
-
-
 </body>
-
 
 </html>
