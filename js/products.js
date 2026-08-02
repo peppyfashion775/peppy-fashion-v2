@@ -1,5 +1,5 @@
 /* =====================================
-   PEPPY FASHION V5
+   PEPPY FASHION V6
    PRODUCTS
 ===================================== */
 
@@ -8,68 +8,168 @@ let products = [];
 const API_URL =
 "https://script.google.com/macros/s/AKfycbwbHxHS5GuRH4Lr-L5wTs8aRjXbdgK60CyM0muAjRvhUKZ-1IzeFBGq7y6an9d0Kmg_/exec";
 
+const CACHE_KEY = "peppy_products";
+
+
+
 /* =====================================
    LOAD PRODUCTS
 ===================================== */
 
 async function loadProducts(){
 
-    try{
+    if(products.length > 0){
 
-        const response = await fetch(API_URL);
+        return products;
 
-if (!response.ok) {
-    throw new Error("Failed to load products");
+    }
+
+
+
+    let cachedProducts =
+    localStorage.getItem(CACHE_KEY);
+
+
+
+    if(cachedProducts){
+
+        try{
+
+            products =
+            JSON.parse(cachedProducts);
+
+
+
+            refreshProducts();
+
+
+
+            return products;
+
+        }
+
+        catch(error){
+
+            localStorage.removeItem(CACHE_KEY);
+
+        }
+
+    }
+
+
+
+    return await refreshProducts();
+
 }
 
-const data = await response.json();
+
+
+/* =====================================
+   REFRESH PRODUCTS
+===================================== */
+
+async function refreshProducts(){
+
+    try{
+
+        const response =
+        await fetch(API_URL);
+
+
+
+        if(!response.ok){
+
+            throw new Error(
+                "Failed to load products"
+            );
+
+        }
+
+
+
+        const data =
+        await response.json();
+
+
 
         if(
+
             data.success &&
+
             Array.isArray(data.products)
+
         ){
 
-            products = data.products.map(product=>({
+            products =
+            data.products.map(product => ({
 
-                id:Number(product.id),
+                id:
+                Number(product.id),
 
-                name:product.name || "",
+                name:
+                product.name || "",
 
-                category:product.category || "Others",
+                category:
+                product.category || "Others",
 
-                subCategory:product.subCategory || "All",
+                subCategory:
+                product.subCategory || "All",
 
-                collection:product.collection || "",
+                collection:
+                product.collection || "",
 
-                price:Number(product.price)||0,
+                price:
+                Number(product.price) || 0,
 
-                oldPrice:product.oldPrice
-                    ? Number(product.oldPrice)
-                    : null,
+                oldPrice:
+                product.oldPrice
+                ? Number(product.oldPrice)
+                : null,
 
-                discount:Number(product.discount)||0,
+                discount:
+                Number(product.discount) || 0,
 
-                image:product.image || "",
+                image:
+                product.image || "",
 
-                badge:product.badge || "",
+                badge:
+                product.badge || "",
 
-                stock:Number(product.stock)||0,
+                stock:
+                Number(product.stock) || 0,
 
                 featured:
-                    String(product.featured)
-                    .toLowerCase(),
+                String(product.featured)
+                .toLowerCase(),
 
                 description:
-                    product.description || "",
+                product.description || "",
 
                 sizes:
-                    Array.isArray(product.sizes)
-                    ? product.sizes
-                    : []
+
+                Array.isArray(product.sizes)
+
+                ? product.sizes
+
+                : []
 
             }));
 
+
+
+            localStorage.setItem(
+
+                CACHE_KEY,
+
+                JSON.stringify(products)
+
+            );
+
         }
+
+
+
+        return products;
 
     }
 
@@ -77,11 +177,11 @@ const data = await response.json();
 
         console.error(error);
 
+        return [];
+
     }
 
 }
-
-loadProducts();
 
 /* =====================================
    GET PRODUCT BY ID
@@ -96,6 +196,8 @@ function getProductById(id){
     );
 
 }
+
+
 
 /* =====================================
    GET PRODUCTS BY CATEGORY
@@ -113,6 +215,8 @@ function getProductsByCategory(category){
     );
 
 }
+
+
 
 /* =====================================
    GET FEATURED PRODUCTS
@@ -145,6 +249,8 @@ function getCollectionProducts(collection){
     );
 
 }
+
+
 
 /* =====================================
    SEARCH PRODUCTS
@@ -181,3 +287,4 @@ function searchAllProducts(keyword){
     );
 
 }
+
