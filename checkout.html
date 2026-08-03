@@ -106,6 +106,7 @@
                     <option value="Cash on Delivery">Cash On Delivery</option>
                     <option value="bKash">bKash</option>
                     <option value="Nagad">Nagad</option>
+                    <option value="Rocket">Rocket</option>
                 </select>
             </div>
 
@@ -189,15 +190,29 @@ function calculateCheckout(){
     document.getElementById("checkoutTotal").innerText = "৳" + total;
 }
 
-function applyPromo(){
-    let code = document.getElementById("promoCode").value;
-    if(code.trim().toUpperCase() === "PEPPY10"){
-        discountAmount = 100;
-        alert("Promo Code Applied: ৳100 Off");
+function applyPromo() {
+    let code = document.getElementById("promoCode").value.trim().toUpperCase();
+
+    if (code === "PEPPY10") {
+
+        let cart = getCart();
+        let subtotal = 0;
+
+        cart.forEach(item => {
+            subtotal += item.price * item.quantity;
+        });
+
+        discountAmount = Math.round(subtotal * 0.10); // 10% Discount
+
+        alert("Promo Code Applied: 10% Off");
+
     } else {
+
         discountAmount = 0;
         alert("Invalid Promo Code");
+
     }
+
     calculateCheckout();
 }
 
@@ -212,25 +227,32 @@ async function placeOrder(){
     let phone = document.getElementById("customerPhone").value;
     let address = document.getElementById("customerAddress").value;
 
+    const email = document.getElementById("customerEmail").value.trim();
+
+if (email !== "" && !email.includes("@")) {
+    alert("Please enter a valid email address.");
+    return;
+}
+
     if(!name || !phone || !address){
         alert("Please fill in required fields (Name, Phone, Address)");
         return;
     }
 
     let order = {
-        orderId: "ORD-" + Date.now(),
-        name: name,
-        phone: phone,
-        email: document.getElementById("customerEmail").value,
-        address: address,
-        items: JSON.stringify(cart),
-        subtotal: document.getElementById("checkoutSubtotal").innerText.replace("৳", ""),
-        discount: discountAmount,
-        delivery: document.getElementById("deliveryArea").value,
-        total: document.getElementById("checkoutTotal").innerText.replace("৳", ""),
-        payment: document.getElementById("paymentMethod").value,
-        note: document.getElementById("orderNote").value
-    };
+    orderId: "ORD-" + Date.now(),
+    name: name,
+    phone: phone,
+    email: email,
+    address: address,
+    items: JSON.stringify(cart),
+    subtotal: document.getElementById("checkoutSubtotal").innerText.replace("৳", ""),
+    discount: discountAmount,
+    delivery: document.getElementById("deliveryArea").value,
+    total: document.getElementById("checkoutTotal").innerText.replace("৳", ""),
+    payment: document.getElementById("paymentMethod").value,
+    note: document.getElementById("orderNote").value
+};
 
     try {
         await fetch(GOOGLE_SCRIPT_URL, {
