@@ -227,7 +227,7 @@ async function placeOrder(){
     let phone = document.getElementById("customerPhone").value;
     let address = document.getElementById("customerAddress").value;
 
-    const email = document.getElementById("customerEmail").value.trim();
+    let email = document.getElementById("customerEmail").value.trim();
 
 if (email !== "" && !email.includes("@")) {
     alert("Please enter a valid email address.");
@@ -240,7 +240,7 @@ if (email !== "" && !email.includes("@")) {
     }
 
     let order = {
-    orderId: "ORD-" + Date.now(),
+    orderId: "PF" + new Date().toISOString().replace(/[-:T]/g, "").slice(2, 14),
     name: name,
     phone: phone,
     email: email,
