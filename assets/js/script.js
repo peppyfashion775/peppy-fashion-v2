@@ -83,6 +83,27 @@ function toggleMenu() {
     }
 
 }
+/* =====================================
+   CLOSE MENU WHEN CLICK OUTSIDE
+===================================== */
+
+document.addEventListener("click", function (e) {
+
+    const nav = document.querySelector(".navbar");
+    const menuBtn = document.querySelector(".menu-btn");
+
+    if (!nav || !menuBtn) return;
+
+    if (
+        window.innerWidth <= 768 &&
+        nav.style.display === "flex" &&
+        !nav.contains(e.target) &&
+        !menuBtn.contains(e.target)
+    ) {
+        nav.style.display = "none";
+    }
+
+});
 
 /* =====================================
    MAIN CATEGORY
