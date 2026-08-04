@@ -1,55 +1,53 @@
 let deferredPrompt;
 
+const installBtn = document.getElementById("installBtn");
+
 window.addEventListener("beforeinstallprompt", (e) => {
 
-  e.preventDefault();
+    e.preventDefault();
 
-  deferredPrompt = e;
+    deferredPrompt = e;
 
-  console.log("PWA Install Available");
-const btn = document.getElementById("installBtn");
+    console.log("PWA Install Available");
 
-if (btn) {
-
-  btn.style.display = "inline-block";
-
-}
-
-});
-window.addEventListener("appinstalled", () => {
-
-  const btn = document.getElementById("installBtn");
-
-  if (btn) {
-
-    btn.style.display = "none";
-
-  }
-
-  console.log("Peppy Fashion App Installed");
+    if (installBtn) {
+        installBtn.style.display = "inline-block";
+    }
 
 });
 
 window.installPeppyApp = async function () {
 
-  if (!deferredPrompt) {
+    if (!deferredPrompt) {
 
-    alert("Install option is not available yet.");
+        alert(
+            "If the install window does not appear, tap Chrome Menu (⋮) and choose 'Install app' or 'Add to Home screen'."
+        );
 
-    return;
+        return;
 
-  }
+    }
 
-  deferredPrompt.prompt();
+    deferredPrompt.prompt();
 
-  await deferredPrompt.userChoice;
-const btn = document.getElementById("installBtn");
+    const { outcome } = await deferredPrompt.userChoice;
 
-if (btn) {
+    console.log("Install Result:", outcome);
 
-  btn.style.display = "none";
+    deferredPrompt = null;
 
-}
-  deferredPrompt = null;
+    if (installBtn) {
+        installBtn.style.display = "none";
+    }
 
 };
+
+window.addEventListener("appinstalled", () => {
+
+    console.log("Peppy Fashion Installed");
+
+    if (installBtn) {
+        installBtn.style.display = "none";
+    }
+
+});
