@@ -9,6 +9,9 @@
 <title>Shop | Peppy Fashion</title>
 
 <link rel="stylesheet" href="assets/css/style.css">
+<link rel="manifest" href="manifest.json">
+
+<meta name="theme-color" content="#6C3BD0">
 
 </head>
 
@@ -42,7 +45,7 @@ onclick="toggleMenu()">
 
 </button>
 
-<nav class="navbar">
+<nav class="navbar" id="mainNavbar">
 
 <a href="index.html">
 
@@ -67,6 +70,17 @@ Cart (<span id="cartCount">0</span>)
 <a href="contact.html">
 
 Contact
+
+</a>
+<a href="wishlist.html">
+
+❤️ Wishlist
+
+</a>
+
+<a href="account.html">
+
+👤 My Account
 
 </a>
 
@@ -265,6 +279,33 @@ Try another category or search keyword.
 FOOTER
 =========================== -->
 
+<!-- ===========================
+BOTTOM NAVIGATION
+=========================== -->
+
+<nav class="bottom-nav">
+
+<a href="index.html">
+🏠
+<span>Home</span>
+</a>
+
+<a href="shop.html" class="active">
+🛍️
+<span>Shop</span>
+</a>
+
+<a href="wishlist.html">
+❤️
+<span>Wishlist</span>
+</a>
+
+<a href="account.html">
+👤
+<span>Account</span>
+</a>
+
+</nav>
 <footer>
 
 <div class="container footer-grid">
@@ -372,6 +413,14 @@ Contact
 <script src="assets/js/cart.js"></script>
 
 <script src="assets/js/script.js"></script>
+<script src="assets/js/pwa.js"></script>
+<script>
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("sw.js");
+  });
+}
+</script>
 
 </body>
 

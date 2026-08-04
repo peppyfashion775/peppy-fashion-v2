@@ -11,10 +11,12 @@
 <title>Peppy Fashion | Home</title>
 
 <link rel="stylesheet" href="assets/css/style.css">
-
-<!-- PWA -->
 <link rel="manifest" href="manifest.json">
+
 <meta name="theme-color" content="#6C3BD0">
+
+<link rel="apple-touch-icon" href="assets/images/logo/icon-192.png">
+<!-- PWA -->
 
 </head>
 
@@ -48,7 +50,7 @@ onclick="toggleMenu()">
 
 </button>
 
-<nav class="navbar">
+<nav class="navbar" id="mainNavbar">
 
 <a
 href="index.html"
@@ -74,6 +76,14 @@ Cart (<span id="cartCount">0</span>)
 
 Contact
 
+</a>
+
+<a href="wishlist.html">
+❤️ Wishlist
+</a>
+
+<a href="account.html">
+👤 My Account
 </a>
 
 </nav>
@@ -227,6 +237,15 @@ Peppy Fashion
 
 </h2>
 
+<button
+id="installBtn"
+onclick="installPeppyApp()"
+style="display:none;margin:20px auto;padding:12px 25px;border:none;border-radius:8px;background:#6C3BD0;color:#fff;font-size:16px;cursor:pointer;">
+
+📲 Install App
+
+</button>
+
 <p>
 
 Your trusted online fashion store.
@@ -259,6 +278,33 @@ Shalbahan, Tetulia, Panchagarh, Bangladesh
 FOOTER
 =========================== -->
 
+<!-- ===========================
+BOTTOM NAVIGATION
+=========================== -->
+
+<nav class="bottom-nav">
+
+<a href="index.html" class="active">
+🏠
+<span>Home</span>
+</a>
+
+<a href="shop.html">
+🛍️
+<span>Shop</span>
+</a>
+
+<a href="cart.html">
+🛒
+<span>Cart</span>
+</a>
+
+<a href="contact.html">
+☎️
+<span>Contact</span>
+</a>
+
+</nav>
 <footer>
 
 <div class="container footer-grid">
@@ -328,23 +374,27 @@ Contact
 </div>
 
 </footer>
+<!-- Bottom Navigation -->
 
 <script src="assets/js/products.js"></script>
 
 <script src="assets/js/cart.js"></script>
 
 <script src="assets/js/script.js"></script>
-
-<!-- PWA Service Worker -->
 <script>
 if ("serviceWorker" in navigator) {
+
   window.addEventListener("load", () => {
-    navigator.serviceWorker.register("./sw.js")
+
+    navigator.serviceWorker.register("sw.js")
       .then(() => console.log("Service Worker Registered"))
       .catch(err => console.log(err));
+
   });
+
 }
 </script>
+<script src="assets/js/pwa.js"></script>
 
 </body>
 
