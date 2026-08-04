@@ -6,7 +6,7 @@
   "lang": "en",
   "dir": "ltr",
 
-  "start_url": "/peppy-fashion-v2/splash.html",
+  "start_url": "/peppy-fashion-v2/index.html",
   "scope": "/peppy-fashion-v2/",
 
   "display": "standalone",
