@@ -12,6 +12,10 @@
 
 <link rel="stylesheet" href="assets/css/style.css">
 
+<!-- PWA -->
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#6C3BD0">
+
 </head>
 
 <body>
@@ -330,6 +334,17 @@ Contact
 <script src="assets/js/cart.js"></script>
 
 <script src="assets/js/script.js"></script>
+
+<!-- PWA Service Worker -->
+<script>
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("./sw.js")
+      .then(() => console.log("Service Worker Registered"))
+      .catch(err => console.log(err));
+  });
+}
+</script>
 
 </body>
 
