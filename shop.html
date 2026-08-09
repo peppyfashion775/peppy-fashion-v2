@@ -1,427 +1,382 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
 
-<title>Shop | Peppy Fashion</title>
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
-<link rel="stylesheet" href="assets/css/style.css">
-<link rel="manifest" href="manifest.json">
+    <title>Shop | Peppy Fashion</title>
 
-<meta name="theme-color" content="#6C3BD0">
+    <meta
+        name="description"
+        content="Browse all fashion collections at Peppy Fashion."
+    >
+
+    <link
+        rel="icon"
+        href="assets/images/logo/logo.png"
+    >
+
+    <link
+        rel="stylesheet"
+    href="css/style.css"
+    >
 
 </head>
 
+
 <body>
 
-<!-- ===========================
+
+<!-- =========================
 HEADER
-=========================== -->
+========================= -->
 
-<header>
+<header class="site-header">
 
-<div class="container header-container">
+    <div class="header-container">
 
-<div class="logo">
 
-<a href="index.html">
+        <a
+            href="index.html"
+            class="logo"
+        >
 
-<img
-src="assets/images/logo/logo.png"
-alt="Peppy Fashion">
+            <img
+                src="assets/images/logo/logo.png"
+                alt="Peppy Fashion Logo"
+            >
 
-</a>
+        </a>
 
-</div>
 
-<button
-class="menu-btn"
-onclick="toggleMenu()">
+        <button
+            class="menu-btn"
+            type="button"
+            onclick="toggleMenu()"
+            aria-label="Open menu"
+        >
+            ☰
+        </button>
 
-☰
 
-</button>
+        <nav class="navbar">
 
-<nav class="navbar" id="mainNavbar">
+            <a
+                href="index.html"
+                class="nav-link"
+            >
+                Home
+            </a>
 
-<a href="index.html">
 
-Home
+            <a
+                href="shop.html"
+                class="nav-link active"
+            >
+                Shop
+            </a>
 
-</a>
 
-<a
-href="shop.html"
-class="active">
+            <a
+                href="cart.html"
+                class="nav-link"
+            >
+                Cart
+                (<span id="cartCount">0</span>)
+            </a>
 
-Shop
 
-</a>
+            <a
+                href="contact.html"
+                class="nav-link"
+            >
+                Contact
+            </a>
 
-<a href="cart.html">
 
-Cart (<span id="cartCount">0</span>)
+            <a
+                href="wishlist.html"
+                class="nav-link"
+            >
+                ❤️ Wishlist
+            </a>
 
-</a>
 
-<a href="contact.html">
+            <a
+                href="account.html"
+                class="nav-link"
+            >
+                👤 My Account
+            </a>
 
-Contact
+        </nav>
 
-</a>
-<a href="wishlist.html">
-
-❤️ Wishlist
-
-</a>
-
-<a href="account.html">
-
-👤 My Account
-
-</a>
-
-</nav>
-
-</div>
+    </div>
 
 </header>
 
-<!-- ===========================
-SHOP BANNER
-=========================== -->
 
-<section class="shop-banner">
 
-<img
-src="assets/images/banners/banner.jpg"
-alt="Peppy Fashion Banner">
-
-</section>
-
-<!-- ===========================
+<!-- =========================
 SHOP
-=========================== -->
+========================= -->
 
-<section class="section">
+<main>
 
-<div class="container">
+    <section class="shop-section">
 
-<h1 class="section-title">
+        <div class="container">
 
-Shop Collection
 
-</h1>
+            <div class="shop-heading">
 
-<p class="section-subtitle">
+                <h1 class="section-title">
+                    Shop Collection
+                </h1>
 
-Browse all fashion collections
+                <p>
+                    Browse all fashion collections
+                </p>
 
-</p>
+            </div>
 
-<!-- SEARCH -->
 
-<div class="search-box">
+            <!-- MAIN CATEGORIES -->
 
-<input
-type="text"
-id="searchInput"
-class="form-control"
-placeholder="Search products..."
-onkeyup="searchProducts()">
+            <div class="category-container">
 
-</div>
 
-<!-- MAIN CATEGORY -->
+                <button
+                    type="button"
+                    class="category-btn active"
+                    onclick="changeCategory('All', this)"
+                >
+                    All
+                </button>
 
-<div class="main-category">
 
-<button
-class="category-btn active"
-onclick="changeCategory('All',this)">
+                <button
+                    type="button"
+                    class="category-btn"
+                    onclick="changeCategory('Men', this)"
+                >
+                    Men
+                </button>
 
-All
 
-</button>
+                <button
+                    type="button"
+                    class="category-btn"
+                    onclick="changeCategory('Women', this)"
+                >
+                    Women
+                </button>
 
-<button
-class="category-btn"
-onclick="changeCategory('Men',this)">
 
-Men
+                <button
+                    type="button"
+                    class="category-btn"
+                    onclick="changeCategory('Kids', this)"
+                >
+                    Kids
+                </button>
 
-</button>
 
-<button
-class="category-btn"
-onclick="changeCategory('Women',this)">
+                <button
+                    type="button"
+                    class="category-btn"
+                    onclick="changeCategory('Sports', this)"
+                >
+                    Sports
+                </button>
 
-Women
 
-</button>
+            </div>
 
-<button
-class="category-btn"
-onclick="changeCategory('Kids',this)">
 
-Kids
+            <!-- SUB CATEGORIES -->
 
-</button>
+            <div
+                id="subCategoryContainer"
+                class="subcategory-container"
+            >
+            </div>
 
-<button
-class="category-btn"
-onclick="changeCategory('Sports',this)">
 
-Sports
+            <!-- SEARCH + SORT -->
 
-</button>
+            <div class="shop-controls">
 
-</div>
 
-<!-- SUB CATEGORY -->
+                <div class="search-box">
 
-<div
-id="subCategoryContainer"
-class="sub-category">
+                    <input
+                        type="search"
+                        id="searchInput"
+                        class="search-input"
+                        placeholder="Search products..."
+                        oninput="searchProducts()"
+                    >
 
-</div>
+                </div>
 
-<!-- SHOP TOOLBAR -->
 
-<div class="shop-toolbar">
+                <div class="sort-box">
 
-<div class="form-group">
+                    <label for="sortProducts">
+                        Sort Products
+                    </label>
 
-<label>
 
-Sort Products
+                    <select
+                        id="sortProducts"
+                        onchange="sortProducts()"
+                    >
 
-</label>
+                        <option value="">
+                            Default
+                        </option>
 
-<select
-id="sortProducts"
-class="form-control"
-onchange="sortProducts()">
+                        <option value="low">
+                            Price Low → High
+                        </option>
 
-<option value="default">
+                        <option value="high">
+                            Price High → Low
+                        </option>
 
-Default
+                        <option value="name">
+                            A → Z
+                        </option>
 
-</option>
+                    </select>
 
-<option value="low">
+                </div>
 
-Price Low → High
 
-</option>
+            </div>
 
-<option value="high">
 
-Price High → Low
+            <!-- PRODUCTS -->
 
-</option>
+            <div
+                id="productContainer"
+                class="product-grid"
+            >
 
-<option value="name">
+                <div class="loading">
+                    Loading Products...
+                </div>
 
-A → Z
+            </div>
 
-</option>
 
-</select>
+        </div>
 
-</div>
+    </section>
 
-</div>
+</main>
 
-<!-- PRODUCT GRID -->
 
-<div
-id="productContainer"
-class="product-grid">
 
-<div class="loading-products">
-
-Loading Products...
-
-</div>
-
-</div>
-
-<!-- NO PRODUCT -->
-
-<div
-id="noProducts"
-class="no-products"
-style="display:none;">
-
-<h3>
-
-No Products Found
-
-</h3>
-
-<p>
-
-Try another category or search keyword.
-
-</p>
-
-</div>
-
-</div>
-
-</section>
-
-<!-- ===========================
+<!-- =========================
 FOOTER
-=========================== -->
+========================= -->
 
-<!-- ===========================
-BOTTOM NAVIGATION
-=========================== -->
-
-<nav class="bottom-nav">
-
-<a href="index.html">
-🏠
-<span>Home</span>
-</a>
-
-<a href="shop.html" class="active">
-🛍️
-<span>Shop</span>
-</a>
-
-<a href="wishlist.html">
-❤️
-<span>Wishlist</span>
-</a>
-
-<a href="account.html">
-👤
-<span>Account</span>
-</a>
-
-</nav>
 <footer>
 
-<div class="container footer-grid">
+    <div class="footer-container">
 
-<div>
 
-<h3>
+        <div class="footer-column">
 
-Peppy Fashion
+            <h3>
+                Peppy Fashion
+            </h3>
 
-</h3>
+            <p>
+                Quality fashion at affordable prices.
+            </p>
 
-<p>
+        </div>
 
-Quality fashion at affordable prices.
 
-</p>
+        <div class="footer-column">
 
-</div>
+            <h3>
+                Quick Links
+            </h3>
 
-<div>
 
-<h3>
+            <a href="index.html">
+                Home
+            </a>
 
-Quick Links
 
-</h3>
+            <a href="shop.html">
+                Shop
+            </a>
 
-<p>
 
-<a href="index.html">
+            <a href="cart.html">
+                Cart
+            </a>
 
-Home
 
-</a>
+            <a href="checkout.html">
+                Checkout
+            </a>
 
-</p>
+        </div>
 
-<p>
 
-<a href="shop.html">
+        <div class="footer-column">
 
-Shop
+            <h3>
+                Contact
+            </h3>
 
-</a>
 
-</p>
+            <p>
+                📍 Shalbahan, Tetulia, Panchagarh
+            </p>
 
-<p>
 
-<a href="cart.html">
+            <p>
+                📞 +8801710868775
+            </p>
 
-Cart
 
-</a>
+            <p>
+                ✉ peppyfashionbd@gmail.com
+            </p>
 
-</p>
+        </div>
 
-<p>
 
-<a href="contact.html">
-
-Contact
-
-</a>
-
-</p>
-
-</div>
-
-<div>
-
-<h3>
-
-Contact
-
-</h3>
-
-<p>
-
-📍 Shalbahan, Tetulia, Panchagarh
-
-</p>
-
-<p>
-
-📞 +8801710868775
-
-</p>
-
-<p>
-
-✉ peppyfashionbd@gmail.com
-
-</p>
-
-</div>
-
-</div>
+    </div>
 
 </footer>
 
-<script src="assets/js/products.js"></script>
 
-<script src="assets/js/cart.js"></script>
 
-<script src="assets/js/script.js"></script>
-<script src="assets/js/pwa.js"></script>
-<script>
-if ("serviceWorker" in navigator) {
-  window.addEventListener("load", () => {
-    navigator.serviceWorker.register("sw.js");
-  });
-}
-</script>
+<!-- =========================
+JAVASCRIPT
+========================= -->
+
+<script src="js/products.js"></script>
+
+<script src="js/script.js"></script>
+
 
 </body>
 
 </html>
+```

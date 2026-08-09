@@ -1,6 +1,6 @@
 /* =====================================
-   PEPPY FASHION V5
-   PRODUCTS
+PEPPY FASHION V6
+PRODUCTS DATA
 ===================================== */
 
 let products = [];
@@ -8,129 +8,214 @@ let products = [];
 const API_URL =
 "https://script.google.com/macros/s/AKfycbwbHxHS5GuRH4Lr-L5wTs8aRjXbdgK60CyM0muAjRvhUKZ-1IzeFBGq7y6an9d0Kmg_/exec";
 
+const CACHE_KEY = "peppy_products_v6";
+
+
 /* =====================================
-   LOAD PRODUCTS
+LOAD PRODUCTS
 ===================================== */
 
-async function loadProducts(){
+async function loadProducts() {
 
-    try{
+    if (products.length > 0) {
+        return products;
+    }
 
-        const response = await fetch(API_URL);
+    try {
 
-if (!response.ok) {
-    throw new Error("Failed to load products");
+        const cached =
+            localStorage.getItem(CACHE_KEY);
+
+        if (cached) {
+
+            const cachedData =
+                JSON.parse(cached);
+
+            if (
+                Array.isArray(cachedData) &&
+                cachedData.length > 0
+            ) {
+
+                products = cachedData;
+
+                /* Refresh in background */
+                refreshProducts();
+
+                return products;
+            }
+
+        }
+
+    } catch (error) {
+
+        localStorage.removeItem(CACHE_KEY);
+
+    }
+
+
+    return await refreshProducts();
+
 }
 
-const data = await response.json();
 
-        if(
-            data.success &&
-            Array.isArray(data.products)
-        ){
+/* =====================================
+REFRESH PRODUCTS FROM GOOGLE SHEETS
+===================================== */
 
-            products = data.products.map(product=>({
+async function refreshProducts() {
 
-                id:Number(product.id),
+    try {
 
-                name:product.name || "",
+        const response =
+            await fetch(
+                API_URL + "?t=" + Date.now()
+            );
 
-                category:product.category || "Others",
 
-                subCategory:product.subCategory || "All",
+        if (!response.ok) {
 
-                collection:product.collection || "",
+            throw new Error(
+                "Failed to load products"
+            );
 
-                price:Number(product.price)||0,
+        }
 
-                oldPrice:product.oldPrice
-                    ? Number(product.oldPrice)
-                    : null,
 
-                discount:Number(product.discount)||0,
+        const data =
+            await response.json();
 
-                image:product.image || "",
 
-                badge:product.badge || "",
+        if (
+            !data.success ||
+            !Array.isArray(data.products)
+        ) {
 
-                stock:Number(product.stock)||0,
+            throw new Error(
+                "Invalid product data"
+            );
+
+        }
+
+
+        products =
+            data.products.map(product => ({
+
+                id:
+                    Number(product.id),
+
+                name:
+                    String(product.name || "").trim(),
+
+                category:
+                    String(
+                        product.category || "Others"
+                    ).trim(),
+
+                subCategory:
+                    String(
+                        product.subCategory || "All"
+                    ).trim(),
+
+                collection:
+                    String(
+                        product.collection || ""
+                    ).trim(),
+
+                price:
+                    Number(product.price) || 0,
+
+                oldPrice:
+                    product.oldPrice !== "" &&
+                    product.oldPrice !== null &&
+                    product.oldPrice !== undefined
+                        ? Number(product.oldPrice)
+                        : null,
+
+                discount:
+                    Number(product.discount) || 0,
+
+                image:
+                    String(
+                        product.image || ""
+                    ).trim(),
+
+                badge:
+                    String(
+                        product.badge || ""
+                    ).trim(),
+
+                stock:
+                    Number(product.stock) || 0,
 
                 featured:
-                    String(product.featured)
+                    String(
+                        product.featured || ""
+                    )
+                    .trim()
                     .toLowerCase(),
 
                 description:
-                    product.description || "",
+                    String(
+                        product.description || ""
+                    ).trim(),
 
                 sizes:
                     Array.isArray(product.sizes)
-                    ? product.sizes
-                    : []
+                        ? product.sizes
+                        : []
 
             }));
 
-        }
 
-    }
+        localStorage.setItem(
+            CACHE_KEY,
+            JSON.stringify(products)
+        );
 
-    catch(error){
-
-        console.error(error);
-
-    }
-
-}
-
-async function loadProducts(){
-
-    if(products.length>0){
-        return products;
-    }
-
-    try{
-
-        const response = await fetch(API_URL);
-
-        if(!response.ok){
-            throw new Error("Failed to load products");
-        }
-
-        const data = await response.json();
-
-        if(data.success && Array.isArray(data.products)){
-
-            products = data.products.map(product=>({
-
-                id:Number(product.id),
-                name:product.name || "",
-                category:product.category || "Others",
-                subCategory:product.subCategory || "All",
-                collection:product.collection || "",
-                price:Number(product.price)||0,
-                oldPrice:product.oldPrice
-                    ? Number(product.oldPrice)
-                    : null,
-                discount:Number(product.discount)||0,
-                image:product.image || "",
-                badge:product.badge || "",
-                stock:Number(product.stock)||0,
-                featured:String(product.featured).toLowerCase(),
-                description:product.description || "",
-                sizes:Array.isArray(product.sizes)
-                    ? product.sizes
-                    : []
-
-            }));
-
-        }
 
         return products;
 
     }
 
-    catch(error){
 
-        console.error(error);
+    catch (error) {
+
+        console.error(
+            "Product loading error:",
+            error
+        );
+
+
+        /*
+        If fresh loading fails,
+        use existing cached data.
+        */
+
+        try {
+
+            const cached =
+                localStorage.getItem(CACHE_KEY);
+
+            if (cached) {
+
+                products =
+                    JSON.parse(cached);
+
+                return products;
+
+            }
+
+        } catch (cacheError) {
+
+            console.error(
+                "Cache error:",
+                cacheError
+            );
+
+        }
+
+
+        products = [];
 
         return [];
 
@@ -138,101 +223,185 @@ async function loadProducts(){
 
 }
 
+
 /* =====================================
-   GET PRODUCT BY ID
+GET PRODUCT BY ID
 ===================================== */
 
-function getProductById(id){
+function getProductById(id) {
 
     return products.find(product =>
-
         Number(product.id) === Number(id)
+    );
+
+}
+
+
+/* =====================================
+GET PRODUCTS BY CATEGORY
+===================================== */
+
+function getProductsByCategory(category) {
+
+    return products.filter(product =>
+
+        String(product.category || "")
+            .trim()
+            .toLowerCase() ===
+
+        String(category || "")
+            .trim()
+            .toLowerCase()
 
     );
 
 }
 
+
 /* =====================================
-   GET PRODUCTS BY CATEGORY
+GET PRODUCTS BY SUB CATEGORY
 ===================================== */
 
-function getProductsByCategory(category){
+function getProductsBySubCategory(
+    category,
+    subCategory
+) {
 
     return products.filter(product =>
 
-        String(product.category)
-        .toLowerCase() ===
-        String(category)
-        .toLowerCase()
+        String(product.category || "")
+            .trim()
+            .toLowerCase() ===
+
+        String(category || "")
+            .trim()
+            .toLowerCase()
+
+        &&
+
+        String(product.subCategory || "")
+            .trim()
+            .toLowerCase() ===
+
+        String(subCategory || "")
+            .trim()
+            .toLowerCase()
 
     );
 
 }
 
+
 /* =====================================
-   GET FEATURED PRODUCTS
+GET FEATURED PRODUCTS
 ===================================== */
 
-function getFeaturedProducts(){
+function getFeaturedProducts() {
 
     return products.filter(product =>
 
-        String(product.featured)
-        .toLowerCase() === "yes"
+        String(product.featured || "")
+            .trim()
+            .toLowerCase() === "yes"
 
     );
 
 }
 
+
 /* =====================================
-   GET COLLECTION PRODUCTS
+GET COLLECTION PRODUCTS
 ===================================== */
 
-function getCollectionProducts(collection){
+function getCollectionProducts(
+    collection
+) {
 
     return products.filter(product =>
 
-        String(product.collection)
-        .toLowerCase() ===
-        String(collection)
-        .toLowerCase()
+        String(product.collection || "")
+            .trim()
+            .toLowerCase() ===
+
+        String(collection || "")
+            .trim()
+            .toLowerCase()
 
     );
 
 }
 
+
 /* =====================================
-   SEARCH PRODUCTS
+SEARCH ALL PRODUCTS
 ===================================== */
 
-function searchAllProducts(keyword){
+function searchAllProducts(keyword) {
 
-    keyword = String(keyword).toLowerCase();
+    keyword =
+        String(keyword || "")
+            .trim()
+            .toLowerCase();
 
-    return products.filter(product =>
 
-        String(product.name)
-        .toLowerCase()
-        .includes(keyword)
+    if (!keyword) {
+        return products;
+    }
 
-        ||
 
-        String(product.category)
-        .toLowerCase()
-        .includes(keyword)
+    return products.filter(product => {
 
-        ||
+        return (
 
-        String(product.subCategory)
-        .toLowerCase()
-        .includes(keyword)
+            String(product.name || "")
+                .toLowerCase()
+                .includes(keyword)
 
-        ||
+            ||
 
-        String(product.collection)
-        .toLowerCase()
-        .includes(keyword)
+            String(product.category || "")
+                .toLowerCase()
+                .includes(keyword)
 
+            ||
+
+            String(product.subCategory || "")
+                .toLowerCase()
+                .includes(keyword)
+
+            ||
+
+            String(product.collection || "")
+                .toLowerCase()
+                .includes(keyword)
+
+            ||
+
+            String(product.badge || "")
+                .toLowerCase()
+                .includes(keyword)
+
+            ||
+
+            String(product.description || "")
+                .toLowerCase()
+                .includes(keyword)
+
+        );
+
+    });
+
+}
+
+
+/* =====================================
+CLEAR PRODUCT CACHE
+===================================== */
+
+function clearProductCache() {
+
+    localStorage.removeItem(
+        CACHE_KEY
     );
 
 }

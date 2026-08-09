@@ -1,9 +1,10 @@
 /* ==========================================
-   PEPPY FASHION V4
-   SERVICE WORKER
+PEPPY FASHION V6
+SERVICE WORKER
 ========================================== */
 
-const CACHE_NAME = "peppy-fashion-v4";
+const CACHE_NAME = "peppy-fashion-v6";
+
 
 const urlsToCache = [
 
@@ -13,19 +14,18 @@ const urlsToCache = [
     "/peppy-fashion-v2/cart.html",
     "/peppy-fashion-v2/checkout.html",
     "/peppy-fashion-v2/contact.html",
+    "/peppy-fashion-v2/product-details.html",
+
+    "/peppy-fashion-v2/style.css",
+    "/peppy-fashion-v2/script.js",
+    "/peppy-fashion-v2/products.js",
+
     "/peppy-fashion-v2/manifest.json",
 
-    "/peppy-fashion-v2/assets/css/style.css",
-
-    "/peppy-fashion-v2/assets/js/script.js",
-    "/peppy-fashion-v2/assets/js/products.js",
-
-    "/peppy-fashion-v2/icons/icon-192.png",
-    "/peppy-fashion-v2/icons/icon-512.png",
-
     "/peppy-fashion-v2/assets/images/logo/logo.png",
+    "/peppy-fashion-v2/assets/images/logo/icon-192.png",
+    "/peppy-fashion-v2/assets/images/logo/icon-512.png",
 
-    /* BANNERS */
     "/peppy-fashion-v2/assets/images/banners/banner.jpg",
     "/peppy-fashion-v2/assets/images/banners/mens-banner.jpg",
     "/peppy-fashion-v2/assets/images/banners/womens-banner.jpg",
@@ -36,33 +36,35 @@ const urlsToCache = [
 
 
 /* ==========================================
-   INSTALL
+INSTALL
 ========================================== */
 
 self.addEventListener("install", event => {
 
     event.waitUntil(
 
-        caches.open(CACHE_NAME).then(async cache => {
+        caches.open(CACHE_NAME)
 
-            for (const url of urlsToCache) {
+            .then(async cache => {
 
-                try {
+                for (const url of urlsToCache) {
 
-                    await cache.add(url);
+                    try {
 
-                } catch (error) {
+                        await cache.add(url);
 
-                    console.warn(
-                        "Could not cache:",
-                        url
-                    );
+                    } catch (error) {
+
+                        console.warn(
+                            "Could not cache:",
+                            url
+                        );
+
+                    }
 
                 }
 
-            }
-
-        })
+            })
 
     );
 
@@ -72,78 +74,147 @@ self.addEventListener("install", event => {
 
 
 /* ==========================================
-   FETCH
-   NETWORK FIRST FOR HTML + BANNERS
+FETCH
 ========================================== */
 
 self.addEventListener("fetch", event => {
 
     const request = event.request;
 
+
     if (request.method !== "GET") {
         return;
     }
 
-    const url = new URL(request.url);
+
+    const url =
+        new URL(request.url);
+
+
+    /*
+    Only handle our own website.
+    */
+
+    if (
+        url.origin !== self.location.origin
+    ) {
+        return;
+    }
+
 
     const isHTML =
         request.mode === "navigate" ||
         request.destination === "document";
 
-    const isBanner =
-        url.pathname.includes("/assets/images/banners/");
 
-    if (isHTML || isBanner) {
+    const isImage =
+        request.destination === "image";
+
+
+    /*
+    HTML + images:
+    NETWORK FIRST
+    */
+
+    if (
+        isHTML ||
+        isImage
+    ) {
 
         event.respondWith(
 
             fetch(request)
+
                 .then(response => {
 
-                    if (response && response.ok) {
+                    if (
+                        response &&
+                        response.ok
+                    ) {
 
-                        const responseClone =
+                        const clone =
                             response.clone();
 
-                        caches.open(CACHE_NAME)
-                            .then(cache => {
+                        caches.open(
+                            CACHE_NAME
+                        ).then(cache => {
 
-                                cache.put(
-                                    request,
-                                    responseClone
-                                );
+                            cache.put(
+                                request,
+                                clone
+                            );
 
-                            });
+                        });
 
                     }
 
                     return response;
 
                 })
+
                 .catch(() => {
 
-                    return caches.match(request);
+                    return caches.match(
+                        request
+                    );
 
                 })
 
         );
 
         return;
+
     }
 
 
-    /* ======================================
-       OTHER FILES
-       CACHE FIRST
-    ====================================== */
+    /*
+    CSS / JS / manifest:
+    CACHE FIRST
+    */
 
     event.respondWith(
 
-        caches.match(request).then(response => {
+        caches.match(request)
 
-            return response || fetch(request);
+            .then(cachedResponse => {
 
-        })
+                if (cachedResponse) {
+
+                    return cachedResponse;
+
+                }
+
+
+                return fetch(request)
+
+                    .then(response => {
+
+                        if (
+                            response &&
+                            response.ok
+                        ) {
+
+                            const clone =
+                                response.clone();
+
+                            caches.open(
+                                CACHE_NAME
+                            ).then(cache => {
+
+                                cache.put(
+                                    request,
+                                    clone
+                                );
+
+                            });
+
+                        }
+
+                        return response;
+
+                    });
+
+            })
 
     );
 
@@ -151,32 +222,39 @@ self.addEventListener("fetch", event => {
 
 
 /* ==========================================
-   ACTIVATE
+ACTIVATE
 ========================================== */
 
 self.addEventListener("activate", event => {
 
     event.waitUntil(
 
-        caches.keys().then(keys => {
+        caches.keys()
 
-            return Promise.all(
+            .then(keys => {
 
-                keys.map(key => {
+                return Promise.all(
 
-                    if (key !== CACHE_NAME) {
+                    keys.map(key => {
 
-                        return caches.delete(key);
+                        if (
+                            key !== CACHE_NAME
+                        ) {
 
-                    }
+                            return caches.delete(
+                                key
+                            );
 
-                })
+                        }
 
-            );
+                    })
 
-        })
+                );
+
+            })
 
     );
+
 
     self.clients.claim();
 

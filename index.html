@@ -1,543 +1,637 @@
 <!DOCTYPE html>
-
 <html lang="en">
 
 <head>
 
-<meta charset="UTF-8">
+    <meta charset="UTF-8">
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
-<title>Peppy Fashion | Home</title>
+    <title>Peppy Fashion</title>
 
-<link rel="stylesheet" href="assets/css/style.css">
-<link rel="manifest" href="manifest.json">
+    <meta
+        name="description"
+        content="Peppy Fashion - Quality fashion at affordable prices."
+    >
 
-<meta name="theme-color" content="#6C3BD0">
+    <link
+        rel="stylesheet"
+        href="css/style.css"
+    >
 
-<link rel="apple-touch-icon" href="assets/images/logo/icon-192.png">
-<!-- PWA -->
+    <link
+        rel="manifest"
+        href="manifest.json"
+    >
 
 </head>
 
+
 <body>
 
-<!-- ===========================
+
+<!-- =====================================
 HEADER
-=========================== -->
+===================================== -->
 
-<header>
+<header class="site-header">
 
-<div class="container header-container">
+    <div class="header-container">
 
-<div class="logo">
+        <a
+            href="index.html"
+            class="logo"
+        >
 
-<a href="index.html">
+            <img
+                src="assets/images/logo/logo.png"
+                alt="Peppy Fashion Logo"
+            >
 
-<img
-src="assets/images/logo/logo.png"
-alt="Peppy Fashion Logo">
+        </a>
 
-</a>
 
-</div>
+        <button
+            class="menu-btn"
+            type="button"
+            onclick="toggleMenu()"
+            aria-label="Open Menu"
+        >
+            ☰
+        </button>
 
-<button
-class="menu-btn"
-onclick="toggleMenu()">
 
-☰
+        <nav class="navbar">
 
-</button>
+            <a
+                href="index.html"
+                class="nav-link active"
+            >
+                Home
+            </a>
 
-<nav class="navbar" id="mainNavbar">
+            <a
+                href="shop.html"
+                class="nav-link"
+            >
+                Shop
+            </a>
 
-<a
-href="index.html"
-class="active">
+            <a
+                href="cart.html"
+                class="nav-link"
+            >
+                Cart
+                (<span id="cartCount">0</span>)
+            </a>
 
-Home
+            <a
+                href="contact.html"
+                class="nav-link"
+            >
+                Contact
+            </a>
 
-</a>
+        </nav>
 
-<a href="shop.html">
-
-Shop
-
-</a>
-
-<a href="cart.html">
-
-Cart (<span id="cartCount">0</span>)
-
-</a>
-
-<a href="contact.html">
-
-Contact
-
-</a>
-
-<a href="wishlist.html">
-❤️ Wishlist
-</a>
-
-<a href="account.html">
-👤 My Account
-</a>
-
-</nav>
-
-</div>
+    </div>
 
 </header>
 
 
-<!-- ===========================
-HOME BANNER SLIDER
-=========================== -->
+<!-- =====================================
+MAIN
+===================================== -->
 
-<section class="banner-slider" aria-label="Peppy Fashion Collections">
+<main>
+
+
+<!-- =====================================
+BANNER
+===================================== -->
+
+<section class="shop-banner">
 
     <div class="banner-slides">
 
-        <a href="shop.html" class="banner-slide active">
+        <a
+            href="shop.html"
+            class="banner-slide active"
+        >
+
             <img
                 src="assets/images/banners/banner.jpg"
-                alt="Peppy Fashion Main Banner">
+                alt="Peppy Fashion Main Banner"
+            >
+
         </a>
 
-        <a href="shop.html" class="banner-slide">
+
+        <a
+            href="shop.html?category=Men"
+            class="banner-slide"
+        >
+
             <img
                 src="assets/images/banners/mens-banner.jpg"
-                alt="Men's Collection">
+                alt="Men's Collection"
+            >
+
         </a>
 
-        <a href="shop.html" class="banner-slide">
+
+        <a
+            href="shop.html?category=Women"
+            class="banner-slide"
+        >
+
             <img
                 src="assets/images/banners/womens-banner.jpg"
-                alt="Women's Collection">
+                alt="Women's Collection"
+            >
+
         </a>
 
-        <a href="shop.html" class="banner-slide">
+
+        <a
+            href="shop.html?category=Kids"
+            class="banner-slide"
+        >
+
             <img
                 src="assets/images/banners/kids-banner.jpg"
-                alt="Kids' Collection">
+                alt="Kids' Collection"
+            >
+
         </a>
 
-        <a href="shop.html" class="banner-slide">
+
+        <a
+            href="shop.html?category=Sports"
+            class="banner-slide"
+        >
+
             <img
                 src="assets/images/banners/sports-banner.jpg"
-                alt="Sports Collection">
+                alt="Sports Collection"
+            >
+
         </a>
 
     </div>
 
-    <button class="banner-prev" type="button" aria-label="Previous banner">
+
+    <button
+        class="banner-prev"
+        type="button"
+        aria-label="Previous banner"
+    >
         &#10094;
     </button>
 
-    <button class="banner-next" type="button" aria-label="Next banner">
+
+    <button
+        class="banner-next"
+        type="button"
+        aria-label="Next banner"
+    >
         &#10095;
     </button>
 
+
     <div class="banner-dots">
-        <button class="banner-dot active" type="button" aria-label="Banner 1"></button>
-        <button class="banner-dot" type="button" aria-label="Banner 2"></button>
-        <button class="banner-dot" type="button" aria-label="Banner 3"></button>
-        <button class="banner-dot" type="button" aria-label="Banner 4"></button>
-        <button class="banner-dot" type="button" aria-label="Banner 5"></button>
+
+        <button
+            class="banner-dot active"
+            type="button"
+            aria-label="Banner 1"
+        ></button>
+
+        <button
+            class="banner-dot"
+            type="button"
+            aria-label="Banner 2"
+        ></button>
+
+        <button
+            class="banner-dot"
+            type="button"
+            aria-label="Banner 3"
+        ></button>
+
+        <button
+            class="banner-dot"
+            type="button"
+            aria-label="Banner 4"
+        ></button>
+
+        <button
+            class="banner-dot"
+            type="button"
+            aria-label="Banner 5"
+        ></button>
+
     </div>
 
 </section>
 
-<!-- ===========================
-CATEGORY SECTION
-=========================== -->
 
-<section class="section">
+<!-- =====================================
+SHOP CATEGORIES
+===================================== -->
 
-<div class="container">
+<section class="categories-section">
 
-<h2 class="section-title">
+    <div class="container">
 
-Shop Categories
+        <h2 class="section-title">
+            Shop Categories
+        </h2>
 
-</h2>
 
-<div class="category-grid">
+        <div class="category-grid">
 
-<div class="category-card">
 
-<h3>
+            <a
+                href="shop.html?category=Men"
+                class="category-card"
+            >
 
-Men
+                <h3>Men</h3>
 
-</h3>
+                <span>
+                    View Collection
+                </span>
 
-<a href="shop.html">
+            </a>
 
-View Collection
 
-</a>
+            <a
+                href="shop.html?category=Women"
+                class="category-card"
+            >
 
-</div>
+                <h3>Women</h3>
 
-<div class="category-card">
+                <span>
+                    View Collection
+                </span>
 
-<h3>
+            </a>
 
-Women
 
-</h3>
+            <a
+                href="shop.html?category=Kids"
+                class="category-card"
+            >
 
-<a href="shop.html">
+                <h3>Kids</h3>
 
-View Collection
+                <span>
+                    View Collection
+                </span>
 
-</a>
+            </a>
 
-</div>
 
-<div class="category-card">
+            <a
+                href="shop.html?category=Sports"
+                class="category-card"
+            >
 
-<h3>
+                <h3>Sports</h3>
 
-Kids
+                <span>
+                    View Collection
+                </span>
 
-</h3>
+            </a>
 
-<a href="shop.html">
+        </div>
 
-View Collection
-
-</a>
-
-</div>
-
-<div class="category-card">
-
-<h3>
-
-Sports
-
-</h3>
-
-<a href="shop.html">
-
-View Collection
-
-</a>
-
-</div>
-
-</div>
-
-</div>
+    </div>
 
 </section>
 
-<!-- ===========================
+
+<!-- =====================================
 FEATURED PRODUCTS
-=========================== -->
+===================================== -->
 
-<section class="section">
+<section class="featured-section">
 
-<div class="container">
+    <div class="container">
 
-<h2 class="section-title">
+        <h2 class="section-title">
+            Featured Products
+        </h2>
 
-Featured Products
 
-</h2>
+        <div
+            id="productContainer"
+            class="products-grid"
+        >
 
-<div
-id="productContainer"
-class="product-grid">
+            <div class="loading">
+                Loading Products...
+            </div>
 
-<div class="loading-products">
+        </div>
 
-Loading Products...
-
-</div>
-
-</div>
-
-</div>
+    </div>
 
 </section>
 
-<!-- ===========================
-ABOUT
-=========================== -->
 
-<section class="section">
-
-<div class="container">
-
-<div class="contact-box">
-
-<h2>
-
-Peppy Fashion
-
-</h2>
+</main>
 
 
-<p>
-
-Your trusted online fashion store.
-
-We provide quality clothing with easy ordering options.
-
-</p>
-
-<br>
-
-<p>
-
-📍 Shop Location
-
-</p>
-
-<p>
-
-Shalbahan, Tetulia, Panchagarh, Bangladesh
-
-</p>
-
-</div>
-
-</div>
-
-</section>
-
-<!-- ===========================
+<!-- =====================================
 FOOTER
-=========================== -->
+===================================== -->
 
-<!-- ===========================
-BOTTOM NAVIGATION
-=========================== -->
-
-<nav class="bottom-nav">
-
-<a href="index.html" class="active">
-🏠
-<span>Home</span>
-</a>
-
-<a href="shop.html">
-🛍️
-<span>Shop</span>
-</a>
-
-<a href="cart.html">
-🛒
-<span>Cart</span>
-</a>
-
-<a href="contact.html">
-☎️
-<span>Contact</span>
-</a>
-
-</nav>
 <footer>
 
-<div class="container footer-grid">
+    <div class="footer-container">
 
-<div>
 
-<h3>
+        <div class="footer-column">
 
-Peppy Fashion
+            <h3>
+                Peppy Fashion
+            </h3>
 
-</h3>
+            <p>
+                Your trusted online fashion store.
+            </p>
 
-<p>
+            <p>
+                We provide quality clothing
+                with easy ordering options.
+            </p>
 
-Modern fashion for everyone.
+        </div>
 
-</p>
 
-</div>
+        <div class="footer-column">
 
-<div>
+            <h3>
+                Quick Links
+            </h3>
 
-<h3>
+            <a href="index.html">
+                Home
+            </a>
 
-Quick Links
+            <a href="shop.html">
+                Shop
+            </a>
 
-</h3>
+            <a href="cart.html">
+                Cart
+            </a>
 
-<p><a href="index.html">Home</a></p>
+            <a href="contact.html">
+                Contact
+            </a>
 
-<p><a href="shop.html">Shop</a></p>
+        </div>
 
-<p><a href="cart.html">Cart</a></p>
 
-<p><a href="contact.html">Contact</a></p>
+        <div class="footer-column">
 
-</div>
+            <h3>
+                Contact
+            </h3>
 
-<div>
+            <p>
+                📍 Shalbahan, Tetulia,
+                Panchagarh, Bangladesh
+            </p>
 
-<h3>
+            <p>
+                📞 WhatsApp:
+                +8801710868775
+            </p>
 
-Contact
+            <p>
+                ✉
+                <a href="mailto:peppyfashionbd@gmail.com">
+                    peppyfashionbd@gmail.com
+                </a>
+            </p>
 
-</h3>
+        </div>
 
-<p>
+    </div>
 
-📍 Shalbahan, Tetulia, Panchagarh
 
-</p>
+    <div class="footer-bottom">
 
-<p>
+        <p>
+            © 2026 Peppy Fashion.
+            All rights reserved.
+        </p>
 
-📞 WhatsApp: +8801710868775
-
-</p>
-
-<p>
-
-✉ peppyfashionbd@gmail.com
-
-</p>
-
-</div>
-
-</div>
+    </div>
 
 </footer>
-<!-- Bottom Navigation -->
+
+
+<!-- =====================================
+PRODUCTS
+===================================== -->
+
+<script src="js/products.js"></script>
+
+
+<!-- =====================================
+MAIN SCRIPT
+===================================== -->
+
+<script src="js/script.js"></script>
+
+
+<!-- =====================================
+BANNER SLIDER
+===================================== -->
+
 <script>
-/* ==========================================
-   PEPPY FASHION BANNER SLIDER
-   AUTO SLIDE EVERY 3 SECONDS
-========================================== */
 
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
 
-    const slides = document.querySelectorAll(".banner-slide");
-    const dots = document.querySelectorAll(".banner-dot");
-    const prevButton = document.querySelector(".banner-prev");
-    const nextButton = document.querySelector(".banner-next");
-
-    if (!slides.length) return;
-
-    let currentSlide = 0;
-    let slideTimer;
-
-    function showSlide(index) {
-
-        if (index >= slides.length) {
-            currentSlide = 0;
-        }
-
-        if (index < 0) {
-            currentSlide = slides.length - 1;
-        }
-
-        if (index >= 0 && index < slides.length) {
-            currentSlide = index;
-        }
-
-        slides.forEach((slide, i) => {
-            slide.classList.toggle(
-                "active",
-                i === currentSlide
+        const slides =
+            document.querySelectorAll(
+                ".banner-slide"
             );
-        });
 
-        dots.forEach((dot, i) => {
-            dot.classList.toggle(
-                "active",
-                i === currentSlide
+        const dots =
+            document.querySelectorAll(
+                ".banner-dot"
             );
-        });
-    }
 
-    function nextSlide() {
-        showSlide(currentSlide + 1);
-    }
+        const prevButton =
+            document.querySelector(
+                ".banner-prev"
+            );
 
-    function previousSlide() {
-        showSlide(currentSlide - 1);
-    }
+        const nextButton =
+            document.querySelector(
+                ".banner-next"
+            );
 
-    function startSlider() {
 
-        clearInterval(slideTimer);
+        if (!slides.length) return;
 
-        slideTimer = setInterval(
-            nextSlide,
-            3000
+
+        let currentSlide = 0;
+
+        let slideTimer;
+
+
+        function showSlide(index) {
+
+            if (index >= slides.length) {
+
+                currentSlide = 0;
+
+            }
+            else if (index < 0) {
+
+                currentSlide =
+                    slides.length - 1;
+
+            }
+            else {
+
+                currentSlide = index;
+
+            }
+
+
+            slides.forEach(
+                (slide, i) => {
+
+                    slide.classList.toggle(
+                        "active",
+                        i === currentSlide
+                    );
+
+                }
+            );
+
+
+            dots.forEach(
+                (dot, i) => {
+
+                    dot.classList.toggle(
+                        "active",
+                        i === currentSlide
+                    );
+
+                }
+            );
+
+        }
+
+
+        function nextSlide() {
+
+            showSlide(
+                currentSlide + 1
+            );
+
+        }
+
+
+        function previousSlide() {
+
+            showSlide(
+                currentSlide - 1
+            );
+
+        }
+
+
+        function startSlider() {
+
+            clearInterval(
+                slideTimer
+            );
+
+            slideTimer =
+                setInterval(
+                    nextSlide,
+                    3000
+                );
+
+        }
+
+
+        if (nextButton) {
+
+            nextButton.addEventListener(
+                "click",
+                function () {
+
+                    nextSlide();
+
+                    startSlider();
+
+                }
+            );
+
+        }
+
+
+        if (prevButton) {
+
+            prevButton.addEventListener(
+                "click",
+                function () {
+
+                    previousSlide();
+
+                    startSlider();
+
+                }
+            );
+
+        }
+
+
+        dots.forEach(
+            (dot, index) => {
+
+                dot.addEventListener(
+                    "click",
+                    function () {
+
+                        showSlide(index);
+
+                        startSlider();
+
+                    }
+                );
+
+            }
         );
-    }
 
-    function resetSlider() {
+
+        showSlide(0);
+
         startSlider();
+
     }
+);
 
-    if (nextButton) {
-
-        nextButton.addEventListener("click", function () {
-
-            nextSlide();
-            resetSlider();
-
-        });
-    }
-
-    if (prevButton) {
-
-        prevButton.addEventListener("click", function () {
-
-            previousSlide();
-            resetSlider();
-
-        });
-    }
-
-    dots.forEach((dot, index) => {
-
-        dot.addEventListener("click", function () {
-
-            showSlide(index);
-            resetSlider();
-
-        });
-    });
-
-    showSlide(0);
-    startSlider();
-
-});
 </script>
 
-<script src="assets/js/products.js"></script>
-<script src="assets/js/products.js"></script>
-
-<script src="assets/js/cart.js"></script>
-
-<script src="assets/js/script.js"></script>
-<script>
-if ("serviceWorker" in navigator) {
-
-  window.addEventListener("load", () => {
-
-    navigator.serviceWorker.register("sw.js")
-      .then(() => console.log("Service Worker Registered"))
-      .catch(err => console.log(err));
-
-  });
-
-}
-</script>
-<script src="assets/js/pwa.js"></script>
 
 </body>
 
