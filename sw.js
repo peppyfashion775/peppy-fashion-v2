@@ -1,9 +1,9 @@
 /* ==========================================
-   PEPPY FASHION V3
+   PEPPY FASHION V4
    SERVICE WORKER
 ========================================== */
 
-const CACHE_NAME = "peppy-fashion-v3";
+const CACHE_NAME = "peppy-fashion-v4";
 
 const urlsToCache = [
 
@@ -13,15 +13,12 @@ const urlsToCache = [
     "/peppy-fashion-v2/cart.html",
     "/peppy-fashion-v2/checkout.html",
     "/peppy-fashion-v2/contact.html",
-    "/peppy-fashion-v2/offline.html",
     "/peppy-fashion-v2/manifest.json",
 
     "/peppy-fashion-v2/assets/css/style.css",
 
     "/peppy-fashion-v2/assets/js/script.js",
     "/peppy-fashion-v2/assets/js/products.js",
-    "/peppy-fashion-v2/assets/js/cart.js",
-    "/peppy-fashion-v2/assets/js/pwa.js",
 
     "/peppy-fashion-v2/icons/icon-192.png",
     "/peppy-fashion-v2/icons/icon-512.png",
@@ -46,9 +43,24 @@ self.addEventListener("install", event => {
 
     event.waitUntil(
 
-        caches.open(CACHE_NAME).then(cache => {
+        caches.open(CACHE_NAME).then(async cache => {
 
-            return cache.addAll(urlsToCache);
+            for (const url of urlsToCache) {
+
+                try {
+
+                    await cache.add(url);
+
+                } catch (error) {
+
+                    console.warn(
+                        "Could not cache:",
+                        url
+                    );
+
+                }
+
+            }
 
         })
 
@@ -61,15 +73,75 @@ self.addEventListener("install", event => {
 
 /* ==========================================
    FETCH
+   NETWORK FIRST FOR HTML + BANNERS
 ========================================== */
 
 self.addEventListener("fetch", event => {
 
+    const request = event.request;
+
+    if (request.method !== "GET") {
+        return;
+    }
+
+    const url = new URL(request.url);
+
+    const isHTML =
+        request.mode === "navigate" ||
+        request.destination === "document";
+
+    const isBanner =
+        url.pathname.includes("/assets/images/banners/");
+
+    if (isHTML || isBanner) {
+
+        event.respondWith(
+
+            fetch(request)
+                .then(response => {
+
+                    if (response && response.ok) {
+
+                        const responseClone =
+                            response.clone();
+
+                        caches.open(CACHE_NAME)
+                            .then(cache => {
+
+                                cache.put(
+                                    request,
+                                    responseClone
+                                );
+
+                            });
+
+                    }
+
+                    return response;
+
+                })
+                .catch(() => {
+
+                    return caches.match(request);
+
+                })
+
+        );
+
+        return;
+    }
+
+
+    /* ======================================
+       OTHER FILES
+       CACHE FIRST
+    ====================================== */
+
     event.respondWith(
 
-        caches.match(event.request).then(response => {
+        caches.match(request).then(response => {
 
-            return response || fetch(event.request);
+            return response || fetch(request);
 
         })
 
