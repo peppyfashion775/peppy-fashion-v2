@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Peppy Fashion | Home</title>
+
+<link rel="stylesheet" href="assets/css/style.css">
+<link rel="manifest" href="manifest.json">
+
+<meta name="theme-color" content="#6C3BD0">
+
+<link rel="apple-touch-icon" href="assets/images/logo/icon-192.png">
+<!-- PWA -->
+
+</head>
+
+<body>
+
+<!-- ===========================
+HEADER
+=========================== -->
+
+<header>
+
+<div class="container header-container">
+
+<div class="logo">
+
+<a href="index.html">
+
+<img
+src="assets/images/logo/logo.png"
+alt="Peppy Fashion Logo">
+
+</a>
+
+</div>
+
+<button
+class="menu-btn"
+onclick="toggleMenu()">
+
+☰
+
+</button>
+
+<nav class="navbar" id="mainNavbar">
+
+<a
+href="index.html"
+class="active">
+
+Home
+
+</a>
+
+<a href="shop.html">
+
+Shop
+
+</a>
+
+<a href="cart.html">
+
+Cart (<span id="cartCount">0</span>)
+
+</a>
+
+<a href="contact.html">
+
+Contact
+
+</a>
+
+<a href="wishlist.html">
+❤️ Wishlist
+</a>
+
+<a href="account.html">
+👤 My Account
+</a>
+
+</nav>
+
+</div>
+
+</header>
+
+
+<!-- ===========================
+HOME BANNER SLIDER
+=========================== -->
+
+<section class="banner-slider" aria-label="Peppy Fashion Collections">
+
+    <div class="banner-slides">
+
+        <a href="shop.html" class="banner-slide active">
+            <img
+                src="assets/images/banners/banner.jpg"
+                alt="Peppy Fashion Main Banner">
+        </a>
+
+        <a href="shop.html" class="banner-slide">
+            <img
+                src="assets/images/banners/mens-banner.jpg"
+                alt="Men's Collection">
+        </a>
+
+        <a href="shop.html" class="banner-slide">
+            <img
+                src="assets/images/banners/womens-banner.jpg"
+                alt="Women's Collection">
+        </a>
+
+        <a href="shop.html" class="banner-slide">
+            <img
+                src="assets/images/banners/kids-banner.jpg"
+                alt="Kids' Collection">
+        </a>
+
+        <a href="shop.html" class="banner-slide">
+            <img
+                src="assets/images/banners/sports-banner.jpg"
+                alt="Sports Collection">
+        </a>
+
+    </div>
+
+    <button class="banner-prev" type="button" aria-label="Previous banner">
+        &#10094;
+    </button>
+
+    <button class="banner-next" type="button" aria-label="Next banner">
+        &#10095;
+    </button>
+
+    <div class="banner-dots">
+        <button class="banner-dot active" type="button" aria-label="Banner 1"></button>
+        <button class="banner-dot" type="button" aria-label="Banner 2"></button>
+        <button class="banner-dot" type="button" aria-label="Banner 3"></button>
+        <button class="banner-dot" type="button" aria-label="Banner 4"></button>
+        <button class="banner-dot" type="button" aria-label="Banner 5"></button>
+    </div>
+
+</section>
+
+<!-- ===========================
+CATEGORY SECTION
+=========================== -->
+
+<section class="section">
+
+<div class="container">
+
+<h2 class="section-title">
+
+Shop Categories
+
+</h2>
+
+<div class="category-grid">
+
+<div class="category-card">
+
+<h3>
+
+Men
+
+</h3>
+
+<a href="shop.html">
+
+View Collection
+
+</a>
+
+</div>
+
+<div class="category-card">
+
+<h3>
+
+Women
+
+</h3>
+
+<a href="shop.html">
+
+View Collection
+
+</a>
+
+</div>
+
+<div class="category-card">
+
+<h3>
+
+Kids
+
+</h3>
+
+<a href="shop.html">
+
+View Collection
+
+</a>
+
+</div>
+
+<div class="category-card">
+
+<h3>
+
+Sports
+
+</h3>
+
+<a href="shop.html">
+
+View Collection
+
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- ===========================
+FEATURED PRODUCTS
+=========================== -->
+
+<section class="section">
+
+<div class="container">
+
+<h2 class="section-title">
+
+Featured Products
+
+</h2>
+
+<div
+id="productContainer"
+class="product-grid">
+
+<div class="loading-products">
+
+Loading Products...
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- ===========================
+ABOUT
+=========================== -->
+
+<section class="section">
+
+<div class="container">
+
+<div class="contact-box">
+
+<h2>
+
+Peppy Fashion
+
+</h2>
+
+
+<p>
+
+Your trusted online fashion store.
+
+We provide quality clothing with easy ordering options.
+
+</p>
+
+<br>
+
+<p>
+
+📍 Shop Location
+
+</p>
+
+<p>
+
+Shalbahan, Tetulia, Panchagarh, Bangladesh
+
+</p>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- ===========================
+FOOTER
+=========================== -->
+
+<!-- ===========================
+BOTTOM NAVIGATION
+=========================== -->
+
+<nav class="bottom-nav">
+
+<a href="index.html" class="active">
+🏠
+<span>Home</span>
+</a>
+
+<a href="shop.html">
+🛍️
+<span>Shop</span>
+</a>
+
+<a href="cart.html">
+🛒
+<span>Cart</span>
+</a>
+
+<a href="contact.html">
+☎️
+<span>Contact</span>
+</a>
+
+</nav>
+<footer>
+
+<div class="container footer-grid">
+
+<div>
+
+<h3>
+
+Peppy Fashion
+
+</h3>
+
+<p>
+
+Modern fashion for everyone.
+
+</p>
+
+</div>
+
+<div>
+
+<h3>
+
+Quick Links
+
+</h3>
+
+<p><a href="index.html">Home</a></p>
+
+<p><a href="shop.html">Shop</a></p>
+
+<p><a href="cart.html">Cart</a></p>
+
+<p><a href="contact.html">Contact</a></p>
+
+</div>
+
+<div>
+
+<h3>
+
+Contact
+
+</h3>
+
+<p>
+
+📍 Shalbahan, Tetulia, Panchagarh
+
+</p>
+
+<p>
+
+📞 WhatsApp: +8801710868775
+
+</p>
+
+<p>
+
+✉ peppyfashionbd@gmail.com
+
+</p>
+
+</div>
+
+</div>
+
+</footer>
+<!-- Bottom Navigation -->
+<script>
+/* ==========================================
+   PEPPY FASHION BANNER SLIDER
+   AUTO SLIDE EVERY 3 SECONDS
+========================================== */
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    const slides = document.querySelectorAll(".banner-slide");
+    const dots = document.querySelectorAll(".banner-dot");
+    const prevButton = document.querySelector(".banner-prev");
+    const nextButton = document.querySelector(".banner-next");
+
+    if (!slides.length) return;
+
+    let currentSlide = 0;
+    let slideTimer;
+
+    function showSlide(index) {
+
+        if (index >= slides.length) {
+            currentSlide = 0;
+        }
+
+        if (index < 0) {
+            currentSlide = slides.length - 1;
+        }
+
+        if (index >= 0 && index < slides.length) {
+            currentSlide = index;
+        }
+
+        slides.forEach((slide, i) => {
+            slide.classList.toggle(
+                "active",
+                i === currentSlide
+            );
+        });
+
+        dots.forEach((dot, i) => {
+            dot.classList.toggle(
+                "active",
+                i === currentSlide
+            );
+        });
+    }
+
+    function nextSlide() {
+        showSlide(currentSlide + 1);
+    }
+
+    function previousSlide() {
+        showSlide(currentSlide - 1);
+    }
+
+    function startSlider() {
+
+        clearInterval(slideTimer);
+
+        slideTimer = setInterval(
+            nextSlide,
+            3000
+        );
+    }
+
+    function resetSlider() {
+        startSlider();
+    }
+
+    if (nextButton) {
+
+        nextButton.addEventListener("click", function () {
+
+            nextSlide();
+            resetSlider();
+
+        });
+    }
+
+    if (prevButton) {
+
+        prevButton.addEventListener("click", function () {
+
+            previousSlide();
+            resetSlider();
+
+        });
+    }
+
+    dots.forEach((dot, index) => {
+
+        dot.addEventListener("click", function () {
+
+            showSlide(index);
+            resetSlider();
+
+        });
+    });
+
+    showSlide(0);
+    startSlider();
+
+});
+</script>
+
+<script src="assets/js/products.js"></script>
+<script src="assets/js/products.js"></script>
+
+<script src="assets/js/cart.js"></script>
+
+<script src="assets/js/script.js"></script>
+<script>
+if ("serviceWorker" in navigator) {
+
+  window.addEventListener("load", () => {
+
+    navigator.serviceWorker.register("sw.js")
+      .then(() => console.log("Service Worker Registered"))
+      .catch(err => console.log(err));
+
+  });
+
+}
+</script>
+<script src="assets/js/pwa.js"></script>
+
+</body>
+
+</html>
