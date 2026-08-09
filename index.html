@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Peppy Fashion</title>
+
+    <meta
+        name="description"
+        content="Peppy Fashion - Quality fashion at affordable prices."
+    >
+
+    <link
+        rel="stylesheet"
+        href="css/style.css"
+    >
+
+    <link
+        rel="manifest"
+        href="manifest.json"
+    >
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================
+HEADER
+===================================== -->
+
+<header class="site-header">
+
+    <div class="header-container">
+
+        <a
+            href="index.html"
+            class="logo"
+        >
+
+            <img
+                src="assets/images/logo/logo.png"
+                alt="Peppy Fashion Logo"
+            >
+
+        </a>
+
+
+        <button
+            class="menu-btn"
+            type="button"
+            onclick="toggleMenu()"
+            aria-label="Open Menu"
+        >
+            ☰
+        </button>
+
+
+        <nav class="navbar">
+
+            <a
+                href="index.html"
+                class="nav-link active"
+            >
+                Home
+            </a>
+
+            <a
+                href="shop.html"
+                class="nav-link"
+            >
+                Shop
+            </a>
+
+            <a
+                href="cart.html"
+                class="nav-link"
+            >
+                Cart
+                (<span id="cartCount">0</span>)
+            </a>
+
+            <a
+                href="contact.html"
+                class="nav-link"
+            >
+                Contact
+            </a>
+
+        </nav>
+
+    </div>
+
+</header>
+
+
+<!-- =====================================
+MAIN
+===================================== -->
+
+<main>
+
+
+<!-- =====================================
+BANNER
+===================================== -->
+
+<section class="shop-banner">
+
+    <div class="banner-slides">
+
+        <a
+            href="shop.html"
+            class="banner-slide active"
+        >
+
+            <img
+                src="assets/images/banners/banner.jpg"
+                alt="Peppy Fashion Main Banner"
+            >
+
+        </a>
+
+
+        <a
+            href="shop.html?category=Men"
+            class="banner-slide"
+        >
+
+            <img
+                src="assets/images/banners/mens-banner.jpg"
+                alt="Men's Collection"
+            >
+
+        </a>
+
+
+        <a
+            href="shop.html?category=Women"
+            class="banner-slide"
+        >
+
+            <img
+                src="assets/images/banners/womens-banner.jpg"
+                alt="Women's Collection"
+            >
+
+        </a>
+
+
+        <a
+            href="shop.html?category=Kids"
+            class="banner-slide"
+        >
+
+            <img
+                src="assets/images/banners/kids-banner.jpg"
+                alt="Kids' Collection"
+            >
+
+        </a>
+
+
+        <a
+            href="shop.html?category=Sports"
+            class="banner-slide"
+        >
+
+            <img
+                src="assets/images/banners/sports-banner.jpg"
+                alt="Sports Collection"
+            >
+
+        </a>
+
+    </div>
+
+
+    <button
+        class="banner-prev"
+        type="button"
+        aria-label="Previous banner"
+    >
+        &#10094;
+    </button>
+
+
+    <button
+        class="banner-next"
+        type="button"
+        aria-label="Next banner"
+    >
+        &#10095;
+    </button>
+
+
+    <div class="banner-dots">
+
+        <button
+            class="banner-dot active"
+            type="button"
+            aria-label="Banner 1"
+        ></button>
+
+        <button
+            class="banner-dot"
+            type="button"
+            aria-label="Banner 2"
+        ></button>
+
+        <button
+            class="banner-dot"
+            type="button"
+            aria-label="Banner 3"
+        ></button>
+
+        <button
+            class="banner-dot"
+            type="button"
+            aria-label="Banner 4"
+        ></button>
+
+        <button
+            class="banner-dot"
+            type="button"
+            aria-label="Banner 5"
+        ></button>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================
+SHOP CATEGORIES
+===================================== -->
+
+<section class="categories-section">
+
+    <div class="container">
+
+        <h2 class="section-title">
+            Shop Categories
+        </h2>
+
+
+        <div class="category-grid">
+
+
+            <a
+                href="shop.html?category=Men"
+                class="category-card"
+            >
+
+                <h3>Men</h3>
+
+                <span>
+                    View Collection
+                </span>
+
+            </a>
+
+
+            <a
+                href="shop.html?category=Women"
+                class="category-card"
+            >
+
+                <h3>Women</h3>
+
+                <span>
+                    View Collection
+                </span>
+
+            </a>
+
+
+            <a
+                href="shop.html?category=Kids"
+                class="category-card"
+            >
+
+                <h3>Kids</h3>
+
+                <span>
+                    View Collection
+                </span>
+
+            </a>
+
+
+            <a
+                href="shop.html?category=Sports"
+                class="category-card"
+            >
+
+                <h3>Sports</h3>
+
+                <span>
+                    View Collection
+                </span>
+
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================
+FEATURED PRODUCTS
+===================================== -->
+
+<section class="featured-section">
+
+    <div class="container">
+
+        <h2 class="section-title">
+            Featured Products
+        </h2>
+
+
+        <div
+            id="productContainer"
+            class="products-grid"
+        >
+
+            <div class="loading">
+                Loading Products...
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+</main>
+
+
+<!-- =====================================
+FOOTER
+===================================== -->
+
+<footer>
+
+    <div class="footer-container">
+
+
+        <div class="footer-column">
+
+            <h3>
+                Peppy Fashion
+            </h3>
+
+            <p>
+                Your trusted online fashion store.
+            </p>
+
+            <p>
+                We provide quality clothing
+                with easy ordering options.
+            </p>
+
+        </div>
+
+
+        <div class="footer-column">
+
+            <h3>
+                Quick Links
+            </h3>
+
+            <a href="index.html">
+                Home
+            </a>
+
+            <a href="shop.html">
+                Shop
+            </a>
+
+            <a href="cart.html">
+                Cart
+            </a>
+
+            <a href="contact.html">
+                Contact
+            </a>
+
+        </div>
+
+
+        <div class="footer-column">
+
+            <h3>
+                Contact
+            </h3>
+
+            <p>
+                📍 Shalbahan, Tetulia,
+                Panchagarh, Bangladesh
+            </p>
+
+            <p>
+                📞 WhatsApp:
+                +8801710868775
+            </p>
+
+            <p>
+                ✉
+                <a href="mailto:peppyfashionbd@gmail.com">
+                    peppyfashionbd@gmail.com
+                </a>
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="footer-bottom">
+
+        <p>
+            © 2026 Peppy Fashion.
+            All rights reserved.
+        </p>
+
+    </div>
+
+</footer>
+
+
+<!-- =====================================
+PRODUCTS
+===================================== -->
+
+<script src="js/products.js"></script>
+
+
+<!-- =====================================
+MAIN SCRIPT
+===================================== -->
+
+<script src="js/script.js"></script>
+
+
+<!-- =====================================
+BANNER SLIDER
+===================================== -->
+
+<script>
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+
+        const slides =
+            document.querySelectorAll(
+                ".banner-slide"
+            );
+
+        const dots =
+            document.querySelectorAll(
+                ".banner-dot"
+            );
+
+        const prevButton =
+            document.querySelector(
+                ".banner-prev"
+            );
+
+        const nextButton =
+            document.querySelector(
+                ".banner-next"
+            );
+
+
+        if (!slides.length) return;
+
+
+        let currentSlide = 0;
+
+        let slideTimer;
+
+
+        function showSlide(index) {
+
+            if (index >= slides.length) {
+
+                currentSlide = 0;
+
+            }
+            else if (index < 0) {
+
+                currentSlide =
+                    slides.length - 1;
+
+            }
+            else {
+
+                currentSlide = index;
+
+            }
+
+
+            slides.forEach(
+                (slide, i) => {
+
+                    slide.classList.toggle(
+                        "active",
+                        i === currentSlide
+                    );
+
+                }
+            );
+
+
+            dots.forEach(
+                (dot, i) => {
+
+                    dot.classList.toggle(
+                        "active",
+                        i === currentSlide
+                    );
+
+                }
+            );
+
+        }
+
+
+        function nextSlide() {
+
+            showSlide(
+                currentSlide + 1
+            );
+
+        }
+
+
+        function previousSlide() {
+
+            showSlide(
+                currentSlide - 1
+            );
+
+        }
+
+
+        function startSlider() {
+
+            clearInterval(
+                slideTimer
+            );
+
+            slideTimer =
+                setInterval(
+                    nextSlide,
+                    3000
+                );
+
+        }
+
+
+        if (nextButton) {
+
+            nextButton.addEventListener(
+                "click",
+                function () {
+
+                    nextSlide();
+
+                    startSlider();
+
+                }
+            );
+
+        }
+
+
+        if (prevButton) {
+
+            prevButton.addEventListener(
+                "click",
+                function () {
+
+                    previousSlide();
+
+                    startSlider();
+
+                }
+            );
+
+        }
+
+
+        dots.forEach(
+            (dot, index) => {
+
+                dot.addEventListener(
+                    "click",
+                    function () {
+
+                        showSlide(index);
+
+                        startSlider();
+
+                    }
+                );
+
+            }
+        );
+
+
+        showSlide(0);
+
+        startSlider();
+
+    }
+);
+
+</script>
+
+
+</body>
+
+</html>

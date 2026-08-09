@@ -1,0 +1,232 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Product Details | Peppy Fashion</title>
+
+    <meta
+        name="description"
+        content="View product details and order from Peppy Fashion."
+    >
+
+    <link
+        rel="icon"
+        href="assets/images/logo/logo.png"
+    >
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
+</head>
+
+
+<body>
+
+
+<!-- =========================
+HEADER
+========================= -->
+
+<header class="site-header">
+
+    <div class="header-container">
+
+
+        <a
+            href="index.html"
+            class="logo"
+        >
+
+            <img
+                src="assets/images/logo/logo.png"
+                alt="Peppy Fashion Logo"
+            >
+
+        </a>
+
+
+        <button
+            class="menu-btn"
+            type="button"
+            onclick="toggleMenu()"
+            aria-label="Open menu"
+        >
+            ☰
+        </button>
+
+
+        <nav class="navbar">
+
+            <a
+                href="index.html"
+                class="nav-link"
+            >
+                Home
+            </a>
+
+
+            <a
+                href="shop.html"
+                class="nav-link"
+            >
+                Shop
+            </a>
+
+
+            <a
+                href="cart.html"
+                class="nav-link"
+            >
+                Cart
+                (<span id="cartCount">0</span>)
+            </a>
+
+
+            <a
+                href="contact.html"
+                class="nav-link"
+            >
+                Contact
+            </a>
+
+        </nav>
+
+    </div>
+
+</header>
+
+
+
+<!-- =========================
+PRODUCT DETAILS
+========================= -->
+
+<main>
+
+    <section class="product-details-section">
+
+        <div class="container">
+
+
+            <div
+                id="productDetails"
+                class="product-details"
+            >
+
+                <div class="loading">
+                    Loading Product...
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+</main>
+
+
+
+<!-- =========================
+FOOTER
+========================= -->
+
+<footer>
+
+    <div class="footer-container">
+
+
+        <div class="footer-column">
+
+            <h3>
+                Peppy Fashion
+            </h3>
+
+            <p>
+                Your online fashion destination.
+            </p>
+
+        </div>
+
+
+        <div class="footer-column">
+
+            <h3>
+                Quick Links
+            </h3>
+
+
+            <a href="index.html">
+                Home
+            </a>
+
+
+            <a href="shop.html">
+                Shop
+            </a>
+
+
+            <a href="cart.html">
+                Cart
+            </a>
+
+        </div>
+
+
+        <div class="footer-column">
+
+            <h3>
+                Contact
+            </h3>
+
+
+            <p>
+                📍 Shalbahan, Tetulia, Panchagarh
+            </p>
+
+
+            <p>
+                📞 WhatsApp:
+                +8801710868775
+            </p>
+
+
+            <p>
+                ✉ Email:
+                peppyfashionbd@gmail.com
+            </p>
+
+        </div>
+
+
+    </div>
+
+</footer>
+
+
+
+<!-- =========================
+JAVASCRIPT
+========================= -->
+
+<script src="products.js"></script>
+
+<script src="script.js"></script>
+
+
+</body>
+
+</html>
+```

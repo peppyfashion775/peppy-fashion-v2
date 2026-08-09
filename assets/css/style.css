@@ -1,0 +1,1362 @@
+/* =========================================================
+PEPPY FASHION
+PREMIUM STYLE + SMOOTH TRANSITIONS
+========================================================= */
+
+/* =========================
+ROOT VARIABLES
+========================= */
+
+:root {
+--primary: #6c3bd0;
+--primary-dark: #5426ad;
+--primary-light: #f2edff;
+
+```
+--text: #222222;
+--text-light: #666666;
+--white: #ffffff;
+--black: #111111;
+
+--bg: #f8f8fb;
+--card-bg: #ffffff;
+--border: #e8e8ee;
+
+--success: #20a464;
+--danger: #e53935;
+--warning: #f5a623;
+
+--shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.06);
+--shadow-md: 0 8px 25px rgba(0, 0, 0, 0.09);
+--shadow-lg: 0 15px 40px rgba(0, 0, 0, 0.13);
+
+--radius-sm: 8px;
+--radius-md: 14px;
+--radius-lg: 20px;
+
+--transition-fast: 0.2s ease;
+--transition: 0.3s ease;
+--transition-smooth: 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+```
+
+}
+
+/* =========================
+RESET
+========================= */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  }
+
+html {
+scroll-behavior: smooth;
+scroll-padding-top: 80px;
+}
+
+body {
+font-family: Arial, Helvetica, sans-serif;
+background: var(--bg);
+color: var(--text);
+line-height: 1.6;
+overflow-x: hidden;
+
+```
+-webkit-font-smoothing: antialiased;
+text-rendering: optimizeLegibility;
+```
+
+}
+
+img {
+max-width: 100%;
+display: block;
+}
+
+button,
+input,
+select,
+textarea {
+font: inherit;
+}
+
+button {
+cursor: pointer;
+}
+
+a {
+color: inherit;
+text-decoration: none;
+}
+
+/* =========================
+GLOBAL TRANSITION
+========================= */
+
+a,
+button,
+.product-card,
+.category-card,
+.shop-card,
+.nav-link,
+.cart-btn,
+.wishlist-btn,
+.action-btn,
+.add-cart-btn,
+.shop-now-btn,
+.view-btn,
+input,
+select,
+textarea {
+transition:
+transform var(--transition),
+opacity var(--transition),
+background-color var(--transition),
+color var(--transition),
+border-color var(--transition),
+box-shadow var(--transition);
+}
+
+/* =========================
+PAGE LOAD ANIMATION
+========================= */
+
+body {
+animation: pageFadeIn 0.45s ease both;
+}
+
+@keyframes pageFadeIn {
+from {
+opacity: 0;
+}
+
+```
+to {
+    opacity: 1;
+}
+```
+
+}
+
+/* =========================
+HEADER
+========================= */
+
+header,
+.site-header,
+.main-header {
+position: sticky;
+top: 0;
+z-index: 1000;
+background: rgba(255, 255, 255, 0.96);
+backdrop-filter: blur(12px);
+-webkit-backdrop-filter: blur(12px);
+box-shadow: var(--shadow-sm);
+transition:
+box-shadow var(--transition),
+background-color var(--transition);
+}
+
+header:hover,
+.site-header:hover,
+.main-header:hover {
+box-shadow: var(--shadow-md);
+}
+
+/* =========================
+LOGO
+========================= */
+
+.logo,
+.logo img,
+.site-logo,
+.site-logo img {
+transition: transform var(--transition-smooth);
+}
+
+.logo:hover img,
+.site-logo:hover img {
+transform: scale(1.04);
+}
+
+/* =========================
+NAVIGATION
+========================= */
+
+nav a,
+.nav-link {
+position: relative;
+transition:
+color var(--transition),
+transform var(--transition);
+}
+
+nav a::after,
+.nav-link::after {
+content: "";
+position: absolute;
+left: 50%;
+bottom: -5px;
+width: 0;
+height: 2px;
+background: var(--primary);
+border-radius: 10px;
+transform: translateX(-50%);
+transition: width var(--transition-smooth);
+}
+
+nav a:hover,
+.nav-link:hover {
+color: var(--primary);
+}
+
+nav a:hover::after,
+.nav-link:hover::after,
+nav a.active::after,
+.nav-link.active::after {
+width: 70%;
+}
+
+/* =========================
+MENU BUTTON
+========================= */
+
+.menu-btn,
+.menu-toggle,
+.mobile-menu-btn {
+transition:
+transform var(--transition),
+background-color var(--transition);
+}
+
+.menu-btn:hover,
+.menu-toggle:hover,
+.mobile-menu-btn:hover {
+transform: scale(1.06);
+}
+
+.menu-btn:active,
+.menu-toggle:active,
+.mobile-menu-btn:active {
+transform: scale(0.94);
+}
+
+/* =========================
+SHOP BANNER
+========================= */
+
+.shop-banner {
+position: relative;
+overflow: hidden;
+}
+
+.shop-banner img {
+    width: 100%;
+    transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.shop-banner:hover img {
+transform: scale(1.025);
+}
+
+/* =========================
+SECTION
+========================= */
+
+section {
+animation: sectionAppear 0.6s ease both;
+}
+
+@keyframes sectionAppear {
+from {
+opacity: 0;
+transform: translateY(12px);
+}
+
+```
+to {
+    opacity: 1;
+    transform: translateY(0);
+}
+```
+
+}
+
+.section-title,
+.section-heading {
+position: relative;
+}
+
+/* =========================
+CATEGORY BUTTONS
+========================= */
+
+.category-btn,
+.category-button,
+.filter-btn,
+.filter-button {
+border: 1px solid var(--border);
+background: var(--white);
+color: var(--text);
+border-radius: 999px;
+transition:
+transform var(--transition),
+background-color var(--transition),
+color var(--transition),
+border-color var(--transition),
+box-shadow var(--transition);
+}
+
+.category-btn:hover,
+.category-button:hover,
+.filter-btn:hover,
+.filter-button:hover {
+color: var(--primary);
+border-color: var(--primary);
+transform: translateY(-2px);
+box-shadow: var(--shadow-sm);
+}
+
+.category-btn.active,
+.category-button.active,
+.filter-btn.active,
+.filter-button.active {
+background: var(--primary);
+color: var(--white);
+border-color: var(--primary);
+box-shadow: 0 5px 16px rgba(108, 59, 208, 0.22);
+}
+
+/* =========================
+PRODUCT GRID
+========================= */
+
+.products-grid,
+.product-grid {
+transition: opacity var(--transition);
+}
+
+/* =========================
+PRODUCT CARD
+========================= */
+
+.product-card {
+position: relative;
+background: var(--card-bg);
+border: 1px solid transparent;
+border-radius: var(--radius-md);
+overflow: hidden;
+box-shadow: var(--shadow-sm);
+
+```
+transform: translateY(0);
+will-change: transform;
+```
+
+}
+
+.product-card:hover {
+transform: translateY(-7px);
+border-color: rgba(108, 59, 208, 0.12);
+box-shadow: var(--shadow-lg);
+}
+
+/* =========================
+PRODUCT IMAGE
+========================= */
+
+.product-card .product-image,
+.product-card .image-container {
+overflow: hidden;
+position: relative;
+}
+
+.product-card img {
+    width: 100%;
+    transition:
+        transform 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+        opacity var(--transition);
+}
+
+.product-card:hover img {
+transform: scale(1.055);
+}
+
+/* =========================
+IMAGE OVERLAY
+========================= */
+
+.product-card .product-image::after,
+.product-card .image-container::after {
+content: "";
+position: absolute;
+inset: 0;
+background: linear-gradient(
+to bottom,
+transparent 60%,
+rgba(0, 0, 0, 0.04)
+);
+opacity: 0;
+pointer-events: none;
+transition: opacity var(--transition);
+}
+
+.product-card:hover .product-image::after,
+.product-card:hover .image-container::after {
+opacity: 1;
+}
+
+/* =========================
+PRODUCT DETAILS
+========================= */
+
+.product-card h3,
+.product-card .product-name {
+transition: color var(--transition);
+}
+
+.product-card:hover h3,
+.product-card:hover .product-name {
+color: var(--primary);
+}
+
+/* =========================
+PRODUCT PRICE
+========================= */
+
+.product-price,
+.price {
+transition: transform var(--transition);
+}
+
+.product-card:hover .product-price,
+.product-card:hover .price {
+transform: translateX(2px);
+}
+
+.old-price {
+color: #999;
+text-decoration: line-through;
+}
+
+.new-price,
+.current-price {
+color: var(--primary);
+font-weight: 700;
+}
+
+/* =========================
+BADGES
+========================= */
+
+.badge,
+.product-badge,
+.sale-badge {
+transition:
+transform var(--transition),
+box-shadow var(--transition);
+}
+
+.product-card:hover .badge,
+.product-card:hover .product-badge,
+.product-card:hover .sale-badge {
+transform: scale(1.05);
+}
+
+/* =========================
+WISHLIST BUTTON
+========================= */
+
+.wishlist-btn,
+.wishlist-button {
+transition:
+transform var(--transition-smooth),
+background-color var(--transition),
+color var(--transition);
+}
+
+.wishlist-btn:hover,
+.wishlist-button:hover {
+transform: scale(1.12);
+}
+
+.wishlist-btn:active,
+.wishlist-button:active {
+transform: scale(0.88);
+}
+
+/* =========================
+CART BUTTON
+========================= */
+
+.cart-btn,
+.add-cart-btn,
+.add-to-cart,
+.shop-now-btn,
+.view-btn {
+position: relative;
+overflow: hidden;
+}
+
+.cart-btn:hover,
+.add-cart-btn:hover,
+.add-to-cart:hover,
+.shop-now-btn:hover,
+.view-btn:hover {
+transform: translateY(-2px);
+box-shadow: 0 8px 20px rgba(108, 59, 208, 0.20);
+}
+
+.cart-btn:active,
+.add-cart-btn:active,
+.add-to-cart:active,
+.shop-now-btn:active,
+.view-btn:active {
+transform: translateY(0) scale(0.97);
+}
+
+/* =========================
+BUTTON LIGHT EFFECT
+========================= */
+
+.cart-btn::after,
+.add-cart-btn::after,
+.add-to-cart::after,
+.shop-now-btn::after,
+.view-btn::after {
+content: "";
+position: absolute;
+top: 0;
+left: -120%;
+width: 60%;
+height: 100%;
+background: linear-gradient(
+90deg,
+transparent,
+rgba(255, 255, 255, 0.22),
+transparent
+);
+transform: skewX(-20deg);
+transition: left 0.65s ease;
+pointer-events: none;
+}
+
+.cart-btn:hover::after,
+.add-cart-btn:hover::after,
+.add-to-cart:hover::after,
+.shop-now-btn:hover::after,
+.view-btn:hover::after {
+left: 140%;
+}
+
+/* =========================
+INPUTS
+========================= */
+
+input,
+select,
+textarea {
+border: 1px solid var(--border);
+outline: none;
+background: var(--white);
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+border-color: var(--primary);
+box-shadow: 0 0 0 4px rgba(108, 59, 208, 0.10);
+}
+
+/* =========================
+SEARCH BOX
+========================= */
+
+.search-box input,
+.search-input {
+transition:
+border-color var(--transition),
+box-shadow var(--transition),
+transform var(--transition);
+}
+
+.search-box input:focus,
+.search-input:focus {
+transform: translateY(-1px);
+}
+
+/* =========================
+CART COUNT
+========================= */
+
+#cartCount,
+.cart-count {
+transition:
+transform var(--transition-smooth),
+background-color var(--transition);
+}
+
+.cart-count.updated,
+#cartCount.updated {
+animation: cartPop 0.45s ease;
+}
+
+@keyframes cartPop {
+0% {
+transform: scale(1);
+}
+
+```
+40% {
+    transform: scale(1.35);
+}
+
+70% {
+    transform: scale(0.9);
+}
+
+100% {
+    transform: scale(1);
+}
+```
+
+}
+
+/* =========================
+PRODUCT DETAILS PAGE
+========================= */
+
+.product-details img,
+.product-detail-image img,
+.product-gallery img {
+transition:
+transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.product-details img:hover,
+.product-detail-image img:hover,
+.product-gallery img:hover {
+transform: scale(1.025);
+}
+
+/* =========================
+SIZE BUTTONS
+========================= */
+
+.size-btn,
+.size-option,
+.size-button {
+transition:
+transform var(--transition),
+background-color var(--transition),
+color var(--transition),
+border-color var(--transition),
+box-shadow var(--transition);
+}
+
+.size-btn:hover,
+.size-option:hover,
+.size-button:hover {
+transform: translateY(-2px);
+border-color: var(--primary);
+color: var(--primary);
+}
+
+.size-btn.active,
+.size-option.active,
+.size-button.active {
+background: var(--primary);
+color: var(--white);
+border-color: var(--primary);
+box-shadow: 0 5px 15px rgba(108, 59, 208, 0.20);
+}
+
+/* =========================
+MODAL
+========================= */
+
+.modal,
+.popup,
+.overlay {
+transition:
+opacity var(--transition),
+visibility var(--transition);
+}
+
+.modal-content,
+.popup-content {
+animation: modalOpen 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes modalOpen {
+from {
+opacity: 0;
+transform: translateY(20px) scale(0.97);
+}
+
+```
+to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+```
+
+}
+
+/* =========================
+MOBILE MENU
+========================= */
+
+.mobile-menu,
+.mobile-nav {
+transition:
+transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+opacity var(--transition);
+}
+
+/* =========================
+LOADING
+========================= */
+
+.loading,
+.loader {
+animation: loadingFade 0.8s ease-in-out infinite alternate;
+}
+
+@keyframes loadingFade {
+from {
+opacity: 0.45;
+}
+
+```
+to {
+    opacity: 1;
+}
+```
+
+}
+
+/* =========================
+EMPTY STATE
+========================= */
+
+.empty-state,
+.no-products {
+animation: emptyAppear 0.5s ease both;
+}
+
+@keyframes emptyAppear {
+from {
+opacity: 0;
+transform: translateY(10px);
+}
+
+```
+to {
+    opacity: 1;
+    transform: translateY(0);
+}
+```
+
+}
+
+/* =========================
+TOAST / NOTIFICATION
+========================= */
+
+.toast,
+.notification {
+animation: toastIn 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes toastIn {
+from {
+opacity: 0;
+transform: translateY(18px) scale(0.96);
+}
+
+```
+to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+```
+
+}
+
+/* =========================
+FOOTER
+========================= */
+
+footer a {
+transition:
+color var(--transition),
+transform var(--transition);
+}
+
+footer a:hover {
+color: var(--primary);
+transform: translateX(3px);
+}
+
+/* =========================
+SOCIAL ICONS
+========================= */
+
+.social-icon,
+.social-icons a {
+transition:
+transform var(--transition-smooth),
+background-color var(--transition),
+color var(--transition);
+}
+
+.social-icon:hover,
+.social-icons a:hover {
+transform: translateY(-4px) scale(1.06);
+}
+
+/* =========================
+SCROLLBAR
+========================= */
+
+::-webkit-scrollbar {
+width: 8px;
+}
+
+::-webkit-scrollbar-track {
+background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+background: #c7c7c7;
+border-radius: 10px;
+transition: background var(--transition);
+}
+
+::-webkit-scrollbar-thumb:hover {
+background: var(--primary);
+}
+
+/* =========================
+SELECTION
+========================= */
+
+::selection {
+background: rgba(108, 59, 208, 0.18);
+color: var(--text);
+}
+
+/* =========================
+TOUCH DEVICES
+========================= */
+
+@media (hover: none) {
+
+```
+.product-card:hover {
+    transform: none;
+    box-shadow: var(--shadow-sm);
+}
+
+.product-card:hover img {
+    transform: none;
+}
+
+.product-card:hover h3,
+.product-card:hover .product-name {
+    color: inherit;
+}
+
+.product-card:active {
+    transform: scale(0.985);
+}
+
+.cart-btn:active,
+.add-cart-btn:active,
+.add-to-cart:active,
+.shop-now-btn:active,
+.view-btn:active {
+    transform: scale(0.96);
+}
+```
+
+}
+
+/* =========================
+TABLET
+========================= */
+
+@media (max-width: 768px) {
+
+```
+html {
+    scroll-padding-top: 70px;
+}
+
+.product-card {
+    border-radius: 12px;
+}
+
+.product-card:hover {
+    transform: translateY(-3px);
+}
+
+.shop-banner:hover img {
+    transform: none;
+}
+```
+
+}
+
+/* =========================
+SMALL MOBILE
+========================= */
+
+@media (max-width: 480px) {
+
+```
+.product-card {
+    border-radius: 10px;
+}
+
+.product-card:hover {
+    transform: translateY(-2px);
+}
+
+nav a::after,
+.nav-link::after {
+    display: none;
+}
+```
+
+}
+
+/* =========================
+REDUCED MOTION
+========================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+```
+*,
+*::before,
+*::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+}
+```
+
+}
+/* =========================
+SUBCATEGORY TRANSITION
+========================= */
+
+#subCategoryContainer .subcategory-btn {
+    animation: subCategoryEnter 0.6s ease both;
+}
+
+@keyframes subCategoryEnter {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+/* =========================
+PRODUCT CARD ENTRANCE
+========================= */
+
+#productContainer .product-card {
+    animation: productCardEnter 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+#productContainer .product-card:nth-child(1) {
+    animation-delay: 0.05s;
+}
+
+#productContainer .product-card:nth-child(2) {
+    animation-delay: 0.10s;
+}
+
+#productContainer .product-card:nth-child(3) {
+    animation-delay: 0.15s;
+}
+
+#productContainer .product-card:nth-child(4) {
+    animation-delay: 0.20s;
+}
+
+#productContainer .product-card:nth-child(5) {
+    animation-delay: 0.25s;
+}
+
+#productContainer .product-card:nth-child(6) {
+    animation-delay: 0.30s;
+}
+
+@keyframes productCardEnter {
+    from {
+        opacity: 0;
+        transform: translateY(18px) scale(0.98);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+/* =========================
+CATEGORY BUTTON TRANSITION
+========================= */
+
+.category-btn,
+.category-button,
+.filter-btn,
+.filter-button,
+.subcategory-btn {
+    transition:
+        transform 0.6s ease,
+        background-color 0.6s ease,
+        color 0.6s ease,
+        border-color 0.6s ease,
+        box-shadow 0.6s ease;
+}
+
+.category-btn:hover,
+.category-button:hover,
+.filter-btn:hover,
+.filter-button:hover,
+.subcategory-btn:hover {
+    transform: translateY(-2px);
+}
+
+.category-btn:active,
+.category-button:active,
+.filter-btn:active,
+.filter-button:active,
+.subcategory-btn:active {
+    transform: scale(0.96);
+}
+/* =========================
+SEARCH RESULT TRANSITION
+========================= */
+
+#searchInput {
+    transition:
+        border-color 0.6s ease,
+        box-shadow 0.6s ease,
+        transform 0.6s ease;
+}
+
+#searchInput:focus {
+    transform: translateY(-1px);
+    box-shadow: 0 0 0 4px rgba(108, 59, 208, 0.10);
+}
+
+#productContainer {
+    transition:
+        opacity 0.6s ease,
+        transform 0.6s ease;
+}
+/* =========================
+SORT TRANSITION
+========================= */
+
+#sortProducts {
+    transition:
+        border-color 0.6s ease,
+        box-shadow 0.6s ease,
+        transform 0.6s ease;
+}
+
+#sortProducts:hover {
+    transform: translateY(-1px);
+}
+
+#sortProducts:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 4px rgba(108, 59, 208, 0.10);
+}
+/* =========================
+ADD TO CART TRANSITION
+========================= */
+
+.product-card .btn,
+.add-cart-btn,
+.add-to-cart,
+.cart-btn {
+    transition:
+        transform 0.6s ease,
+        box-shadow 0.6s ease,
+        background-color 0.6s ease,
+        color 0.6s ease;
+}
+
+.product-card .btn:hover,
+.add-cart-btn:hover,
+.add-to-cart:hover,
+.cart-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 7px 18px rgba(108, 59, 208, 0.20);
+}
+
+.product-card .btn:active,
+.add-cart-btn:active,
+.add-to-cart:active,
+.cart-btn:active {
+    transform: scale(0.96);
+}
+/* =========================
+PRODUCT NAME + PRICE TRANSITION
+========================= */
+
+.product-card h3,
+.product-card .product-name,
+.product-card .price,
+.product-card .product-price {
+    transition:
+        color 0.6s ease,
+        transform 0.6s ease;
+}
+
+.product-card:hover h3,
+.product-card:hover .product-name {
+    color: var(--primary);
+    transform: translateX(2px);
+}
+
+.product-card:hover .price,
+.product-card:hover .product-price {
+    transform: translateX(2px);
+}
+
+/* =========================
+WISHLIST TRANSITION
+========================= */
+
+.wishlist-btn,
+.wishlist-button {
+    transition:
+        transform 0.6s ease,
+        background-color 0.6s ease,
+        color 0.6s ease,
+        box-shadow 0.6s ease;
+}
+
+.wishlist-btn:hover,
+.wishlist-button:hover {
+    transform: scale(1.08);
+}
+
+.wishlist-btn:active,
+.wishlist-button:active {
+    transform: scale(0.90);
+}
+/* =========================
+PRODUCT BADGE TRANSITION
+========================= */
+
+.product-card .badge,
+.product-card .product-badge,
+.product-card .sale-badge {
+    transition:
+        transform 0.6s ease,
+        box-shadow 0.6s ease;
+}
+
+.product-card:hover .badge,
+.product-card:hover .product-badge,
+.product-card:hover .sale-badge {
+    transform: scale(1.05);
+}
+/* =========================
+CART COUNT TRANSITION
+========================= */
+
+#cartCount,
+.cart-count {
+    transition:
+        transform 0.6s ease,
+        background-color 0.6s ease;
+}
+
+.cart-count.updated,
+#cartCount.updated {
+    animation: cartCountPop 0.6s ease;
+}
+
+@keyframes cartCountPop {
+    0% {
+        transform: scale(1);
+    }
+
+    40% {
+        transform: scale(1.3);
+    }
+
+    70% {
+        transform: scale(0.92);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+/* =========================
+MODAL / POPUP TRANSITION
+========================= */
+
+.modal,
+.popup,
+.overlay {
+    transition:
+        opacity 0.6s ease,
+        visibility 0.6s ease;
+}
+
+.modal-content,
+.popup-content {
+    animation: modalOpen 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes modalOpen {
+    from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.97);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+/* =========================
+TOAST / NOTIFICATION TRANSITION
+========================= */
+
+.toast,
+.notification {
+    animation: toastIn 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes toastIn {
+    from {
+        opacity: 0;
+        transform: translateY(18px) scale(0.96);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* =========================
+PRODUCT DETAILS IMAGE TRANSITION
+========================= */
+
+.product-details img,
+.product-detail-image img,
+.product-gallery img {
+    transition:
+        transform 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+        opacity 0.6s ease;
+}
+
+.product-details img:hover,
+.product-detail-image img:hover,
+.product-gallery img:hover {
+    transform: scale(1.025);
+}
+
+/* =========================
+SIZE BUTTON TRANSITION
+========================= */
+
+.size-btn,
+.size-option,
+.size-button {
+    transition:
+        transform 0.6s ease,
+        background-color 0.6s ease,
+        color 0.6s ease,
+        border-color 0.6s ease,
+        box-shadow 0.6s ease;
+}
+
+.size-btn:hover,
+.size-option:hover,
+.size-button:hover {
+    transform: translateY(-2px);
+    border-color: var(--primary);
+    color: var(--primary);
+}
+
+.size-btn.active,
+.size-option.active,
+.size-button.active {
+    background: var(--primary);
+    color: var(--white);
+    border-color: var(--primary);
+    box-shadow: 0 5px 15px rgba(108, 59, 208, 0.20);
+}
+/* =========================
+MOBILE MENU TRANSITION
+========================= */
+
+.mobile-menu,
+.mobile-nav {
+    transition:
+        transform 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+        opacity 0.6s ease;
+}
+
+/* =========================
+LOADING TRANSITION
+========================= */
+
+.loading,
+.loader {
+    animation: loadingFade 0.6s ease-in-out infinite alternate;
+}
+
+@keyframes loadingFade {
+    from {
+        opacity: 0.45;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+/* =========================
+EMPTY / NO PRODUCTS TRANSITION
+========================= */
+
+.empty-state,
+.no-products {
+    animation: emptyAppear 0.6s ease both;
+}
+
+@keyframes emptyAppear {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
