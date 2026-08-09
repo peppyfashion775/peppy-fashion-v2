@@ -242,26 +242,226 @@ cursor:pointer;
 }
 
 /* ==========================================
-SHOP BANNER
+   PEPPY FASHION BANNER SLIDER
 ========================================== */
 
-.shop-banner{
+.banner-slider{
 
-width:100%;
+    width:100%;
 
-overflow:hidden;
+    position:relative;
 
-background:#fff;
+    overflow:hidden;
+
+    background:#fff;
+
+    line-height:0;
 
 }
 
-.shop-banner img{
+.banner-slides{
 
-width:100%;
+    width:100%;
 
-display:block;
+    position:relative;
 
-object-fit:cover;
+    overflow:hidden;
+
+}
+
+.banner-slide{
+
+    display:none;
+
+    width:100%;
+
+    position:relative;
+
+}
+
+.banner-slide.active{
+
+    display:block;
+
+}
+
+.banner-slide img{
+
+    width:100%;
+
+    height:auto;
+
+    display:block;
+
+    object-fit:cover;
+
+}
+
+
+/* ==========================================
+   PREVIOUS / NEXT BUTTONS
+========================================== */
+
+.banner-prev,
+.banner-next{
+
+    position:absolute;
+
+    top:50%;
+
+    transform:translateY(-50%);
+
+    width:42px;
+
+    height:42px;
+
+    border:none;
+
+    border-radius:50%;
+
+    background:rgba(0,0,0,.45);
+
+    color:#fff;
+
+    font-size:24px;
+
+    line-height:42px;
+
+    text-align:center;
+
+    cursor:pointer;
+
+    z-index:10;
+
+    transition:.3s;
+
+}
+
+.banner-prev{
+
+    left:15px;
+
+}
+
+.banner-next{
+
+    right:15px;
+
+}
+
+.banner-prev:hover,
+.banner-next:hover{
+
+    background:rgba(0,0,0,.7);
+
+}
+
+
+/* ==========================================
+   SLIDER DOTS
+========================================== */
+
+.banner-dots{
+
+    position:absolute;
+
+    left:50%;
+
+    bottom:14px;
+
+    transform:translateX(-50%);
+
+    display:flex;
+
+    gap:8px;
+
+    z-index:10;
+
+}
+
+.banner-dot{
+
+    width:9px;
+
+    height:9px;
+
+    padding:0;
+
+    border:none;
+
+    border-radius:50%;
+
+    background:rgba(255,255,255,.65);
+
+    cursor:pointer;
+
+    transition:.3s;
+
+}
+
+.banner-dot.active{
+
+    width:24px;
+
+    border-radius:10px;
+
+    background:#fff;
+
+}
+
+
+/* ==========================================
+   MOBILE BANNER
+========================================== */
+
+@media(max-width:600px){
+
+    .banner-prev,
+    .banner-next{
+
+        width:34px;
+
+        height:34px;
+
+        font-size:19px;
+
+        line-height:34px;
+
+    }
+
+    .banner-prev{
+
+        left:8px;
+
+    }
+
+    .banner-next{
+
+        right:8px;
+
+    }
+
+    .banner-dots{
+
+        bottom:8px;
+
+        gap:6px;
+
+    }
+
+    .banner-dot{
+
+        width:7px;
+
+        height:7px;
+
+    }
+
+    .banner-dot.active{
+
+        width:18px;
+
+    }
 
 }
 
