@@ -1642,39 +1642,65 @@ PWA APP SUPPORT
   }
 
 }
-/* ====================================
-INSTALL BUTTON
-==================================== */
+/* =========================================================
+   PWA INSTALL APP BUTTON
+   ========================================================= */
 
-.install-btn{
+.install-btn {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    z-index: 9999;
 
-background:#6C3BD0;
+    display: none;
 
-color:#fff;
+    border: none;
+    border-radius: 30px;
 
-border:none;
+    padding: 12px 20px;
 
-padding:14px 24px;
+    background: #6C3BD0;
+    color: #ffffff;
 
-border-radius:10px;
+    font-size: 14px;
+    font-weight: 600;
 
-font-size:16px;
+    cursor: pointer;
 
-font-weight:600;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.20);
 
-cursor:pointer;
-
-margin-top:20px;
-
-transition:.3s;
-
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        opacity 0.2s ease;
 }
 
-.install-btn:hover{
+.install-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+}
 
-opacity:.9;
+.install-btn:active {
+    transform: scale(0.96);
+}
 
-transform:translateY(-2px);
+
+/* =========================================================
+   MOBILE INSTALL BUTTON
+   ========================================================= */
+
+@media (max-width: 600px) {
+
+    .install-btn {
+        right: 15px;
+        bottom: 15px;
+
+        padding: 11px 17px;
+
+        font-size: 13px;
+
+        border-radius: 28px;
+    }
 
 }
 
