@@ -92,18 +92,64 @@ Contact
 
 </header>
 
+
 <!-- ===========================
-HOME BANNER
+HOME BANNER SLIDER
 =========================== -->
 
-<section class="shop-banner">
+<section class="banner-slider" aria-label="Peppy Fashion Collections">
 
-<img
-src="assets/images/banners/banner.jpg"
-alt="Peppy Fashion Banner">
+    <div class="banner-slides">
+
+        <a href="shop.html" class="banner-slide active">
+            <img
+                src="assets/images/banners/banner.jpg"
+                alt="Peppy Fashion Main Banner">
+        </a>
+
+        <a href="shop.html" class="banner-slide">
+            <img
+                src="assets/images/banners/mens-banner.jpg"
+                alt="Men's Collection">
+        </a>
+
+        <a href="shop.html" class="banner-slide">
+            <img
+                src="assets/images/banners/womens-banner.jpg"
+                alt="Women's Collection">
+        </a>
+
+        <a href="shop.html" class="banner-slide">
+            <img
+                src="assets/images/banners/kids-banner.jpg"
+                alt="Kids' Collection">
+        </a>
+
+        <a href="shop.html" class="banner-slide">
+            <img
+                src="assets/images/banners/sports-banner.jpg"
+                alt="Sports Collection">
+        </a>
+
+    </div>
+
+    <button class="banner-prev" type="button" aria-label="Previous banner">
+        &#10094;
+    </button>
+
+    <button class="banner-next" type="button" aria-label="Next banner">
+        &#10095;
+    </button>
+
+    <div class="banner-dots">
+        <button class="banner-dot active" type="button" aria-label="Banner 1"></button>
+        <button class="banner-dot" type="button" aria-label="Banner 2"></button>
+        <button class="banner-dot" type="button" aria-label="Banner 3"></button>
+        <button class="banner-dot" type="button" aria-label="Banner 4"></button>
+        <button class="banner-dot" type="button" aria-label="Banner 5"></button>
+    </div>
 
 </section>
-
 
 <!-- ===========================
 CATEGORY SECTION
@@ -367,7 +413,112 @@ Contact
 
 </footer>
 <!-- Bottom Navigation -->
+<script>
+/* ==========================================
+   PEPPY FASHION BANNER SLIDER
+   AUTO SLIDE EVERY 3 SECONDS
+========================================== */
 
+document.addEventListener("DOMContentLoaded", function () {
+
+    const slides = document.querySelectorAll(".banner-slide");
+    const dots = document.querySelectorAll(".banner-dot");
+    const prevButton = document.querySelector(".banner-prev");
+    const nextButton = document.querySelector(".banner-next");
+
+    if (!slides.length) return;
+
+    let currentSlide = 0;
+    let slideTimer;
+
+    function showSlide(index) {
+
+        if (index >= slides.length) {
+            currentSlide = 0;
+        }
+
+        if (index < 0) {
+            currentSlide = slides.length - 1;
+        }
+
+        if (index >= 0 && index < slides.length) {
+            currentSlide = index;
+        }
+
+        slides.forEach((slide, i) => {
+            slide.classList.toggle(
+                "active",
+                i === currentSlide
+            );
+        });
+
+        dots.forEach((dot, i) => {
+            dot.classList.toggle(
+                "active",
+                i === currentSlide
+            );
+        });
+    }
+
+    function nextSlide() {
+        showSlide(currentSlide + 1);
+    }
+
+    function previousSlide() {
+        showSlide(currentSlide - 1);
+    }
+
+    function startSlider() {
+
+        clearInterval(slideTimer);
+
+        slideTimer = setInterval(
+            nextSlide,
+            3000
+        );
+    }
+
+    function resetSlider() {
+        startSlider();
+    }
+
+    if (nextButton) {
+
+        nextButton.addEventListener("click", function () {
+
+            nextSlide();
+            resetSlider();
+
+        });
+    }
+
+    if (prevButton) {
+
+        prevButton.addEventListener("click", function () {
+
+            previousSlide();
+            resetSlider();
+
+        });
+    }
+
+    dots.forEach((dot, index) => {
+
+        dot.addEventListener("click", function () {
+
+            showSlide(index);
+            resetSlider();
+
+        });
+    });
+
+    showSlide(0);
+    startSlider();
+
+});
+</script>
+
+<script src="assets/js/products.js"></script>
 <script src="assets/js/products.js"></script>
 
 <script src="assets/js/cart.js"></script>
