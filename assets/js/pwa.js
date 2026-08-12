@@ -1,227 +1,509 @@
-/* =========================================================
-   PEPPY FASHION - PWA INSTALL SYSTEM
-   ========================================================= */
+/* ==========================================
+   PEPPY FASHION
+   PWA INSTALL SYSTEM V2
+========================================== */
 
-let deferredPrompt = null;
-let installBtn = null;
+(function () {
 
-
-/* =========================================================
-   CHECK IF APP IS ALREADY INSTALLED
-   ========================================================= */
-
-function isAppInstalled() {
-
-    return (
-        window.matchMedia("(display-mode: standalone)").matches ||
-        window.navigator.standalone === true
-    );
-
-}
+    "use strict";
 
 
-/* =========================================================
-   CREATE INSTALL BUTTON
-   ========================================================= */
+    /* ==========================================
+       VARIABLES
+    ========================================== */
 
-function createInstallButton() {
+    let deferredInstallPrompt = null;
 
-    if (installBtn) {
-        return;
-    }
-
-    installBtn = document.createElement("button");
-
-    installBtn.id = "installBtn";
-    installBtn.className = "install-btn";
-
-    installBtn.innerHTML = "📲 Install Peppy App";
-
-    installBtn.style.display = "none";
-
-    installBtn.addEventListener("click", installPeppyApp);
-
-    document.body.appendChild(installBtn);
-
-}
+    const INSTALL_BUTTON_ID =
+        "peppyInstallAppBtn";
 
 
-/* =========================================================
-   SHOW INSTALL BUTTON
-   ========================================================= */
+    /* ==========================================
+       CREATE INSTALL BUTTON
+    ========================================== */
 
-function showInstallButton() {
+    function createInstallButton() {
 
-    if (!installBtn) {
-        createInstallButton();
-    }
+        /*
+           Do not create another button
+           if one already exists.
+        */
 
-    if (isAppInstalled()) {
-        hideInstallButton();
-        return;
-    }
-
-    installBtn.style.display = "block";
-
-}
-
-
-/* =========================================================
-   HIDE INSTALL BUTTON
-   ========================================================= */
-
-function hideInstallButton() {
-
-    if (installBtn) {
-        installBtn.style.display = "none";
-    }
-
-}
+        if (
+            document.getElementById(
+                INSTALL_BUTTON_ID
+            )
+        ) {
+            return;
+        }
 
 
-/* =========================================================
-   INSTALL APP
-   ========================================================= */
+        const button =
+            document.createElement("button");
 
-async function installPeppyApp() {
+        button.id =
+            INSTALL_BUTTON_ID;
 
-    if (!deferredPrompt) {
+        button.type =
+            "button";
 
-        alert(
-            "To install Peppy Fashion:\n\n" +
-            "Android Chrome:\n" +
-            "Tap ⋮ Menu → Install app\n\n" +
-            "If 'Install app' is not available, choose 'Add to Home screen'."
+        button.className =
+            "install-btn";
+
+        button.innerHTML =
+            "📲 Install Peppy App";
+
+
+        button.setAttribute(
+            "aria-label",
+            "Install Peppy Fashion App"
         );
 
-        return;
 
-    }
+        /*
+           Initially hidden.
+           It will appear when the browser
+           confirms installation is available.
+        */
 
-    deferredPrompt.prompt();
+        button.style.display =
+            "none";
 
-    try {
 
-        const result = await deferredPrompt.userChoice;
-
-        console.log(
-            "Peppy Fashion Install Result:",
-            result.outcome
+        button.addEventListener(
+            "click",
+            installApp
         );
 
-    } catch (error) {
 
-        console.log(
-            "Install prompt error:",
-            error
-        );
+        /*
+           Put the button in the header
+           if possible.
+        */
 
-    }
-
-    deferredPrompt = null;
-
-    hideInstallButton();
-
-}
+        const navbar =
+            document.querySelector(
+                ".navbar"
+            );
 
 
-/* =========================================================
-   BEFORE INSTALL PROMPT
-   ========================================================= */
+        if (navbar) {
 
-window.addEventListener(
-    "beforeinstallprompt",
-    function (event) {
+            navbar.appendChild(
+                button
+            );
 
-        console.log(
-            "Peppy Fashion PWA installation is available."
-        );
+            return;
 
-        event.preventDefault();
-
-        deferredPrompt = event;
-
-        showInstallButton();
-
-    }
-);
+        }
 
 
-/* =========================================================
-   APP INSTALLED
-   ========================================================= */
+        /*
+           Fallback:
+           put it at the top of the body.
+        */
 
-window.addEventListener(
-    "appinstalled",
-    function () {
+        if (document.body) {
 
-        console.log(
-            "Peppy Fashion has been installed."
-        );
+            document.body.prepend(
+                button
+            );
 
-        deferredPrompt = null;
-
-        hideInstallButton();
-
-    }
-);
-
-
-/* =========================================================
-   DISPLAY MODE CHANGE
-   ========================================================= */
-
-window.addEventListener(
-    "DOMContentLoaded",
-    function () {
-
-        createInstallButton();
-
-        if (isAppInstalled()) {
-            hideInstallButton();
         }
 
     }
-);
 
 
-/* =========================================================
-   SERVICE WORKER REGISTRATION
-   ========================================================= */
+    /* ==========================================
+       SHOW INSTALL BUTTON
+    ========================================== */
 
-if ("serviceWorker" in navigator) {
+    function showInstallButton() {
+
+        const button =
+            document.getElementById(
+                INSTALL_BUTTON_ID
+            );
+
+
+        if (!button) return;
+
+
+        /*
+           If the app is already installed,
+           don't show the button.
+        */
+
+        if (isAppInstalled()) {
+
+            button.style.display =
+                "none";
+
+            return;
+
+        }
+
+
+        button.style.display =
+            "inline-flex";
+
+    }
+
+
+    /* ==========================================
+       HIDE INSTALL BUTTON
+    ========================================== */
+
+    function hideInstallButton() {
+
+        const button =
+            document.getElementById(
+                INSTALL_BUTTON_ID
+            );
+
+
+        if (!button) return;
+
+
+        button.style.display =
+            "none";
+
+    }
+
+
+    /* ==========================================
+       INSTALL APP
+    ========================================== */
+
+    async function installApp() {
+
+        /*
+           Browser does not currently provide
+           an installation prompt.
+        */
+
+        if (!deferredInstallPrompt) {
+
+            showInstallInstructions();
+
+            return;
+
+        }
+
+
+        try {
+
+            /*
+               Show native installation prompt.
+            */
+
+            await deferredInstallPrompt.prompt();
+
+
+            /*
+               Wait for user's choice.
+            */
+
+            const result =
+                await deferredInstallPrompt.userChoice;
+
+
+            if (
+                result &&
+                result.outcome === "accepted"
+            ) {
+
+                console.log(
+                    "Peppy Fashion app installation accepted."
+                );
+
+            } else {
+
+                console.log(
+                    "Peppy Fashion app installation dismissed."
+                );
+
+            }
+
+        }
+
+        catch (error) {
+
+            console.error(
+                "PWA installation error:",
+                error
+            );
+
+        }
+
+
+        /*
+           Prompt can only be used once.
+        */
+
+        deferredInstallPrompt =
+            null;
+
+
+        hideInstallButton();
+
+    }
+
+
+    /* ==========================================
+       INSTALL INSTRUCTIONS
+    ========================================== */
+
+    function showInstallInstructions() {
+
+        /*
+           iPhone / iPad
+        */
+
+        if (
+            /iPhone|iPad|iPod/i.test(
+                navigator.userAgent
+            )
+        ) {
+
+            alert(
+                "To install Peppy Fashion on iPhone/iPad:\n\n" +
+                "1. Tap the Share button in Safari.\n" +
+                "2. Select 'Add to Home Screen'.\n" +
+                "3. Tap 'Add'."
+            );
+
+            return;
+
+        }
+
+
+        /*
+           Android / other browsers
+        */
+
+        alert(
+            "Peppy Fashion cannot show the installation " +
+            "prompt right now.\n\n" +
+            "If your browser supports installation, " +
+            "open the browser menu and select " +
+            "'Install app' or 'Add to Home screen'."
+        );
+
+    }
+
+
+    /* ==========================================
+       CHECK IF APP IS ALREADY INSTALLED
+    ========================================== */
+
+    function isAppInstalled() {
+
+        /*
+           Standalone mode
+           Android / Chrome / Edge etc.
+        */
+
+        const standalone =
+            window.matchMedia &&
+            window.matchMedia(
+                "(display-mode: standalone)"
+            ).matches;
+
+
+        /*
+           iOS standalone mode
+        */
+
+        const iosStandalone =
+            window.navigator &&
+            window.navigator.standalone === true;
+
+
+        return (
+            standalone ||
+            iosStandalone
+        );
+
+    }
+
+
+    /* ==========================================
+       BEFORE INSTALL PROMPT
+    ========================================== */
 
     window.addEventListener(
-        "load",
+        "beforeinstallprompt",
+        function (event) {
+
+            console.log(
+                "Peppy Fashion installation available."
+            );
+
+
+            /*
+               Stop browser from automatically
+               showing its own prompt.
+            */
+
+            event.preventDefault();
+
+
+            /*
+               Save the event so our button
+               can trigger it later.
+            */
+
+            deferredInstallPrompt =
+                event;
+
+
+            showInstallButton();
+
+        }
+    );
+
+
+    /* ==========================================
+       APP INSTALLED
+    ========================================== */
+
+    window.addEventListener(
+        "appinstalled",
         function () {
 
-            navigator.serviceWorker
-                .register("sw.js")
-                .then(function (registration) {
+            console.log(
+                "Peppy Fashion installed successfully."
+            );
+
+
+            deferredInstallPrompt =
+                null;
+
+
+            hideInstallButton();
+
+        }
+    );
+
+
+    /* ==========================================
+       SERVICE WORKER
+    ========================================== */
+
+    function registerServiceWorker() {
+
+        if (
+            !("serviceWorker" in navigator)
+        ) {
+
+            console.warn(
+                "Service Worker is not supported."
+            );
+
+            return;
+
+        }
+
+
+        /*
+           Register from the project root.
+
+           This matches:
+           /peppy-fashion-v2/sw.js
+        */
+
+        navigator.serviceWorker
+            .register(
+                "sw.js",
+                {
+                    scope:
+                        "./"
+                }
+            )
+
+            .then(
+                function (registration) {
 
                     console.log(
                         "Peppy Fashion Service Worker registered:",
                         registration.scope
                     );
 
-                })
-                .catch(function (error) {
+                }
+            )
 
-                    console.log(
+            .catch(
+                function (error) {
+
+                    console.error(
                         "Service Worker registration failed:",
                         error
                     );
 
-                });
+                }
+            );
+
+    }
+
+
+    /* ==========================================
+       START PWA SYSTEM
+    ========================================== */
+
+    function initializePWA() {
+
+        createInstallButton();
+
+
+        /*
+           If already installed,
+           keep button hidden.
+        */
+
+        if (isAppInstalled()) {
+
+            hideInstallButton();
 
         }
-    );
-
-}
 
 
-/* =========================================================
-   GLOBAL INSTALL FUNCTION
-   ========================================================= */
+        /*
+           Register service worker.
+        */
 
-window.installPeppyApp = installPeppyApp;
+        registerServiceWorker();
+
+    }
+
+
+    /* ==========================================
+       DOM READY
+    ========================================== */
+
+    if (
+        document.readyState ===
+        "loading"
+    ) {
+
+        document.addEventListener(
+            "DOMContentLoaded",
+            initializePWA
+        );
+
+    } else {
+
+        initializePWA();
+
+    }
+
+
+    /* ==========================================
+       GLOBAL INSTALL FUNCTION
+    ========================================== */
+
+    window.installPeppyApp =
+        installApp;
+
+
+})();
