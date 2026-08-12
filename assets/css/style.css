@@ -1989,6 +1989,312 @@ display:none;
 }
 
 }
+/* ==========================================
+   PEPPY FASHION
+   SHOP NOW + APP INSTALL SECTION
+========================================== */
+
+
+/* ==========================================
+   SHOP NOW SECTION
+========================================== */
+
+.shop-now-section {
+    width: 100%;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px 0 40px;
+}
+
+
+.shop-now-section .section-title {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 28px;
+}
+
+
+.shop-now-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-width: 180px;
+    min-height: 56px;
+
+    padding: 15px 30px;
+
+    background: #e60023;
+    color: #ffffff;
+
+    font-size: 18px;
+    font-weight: 700;
+
+    text-decoration: none;
+
+    border-radius: 10px;
+
+    box-shadow:
+        0 6px 18px rgba(0, 0, 0, 0.15);
+
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease,
+        background 0.25s ease;
+}
+
+
+.shop-now-btn:hover {
+    background: #c9001f;
+
+    transform: translateY(-3px);
+
+    box-shadow:
+        0 10px 24px rgba(0, 0, 0, 0.20);
+}
+
+
+.shop-now-btn:active {
+    transform: scale(0.97);
+}
+
+
+
+/* ==========================================
+   APP INSTALL SECTION
+========================================== */
+
+.app-install-section {
+    padding-top: 20px;
+    padding-bottom: 50px;
+}
+
+
+.app-install-box {
+    width: 100%;
+    max-width: 760px;
+
+    margin: 0 auto;
+
+    padding: 40px 25px;
+
+    text-align: center;
+
+    background:
+        linear-gradient(
+            135deg,
+            #ffffff,
+            #faf7ff
+        );
+
+    border-radius: 22px;
+
+    border: 1px solid rgba(108, 59, 208, 0.12);
+
+    box-shadow:
+        0 10px 35px rgba(0, 0, 0, 0.08);
+}
+
+
+.app-install-icon {
+    width: 70px;
+    height: 70px;
+
+    margin: 0 auto 18px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 38px;
+
+    background: #f0eaff;
+
+    border-radius: 20px;
+}
+
+
+.app-install-box h2 {
+    margin: 0 0 12px;
+
+    font-size: 28px;
+    font-weight: 700;
+
+    color: #222;
+}
+
+
+.app-install-box p {
+    max-width: 600px;
+
+    margin: 0 auto 24px;
+
+    font-size: 16px;
+    line-height: 1.6;
+
+    color: #666;
+}
+
+
+/* ==========================================
+   INSTALL BUTTON
+========================================== */
+
+.app-install-box .install-btn {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    min-height: 52px;
+
+    padding: 14px 28px;
+
+    border: none;
+    border-radius: 10px;
+
+    background: #6c3bd0;
+    color: #ffffff;
+
+    font-size: 16px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 6px 18px rgba(108, 59, 208, 0.25);
+
+    transition:
+        transform 0.25s ease,
+        background 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+
+.app-install-box .install-btn:hover {
+    background: #5729b5;
+
+    transform: translateY(-3px);
+
+    box-shadow:
+        0 10px 25px rgba(108, 59, 208, 0.30);
+}
+
+
+.app-install-box .install-btn:active {
+    transform: scale(0.97);
+}
+
+
+/* ==========================================
+   INSTALL MESSAGE
+========================================== */
+
+.install-app-message {
+    margin-top: 16px !important;
+    margin-bottom: 0 !important;
+
+    font-size: 13px !important;
+
+    color: #777 !important;
+}
+
+
+
+/* ==========================================
+   MOBILE
+========================================== */
+
+@media (max-width: 768px) {
+
+    .shop-now-section {
+        padding: 10px 0 30px;
+    }
+
+
+    .shop-now-section .section-title {
+        margin-bottom: 22px;
+    }
+
+
+    .shop-now-btn {
+        width: 90%;
+        max-width: 320px;
+
+        min-height: 56px;
+
+        font-size: 17px;
+    }
+
+
+    .app-install-section {
+        padding-top: 10px;
+        padding-bottom: 35px;
+    }
+
+
+    .app-install-box {
+        width: calc(100% - 10px);
+
+        padding: 32px 18px;
+
+        border-radius: 18px;
+    }
+
+
+    .app-install-icon {
+        width: 62px;
+        height: 62px;
+
+        font-size: 32px;
+    }
+
+
+    .app-install-box h2 {
+        font-size: 24px;
+    }
+
+
+    .app-install-box p {
+        font-size: 15px;
+    }
+
+
+    .app-install-box .install-btn {
+        width: 100%;
+        max-width: 320px;
+
+        font-size: 15px;
+    }
+
+}
+
+
+
+/* ==========================================
+   SMALL MOBILE
+========================================== */
+
+@media (max-width: 480px) {
+
+    .app-install-box {
+        padding: 28px 15px;
+    }
+
+
+    .app-install-box h2 {
+        font-size: 22px;
+    }
+
+
+    .shop-now-btn {
+        width: 92%;
+    }
+
+}
 
 /* ==========================================
 END OF FILE
