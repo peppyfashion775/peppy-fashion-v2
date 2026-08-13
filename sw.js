@@ -3,7 +3,7 @@
    SERVICE WORKER
 ========================================== */
 
-const CACHE_NAME = "peppy-fashion-v5";
+const CACHE_NAME = "peppy-fashion-v6";
 
 
 /* ==========================================

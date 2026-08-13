@@ -1,73 +1,238 @@
 <!DOCTYPE html>
-
 <html lang="en">
-
 
 <head>
 
 <meta charset="UTF-8">
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
 
+<!-- ===========================
+PRIMARY SEO
+=========================== -->
 
 <title>Product Details | Peppy Fashion</title>
 
+<meta
+    name="description"
+    content="View product details, prices, sizes and availability at Peppy Fashion. Shop quality men's, women's, kids' and sports fashion online in Bangladesh."
+>
 
-<link rel="stylesheet" href="assets/css/style.css">
+<meta
+    name="author"
+    content="Peppy Fashion"
+>
 
+<meta
+    name="robots"
+    content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+>
+
+<meta
+    name="theme-color"
+    content="#6C3BD0"
+>
+
+
+<!-- ===========================
+CANONICAL
+=========================== -->
+
+<link
+    id="canonicalUrl"
+    rel="canonical"
+    href="https://peppyfashion775.github.io/peppy-fashion-v2/product.html"
+>
+
+
+<!-- ===========================
+FAVICON
+=========================== -->
+
+<link
+    rel="icon"
+    type="image/png"
+    href="assets/images/logo/logo.png"
+>
+
+<link
+    rel="apple-touch-icon"
+    href="assets/images/logo/icon-192.png"
+>
+
+
+<!-- ===========================
+OPEN GRAPH / FACEBOOK
+=========================== -->
+
+<meta
+    id="ogType"
+    property="og:type"
+    content="product"
+>
+
+<meta
+    id="ogTitle"
+    property="og:title"
+    content="Product Details | Peppy Fashion"
+>
+
+<meta
+    id="ogDescription"
+    property="og:description"
+    content="View product details and shop quality fashion from Peppy Fashion."
+>
+
+<meta
+    id="ogUrl"
+    property="og:url"
+    content="https://peppyfashion775.github.io/peppy-fashion-v2/product.html"
+>
+
+<meta
+    property="og:site_name"
+    content="Peppy Fashion"
+>
+
+<meta
+    id="ogImage"
+    property="og:image"
+    content="https://peppyfashion775.github.io/peppy-fashion-v2/assets/images/logo/logo.png"
+>
+
+<meta
+    id="ogImageAlt"
+    property="og:image:alt"
+    content="Peppy Fashion Product"
+>
+
+<meta
+    property="og:locale"
+    content="en_US"
+>
+
+
+<!-- ===========================
+TWITTER / X
+=========================== -->
+
+<meta
+    name="twitter:card"
+    content="summary_large_image"
+>
+
+<meta
+    id="twitterTitle"
+    name="twitter:title"
+    content="Product Details | Peppy Fashion"
+>
+
+<meta
+    id="twitterDescription"
+    name="twitter:description"
+    content="View product details and shop quality fashion from Peppy Fashion."
+>
+
+<meta
+    id="twitterImage"
+    name="twitter:image"
+    content="https://peppyfashion775.github.io/peppy-fashion-v2/assets/images/logo/logo.png"
+>
+
+
+<!-- ===========================
+PRODUCT STRUCTURED DATA
+=========================== -->
+
+<script
+    id="productSchema"
+    type="application/ld+json"
+>
+{
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "name": "Peppy Fashion Product",
+    "description": "Fashion product from Peppy Fashion.",
+    "brand": {
+        "@type": "Brand",
+        "name": "Peppy Fashion"
+    }
+}
+</script>
+
+
+<!-- ===========================
+STYLESHEET
+=========================== -->
+
+<link
+    rel="stylesheet"
+    href="assets/css/style.css"
+>
+
+
+<!-- ===========================
+PWA MANIFEST
+=========================== -->
+
+<link
+    rel="manifest"
+    href="manifest.json"
+>
 
 </head>
-
 
 
 <body>
 
 
-
-
-<!-- HEADER -->
-
+<!-- ===========================
+HEADER
+=========================== -->
 
 <header>
 
-
 <div class="container header-container">
-
 
 <div class="logo">
 
+<a href="index.html">
 
-<img src="assets/images/logo/logo.png" 
-alt="Peppy Fashion Logo">
+<img
+    src="assets/images/logo/logo.png"
+    alt="Peppy Fashion Logo"
+>
 
+</a>
 
 </div>
 
 
-
-
-
-<button 
-class="menu-btn"
-onclick="toggleMenu()">
+<button
+    class="menu-btn"
+    type="button"
+    onclick="toggleMenu()"
+    aria-label="Open Menu"
+>
 
 ☰
 
 </button>
 
 
-
-
-
-<nav class="navbar">
-
+<nav
+    class="navbar"
+    id="mainNavbar"
+>
 
 <a href="index.html">
 
 Home
 
 </a>
-
 
 
 <a href="shop.html">
@@ -77,14 +242,12 @@ Shop
 </a>
 
 
-
 <a href="cart.html">
 
-Cart 
+Cart
 (<span id="cartCount">0</span>)
 
 </a>
-
 
 
 <a href="contact.html">
@@ -94,60 +257,64 @@ Contact
 </a>
 
 
+<a href="wishlist.html">
+
+❤️ Wishlist
+
+</a>
+
+
+<a href="account.html">
+
+👤 My Account
+
+</a>
+
 </nav>
 
-
-
 </div>
-
 
 </header>
 
 
 
+<!-- ===========================
+PRODUCT DETAILS
+=========================== -->
 
-
-
-
-<!-- PRODUCT DETAILS -->
-
-
-<section class="section">
-
+<section
+    class="section"
+    aria-label="Product Details"
+>
 
 <div class="container">
 
-
 <div id="productDetails">
 
+<div class="loading-products">
+
+Loading Product Details...
 
 </div>
 
-
-
 </div>
 
+</div>
 
 </section>
 
 
 
-
-
-
-
-<!-- FOOTER -->
-
+<!-- ===========================
+FOOTER
+=========================== -->
 
 <footer>
-
 
 <div class="container footer-grid">
 
 
-
 <div>
-
 
 <h3>
 
@@ -155,29 +322,23 @@ Peppy Fashion
 
 </h3>
 
-
 <p>
 
 Your online fashion destination.
 
 </p>
 
-
 </div>
 
 
 
-
-
 <div>
-
 
 <h3>
 
 Quick Links
 
 </h3>
-
 
 <p>
 
@@ -189,7 +350,6 @@ Home
 
 </p>
 
-
 <p>
 
 <a href="shop.html">
@@ -199,7 +359,6 @@ Shop
 </a>
 
 </p>
-
 
 <p>
 
@@ -211,15 +370,21 @@ Cart
 
 </p>
 
+<p>
+
+<a href="contact.html">
+
+Contact
+
+</a>
+
+</p>
 
 </div>
 
 
 
-
-
 <div>
-
 
 <h3>
 
@@ -227,16 +392,11 @@ Contact
 
 </h3>
 
-
-
 <p>
 
 📍 Shalbahan, Tetulia, Panchagarh
 
 </p>
-
-
-
 
 <p>
 
@@ -244,41 +404,467 @@ Contact
 
 </p>
 
-
-
 <p>
 
 ✉ Email: peppyfashionbd@gmail.com
 
 </p>
 
-
-
 </div>
 
 
-
 </div>
-
 
 </footer>
 
 
 
-
-
-
-
+<!-- ===========================
+PRODUCTS
+=========================== -->
 
 <script src="assets/js/products.js"></script>
 
+
+<!-- ===========================
+CART
+=========================== -->
+
 <script src="assets/js/cart.js"></script>
+
+
+<!-- ===========================
+MAIN SCRIPT
+=========================== -->
 
 <script src="assets/js/script.js"></script>
 
 
+<!-- ===========================
+PWA INSTALL SCRIPT
+=========================== -->
+
+<script src="assets/js/pwa.js"></script>
+
+
+<!-- ===========================
+PRODUCT SEO
+=========================== -->
+
+<script>
+
+document.addEventListener(
+    "DOMContentLoaded",
+    async function () {
+
+        /*
+        Wait for products.js to load products.
+        */
+
+        if (
+            typeof loadProducts === "function"
+        ) {
+
+            await loadProducts();
+
+        }
+
+
+        /*
+        Get product ID from URL.
+        Example:
+
+        product.html?id=123
+        */
+
+        const params =
+            new URLSearchParams(
+                window.location.search
+            );
+
+
+        const productId =
+            params.get("id");
+
+
+        if (
+            !productId ||
+            typeof getProductById !== "function"
+        ) {
+
+            return;
+
+        }
+
+
+        const product =
+            getProductById(productId);
+
+
+        if (!product) {
+
+            return;
+
+        }
+
+
+        /*
+        PRODUCT INFORMATION
+        */
+
+        const productName =
+            product.name ||
+            "Product";
+
+
+        const productDescription =
+            product.description ||
+            (
+                productName +
+                " available at Peppy Fashion. " +
+                "Shop quality fashion products online in Bangladesh."
+            );
+
+
+        const productImage =
+            product.image ||
+            "https://peppyfashion775.github.io/peppy-fashion-v2/assets/images/logo/logo.png";
+
+
+        const productUrl =
+            window.location.origin +
+            window.location.pathname +
+            "?id=" +
+            encodeURIComponent(product.id);
+
+
+        /*
+        UPDATE PAGE TITLE
+        */
+
+        document.title =
+            productName +
+            " | Peppy Fashion";
+
+
+        /*
+        UPDATE META DESCRIPTION
+        */
+
+        const descriptionMeta =
+            document.querySelector(
+                'meta[name="description"]'
+            );
+
+
+        if (descriptionMeta) {
+
+            descriptionMeta.setAttribute(
+                "content",
+                productDescription
+            );
+
+        }
+
+
+        /*
+        UPDATE CANONICAL
+        */
+
+        const canonical =
+            document.getElementById(
+                "canonicalUrl"
+            );
+
+
+        if (canonical) {
+
+            canonical.setAttribute(
+                "href",
+                productUrl
+            );
+
+        }
+
+
+        /*
+        UPDATE FACEBOOK / OPEN GRAPH
+        */
+
+        const ogTitle =
+            document.getElementById(
+                "ogTitle"
+            );
+
+
+        if (ogTitle) {
+
+            ogTitle.setAttribute(
+                "content",
+                productName +
+                " | Peppy Fashion"
+            );
+
+        }
+
+
+        const ogDescription =
+            document.getElementById(
+                "ogDescription"
+            );
+
+
+        if (ogDescription) {
+
+            ogDescription.setAttribute(
+                "content",
+                productDescription
+            );
+
+        }
+
+
+        const ogUrl =
+            document.getElementById(
+                "ogUrl"
+            );
+
+
+        if (ogUrl) {
+
+            ogUrl.setAttribute(
+                "content",
+                productUrl
+            );
+
+        }
+
+
+        const ogImage =
+            document.getElementById(
+                "ogImage"
+            );
+
+
+        if (ogImage) {
+
+            ogImage.setAttribute(
+                "content",
+                productImage
+            );
+
+        }
+
+
+        const ogImageAlt =
+            document.getElementById(
+                "ogImageAlt"
+            );
+
+
+        if (ogImageAlt) {
+
+            ogImageAlt.setAttribute(
+                "content",
+                productName
+            );
+
+        }
+
+
+        /*
+        UPDATE TWITTER
+        */
+
+        const twitterTitle =
+            document.getElementById(
+                "twitterTitle"
+            );
+
+
+        if (twitterTitle) {
+
+            twitterTitle.setAttribute(
+                "content",
+                productName +
+                " | Peppy Fashion"
+            );
+
+        }
+
+
+        const twitterDescription =
+            document.getElementById(
+                "twitterDescription"
+            );
+
+
+        if (twitterDescription) {
+
+            twitterDescription.setAttribute(
+                "content",
+                productDescription
+            );
+
+        }
+
+
+        const twitterImage =
+            document.getElementById(
+                "twitterImage"
+            );
+
+
+        if (twitterImage) {
+
+            twitterImage.setAttribute(
+                "content",
+                productImage
+            );
+
+        }
+
+
+        /*
+        PRODUCT STRUCTURED DATA
+        */
+
+        const schema =
+            document.getElementById(
+                "productSchema"
+            );
+
+
+        if (schema) {
+
+            const schemaData = {
+
+                "@context":
+                    "https://schema.org",
+
+                "@type":
+                    "Product",
+
+                "name":
+                    productName,
+
+                "description":
+                    productDescription,
+
+                "image": [
+                    productImage
+                ],
+
+                "brand": {
+
+                    "@type":
+                        "Brand",
+
+                    "name":
+                        "Peppy Fashion"
+
+                },
+
+                "category":
+                    product.category ||
+                    "Fashion",
+
+                "sku":
+                    String(product.id),
+
+                "offers": {
+
+                    "@type":
+                        "Offer",
+
+                    "url":
+                        productUrl,
+
+                    "priceCurrency":
+                        "BDT",
+
+                    "price":
+                        String(
+                            product.price || 0
+                        ),
+
+                    "availability":
+                        Number(product.stock) > 0
+                        ? "https://schema.org/InStock"
+                        : "https://schema.org/OutOfStock",
+
+                    "seller": {
+
+                        "@type":
+                            "Organization",
+
+                        "name":
+                            "Peppy Fashion"
+
+                    }
+
+                }
+
+            };
+
+
+            schema.textContent =
+                JSON.stringify(
+                    schemaData
+                );
+
+        }
+
+    }
+
+);
+
+</script>
+
+
+
+<!-- ===========================
+SERVICE WORKER
+=========================== -->
+
+<script>
+
+if ("serviceWorker" in navigator) {
+
+    window.addEventListener(
+        "load",
+        function () {
+
+            navigator.serviceWorker
+                .register("sw.js")
+                .then(
+                    function () {
+
+                        console.log(
+                            "Service Worker Registered"
+                        );
+
+                    }
+                )
+                .catch(
+                    function (error) {
+
+                        console.log(
+                            "Service Worker Error:",
+                            error
+                        );
+
+                    }
+                );
+
+        }
+    );
+
+}
+
+</script>
+
 
 </body>
-
 
 </html>
