@@ -1,0 +1,32 @@
+{
+  "id": "/peppy-fashion-v2/",
+  "name": "Peppy Fashion",
+  "short_name": "Peppy",
+  "description": "Premium Fashion Shopping in Bangladesh",
+  "lang": "en",
+  "dir": "ltr",
+
+  "start_url": "/peppy-fashion-v2/index.html",
+  "scope": "/peppy-fashion-v2/",
+
+  "display": "standalone",
+  "orientation": "portrait",
+
+  "background_color": "#ffffff",
+  "theme_color": "#6C3BD0",
+
+  "icons": [
+  {
+    "src": "icons/icon-192.png",
+    "sizes": "192x192",
+    "type": "image/png",
+    "purpose": "any maskable"
+  },
+  {
+    "src": "icons/icon-512.png",
+    "sizes": "512x512",
+    "type": "image/png",
+    "purpose": "any maskable"
+  }
+]
+}
