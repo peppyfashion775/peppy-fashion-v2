@@ -20,6 +20,7 @@ const categoryConfig = {
         "Shoes",
         "Watches",
         "Sunglasses",
+        "Perfumes",
         "Accessories"
     ],
 
@@ -36,6 +37,7 @@ const categoryConfig = {
         "Shoes",
         "Sunglasses",
         "Watches",
+        "Perfumes",
         "Accessories"
     ],
 
@@ -47,6 +49,7 @@ const categoryConfig = {
         "Pants",
         "Panjabi",
         "Shoes",
+        "Toyes",
         "Accessories"
     ],
 
@@ -55,6 +58,7 @@ const categoryConfig = {
         "Jersey",
         "Shoes",
         "Shorts",
+        "Bags",
         "Accessories"
     ]
 
@@ -466,7 +470,7 @@ function displayProducts(productList = products) {
 <div class="product-image">
 
 <img
-src="${product.image}"
+src="assets/images/products/${product.image}"
 alt="${product.name}">
 
 </div>
@@ -643,7 +647,7 @@ ${size}
 <div>
 
 <img
-src="${product.image}"
+src="assets/images/products/${product.image}"
 alt="${product.name}">
 
 </div>
