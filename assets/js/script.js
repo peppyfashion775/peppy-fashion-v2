@@ -417,12 +417,6 @@ function getProductImagePath(image) {
 
 function displayProducts(productList = products) {
 
-/* =====================================
-   DISPLAY PRODUCTS
-===================================== */
-
-function displayProducts(productList = products) {
-
     const container =
         document.getElementById("productContainer");
 
