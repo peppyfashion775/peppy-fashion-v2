@@ -373,6 +373,49 @@ function filterCategory(category){
     applyFilters();
 
 }
+/* =====================================
+   PRODUCT IMAGE PATH
+===================================== */
+
+function getProductImagePath(image) {
+
+    if (!image) {
+        return "";
+    }
+
+    image = String(image).trim();
+
+    /* Full image URL */
+    if (
+        image.startsWith("http://") ||
+        image.startsWith("https://") ||
+        image.startsWith("data:")
+    ) {
+        return image;
+    }
+
+    /* Already correct */
+    if (
+        image.startsWith("assets/images/products/")
+    ) {
+        return image;
+    }
+
+    /* Remove ./ or / */
+    image = image
+        .replace(/^\.?\//, "")
+        .replace(/^\/+/, "");
+
+    /* Add correct folder */
+    return "assets/images/products/" + image;
+}
+
+
+/* =====================================
+   DISPLAY PRODUCTS
+===================================== */
+
+function displayProducts(productList = products) {
 
 /* =====================================
    DISPLAY PRODUCTS
@@ -466,7 +509,7 @@ function displayProducts(productList = products) {
 <div class="product-image">
 
 <img
-src="${product.image}"
+src="${getProductImagePath(product.image)}"
 alt="${product.name}">
 
 </div>
@@ -643,7 +686,7 @@ ${size}
 <div>
 
 <img
-src="${product.image}"
+src="${getProductImagePath(product.image)}"
 alt="${product.name}">
 
 </div>
