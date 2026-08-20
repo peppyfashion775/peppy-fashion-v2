@@ -6,10 +6,47 @@
 let products = [];
 
 const API_URL =
-"https://script.google.com/macros/s/AKfycbwbHxHS5GuRH4Lr-L5wTs8aRjXbdgK60CyM0muAjRvhUKZ-1IzeFBGq7y6an9d0Kmg_/exec";
+"https://script.google.com/macros/s/AKfycbwbHxHS5GuRH4Lr-L5wTs8aRjXbdgK60CyM0muAjRvhUKZ-1IzeFBGqG7y6an9d0Kmg_/exec";
 
 const CACHE_KEY = "peppy_products";
 
+
+/* =====================================
+   IMAGE PATH HELPER
+===================================== */
+
+function getProductImage(image){
+
+    if(!image){
+        return "";
+    }
+
+    image = String(image).trim();
+
+    /* Already a full URL */
+    if(
+        image.startsWith("http://") ||
+        image.startsWith("https://") ||
+        image.startsWith("data:")
+    ){
+        return image;
+    }
+
+    /* Already contains the correct folder */
+    if(
+        image.includes("assets/images/products/")
+    ){
+        return image.replace(/^\.?\//, "");
+    }
+
+    /* Remove old leading slash/path if any */
+    image = image
+        .replace(/^\/+/, "")
+        .replace(/^\.?\//, "");
+
+    /* Add product image folder */
+    return "assets/images/products/" + image;
+}
 
 
 /* =====================================
@@ -19,16 +56,12 @@ const CACHE_KEY = "peppy_products";
 async function loadProducts(){
 
     if(products.length > 0){
-
         return products;
-
     }
 
 
-
     let cachedProducts =
-    localStorage.getItem(CACHE_KEY);
-
+        localStorage.getItem(CACHE_KEY);
 
 
     if(cachedProducts){
@@ -38,11 +71,13 @@ async function loadProducts(){
             products =
             JSON.parse(cachedProducts);
 
-
+            /* Fix image paths from old cache */
+            products = products.map(product => ({
+                ...product,
+                image: getProductImage(product.image)
+            }));
 
             refreshProducts();
-
-
 
             return products;
 
@@ -57,11 +92,9 @@ async function loadProducts(){
     }
 
 
-
     return await refreshProducts();
 
 }
-
 
 
 /* =====================================
@@ -76,7 +109,6 @@ async function refreshProducts(){
         await fetch(API_URL);
 
 
-
         if(!response.ok){
 
             throw new Error(
@@ -86,10 +118,8 @@ async function refreshProducts(){
         }
 
 
-
         const data =
         await response.json();
-
 
 
         if(
@@ -104,57 +134,57 @@ async function refreshProducts(){
             data.products.map(product => ({
 
                 id:
-                Number(product.id),
+                    Number(product.id),
 
                 name:
-                product.name || "",
+                    product.name || "",
 
                 category:
-                product.category || "Others",
+                    product.category || "Others",
 
                 subCategory:
-                product.subCategory || "All",
+                    product.subCategory || "All",
 
                 collection:
-                product.collection || "",
+                    product.collection || "",
 
                 price:
-                Number(product.price) || 0,
+                    Number(product.price) || 0,
 
                 oldPrice:
-                product.oldPrice
-                ? Number(product.oldPrice)
-                : null,
+                    product.oldPrice
+                    ? Number(product.oldPrice)
+                    : null,
 
                 discount:
-                Number(product.discount) || 0,
+                    Number(product.discount) || 0,
 
+                /* FIXED IMAGE PATH */
                 image:
-                product.image || "",
+                    getProductImage(product.image),
 
                 badge:
-                product.badge || "",
+                    product.badge || "",
 
                 stock:
-                Number(product.stock) || 0,
+                    Number(product.stock) || 0,
 
                 featured:
-                String(product.featured)
-                .toLowerCase(),
+                    String(product.featured)
+                    .toLowerCase(),
 
                 description:
-                product.description || "",
+                    product.description || "",
 
                 sizes:
 
-                Array.isArray(product.sizes)
+                    Array.isArray(product.sizes)
 
-                ? product.sizes
+                    ? product.sizes
 
-                : []
+                    : []
 
             }));
-
 
 
             localStorage.setItem(
@@ -168,10 +198,10 @@ async function refreshProducts(){
         }
 
 
-
         return products;
 
     }
+
 
     catch(error){
 
@@ -182,6 +212,7 @@ async function refreshProducts(){
     }
 
 }
+
 
 /* =====================================
    GET PRODUCT BY ID
@@ -198,7 +229,6 @@ function getProductById(id){
 }
 
 
-
 /* =====================================
    GET PRODUCTS BY CATEGORY
 ===================================== */
@@ -209,13 +239,13 @@ function getProductsByCategory(category){
 
         String(product.category)
         .toLowerCase() ===
+
         String(category)
         .toLowerCase()
 
     );
 
 }
-
 
 
 /* =====================================
@@ -233,6 +263,7 @@ function getFeaturedProducts(){
 
 }
 
+
 /* =====================================
    GET COLLECTION PRODUCTS
 ===================================== */
@@ -243,13 +274,13 @@ function getCollectionProducts(collection){
 
         String(product.collection)
         .toLowerCase() ===
+
         String(collection)
         .toLowerCase()
 
     );
 
 }
-
 
 
 /* =====================================
@@ -287,4 +318,3 @@ function searchAllProducts(keyword){
     );
 
 }
-
