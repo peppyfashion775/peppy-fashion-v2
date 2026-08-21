@@ -6,7 +6,7 @@
 let products = [];
 
 const API_URL =
-"https://script.google.com/macros/s/AKfycbwbHxHS5GuRH4Lr-L5wTs8aRjXbdgK60CyM0muAjRvhUKZ-1IzeFBGqG7y6an9d0Kmg_/exec";
+"https://script.google.com/macros/s/AKfycbwbHxHS5GuRH4Lr-L5wTs8aRjXbdgK60CyM0muAjRvhUKZ-1IzeFBGq7y6an9d0Kmg_/exec";
 
 const CACHE_KEY = "peppy_products";
 
