@@ -199,27 +199,54 @@ function changeSubCategory(
 }
 
 /* =====================================
+   NORMALIZE TEXT
+===================================== */
+
+function normalizeText(text) {
+    return String(text || "")
+        .trim()
+        .toLowerCase()
+        .replace(/['’`]/g, "")
+        .replace(/[^a-z0-9]/g, "");
+}
+
+
+/* =====================================
    APPLY FILTERS
 ===================================== */
 
 function applyFilters() {
 
+    if (!Array.isArray(products)) {
+        console.error("Products data not available");
+        return;
+    }
+
     let filtered = [...products];
+
 
     /* MAIN CATEGORY */
 
     if (selectedMainCategory !== "All") {
 
-        filtered = filtered.filter(product =>
+        const selectedCategory =
+            normalizeText(selectedMainCategory);
 
-            (product.category || "")
-            .toLowerCase()
-            ===
-            selectedMainCategory.toLowerCase()
+        filtered = filtered.filter(product => {
 
-        );
+            const productCategory =
+                product.category ||
+                product.Category ||
+                product.mainCategory ||
+                "";
+
+            return normalizeText(productCategory)
+                === selectedCategory;
+
+        });
 
     }
+
 
     /* SUB CATEGORY */
 
@@ -228,23 +255,30 @@ function applyFilters() {
         selectedSubCategory !== "All"
     ) {
 
-        filtered = filtered.filter(product =>
+        const selectedSub =
+            normalizeText(selectedSubCategory);
 
-            (product.subCategory || "")
-            .toLowerCase()
-            ===
-            selectedSubCategory.toLowerCase()
+        filtered = filtered.filter(product => {
 
-        );
+            const productSubCategory =
+                product.subCategory ||
+                product.subcategory ||
+                product.SubCategory ||
+                product["Sub Category"] ||
+                "";
+
+            return normalizeText(productSubCategory)
+                === selectedSub;
+
+        });
 
     }
+
 
     /* SEARCH */
 
     const searchInput =
-        document.getElementById(
-            "searchInput"
-        );
+        document.getElementById("searchInput");
 
     if (
         searchInput &&
@@ -252,87 +286,67 @@ function applyFilters() {
     ) {
 
         const keyword =
-            searchInput.value
-            .trim()
-            .toLowerCase();
+            normalizeText(searchInput.value);
 
         filtered = filtered.filter(product => {
 
-            return (
+            const searchableText = [
+                product.name,
+                product.category,
+                product.Category,
+                product.subCategory,
+                product.subcategory,
+                product.collection,
+                product.badge
+            ]
+            .map(item => normalizeText(item))
+            .join(" ");
 
-                (product.name || "")
-                .toLowerCase()
-                .includes(keyword)
-
-                ||
-
-                (product.category || "")
-                .toLowerCase()
-                .includes(keyword)
-
-                ||
-
-                (product.subCategory || "")
-                .toLowerCase()
-                .includes(keyword)
-
-                ||
-
-                (product.collection || "")
-                .toLowerCase()
-                .includes(keyword)
-
-                ||
-
-                (product.badge || "")
-                .toLowerCase()
-                .includes(keyword)
-
-            );
+            return searchableText.includes(keyword);
 
         });
 
     }
 
+
     /* SORT */
 
     const sort =
-        document.getElementById(
-            "sortProducts"
-        );
+        document.getElementById("sortProducts");
 
     if (sort) {
 
         switch (sort.value) {
 
             case "low":
-
                 filtered.sort(
-                    (a,b)=>a.price-b.price
+                    (a, b) =>
+                    Number(a.price) - Number(b.price)
                 );
-
                 break;
 
             case "high":
-
                 filtered.sort(
-                    (a,b)=>b.price-a.price
+                    (a, b) =>
+                    Number(b.price) - Number(a.price)
                 );
-
                 break;
 
             case "name":
-
                 filtered.sort(
-                    (a,b)=>
-                    a.name.localeCompare(b.name)
+                    (a, b) =>
+                    String(a.name)
+                    .localeCompare(String(b.name))
                 );
-
                 break;
 
         }
 
     }
+
+    console.log("Category:", selectedMainCategory);
+    console.log("Subcategory:", selectedSubCategory);
+    console.log("Products:", filtered);
 
     displayProducts(filtered);
 
@@ -358,21 +372,6 @@ function sortProducts(){
 
 }
 
-/* =====================================
-   CATEGORY FILTER
-===================================== */
-
-function filterCategory(category){
-
-    selectedMainCategory = category;
-
-    selectedSubCategory = "All";
-
-    renderSubCategories();
-
-    applyFilters();
-
-}
 
 /* =====================================
    DISPLAY PRODUCTS

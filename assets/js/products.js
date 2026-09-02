@@ -15,34 +15,34 @@ const CACHE_KEY = "peppy_products";
 /* =====================================
    LOAD PRODUCTS
 ===================================== */
-
 async function loadProducts(){
 
     if(products.length > 0){
-
         return products;
-
     }
 
-
-
     let cachedProducts =
-    localStorage.getItem(CACHE_KEY);
-
-
+        localStorage.getItem(CACHE_KEY);
 
     if(cachedProducts){
 
         try{
 
             products =
-            JSON.parse(cachedProducts);
+                JSON.parse(cachedProducts);
 
+            // Refresh in background
+            refreshProducts().then(() => {
 
+                // Re-render shop after fresh data arrives
+                if(
+                    typeof applyFilters === "function" &&
+                    document.getElementById("productContainer")
+                ){
+                    applyFilters();
+                }
 
-            refreshProducts();
-
-
+            });
 
             return products;
 
@@ -50,18 +50,20 @@ async function loadProducts(){
 
         catch(error){
 
+            console.error(
+                "Invalid cached products:",
+                error
+            );
+
             localStorage.removeItem(CACHE_KEY);
 
         }
 
     }
 
-
-
     return await refreshProducts();
 
 }
-
 
 
 /* =====================================
