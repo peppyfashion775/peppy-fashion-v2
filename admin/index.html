@@ -1,0 +1,1214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Peppy Fashion — Admin Panel</title>
+
+    <meta
+        name="robots"
+        content="noindex,nofollow"
+    >
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --primary: #111827;
+            --primary-hover: #1f2937;
+            --background: #f3f4f6;
+            --card: #ffffff;
+            --border: #e5e7eb;
+            --text: #111827;
+            --muted: #6b7280;
+            --danger: #dc2626;
+            --success: #16a34a;
+        }
+
+        body {
+            min-height: 100vh;
+            background: var(--background);
+            color: var(--text);
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+        }
+
+        button,
+        input {
+            font: inherit;
+        }
+
+        button {
+            cursor: pointer;
+        }
+
+        /* =========================
+           LOGIN
+        ========================= */
+
+        .login-page {
+            min-height: 100vh;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            padding: 24px;
+        }
+
+        .login-card {
+            width: 100%;
+            max-width: 420px;
+
+            background: var(--card);
+
+            border: 1px solid var(--border);
+            border-radius: 16px;
+
+            padding: 32px;
+
+            box-shadow:
+                0 10px 30px rgba(0, 0, 0, 0.08);
+        }
+
+        .brand {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .brand h1 {
+            font-size: 28px;
+            margin-bottom: 8px;
+        }
+
+        .brand p {
+            color: var(--muted);
+            font-size: 14px;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        .form-group label {
+            display: block;
+
+            margin-bottom: 7px;
+
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .form-group input {
+            width: 100%;
+
+            padding: 13px 14px;
+
+            border: 1px solid var(--border);
+            border-radius: 8px;
+
+            outline: none;
+
+            transition:
+                border-color 0.2s,
+                box-shadow 0.2s;
+        }
+
+        .form-group input:focus {
+            border-color: var(--primary);
+
+            box-shadow:
+                0 0 0 3px rgba(17, 24, 39, 0.08);
+        }
+
+        .btn {
+            width: 100%;
+
+            border: none;
+            border-radius: 8px;
+
+            padding: 13px 16px;
+
+            background: var(--primary);
+            color: white;
+
+            font-weight: 600;
+
+            transition:
+                background 0.2s,
+                transform 0.1s;
+        }
+
+        .btn:hover {
+            background: var(--primary-hover);
+        }
+
+        .btn:active {
+            transform: scale(0.99);
+        }
+
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .message {
+            display: none;
+
+            margin-top: 16px;
+
+            padding: 11px 13px;
+
+            border-radius: 8px;
+
+            font-size: 14px;
+        }
+
+        .message.error {
+            display: block;
+
+            background: #fef2f2;
+            color: var(--danger);
+
+            border: 1px solid #fecaca;
+        }
+
+        .message.success {
+            display: block;
+
+            background: #f0fdf4;
+            color: var(--success);
+
+            border: 1px solid #bbf7d0;
+        }
+
+        /* =========================
+           ADMIN APP
+        ========================= */
+
+        .admin-app {
+            display: none;
+            min-height: 100vh;
+        }
+
+        .admin-header {
+            height: 64px;
+
+            background: var(--card);
+
+            border-bottom: 1px solid var(--border);
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 0 24px;
+
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .admin-logo {
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .admin-logo span {
+            color: var(--muted);
+            font-size: 13px;
+            font-weight: 400;
+            margin-left: 6px;
+        }
+
+        .logout-btn {
+            border: 1px solid var(--border);
+            background: white;
+
+            border-radius: 7px;
+
+            padding: 8px 14px;
+
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .logout-btn:hover {
+            background: #f9fafb;
+        }
+
+        .admin-layout {
+            display: flex;
+            min-height: calc(100vh - 64px);
+        }
+
+        /* =========================
+           SIDEBAR
+        ========================= */
+
+        .sidebar {
+            width: 230px;
+
+            background: #111827;
+            color: white;
+
+            padding: 20px 12px;
+        }
+
+        .sidebar-title {
+            padding: 10px 12px;
+
+            font-size: 11px;
+            font-weight: 700;
+
+            text-transform: uppercase;
+
+            color: #9ca3af;
+
+            letter-spacing: 0.08em;
+        }
+
+        .nav-btn {
+            width: 100%;
+
+            display: flex;
+            align-items: center;
+
+            padding: 11px 12px;
+
+            margin-bottom: 4px;
+
+            border: none;
+            border-radius: 7px;
+
+            background: transparent;
+            color: #d1d5db;
+
+            text-align: left;
+
+            font-size: 14px;
+        }
+
+        .nav-btn:hover,
+        .nav-btn.active {
+            background: #1f2937;
+            color: white;
+        }
+
+        /* =========================
+           MAIN
+        ========================= */
+
+        .main-content {
+            flex: 1;
+
+            padding: 28px;
+
+            min-width: 0;
+        }
+
+        .page-title {
+            margin-bottom: 22px;
+        }
+
+        .page-title h2 {
+            font-size: 25px;
+            margin-bottom: 5px;
+        }
+
+        .page-title p {
+            color: var(--muted);
+            font-size: 14px;
+        }
+
+        /* =========================
+           DASHBOARD CARDS
+        ========================= */
+
+        .stats-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, minmax(0, 1fr));
+
+            gap: 16px;
+
+            margin-bottom: 24px;
+        }
+
+        .stat-card {
+            background: var(--card);
+
+            border: 1px solid var(--border);
+            border-radius: 12px;
+
+            padding: 20px;
+        }
+
+        .stat-card .label {
+            color: var(--muted);
+
+            font-size: 13px;
+
+            margin-bottom: 10px;
+        }
+
+        .stat-card .value {
+            font-size: 28px;
+            font-weight: 700;
+        }
+
+        .dashboard-card {
+            background: var(--card);
+
+            border: 1px solid var(--border);
+            border-radius: 12px;
+
+            padding: 22px;
+        }
+
+        .dashboard-card h3 {
+            margin-bottom: 8px;
+            font-size: 18px;
+        }
+
+        .dashboard-card p {
+            color: var(--muted);
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        /* =========================
+           MOBILE
+        ========================= */
+
+        @media (max-width: 900px) {
+            .stats-grid {
+                grid-template-columns:
+                    repeat(2, minmax(0, 1fr));
+            }
+
+            .sidebar {
+                width: 200px;
+            }
+        }
+
+        @media (max-width: 650px) {
+            .admin-header {
+                padding: 0 16px;
+            }
+
+            .admin-logo span {
+                display: none;
+            }
+
+            .admin-layout {
+                display: block;
+            }
+
+            .sidebar {
+                width: 100%;
+
+                display: flex;
+                gap: 6px;
+
+                overflow-x: auto;
+
+                padding: 10px;
+            }
+
+            .sidebar-title {
+                display: none;
+            }
+
+            .nav-btn {
+                width: auto;
+                white-space: nowrap;
+                margin: 0;
+            }
+
+            .main-content {
+                padding: 18px;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .login-card {
+                padding: 24px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- =====================================================
+     LOGIN PAGE
+===================================================== -->
+
+<div
+    id="loginPage"
+    class="login-page"
+>
+
+    <div class="login-card">
+
+        <div class="brand">
+
+            <h1>Peppy Fashion</h1>
+
+            <p>
+                Administrator Panel
+            </p>
+
+        </div>
+
+        <form id="loginForm">
+
+            <div class="form-group">
+
+                <label for="adminToken">
+                    Admin Token
+                </label>
+
+                <input
+                    id="adminToken"
+                    type="password"
+                    placeholder="Enter your admin token"
+                    autocomplete="current-password"
+                    required
+                >
+
+            </div>
+
+            <button
+                id="loginButton"
+                class="btn"
+                type="submit"
+            >
+                Sign In
+            </button>
+
+        </form>
+
+        <div
+            id="loginMessage"
+            class="message"
+        ></div>
+
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     ADMIN APPLICATION
+===================================================== -->
+
+<div
+    id="adminApp"
+    class="admin-app"
+>
+
+    <header class="admin-header">
+
+        <div class="admin-logo">
+
+            Peppy Fashion
+
+            <span>
+                Admin Panel
+            </span>
+
+        </div>
+
+        <button
+            id="logoutButton"
+            class="logout-btn"
+            type="button"
+        >
+            Logout
+        </button>
+
+    </header>
+
+
+    <div class="admin-layout">
+
+        <!-- SIDEBAR -->
+
+        <aside class="sidebar">
+
+            <div class="sidebar-title">
+                Management
+            </div>
+
+            <button
+                class="nav-btn active"
+                data-section="dashboard"
+                type="button"
+            >
+                Dashboard
+            </button>
+
+            <button
+                class="nav-btn"
+                data-section="products"
+                type="button"
+            >
+                Products
+            </button>
+
+            <button
+                class="nav-btn"
+                data-section="orders"
+                type="button"
+            >
+                Orders
+            </button>
+
+            <button
+                class="nav-btn"
+                data-section="store"
+                type="button"
+            >
+                Store Data
+            </button>
+
+        </aside>
+
+
+        <!-- MAIN CONTENT -->
+
+        <main class="main-content">
+
+            <section id="dashboardSection">
+
+                <div class="page-title">
+
+                    <h2>
+                        Dashboard
+                    </h2>
+
+                    <p>
+                        Peppy Fashion store overview
+                    </p>
+
+                </div>
+
+
+                <div class="stats-grid">
+
+                    <div class="stat-card">
+
+                        <div class="label">
+                            Total Products
+                        </div>
+
+                        <div
+                            id="totalProducts"
+                            class="value"
+                        >
+                            —
+                        </div>
+
+                    </div>
+
+
+                    <div class="stat-card">
+
+                        <div class="label">
+                            Active Products
+                        </div>
+
+                        <div
+                            id="activeProducts"
+                            class="value"
+                        >
+                            —
+                        </div>
+
+                    </div>
+
+
+                    <div class="stat-card">
+
+                        <div class="label">
+                            Out of Stock
+                        </div>
+
+                        <div
+                            id="outOfStock"
+                            class="value"
+                        >
+                            —
+                        </div>
+
+                    </div>
+
+
+                    <div class="stat-card">
+
+                        <div class="label">
+                            Total Orders
+                        </div>
+
+                        <div
+                            id="totalOrders"
+                            class="value"
+                        >
+                            —
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="dashboard-card">
+
+                    <h3>
+                        Admin Panel Ready
+                    </h3>
+
+                    <p>
+                        The foundation is connected to
+                        the existing Peppy Fashion
+                        backend. Product management,
+                        order management and store
+                        management will be added
+                        without replacing the existing
+                        customer website.
+                    </p>
+
+                </div>
+
+            </section>
+
+        </main>
+
+    </div>
+
+</div>
+
+
+<script>
+
+    /* =====================================================
+       CONFIGURATION
+    ===================================================== */
+
+    const API_URL =
+        "https://script.google.com/macros/s/AKfycbwbHxHS5GuRH4Lr-L5wTs8aRjXbdgK60CyM0muAjRvhUKZ-1IzeFBGq7y6an9d0Kmg_/exec";
+
+
+    const ADMIN_TOKEN_KEY =
+        "peppy_admin_token";
+
+
+    /* =====================================================
+       DOM
+    ===================================================== */
+
+    const loginPage =
+        document.getElementById("loginPage");
+
+    const adminApp =
+        document.getElementById("adminApp");
+
+    const loginForm =
+        document.getElementById("loginForm");
+
+    const loginButton =
+        document.getElementById("loginButton");
+
+    const adminTokenInput =
+        document.getElementById("adminToken");
+
+    const loginMessage =
+        document.getElementById("loginMessage");
+
+    const logoutButton =
+        document.getElementById("logoutButton");
+
+
+    /* =====================================================
+       MESSAGE
+    ===================================================== */
+
+    function showLoginMessage(
+        message,
+        type = "error"
+    ) {
+
+        loginMessage.textContent = message;
+
+        loginMessage.className =
+            "message " + type;
+
+    }
+
+
+    function clearLoginMessage() {
+
+        loginMessage.textContent = "";
+
+        loginMessage.className =
+            "message";
+
+    }
+
+
+    /* =====================================================
+       API REQUEST
+    ===================================================== */
+
+    async function apiRequest(
+        action,
+        extraParams = {}
+    ) {
+
+        const token =
+            sessionStorage.getItem(
+                ADMIN_TOKEN_KEY
+            );
+
+        if (!token) {
+
+            throw new Error(
+                "Admin session not found."
+            );
+
+        }
+
+
+        const params =
+            new URLSearchParams({
+
+                action: action,
+
+                adminToken: token,
+
+                ...extraParams
+
+            });
+
+
+        const response =
+            await fetch(
+                API_URL + "?" + params.toString()
+            );
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                "Server request failed."
+            );
+
+        }
+
+
+        const data =
+            await response.json();
+
+
+        if (!data.success) {
+
+            throw new Error(
+                data.message ||
+                "Request failed."
+            );
+
+        }
+
+
+        return data;
+
+    }
+
+
+    /* =====================================================
+       AUTHENTICATION
+    ===================================================== */
+
+    async function verifyAdminToken(
+        token
+    ) {
+
+        const params =
+            new URLSearchParams({
+
+                action: "dashboard",
+
+                adminToken: token
+
+            });
+
+
+        const response =
+            await fetch(
+                API_URL + "?" + params.toString()
+            );
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                "Unable to connect to backend."
+            );
+
+        }
+
+
+        const data =
+            await response.json();
+
+
+        if (!data.success) {
+
+            throw new Error(
+                data.message ||
+                "Invalid admin token."
+            );
+
+        }
+
+
+        return data;
+
+    }
+
+
+    /* =====================================================
+       SHOW ADMIN
+    ===================================================== */
+
+    function showAdmin() {
+
+        loginPage.style.display =
+            "none";
+
+        adminApp.style.display =
+            "block";
+
+    }
+
+
+    function showLogin() {
+
+        adminApp.style.display =
+            "none";
+
+        loginPage.style.display =
+            "flex";
+
+        adminTokenInput.value = "";
+
+    }
+
+
+    /* =====================================================
+       LOAD DASHBOARD
+    ===================================================== */
+
+    async function loadDashboard() {
+
+        try {
+
+            const data =
+                await apiRequest(
+                    "dashboard"
+                );
+
+
+            const stats =
+                data.stats || data.dashboard || {};
+
+
+            document.getElementById(
+                "totalProducts"
+            ).textContent =
+                stats.totalProducts ??
+                stats.total ??
+                "0";
+
+
+            document.getElementById(
+                "activeProducts"
+            ).textContent =
+                stats.activeProducts ??
+                stats.active ??
+                "0";
+
+
+            document.getElementById(
+                "outOfStock"
+            ).textContent =
+                stats.outOfStock ??
+                stats.outOfStockProducts ??
+                "0";
+
+
+            document.getElementById(
+                "totalOrders"
+            ).textContent =
+                stats.totalOrders ??
+                stats.orders ??
+                "0";
+
+
+        } catch (error) {
+
+            console.error(
+                "Dashboard error:",
+                error
+            );
+
+        }
+
+    }
+
+
+    /* =====================================================
+       LOGIN
+    ===================================================== */
+
+    loginForm.addEventListener(
+        "submit",
+        async function (event) {
+
+            event.preventDefault();
+
+            clearLoginMessage();
+
+
+            const token =
+                adminTokenInput.value.trim();
+
+
+            if (!token) {
+
+                showLoginMessage(
+                    "Please enter your admin token."
+                );
+
+                return;
+
+            }
+
+
+            loginButton.disabled =
+                true;
+
+            loginButton.textContent =
+                "Signing in...";
+
+
+            try {
+
+                await verifyAdminToken(
+                    token
+                );
+
+
+                sessionStorage.setItem(
+                    ADMIN_TOKEN_KEY,
+                    token
+                );
+
+
+                showLoginMessage(
+                    "Login successful.",
+                    "success"
+                );
+
+
+                setTimeout(
+                    function () {
+
+                        showAdmin();
+
+                        loadDashboard();
+
+                    },
+                    250
+                );
+
+
+            } catch (error) {
+
+                console.error(
+                    "Login error:",
+                    error
+                );
+
+
+                showLoginMessage(
+                    error.message ||
+                    "Invalid admin token."
+                );
+
+
+                sessionStorage.removeItem(
+                    ADMIN_TOKEN_KEY
+                );
+
+
+            } finally {
+
+                loginButton.disabled =
+                    false;
+
+                loginButton.textContent =
+                    "Sign In";
+
+            }
+
+        }
+    );
+
+
+    /* =====================================================
+       LOGOUT
+    ===================================================== */
+
+    logoutButton.addEventListener(
+        "click",
+        function () {
+
+            sessionStorage.removeItem(
+                ADMIN_TOKEN_KEY
+            );
+
+            showLogin();
+
+        }
+    );
+
+
+    /* =====================================================
+       NAVIGATION
+    ===================================================== */
+
+    document
+        .querySelectorAll(".nav-btn")
+        .forEach(function (button) {
+
+            button.addEventListener(
+                "click",
+                function () {
+
+                    document
+                        .querySelectorAll(
+                            ".nav-btn"
+                        )
+                        .forEach(function (item) {
+
+                            item.classList.remove(
+                                "active"
+                            );
+
+                        });
+
+
+                    button.classList.add(
+                        "active"
+                    );
+
+
+                    const section =
+                        button.dataset.section;
+
+
+                    if (
+                        section ===
+                        "dashboard"
+                    ) {
+
+                        loadDashboard();
+
+                    }
+
+
+                    if (
+                        section !==
+                        "dashboard"
+                    ) {
+
+                        alert(
+                            "This section will be enabled in the next phase."
+                        );
+
+                    }
+
+                }
+            );
+
+        });
+
+
+    /* =====================================================
+       INITIAL SESSION CHECK
+    ===================================================== */
+
+    (async function init() {
+
+        const savedToken =
+            sessionStorage.getItem(
+                ADMIN_TOKEN_KEY
+            );
+
+
+        if (!savedToken) {
+
+            showLogin();
+
+            return;
+
+        }
+
+
+        try {
+
+            await verifyAdminToken(
+                savedToken
+            );
+
+            showAdmin();
+
+            loadDashboard();
+
+        } catch (error) {
+
+            console.warn(
+                "Saved admin session expired or invalid."
+            );
+
+            sessionStorage.removeItem(
+                ADMIN_TOKEN_KEY
+            );
+
+            showLogin();
+
+        }
+
+    })();
+
+</script>
+
+</body>
+</html>
