@@ -412,6 +412,244 @@
             font-weight: 600;
         }
 
+
+        /* =========================
+           ORDERS
+        ========================= */
+
+        .section-hidden {
+            display: none;
+        }
+
+        .orders-toolbar {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 16px;
+            flex-wrap: wrap;
+        }
+
+        .orders-search {
+            flex: 1;
+            min-width: 240px;
+            padding: 11px 13px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            outline: none;
+            background: white;
+        }
+
+        .orders-search:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(17, 24, 39, 0.08);
+        }
+
+        .refresh-btn {
+            border: 1px solid var(--border);
+            background: white;
+            border-radius: 8px;
+            padding: 10px 14px;
+            font-weight: 600;
+        }
+
+        .refresh-btn:hover {
+            background: #f9fafb;
+        }
+
+        .orders-meta {
+            color: var(--muted);
+            font-size: 13px;
+            margin-bottom: 12px;
+        }
+
+        .orders-table-wrap {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            overflow-x: auto;
+        }
+
+        .orders-table {
+            width: 100%;
+            min-width: 900px;
+            border-collapse: collapse;
+        }
+
+        .orders-table th,
+        .orders-table td {
+            padding: 12px 14px;
+            border-bottom: 1px solid var(--border);
+            text-align: left;
+            vertical-align: middle;
+            font-size: 13px;
+        }
+
+        .orders-table th {
+            background: #f9fafb;
+            color: #4b5563;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+        }
+
+        .orders-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .order-id {
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        .order-customer {
+            font-weight: 600;
+        }
+
+        .order-phone,
+        .order-date {
+            white-space: nowrap;
+            color: #4b5563;
+        }
+
+        .status-select {
+            padding: 7px 9px;
+            border: 1px solid var(--border);
+            border-radius: 7px;
+            background: white;
+            min-width: 125px;
+        }
+
+        .view-btn {
+            border: 1px solid var(--border);
+            background: white;
+            border-radius: 7px;
+            padding: 7px 10px;
+            font-size: 12px;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .view-btn:hover {
+            background: #f9fafb;
+        }
+
+        .orders-empty,
+        .orders-loading,
+        .orders-error {
+            padding: 32px;
+            text-align: center;
+            color: var(--muted);
+        }
+
+        .orders-error {
+            color: var(--danger);
+        }
+
+        /* =========================
+           ORDER MODAL
+        ========================= */
+
+        .modal-backdrop {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(17, 24, 39, 0.55);
+            z-index: 300;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .modal-backdrop.open {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .order-modal {
+            width: 100%;
+            max-width: 760px;
+            background: white;
+            border-radius: 14px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+            overflow: hidden;
+        }
+
+        .modal-header {
+            padding: 18px 20px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+        }
+
+        .modal-header h3 {
+            font-size: 18px;
+        }
+
+        .modal-close {
+            border: none;
+            background: transparent;
+            font-size: 24px;
+            line-height: 1;
+            color: var(--muted);
+        }
+
+        .modal-body {
+            padding: 20px;
+        }
+
+        .order-detail-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 14px;
+            margin-bottom: 18px;
+        }
+
+        .detail-box {
+            border: 1px solid var(--border);
+            border-radius: 9px;
+            padding: 12px;
+        }
+
+        .detail-box .detail-label {
+            color: var(--muted);
+            font-size: 11px;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+        }
+
+        .detail-box .detail-value {
+            font-size: 14px;
+            font-weight: 600;
+            word-break: break-word;
+        }
+
+        .order-products-box {
+            border: 1px solid var(--border);
+            border-radius: 9px;
+            padding: 14px;
+            white-space: pre-wrap;
+            line-height: 1.6;
+            font-size: 13px;
+            margin-bottom: 14px;
+        }
+
+        .order-note-box {
+            background: #f9fafb;
+            border-radius: 9px;
+            padding: 14px;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 650px) {
+            .order-detail-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
         /* =========================
            MOBILE
         ========================= */
@@ -734,12 +972,67 @@
 
             </section>
 
+            <!-- ORDERS -->
+            <section id="ordersSection" class="section-hidden">
+                <div class="page-title">
+                    <h2>Orders</h2>
+                    <p>Manage orders from the existing Peppy Fashion Orders sheet</p>
+                </div>
+
+                <div class="orders-toolbar">
+                    <input
+                        id="ordersSearch"
+                        class="orders-search"
+                        type="search"
+                        placeholder="Search Order ID, customer, phone or email..."
+                        autocomplete="off"
+                    >
+                    <button id="refreshOrdersButton" class="refresh-btn" type="button">
+                        Refresh Orders
+                    </button>
+                </div>
+
+                <div id="ordersMeta" class="orders-meta">
+                    Loading orders...
+                </div>
+
+                <div class="orders-table-wrap">
+                    <div id="ordersLoading" class="orders-loading">Loading orders...</div>
+                    <div id="ordersError" class="orders-error" style="display:none;"></div>
+                    <div id="ordersEmpty" class="orders-empty" style="display:none;">No orders found.</div>
+                    <table id="ordersTable" class="orders-table" style="display:none;">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Order ID</th>
+                                <th>Customer</th>
+                                <th>Phone</th>
+                                <th>Total</th>
+                                <th>Payment</th>
+                                <th>Status</th>
+                                <th>Details</th>
+                            </tr>
+                        </thead>
+                        <tbody id="ordersTableBody"></tbody>
+                    </table>
+                </div>
+            </section>
+
         </main>
 
     </div>
 
 </div>
 
+<div id="orderModalBackdrop" class="modal-backdrop" aria-hidden="true">
+    <div class="order-modal" role="dialog" aria-modal="true" aria-labelledby="orderModalTitle">
+        <div class="modal-header">
+            <h3 id="orderModalTitle">Order Details</h3>
+            <button id="orderModalClose" class="modal-close" type="button" aria-label="Close">&times;</button>
+        </div>
+        <div id="orderModalBody" class="modal-body"></div>
+    </div>
+</div>
 
 <script>
 
@@ -793,6 +1086,47 @@
         document.getElementById(
             "logoutButton"
         );
+
+    const dashboardSection =
+        document.getElementById("dashboardSection");
+
+    const ordersSection =
+        document.getElementById("ordersSection");
+
+    const ordersSearch =
+        document.getElementById("ordersSearch");
+
+    const refreshOrdersButton =
+        document.getElementById("refreshOrdersButton");
+
+    const ordersMeta =
+        document.getElementById("ordersMeta");
+
+    const ordersLoading =
+        document.getElementById("ordersLoading");
+
+    const ordersError =
+        document.getElementById("ordersError");
+
+    const ordersEmpty =
+        document.getElementById("ordersEmpty");
+
+    const ordersTable =
+        document.getElementById("ordersTable");
+
+    const ordersTableBody =
+        document.getElementById("ordersTableBody");
+
+    const orderModalBackdrop =
+        document.getElementById("orderModalBackdrop");
+
+    const orderModalClose =
+        document.getElementById("orderModalClose");
+
+    const orderModalBody =
+        document.getElementById("orderModalBody");
+
+    let allOrders = [];
 
 
     /* =====================================================
@@ -1082,6 +1416,314 @@
 
 
     /* =====================================================
+       ORDERS
+    ===================================================== */
+
+    function escapeHtml(value) {
+        return String(value ?? "")
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#039;");
+    }
+
+    function formatDate(value) {
+        if (!value) return "—";
+
+        const date = new Date(value);
+        if (Number.isNaN(date.getTime())) {
+            return String(value);
+        }
+
+        return date.toLocaleString("en-GB", {
+            day: "2-digit",
+            month: "short",
+            year: "numeric",
+            hour: "2-digit",
+            minute: "2-digit"
+        });
+    }
+
+    function formatMoney(value) {
+        const number = Number(value);
+        if (!Number.isFinite(number)) return "৳0";
+        return "৳" + number.toLocaleString("en-BD", {
+            maximumFractionDigits: 2
+        });
+    }
+
+    function showSection(section) {
+        dashboardSection.classList.add("section-hidden");
+        ordersSection.classList.add("section-hidden");
+
+        if (section === "dashboard") {
+            dashboardSection.classList.remove("section-hidden");
+            loadDashboard();
+            return;
+        }
+
+        if (section === "orders") {
+            ordersSection.classList.remove("section-hidden");
+            loadOrders();
+        }
+    }
+
+    async function loadOrders() {
+        ordersLoading.style.display = "block";
+        ordersError.style.display = "none";
+        ordersEmpty.style.display = "none";
+        ordersTable.style.display = "none";
+        ordersMeta.textContent = "Loading orders...";
+
+        try {
+            const data = await apiRequest("orders");
+            allOrders = Array.isArray(data.orders)
+                ? data.orders
+                : [];
+
+            renderOrders();
+        } catch (error) {
+            console.error("Orders error:", error);
+            ordersLoading.style.display = "none";
+            ordersError.textContent =
+                error.message || "Unable to load orders.";
+            ordersError.style.display = "block";
+            ordersMeta.textContent = "Orders could not be loaded.";
+        }
+    }
+
+    function getFilteredOrders() {
+        const query = ordersSearch.value.trim().toLowerCase();
+
+        if (!query) return allOrders;
+
+        return allOrders.filter(function(order) {
+            return [
+                order.orderId,
+                order.name,
+                order.phone,
+                order.email,
+                order.address,
+                order.payment,
+                order.status
+            ].some(function(value) {
+                return String(value ?? "")
+                    .toLowerCase()
+                    .includes(query);
+            });
+        });
+    }
+
+    function renderOrders() {
+        ordersLoading.style.display = "none";
+        ordersError.style.display = "none";
+
+        const filtered = getFilteredOrders();
+        ordersMeta.textContent =
+            "Showing " + filtered.length + " of " + allOrders.length + " orders";
+
+        ordersTableBody.innerHTML = "";
+
+        if (!filtered.length) {
+            ordersTable.style.display = "none";
+            ordersEmpty.style.display = "block";
+            return;
+        }
+
+        ordersEmpty.style.display = "none";
+        ordersTable.style.display = "table";
+
+        filtered.forEach(function(order) {
+            const row = document.createElement("tr");
+            const status = String(order.status || "Pending");
+
+            row.innerHTML = `
+                <td class="order-date">${escapeHtml(formatDate(order.date))}</td>
+                <td class="order-id">${escapeHtml(order.orderId || "—")}</td>
+                <td class="order-customer">${escapeHtml(order.name || "—")}</td>
+                <td class="order-phone">${escapeHtml(order.phone || "—")}</td>
+                <td>${escapeHtml(formatMoney(order.total))}</td>
+                <td>${escapeHtml(order.payment || "—")}</td>
+                <td>
+                    <select class="status-select" data-order-id="${escapeHtml(order.orderId || "")}">
+                        ${buildStatusOptions(status)}
+                    </select>
+                </td>
+                <td>
+                    <button class="view-btn" type="button" data-view-order-id="${escapeHtml(order.orderId || "")}">
+                        View
+                    </button>
+                </td>
+            `;
+
+            ordersTableBody.appendChild(row);
+        });
+
+        ordersTableBody.querySelectorAll(".status-select").forEach(function(select) {
+            select.addEventListener("change", function() {
+                updateOrderStatus(select.dataset.orderId, select.value, select);
+            });
+        });
+
+        ordersTableBody.querySelectorAll(".view-btn").forEach(function(button) {
+            button.addEventListener("click", function() {
+                openOrderModal(button.dataset.viewOrderId);
+            });
+        });
+    }
+
+    function buildStatusOptions(currentStatus) {
+        const statuses = [
+            "Pending",
+            "Confirmed",
+            "Processing",
+            "Shipped",
+            "Delivered",
+            "Cancelled"
+        ];
+
+        const normalizedCurrent = String(currentStatus || "Pending").toLowerCase();
+
+        if (!statuses.some(function(status) {
+            return status.toLowerCase() === normalizedCurrent;
+        })) {
+            statuses.unshift(currentStatus);
+        }
+
+        return statuses.map(function(status) {
+            const selected =
+                status.toLowerCase() === normalizedCurrent
+                    ? " selected"
+                    : "";
+
+            return `<option value="${escapeHtml(status)}"${selected}>${escapeHtml(status)}</option>`;
+        }).join("");
+    }
+
+    async function updateOrderStatus(orderId, status, selectElement) {
+        if (!orderId) {
+            alert("Order ID is missing.");
+            return;
+        }
+
+        const previousStatus =
+            allOrders.find(function(order) {
+                return String(order.orderId) === String(orderId);
+            })?.status || "Pending";
+
+        selectElement.disabled = true;
+
+        try {
+            const token = sessionStorage.getItem(ADMIN_TOKEN_KEY);
+
+            const response = await fetch(API_URL, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "text/plain;charset=utf-8"
+                },
+                body: JSON.stringify({
+                    action: "updateOrderStatus",
+                    adminToken: token,
+                    orderId: orderId,
+                    status: status
+                })
+            });
+
+            if (!response.ok) {
+                throw new Error("Server request failed.");
+            }
+
+            const data = await response.json();
+
+            if (!data.success) {
+                throw new Error(data.message || "Unable to update order status.");
+            }
+
+            const order = allOrders.find(function(item) {
+                return String(item.orderId) === String(orderId);
+            });
+
+            if (order) {
+                order.status = status;
+            }
+
+            renderOrders();
+            alert("Order " + orderId + " status updated to " + status + ".");
+        } catch (error) {
+            console.error("Update order status error:", error);
+            selectElement.value = previousStatus;
+            alert(error.message || "Unable to update order status.");
+        } finally {
+            selectElement.disabled = false;
+        }
+    }
+
+    function openOrderModal(orderId) {
+        const order = allOrders.find(function(item) {
+            return String(item.orderId) === String(orderId);
+        });
+
+        if (!order) {
+            alert("Order not found.");
+            return;
+        }
+
+        document.getElementById("orderModalTitle").textContent =
+            "Order " + (order.orderId || "Details");
+
+        orderModalBody.innerHTML = `
+            <div class="order-detail-grid">
+                ${detailBox("Date", formatDate(order.date))}
+                ${detailBox("Order ID", order.orderId)}
+                ${detailBox("Customer", order.name)}
+                ${detailBox("Phone", order.phone)}
+                ${detailBox("Email", order.email)}
+                ${detailBox("Payment", order.payment)}
+                ${detailBox("Transaction ID", order.transactionId)}
+                ${detailBox("Quantity", order.quantity)}
+                ${detailBox("Subtotal", formatMoney(order.subtotal))}
+                ${detailBox("Discount", formatMoney(order.discount))}
+                ${detailBox("Delivery", formatMoney(order.delivery))}
+                ${detailBox("Total", formatMoney(order.total))}
+                ${detailBox("Status", order.status)}
+            </div>
+
+            <div class="detail-box" style="margin-bottom:14px;">
+                <div class="detail-label">Address</div>
+                <div class="detail-value">${escapeHtml(order.address || "—")}</div>
+            </div>
+
+            <div class="detail-box" style="margin-bottom:14px;">
+                <div class="detail-label">Products</div>
+                <div class="order-products-box" style="border:none;padding:8px 0 0;margin:0;">${escapeHtml(order.products || "—")}</div>
+            </div>
+
+            <div class="order-note-box">
+                <strong>Order Note:</strong><br>
+                ${escapeHtml(order.note || "No order note.")}
+            </div>
+        `;
+
+        orderModalBackdrop.classList.add("open");
+        orderModalBackdrop.setAttribute("aria-hidden", "false");
+    }
+
+    function detailBox(label, value) {
+        return `
+            <div class="detail-box">
+                <div class="detail-label">${escapeHtml(label)}</div>
+                <div class="detail-value">${escapeHtml(value || "—")}</div>
+            </div>
+        `;
+    }
+
+    function closeOrderModal() {
+        orderModalBackdrop.classList.remove("open");
+        orderModalBackdrop.setAttribute("aria-hidden", "true");
+    }
+
+    /* =====================================================
        LOGIN
     ===================================================== */
 
@@ -1240,7 +1882,19 @@
                             "dashboard"
                         ) {
 
-                            loadDashboard();
+                            showSection("dashboard");
+
+                            return;
+
+                        }
+
+
+                        if (
+                            section ===
+                            "orders"
+                        ) {
+
+                            showSection("orders");
 
                             return;
 
@@ -1257,6 +1911,24 @@
             }
         );
 
+
+    ordersSearch.addEventListener("input", renderOrders);
+
+    refreshOrdersButton.addEventListener("click", loadOrders);
+
+    orderModalClose.addEventListener("click", closeOrderModal);
+
+    orderModalBackdrop.addEventListener("click", function(event) {
+        if (event.target === orderModalBackdrop) {
+            closeOrderModal();
+        }
+    });
+
+    document.addEventListener("keydown", function(event) {
+        if (event.key === "Escape") {
+            closeOrderModal();
+        }
+    });
 
     /* =====================================================
        INITIAL SESSION CHECK
