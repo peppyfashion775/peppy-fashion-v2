@@ -717,6 +717,8 @@
             }
         }
 
+        .products-toolbar{display:flex;gap:10px;align-items:center;margin-bottom:14px;flex-wrap:wrap}.products-search{flex:1;min-width:240px;padding:12px 14px;border:1px solid #d9dce3;border-radius:8px;font-size:14px;background:#fff}.primary-btn,.secondary-btn,.danger-btn,.restore-btn,.edit-btn{border:0;border-radius:8px;padding:11px 14px;font-size:13px;font-weight:600;cursor:pointer}.primary-btn{background:#111827;color:#fff}.secondary-btn{background:#eef2f7;color:#172033}.danger-btn{background:#fee2e2;color:#991b1b}.restore-btn{background:#dcfce7;color:#166534}.edit-btn{background:#e5e7eb;color:#111827}.primary-btn:disabled,.secondary-btn:disabled,.danger-btn:disabled,.restore-btn:disabled,.edit-btn:disabled{opacity:.6;cursor:not-allowed}.products-meta{font-size:13px;color:#667085;margin:8px 0 12px}.products-table-wrap{background:#fff;border:1px solid #e3e6eb;border-radius:10px;overflow:auto}.products-table{width:100%;min-width:1050px;border-collapse:collapse}.products-table th,.products-table td{padding:11px 12px;border-bottom:1px solid #edf0f3;text-align:left;vertical-align:middle;font-size:13px}.products-table th{background:#f8fafc;font-weight:700;color:#344054;white-space:nowrap}.product-thumb{width:44px;height:44px;border-radius:7px;object-fit:cover;background:#f2f4f7;display:block}.product-name{font-weight:600;color:#111827;max-width:230px}.product-id{color:#667085;white-space:nowrap}.product-actions{display:flex;gap:6px;flex-wrap:wrap}.product-inline-input,.product-status-select,.product-featured-select{padding:7px 8px;border:1px solid #d9dce3;border-radius:6px;font-size:12px;background:#fff}.product-inline-input{width:75px}.products-loading,.products-error,.products-empty{padding:22px;text-align:center;color:#667085}.products-error{color:#b42318}.product-modal .modal-body{max-height:75vh;overflow:auto}.product-form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.product-form-group{display:flex;flex-direction:column;gap:6px}.product-form-group.full{grid-column:1/-1}.product-form-group label{font-size:12px;font-weight:600;color:#344054}.product-form-group input,.product-form-group select,.product-form-group textarea{width:100%;box-sizing:border-box;padding:10px 11px;border:1px solid #d9dce3;border-radius:7px;font:inherit;background:#fff}.product-form-group textarea{min-height:100px;resize:vertical}.product-form-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:18px}@media(max-width:650px){.product-form-grid{grid-template-columns:1fr}.product-form-group.full{grid-column:auto}}
+
     </style>
 
 </head>
@@ -972,6 +974,14 @@
 
             </section>
 
+            <!-- PRODUCTS -->
+            <section id="productsSection" class="section-hidden">
+                <div class="page-title"><h2>Products</h2><p>Manage products from the existing Peppy Fashion Products sheet</p></div>
+                <div class="products-toolbar"><input id="productsSearch" class="products-search" type="search" placeholder="Search product ID, name, category or collection..." autocomplete="off"><button id="refreshProductsButton" class="secondary-btn" type="button">Refresh Products</button><button id="addProductButton" class="primary-btn" type="button">+ Add Product</button></div>
+                <div id="productsMeta" class="products-meta">Loading products...</div>
+                <div class="products-table-wrap"><div id="productsLoading" class="products-loading">Loading products...</div><div id="productsError" class="products-error" style="display:none;"></div><div id="productsEmpty" class="products-empty" style="display:none;">No products found.</div><table id="productsTable" class="products-table" style="display:none;"><thead><tr><th>Image</th><th>Product</th><th>Category</th><th>Price</th><th>Stock</th><th>Status</th><th>Featured</th><th>Actions</th></tr></thead><tbody id="productsTableBody"></tbody></table></div>
+            </section>
+
             <!-- ORDERS -->
             <section id="ordersSection" class="section-hidden">
                 <div class="page-title">
@@ -1023,6 +1033,9 @@
     </div>
 
 </div>
+
+<div id="productModalBackdrop" class="modal-backdrop" aria-hidden="true"><div class="order-modal product-modal" role="dialog" aria-modal="true" aria-labelledby="productModalTitle"><div class="modal-header"><h3 id="productModalTitle">Add Product</h3><button id="productModalClose" class="modal-close" type="button" aria-label="Close">&times;</button></div><div class="modal-body"><form id="productForm"><div class="product-form-grid">
+<div class="product-form-group"><label for="productIdInput">Product ID</label><input id="productIdInput" type="text" placeholder="Leave blank to generate"></div><div class="product-form-group"><label for="productNameInput">Product Name *</label><input id="productNameInput" type="text" required></div><div class="product-form-group"><label for="productCategoryInput">Main Category</label><input id="productCategoryInput" type="text"></div><div class="product-form-group"><label for="productSubCategoryInput">Sub Category</label><input id="productSubCategoryInput" type="text"></div><div class="product-form-group"><label for="productCollectionInput">Collection</label><input id="productCollectionInput" type="text"></div><div class="product-form-group"><label for="productPriceInput">Price</label><input id="productPriceInput" type="number" min="0" step="0.01"></div><div class="product-form-group"><label for="productOldPriceInput">Old Price</label><input id="productOldPriceInput" type="number" min="0" step="0.01"></div><div class="product-form-group"><label for="productDiscountInput">Discount</label><input id="productDiscountInput" type="number" min="0" step="0.01"></div><div class="product-form-group"><label for="productStockInput">Stock</label><input id="productStockInput" type="number" min="0" step="1"></div><div class="product-form-group"><label for="productStatusInput">Status</label><select id="productStatusInput"><option value="active">Active</option><option value="inactive">Inactive</option></select></div><div class="product-form-group"><label for="productFeaturedInput">Featured</label><select id="productFeaturedInput"><option value="no">No</option><option value="yes">Yes</option></select></div><div class="product-form-group"><label for="productBadgeInput">Badge</label><input id="productBadgeInput" type="text"></div><div class="product-form-group full"><label for="productImageInput">Image URL</label><input id="productImageInput" type="url" placeholder="https://..."></div><div class="product-form-group full"><label for="productSizesInput">Sizes</label><input id="productSizesInput" type="text" placeholder="S, M, L, XL"></div><div class="product-form-group full"><label for="productDescriptionInput">Description</label><textarea id="productDescriptionInput"></textarea></div></div><div id="productFormMessage" class="message"></div><div class="product-form-actions"><button id="productCancelButton" class="secondary-btn" type="button">Cancel</button><button id="productSaveButton" class="primary-btn" type="submit">Save Product</button></div></form></div></div></div>
 
 <div id="orderModalBackdrop" class="modal-backdrop" aria-hidden="true">
     <div class="order-modal" role="dialog" aria-modal="true" aria-labelledby="orderModalTitle">
@@ -1092,6 +1105,27 @@
 
     const ordersSection =
         document.getElementById("ordersSection");
+
+    const productsSection = document.getElementById("productsSection");
+    const productsSearch = document.getElementById("productsSearch");
+    const refreshProductsButton = document.getElementById("refreshProductsButton");
+    const addProductButton = document.getElementById("addProductButton");
+    const productsMeta = document.getElementById("productsMeta");
+    const productsLoading = document.getElementById("productsLoading");
+    const productsError = document.getElementById("productsError");
+    const productsEmpty = document.getElementById("productsEmpty");
+    const productsTable = document.getElementById("productsTable");
+    const productsTableBody = document.getElementById("productsTableBody");
+    const productModalBackdrop = document.getElementById("productModalBackdrop");
+    const productModalClose = document.getElementById("productModalClose");
+    const productForm = document.getElementById("productForm");
+    const productModalTitle = document.getElementById("productModalTitle");
+    const productCancelButton = document.getElementById("productCancelButton");
+    const productSaveButton = document.getElementById("productSaveButton");
+    const productFormMessage = document.getElementById("productFormMessage");
+    const productFields={id:document.getElementById("productIdInput"),name:document.getElementById("productNameInput"),category:document.getElementById("productCategoryInput"),subCategory:document.getElementById("productSubCategoryInput"),collection:document.getElementById("productCollectionInput"),price:document.getElementById("productPriceInput"),oldPrice:document.getElementById("productOldPriceInput"),discount:document.getElementById("productDiscountInput"),stock:document.getElementById("productStockInput"),status:document.getElementById("productStatusInput"),featured:document.getElementById("productFeaturedInput"),badge:document.getElementById("productBadgeInput"),image:document.getElementById("productImageInput"),sizes:document.getElementById("productSizesInput"),description:document.getElementById("productDescriptionInput")};
+    let allProducts=[]; let editingProductId=null;
+
 
     const ordersSearch =
         document.getElementById("ordersSearch");
@@ -1455,18 +1489,11 @@
 
     function showSection(section) {
         dashboardSection.classList.add("section-hidden");
+        productsSection.classList.add("section-hidden");
         ordersSection.classList.add("section-hidden");
-
-        if (section === "dashboard") {
-            dashboardSection.classList.remove("section-hidden");
-            loadDashboard();
-            return;
-        }
-
-        if (section === "orders") {
-            ordersSection.classList.remove("section-hidden");
-            loadOrders();
-        }
+        if (section === "dashboard") { dashboardSection.classList.remove("section-hidden"); loadDashboard(); return; }
+        if (section === "products") { productsSection.classList.remove("section-hidden"); loadProducts(); return; }
+        if (section === "orders") { ordersSection.classList.remove("section-hidden"); loadOrders(); }
     }
 
     async function loadOrders() {
@@ -1724,6 +1751,25 @@
     }
 
     /* =====================================================
+       PRODUCTS
+    ===================================================== */
+    function showProductFormMessage(message,type="error"){productFormMessage.textContent=message||"";productFormMessage.className="message "+type;}
+    function closeProductModal(){productModalBackdrop.classList.remove("open");productModalBackdrop.setAttribute("aria-hidden","true");productForm.reset();editingProductId=null;productFields.id.disabled=false;showProductFormMessage("");}
+    function openProductModal(product){editingProductId=product?String(product.id):null;productModalTitle.textContent=product?"Edit Product":"Add Product";productSaveButton.textContent=product?"Save Changes":"Add Product";productFields.id.disabled=!!product;const values=product||{id:"",name:"",category:"",subCategory:"",collection:"",price:"",oldPrice:"",discount:"",stock:0,status:"active",featured:"no",badge:"",image:"",sizes:"",description:""};Object.keys(productFields).forEach(k=>productFields[k].value=values[k]??"");productModalBackdrop.classList.add("open");productModalBackdrop.setAttribute("aria-hidden","false");setTimeout(()=>productFields.name.focus(),50);}
+    function getFilteredProducts(){const q=productsSearch.value.trim().toLowerCase();if(!q)return allProducts;return allProducts.filter(p=>[p.id,p.name,p.category,p.subCategory,p.collection,p.badge].some(v=>String(v??"").toLowerCase().includes(q)));}
+    function productImageHtml(p){const src=String(p.image||"").trim();if(!src)return "—";return `<img class="product-thumb" src="${escapeHtml(src)}" alt="" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='inline';"><span style="display:none;">No image</span>`;}
+    function renderProducts(){productsLoading.style.display="none";productsError.style.display="none";const filtered=getFilteredProducts();productsMeta.textContent=`Showing ${filtered.length} of ${allProducts.length} products`;productsTableBody.innerHTML="";if(!filtered.length){productsTable.style.display="none";productsEmpty.style.display="block";return;}productsEmpty.style.display="none";productsTable.style.display="table";filtered.forEach(p=>{const row=document.createElement("tr");const status=String(p.status||"active").toLowerCase();const featured=String(p.featured||"no").toLowerCase();row.innerHTML=`<td>${productImageHtml(p)}</td><td><div class="product-name">${escapeHtml(p.name||"Unnamed product")}</div><div class="product-id">${escapeHtml(p.id||"—")}</div></td><td>${escapeHtml(p.category||"—")}</td><td>${escapeHtml(formatMoney(p.price))}</td><td><input class="product-inline-input stock-input" type="number" min="0" step="1" value="${escapeHtml(p.stock??0)}" data-product-id="${escapeHtml(p.id||"")}"></td><td><select class="product-status-select status-product-select" data-product-id="${escapeHtml(p.id||"")}"><option value="active"${status==="active"?" selected":""}>Active</option><option value="inactive"${status!=="active"?" selected":""}>Inactive</option></select></td><td><select class="product-featured-select featured-product-select" data-product-id="${escapeHtml(p.id||"")}"><option value="no"${featured!=="yes"?" selected":""}>No</option><option value="yes"${featured==="yes"?" selected":""}>Yes</option></select></td><td><div class="product-actions"><button class="edit-btn" type="button" data-edit-product-id="${escapeHtml(p.id||"")}">Edit</button>${status==="active"?`<button class="danger-btn" type="button" data-delete-product-id="${escapeHtml(p.id||"")}">Deactivate</button>`:`<button class="restore-btn" type="button" data-restore-product-id="${escapeHtml(p.id||"")}">Restore</button>`}</div></td>`;productsTableBody.appendChild(row);});productsTableBody.querySelectorAll(".edit-btn").forEach(b=>b.addEventListener("click",()=>{const p=allProducts.find(x=>String(x.id)===String(b.dataset.editProductId));if(p)openProductModal(p);}));productsTableBody.querySelectorAll(".stock-input").forEach(i=>i.addEventListener("change",()=>updateProductStock(i.dataset.productId,i)));productsTableBody.querySelectorAll(".status-product-select").forEach(i=>i.addEventListener("change",()=>updateProductStatus(i.dataset.productId,i.value,i)));productsTableBody.querySelectorAll(".featured-product-select").forEach(i=>i.addEventListener("change",()=>updateProductFeatured(i.dataset.productId,i.value,i)));productsTableBody.querySelectorAll("[data-delete-product-id]").forEach(b=>b.addEventListener("click",()=>deactivateProduct(b.dataset.deleteProductId,b)));productsTableBody.querySelectorAll("[data-restore-product-id]").forEach(b=>b.addEventListener("click",()=>restoreProduct(b.dataset.restoreProductId,b)));}
+    async function loadProducts(){productsLoading.style.display="block";productsError.style.display="none";productsEmpty.style.display="none";productsTable.style.display="none";productsMeta.textContent="Loading products...";try{const data=await apiRequest("adminproducts");allProducts=Array.isArray(data.products)?data.products:[];renderProducts();}catch(e){console.error("Products error:",e);productsLoading.style.display="none";productsError.textContent=e.message||"Unable to load products.";productsError.style.display="block";productsMeta.textContent="Products could not be loaded.";}}
+    async function postAdminAction(payload){const token=sessionStorage.getItem(ADMIN_TOKEN_KEY);if(!token)throw new Error("Admin session not found.");const r=await fetch(API_URL,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(Object.assign({},payload,{adminToken:token}))});if(!r.ok)throw new Error("Server request failed.");const d=await r.json();if(!d.success)throw new Error(d.message||"Operation failed.");return d;}
+    async function updateProductStock(id,input){const p=allProducts.find(x=>String(x.id)===String(id));if(!p)return;const prev=p.stock??0;const stock=Math.max(0,Number(input.value)||0);input.disabled=true;try{await postAdminAction({action:"updateStock",id,stock});p.stock=stock;}catch(e){input.value=prev;alert(e.message||"Unable to update stock.");}finally{input.disabled=false;}}
+    async function updateProductStatus(id,status,select){const p=allProducts.find(x=>String(x.id)===String(id));if(!p)return;const prev=p.status||"active";select.disabled=true;try{await postAdminAction({action:"updateProductStatus",id,status});p.status=status;renderProducts();}catch(e){select.value=prev;alert(e.message||"Unable to update product status.");}finally{select.disabled=false;}}
+    async function updateProductFeatured(id,featured,select){const p=allProducts.find(x=>String(x.id)===String(id));if(!p)return;const prev=p.featured||"no";select.disabled=true;try{await postAdminAction({action:"updateFeatured",id,featured});p.featured=featured;}catch(e){select.value=prev;alert(e.message||"Unable to update featured status.");}finally{select.disabled=false;}}
+    async function deactivateProduct(id,b){if(!confirm("Deactivate this product? It will remain in the sheet and can be restored."))return;b.disabled=true;try{await postAdminAction({action:"deleteProduct",id});const p=allProducts.find(x=>String(x.id)===String(id));if(p)p.status="inactive";renderProducts();}catch(e){b.disabled=false;alert(e.message||"Unable to deactivate product.");}}
+    async function restoreProduct(id,b){b.disabled=true;try{await postAdminAction({action:"restoreProduct",id});const p=allProducts.find(x=>String(x.id)===String(id));if(p)p.status="active";renderProducts();}catch(e){b.disabled=false;alert(e.message||"Unable to restore product.");}}
+    productForm.addEventListener("submit",async e=>{e.preventDefault();showProductFormMessage("");productSaveButton.disabled=true;const wasEditing=!!editingProductId;productSaveButton.textContent=wasEditing?"Saving...":"Adding...";const payload={name:productFields.name.value.trim(),category:productFields.category.value.trim(),subCategory:productFields.subCategory.value.trim(),collection:productFields.collection.value.trim(),price:Number(productFields.price.value)||0,oldPrice:Number(productFields.oldPrice.value)||"",discount:Number(productFields.discount.value)||0,image:productFields.image.value.trim(),badge:productFields.badge.value.trim(),stock:Math.max(0,Number(productFields.stock.value)||0),status:productFields.status.value,sizes:productFields.sizes.value.trim(),featured:productFields.featured.value,description:productFields.description.value.trim()};if(!payload.name){showProductFormMessage("Product name is required.");productSaveButton.disabled=false;productSaveButton.textContent=wasEditing?"Save Changes":"Add Product";return;}try{let d;if(wasEditing){d=await postAdminAction(Object.assign({action:"updateProduct",id:editingProductId},payload));const u=d.product||Object.assign({id:editingProductId},payload);const idx=allProducts.findIndex(x=>String(x.id)===String(editingProductId));if(idx>=0)allProducts[idx]=Object.assign({},allProducts[idx],u);}else{if(productFields.id.value.trim())payload.id=productFields.id.value.trim();d=await postAdminAction(Object.assign({action:"addProduct"},payload));if(d.product)allProducts.unshift(d.product);}closeProductModal();renderProducts();loadDashboard();}catch(e){showProductFormMessage(e.message||"Unable to save product.");}finally{productSaveButton.disabled=false;productSaveButton.textContent=wasEditing?"Save Changes":"Add Product";}});
+    addProductButton.addEventListener("click",()=>openProductModal(null));refreshProductsButton.addEventListener("click",loadProducts);productsSearch.addEventListener("input",renderProducts);productModalClose.addEventListener("click",closeProductModal);productCancelButton.addEventListener("click",closeProductModal);productModalBackdrop.addEventListener("click",e=>{if(e.target===productModalBackdrop)closeProductModal();});
+
+    /* =====================================================
        LOGIN
     ===================================================== */
 
@@ -1877,33 +1923,11 @@
                             button.dataset.section;
 
 
-                        if (
-                            section ===
-                            "dashboard"
-                        ) {
-
-                            showSection("dashboard");
-
+                        if (section === "dashboard" || section === "products" || section === "orders") {
+                            showSection(section);
                             return;
-
                         }
-
-
-                        if (
-                            section ===
-                            "orders"
-                        ) {
-
-                            showSection("orders");
-
-                            return;
-
-                        }
-
-
-                        alert(
-                            "This section will be enabled in the next phase."
-                        );
+                        alert("This section will be enabled in the next phase.");
 
                     }
                 );
