@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
 
@@ -16,6 +17,7 @@
     >
 
     <style>
+
         * {
             box-sizing: border-box;
             margin: 0;
@@ -167,7 +169,6 @@
             display: none;
 
             margin-top: 16px;
-
             padding: 11px 13px;
 
             border-radius: 8px;
@@ -217,6 +218,7 @@
 
             position: sticky;
             top: 0;
+
             z-index: 100;
         }
 
@@ -227,8 +229,10 @@
 
         .admin-logo span {
             color: var(--muted);
+
             font-size: 13px;
             font-weight: 400;
+
             margin-left: 6px;
         }
 
@@ -250,7 +254,9 @@
 
         .admin-layout {
             display: flex;
-            min-height: calc(100vh - 64px);
+
+            min-height:
+                calc(100vh - 64px);
         }
 
         /* =========================
@@ -333,7 +339,7 @@
         }
 
         /* =========================
-           DASHBOARD CARDS
+           DASHBOARD
         ========================= */
 
         .stats-grid {
@@ -385,8 +391,25 @@
 
         .dashboard-card p {
             color: var(--muted);
+
             font-size: 14px;
             line-height: 1.6;
+        }
+
+        .dashboard-status {
+            margin-top: 16px;
+
+            display: inline-flex;
+
+            padding: 7px 10px;
+
+            border-radius: 999px;
+
+            background: #f0fdf4;
+            color: #15803d;
+
+            font-size: 12px;
+            font-weight: 600;
         }
 
         /* =========================
@@ -394,6 +417,7 @@
         ========================= */
 
         @media (max-width: 900px) {
+
             .stats-grid {
                 grid-template-columns:
                     repeat(2, minmax(0, 1fr));
@@ -405,6 +429,7 @@
         }
 
         @media (max-width: 650px) {
+
             .admin-header {
                 padding: 0 16px;
             }
@@ -421,6 +446,7 @@
                 width: 100%;
 
                 display: flex;
+
                 gap: 6px;
 
                 overflow-x: auto;
@@ -434,7 +460,9 @@
 
             .nav-btn {
                 width: auto;
+
                 white-space: nowrap;
+
                 margin: 0;
             }
 
@@ -450,7 +478,9 @@
                 padding: 24px;
             }
         }
+
     </style>
+
 </head>
 
 <body>
@@ -468,7 +498,9 @@
 
         <div class="brand">
 
-            <h1>Peppy Fashion</h1>
+            <h1>
+                Peppy Fashion
+            </h1>
 
             <p>
                 Administrator Panel
@@ -685,14 +717,18 @@
                     </h3>
 
                     <p>
-                        The foundation is connected to
-                        the existing Peppy Fashion
+                        The Admin Panel is connected
+                        to the existing Peppy Fashion
                         backend. Product management,
                         order management and store
                         management will be added
                         without replacing the existing
                         customer website.
                     </p>
+
+                    <div class="dashboard-status">
+                        Backend Connected
+                    </div>
 
                 </div>
 
@@ -724,29 +760,43 @@
     ===================================================== */
 
     const loginPage =
-        document.getElementById("loginPage");
+        document.getElementById(
+            "loginPage"
+        );
 
     const adminApp =
-        document.getElementById("adminApp");
+        document.getElementById(
+            "adminApp"
+        );
 
     const loginForm =
-        document.getElementById("loginForm");
+        document.getElementById(
+            "loginForm"
+        );
 
     const loginButton =
-        document.getElementById("loginButton");
+        document.getElementById(
+            "loginButton"
+        );
 
     const adminTokenInput =
-        document.getElementById("adminToken");
+        document.getElementById(
+            "adminToken"
+        );
 
     const loginMessage =
-        document.getElementById("loginMessage");
+        document.getElementById(
+            "loginMessage"
+        );
 
     const logoutButton =
-        document.getElementById("logoutButton");
+        document.getElementById(
+            "logoutButton"
+        );
 
 
     /* =====================================================
-       MESSAGE
+       LOGIN MESSAGE
     ===================================================== */
 
     function showLoginMessage(
@@ -754,7 +804,8 @@
         type = "error"
     ) {
 
-        loginMessage.textContent = message;
+        loginMessage.textContent =
+            message;
 
         loginMessage.className =
             "message " + type;
@@ -764,7 +815,8 @@
 
     function clearLoginMessage() {
 
-        loginMessage.textContent = "";
+        loginMessage.textContent =
+            "";
 
         loginMessage.className =
             "message";
@@ -786,6 +838,7 @@
                 ADMIN_TOKEN_KEY
             );
 
+
         if (!token) {
 
             throw new Error(
@@ -798,9 +851,11 @@
         const params =
             new URLSearchParams({
 
-                action: action,
+                action:
+                    action,
 
-                adminToken: token,
+                adminToken:
+                    token,
 
                 ...extraParams
 
@@ -809,7 +864,9 @@
 
         const response =
             await fetch(
-                API_URL + "?" + params.toString()
+                API_URL +
+                "?" +
+                params.toString()
             );
 
 
@@ -852,16 +909,20 @@
         const params =
             new URLSearchParams({
 
-                action: "dashboard",
+                action:
+                    "dashboard",
 
-                adminToken: token
+                adminToken:
+                    token
 
             });
 
 
         const response =
             await fetch(
-                API_URL + "?" + params.toString()
+                API_URL +
+                "?" +
+                params.toString()
             );
 
 
@@ -894,7 +955,7 @@
 
 
     /* =====================================================
-       SHOW ADMIN
+       SHOW / HIDE ADMIN
     ===================================================== */
 
     function showAdmin() {
@@ -916,7 +977,8 @@
         loginPage.style.display =
             "flex";
 
-        adminTokenInput.value = "";
+        adminTokenInput.value =
+            "";
 
     }
 
@@ -935,40 +997,52 @@
                 );
 
 
-            const stats =
-                data.stats || data.dashboard || {};
+            /*
+             * Backend structure:
+             *
+             * data.dashboard.products
+             * data.dashboard.orders
+             * data.dashboard.sales
+             */
+
+            const dashboard =
+                data.dashboard || {};
+
+
+            const products =
+                dashboard.products || {};
+
+
+            const orders =
+                dashboard.orders || {};
+
+
+            const sales =
+                dashboard.sales || {};
 
 
             document.getElementById(
                 "totalProducts"
             ).textContent =
-                stats.totalProducts ??
-                stats.total ??
-                "0";
+                products.total ?? 0;
 
 
             document.getElementById(
                 "activeProducts"
             ).textContent =
-                stats.activeProducts ??
-                stats.active ??
-                "0";
+                products.active ?? 0;
 
 
             document.getElementById(
                 "outOfStock"
             ).textContent =
-                stats.outOfStock ??
-                stats.outOfStockProducts ??
-                "0";
+                products.outOfStock ?? 0;
 
 
             document.getElementById(
                 "totalOrders"
             ).textContent =
-                stats.totalOrders ??
-                stats.orders ??
-                "0";
+                orders.total ?? 0;
 
 
         } catch (error) {
@@ -977,6 +1051,30 @@
                 "Dashboard error:",
                 error
             );
+
+
+            document.getElementById(
+                "totalProducts"
+            ).textContent =
+                "—";
+
+
+            document.getElementById(
+                "activeProducts"
+            ).textContent =
+                "—";
+
+
+            document.getElementById(
+                "outOfStock"
+            ).textContent =
+                "—";
+
+
+            document.getElementById(
+                "totalOrders"
+            ).textContent =
+                "—";
 
         }
 
@@ -1106,59 +1204,58 @@
 
     document
         .querySelectorAll(".nav-btn")
-        .forEach(function (button) {
+        .forEach(
+            function (button) {
 
-            button.addEventListener(
-                "click",
-                function () {
+                button.addEventListener(
+                    "click",
+                    function () {
 
-                    document
-                        .querySelectorAll(
-                            ".nav-btn"
-                        )
-                        .forEach(function (item) {
+                        document
+                            .querySelectorAll(
+                                ".nav-btn"
+                            )
+                            .forEach(
+                                function (item) {
 
-                            item.classList.remove(
-                                "active"
+                                    item.classList.remove(
+                                        "active"
+                                    );
+
+                                }
                             );
 
-                        });
+
+                        button.classList.add(
+                            "active"
+                        );
 
 
-                    button.classList.add(
-                        "active"
-                    );
+                        const section =
+                            button.dataset.section;
 
 
-                    const section =
-                        button.dataset.section;
+                        if (
+                            section ===
+                            "dashboard"
+                        ) {
 
+                            loadDashboard();
 
-                    if (
-                        section ===
-                        "dashboard"
-                    ) {
+                            return;
 
-                        loadDashboard();
+                        }
 
-                    }
-
-
-                    if (
-                        section !==
-                        "dashboard"
-                    ) {
 
                         alert(
                             "This section will be enabled in the next phase."
                         );
 
                     }
+                );
 
-                }
-            );
-
-        });
+            }
+        );
 
 
     /* =====================================================
@@ -1188,9 +1285,11 @@
                 savedToken
             );
 
+
             showAdmin();
 
             loadDashboard();
+
 
         } catch (error) {
 
@@ -1198,9 +1297,11 @@
                 "Saved admin session expired or invalid."
             );
 
+
             sessionStorage.removeItem(
                 ADMIN_TOKEN_KEY
             );
+
 
             showLogin();
 
@@ -1211,4 +1312,5 @@
 </script>
 
 </body>
+
 </html>
