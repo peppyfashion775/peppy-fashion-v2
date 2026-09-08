@@ -412,7 +412,6 @@
             font-weight: 600;
         }
 
-
         /* =========================
            ORDERS
         ========================= */
@@ -442,7 +441,8 @@
 
         .orders-search:focus {
             border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(17, 24, 39, 0.08);
+            box-shadow:
+                0 0 0 3px rgba(17, 24, 39, 0.08);
         }
 
         .refresh-btn {
@@ -547,7 +547,7 @@
         }
 
         /* =========================
-           ORDER MODAL
+           MODAL
         ========================= */
 
         .modal-backdrop {
@@ -571,7 +571,8 @@
             max-width: 760px;
             background: white;
             border-radius: 14px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+            box-shadow:
+                0 20px 50px rgba(0,0,0,0.2);
             overflow: hidden;
         }
 
@@ -602,7 +603,8 @@
 
         .order-detail-grid {
             display: grid;
-            grid-template-columns: repeat(2, minmax(0, 1fr));
+            grid-template-columns:
+                repeat(2, minmax(0, 1fr));
             gap: 14px;
             margin-bottom: 18px;
         }
@@ -644,14 +646,352 @@
             line-height: 1.6;
         }
 
-        @media (max-width: 650px) {
-            .order-detail-grid {
-                grid-template-columns: 1fr;
-            }
+        /* =========================
+           PRODUCTS
+        ========================= */
+
+        .products-toolbar {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            margin-bottom: 14px;
+            flex-wrap: wrap;
+        }
+
+        .products-search {
+            flex: 1;
+            min-width: 240px;
+            padding: 12px 14px;
+            border: 1px solid #d9dce3;
+            border-radius: 8px;
+            font-size: 14px;
+            background: #fff;
+        }
+
+        .primary-btn,
+        .secondary-btn,
+        .danger-btn,
+        .restore-btn,
+        .permanent-delete-btn,
+        .edit-btn {
+            border: 0;
+            border-radius: 8px;
+            padding: 11px 14px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .primary-btn {
+            background: #111827;
+            color: #fff;
+        }
+
+        .secondary-btn {
+            background: #eef2f7;
+            color: #172033;
+        }
+
+        .danger-btn {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .restore-btn {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .permanent-delete-btn {
+            background: #991b1b;
+            color: #fff;
+        }
+
+        .permanent-delete-btn:hover {
+            background: #7f1d1d;
+        }
+
+        .edit-btn {
+            background: #e5e7eb;
+            color: #111827;
+        }
+
+        .primary-btn:disabled,
+        .secondary-btn:disabled,
+        .danger-btn:disabled,
+        .restore-btn:disabled,
+        .permanent-delete-btn:disabled,
+        .edit-btn:disabled {
+            opacity: .6;
+            cursor: not-allowed;
+        }
+
+        .products-meta {
+            font-size: 13px;
+            color: #667085;
+            margin: 8px 0 12px;
+        }
+
+        .products-table-wrap {
+            background: #fff;
+            border: 1px solid #e3e6eb;
+            border-radius: 10px;
+            overflow: auto;
+        }
+
+        .products-table {
+            width: 100%;
+            min-width: 1900px;
+            border-collapse: collapse;
+        }
+
+        .products-table th,
+        .products-table td {
+            padding: 11px 12px;
+            border-bottom: 1px solid #edf0f3;
+            text-align: left;
+            vertical-align: middle;
+            font-size: 13px;
+        }
+
+        .products-table th {
+            background: #f8fafc;
+            font-weight: 700;
+            color: #344054;
+            white-space: nowrap;
+        }
+
+        .product-thumb {
+            width: 44px;
+            height: 44px;
+            border-radius: 7px;
+            object-fit: cover;
+            background: #f2f4f7;
+            display: block;
+        }
+
+        .product-name {
+            font-weight: 600;
+            color: #111827;
+            max-width: 240px;
+        }
+
+        .product-description {
+            max-width: 320px;
+            white-space: normal;
+            line-height: 1.4;
+            color: #475467;
+        }
+
+        .product-sizes {
+            max-width: 180px;
+            white-space: normal;
+        }
+
+        .product-collection,
+        .product-subcategory,
+        .product-badge {
+            white-space: nowrap;
+        }
+
+        .product-price {
+            white-space: nowrap;
+        }
+
+        .no-image {
+            color: #98a2b3;
+            font-size: 12px;
+        }
+
+        .product-id {
+            color: #667085;
+            white-space: nowrap;
+        }
+
+        .product-actions {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+
+        .product-inline-input,
+        .product-status-select,
+        .product-featured-select {
+            padding: 7px 8px;
+            border: 1px solid #d9dce3;
+            border-radius: 6px;
+            font-size: 12px;
+            background: #fff;
+        }
+
+        .product-inline-input {
+            width: 75px;
+        }
+
+        .products-loading,
+        .products-error,
+        .products-empty {
+            padding: 22px;
+            text-align: center;
+            color: #667085;
+        }
+
+        .products-error {
+            color: #b42318;
+        }
+
+        .product-modal .modal-body {
+            max-height: 75vh;
+            overflow: auto;
+        }
+
+        .product-form-grid {
+            display: grid;
+            grid-template-columns:
+                repeat(2, minmax(0, 1fr));
+            gap: 14px;
+        }
+
+        .product-form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .product-form-group.full {
+            grid-column: 1 / -1;
+        }
+
+        .product-form-group label {
+            font-size: 12px;
+            font-weight: 600;
+            color: #344054;
+        }
+
+        .product-form-group input,
+        .product-form-group select,
+        .product-form-group textarea {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 10px 11px;
+            border: 1px solid #d9dce3;
+            border-radius: 7px;
+            font: inherit;
+            background: #fff;
+        }
+
+        .product-form-group textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .product-gallery-manager {
+            border: 1px solid #d9dce3;
+            border-radius: 8px;
+            padding: 12px;
+            background: #f8fafc;
+        }
+
+        .product-gallery-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .product-gallery-item {
+            width: 150px;
+            background: #fff;
+            border: 1px solid #e3e6eb;
+            border-radius: 8px;
+            padding: 8px;
+            position: relative;
+        }
+
+        .product-gallery-preview {
+            width: 100%;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 6px;
+            background: #f2f4f7;
+            display: block;
+        }
+
+        .product-gallery-label {
+            font-size: 11px;
+            font-weight: 700;
+            color: #344054;
+            margin: 6px 0;
+        }
+
+        .product-gallery-actions {
+            display: flex;
+            gap: 5px;
+            flex-wrap: wrap;
+        }
+
+        .product-gallery-actions button {
+            border: 0;
+            border-radius: 6px;
+            padding: 6px 8px;
+            font-size: 11px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .gallery-primary {
+            background: #111827;
+            color: #fff;
+        }
+
+        .gallery-set-primary {
+            background: #e5e7eb;
+            color: #111827;
+        }
+
+        .gallery-replace {
+            background: #eef2ff;
+            color: #3730a3;
+        }
+
+        .gallery-remove {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .product-gallery-empty {
+            font-size: 12px;
+            color: #667085;
+            padding: 8px 0;
+        }
+
+        .product-gallery-upload {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .product-gallery-upload input {
+            max-width: 100%;
+        }
+
+        .product-gallery-help {
+            font-size: 11px;
+            color: #667085;
+            margin-top: 8px;
+            line-height: 1.45;
+        }
+
+        .product-form-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 8px;
+            margin-top: 18px;
         }
 
         /* =========================
-           MOBILE
+           RESPONSIVE
         ========================= */
 
         @media (max-width: 900px) {
@@ -715,9 +1055,19 @@
             .login-card {
                 padding: 24px;
             }
-        }
 
-        .products-toolbar{display:flex;gap:10px;align-items:center;margin-bottom:14px;flex-wrap:wrap}.products-search{flex:1;min-width:240px;padding:12px 14px;border:1px solid #d9dce3;border-radius:8px;font-size:14px;background:#fff}.primary-btn,.secondary-btn,.danger-btn,.restore-btn,.edit-btn{border:0;border-radius:8px;padding:11px 14px;font-size:13px;font-weight:600;cursor:pointer}.primary-btn{background:#111827;color:#fff}.secondary-btn{background:#eef2f7;color:#172033}.danger-btn{background:#fee2e2;color:#991b1b}.restore-btn{background:#dcfce7;color:#166534}.edit-btn{background:#e5e7eb;color:#111827}.primary-btn:disabled,.secondary-btn:disabled,.danger-btn:disabled,.restore-btn:disabled,.edit-btn:disabled{opacity:.6;cursor:not-allowed}.products-meta{font-size:13px;color:#667085;margin:8px 0 12px}.products-table-wrap{background:#fff;border:1px solid #e3e6eb;border-radius:10px;overflow:auto}.products-table{width:100%;min-width:1900px;border-collapse:collapse}.products-table th,.products-table td{padding:11px 12px;border-bottom:1px solid #edf0f3;text-align:left;vertical-align:middle;font-size:13px}.products-table th{background:#f8fafc;font-weight:700;color:#344054;white-space:nowrap}.product-thumb{width:44px;height:44px;border-radius:7px;object-fit:cover;background:#f2f4f7;display:block}.product-name{font-weight:600;color:#111827;max-width:240px}.product-description{max-width:320px;white-space:normal;line-height:1.4;color:#475467}.product-sizes{max-width:180px;white-space:normal}.product-collection,.product-subcategory,.product-badge{white-space:nowrap}.product-price{white-space:nowrap}.no-image{color:#98a2b3;font-size:12px}.product-id{color:#667085;white-space:nowrap}.product-actions{display:flex;gap:6px;flex-wrap:wrap}.product-inline-input,.product-status-select,.product-featured-select{padding:7px 8px;border:1px solid #d9dce3;border-radius:6px;font-size:12px;background:#fff}.product-inline-input{width:75px}.products-loading,.products-error,.products-empty{padding:22px;text-align:center;color:#667085}.products-error{color:#b42318}.product-modal .modal-body{max-height:75vh;overflow:auto}.product-form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.product-form-group{display:flex;flex-direction:column;gap:6px}.product-form-group.full{grid-column:1/-1}.product-form-group label{font-size:12px;font-weight:600;color:#344054}.product-form-group input,.product-form-group select,.product-form-group textarea{width:100%;box-sizing:border-box;padding:10px 11px;border:1px solid #d9dce3;border-radius:7px;font:inherit;background:#fff}.product-form-group textarea{min-height:100px;resize:vertical}.product-gallery-manager{border:1px solid #d9dce3;border-radius:8px;padding:12px;background:#f8fafc}.product-gallery-list{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:10px}.product-gallery-item{width:150px;background:#fff;border:1px solid #e3e6eb;border-radius:8px;padding:8px;position:relative}.product-gallery-preview{width:100%;height:120px;object-fit:cover;border-radius:6px;background:#f2f4f7;display:block}.product-gallery-label{font-size:11px;font-weight:700;color:#344054;margin:6px 0}.product-gallery-actions{display:flex;gap:5px;flex-wrap:wrap}.product-gallery-actions button{border:0;border-radius:6px;padding:6px 8px;font-size:11px;font-weight:600;cursor:pointer}.gallery-primary{background:#111827;color:#fff}.gallery-set-primary{background:#e5e7eb;color:#111827}.gallery-replace{background:#eef2ff;color:#3730a3}.gallery-remove{background:#fee2e2;color:#991b1b}.product-gallery-empty{font-size:12px;color:#667085;padding:8px 0}.product-gallery-upload{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.product-gallery-upload input{max-width:100%}.product-gallery-help{font-size:11px;color:#667085;margin-top:8px;line-height:1.45}.product-form-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:18px}@media(max-width:650px){.product-form-grid{grid-template-columns:1fr}.product-form-group.full{grid-column:auto}}
+            .order-detail-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .product-form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .product-form-group.full {
+                grid-column: auto;
+            }
+        }
 
     </style>
 
@@ -867,6 +1217,8 @@
 
         <main class="main-content">
 
+            <!-- DASHBOARD -->
+
             <section id="dashboardSection">
 
                 <div class="page-title">
@@ -974,22 +1326,154 @@
 
             </section>
 
-            <!-- PRODUCTS -->
-            <section id="productsSection" class="section-hidden">
-                <div class="page-title"><h2>Products</h2><p>Manage products from the existing Peppy Fashion Products sheet</p></div>
-                <div class="products-toolbar"><input id="productsSearch" class="products-search" type="search" placeholder="Search product ID, name, category or collection..." autocomplete="off"><button id="refreshProductsButton" class="secondary-btn" type="button">Refresh Products</button><button id="addProductButton" class="primary-btn" type="button">+ Add Product</button></div>
-                <div id="productsMeta" class="products-meta">Loading products...</div>
-                <div class="products-table-wrap"><div id="productsLoading" class="products-loading">Loading products...</div><div id="productsError" class="products-error" style="display:none;"></div><div id="productsEmpty" class="products-empty" style="display:none;">No products found.</div><table id="productsTable" class="products-table" style="display:none;"><thead><tr><th>Image</th><th>Product ID</th><th>Product Name</th><th>Main Category</th><th>Sub Category</th><th>Collection</th><th>Price</th><th>Old Price</th><th>Discount</th><th>Stock</th><th>Status</th><th>Featured</th><th>Badge</th><th>Sizes</th><th>Description</th><th>Actions</th></tr></thead><tbody id="productsTableBody"></tbody></table></div>
-            </section>
 
-            <!-- ORDERS -->
-            <section id="ordersSection" class="section-hidden">
+            <!-- PRODUCTS -->
+
+            <section
+                id="productsSection"
+                class="section-hidden"
+            >
+
                 <div class="page-title">
-                    <h2>Orders</h2>
-                    <p>Manage orders from the existing Peppy Fashion Orders sheet</p>
+
+                    <h2>
+                        Products
+                    </h2>
+
+                    <p>
+                        Manage products from the existing
+                        Peppy Fashion Products sheet
+                    </p>
+
                 </div>
 
+
+                <div class="products-toolbar">
+
+                    <input
+                        id="productsSearch"
+                        class="products-search"
+                        type="search"
+                        placeholder="Search product ID, name, category or collection..."
+                        autocomplete="off"
+                    >
+
+                    <button
+                        id="refreshProductsButton"
+                        class="secondary-btn"
+                        type="button"
+                    >
+                        Refresh Products
+                    </button>
+
+                    <button
+                        id="addProductButton"
+                        class="primary-btn"
+                        type="button"
+                    >
+                        + Add Product
+                    </button>
+
+                </div>
+
+
+                <div
+                    id="productsMeta"
+                    class="products-meta"
+                >
+                    Loading products...
+                </div>
+
+
+                <div class="products-table-wrap">
+
+                    <div
+                        id="productsLoading"
+                        class="products-loading"
+                    >
+                        Loading products...
+                    </div>
+
+                    <div
+                        id="productsError"
+                        class="products-error"
+                        style="display:none;"
+                    ></div>
+
+                    <div
+                        id="productsEmpty"
+                        class="products-empty"
+                        style="display:none;"
+                    >
+                        No products found.
+                    </div>
+
+
+                    <table
+                        id="productsTable"
+                        class="products-table"
+                        style="display:none;"
+                    >
+
+                        <thead>
+
+                            <tr>
+
+                                <th>Image</th>
+                                <th>Product ID</th>
+                                <th>Product Name</th>
+                                <th>Main Category</th>
+                                <th>Sub Category</th>
+                                <th>Collection</th>
+                                <th>Price</th>
+                                <th>Old Price</th>
+                                <th>Discount</th>
+                                <th>Stock</th>
+                                <th>Status</th>
+                                <th>Featured</th>
+                                <th>Badge</th>
+                                <th>Sizes</th>
+                                <th>Description</th>
+                                <th>Actions</th>
+
+                            </tr>
+
+                        </thead>
+
+                        <tbody
+                            id="productsTableBody"
+                        ></tbody>
+
+                    </table>
+
+                </div>
+
+            </section>
+
+
+            <!-- ORDERS -->
+
+            <section
+                id="ordersSection"
+                class="section-hidden"
+            >
+
+                <div class="page-title">
+
+                    <h2>
+                        Orders
+                    </h2>
+
+                    <p>
+                        Manage orders from the existing
+                        Peppy Fashion Orders sheet
+                    </p>
+
+                </div>
+
+
                 <div class="orders-toolbar">
+
                     <input
                         id="ordersSearch"
                         class="orders-search"
@@ -997,22 +1481,60 @@
                         placeholder="Search Order ID, customer, phone or email..."
                         autocomplete="off"
                     >
-                    <button id="refreshOrdersButton" class="refresh-btn" type="button">
+
+                    <button
+                        id="refreshOrdersButton"
+                        class="refresh-btn"
+                        type="button"
+                    >
                         Refresh Orders
                     </button>
+
                 </div>
 
-                <div id="ordersMeta" class="orders-meta">
+
+                <div
+                    id="ordersMeta"
+                    class="orders-meta"
+                >
                     Loading orders...
                 </div>
 
+
                 <div class="orders-table-wrap">
-                    <div id="ordersLoading" class="orders-loading">Loading orders...</div>
-                    <div id="ordersError" class="orders-error" style="display:none;"></div>
-                    <div id="ordersEmpty" class="orders-empty" style="display:none;">No orders found.</div>
-                    <table id="ordersTable" class="orders-table" style="display:none;">
+
+                    <div
+                        id="ordersLoading"
+                        class="orders-loading"
+                    >
+                        Loading orders...
+                    </div>
+
+                    <div
+                        id="ordersError"
+                        class="orders-error"
+                        style="display:none;"
+                    ></div>
+
+                    <div
+                        id="ordersEmpty"
+                        class="orders-empty"
+                        style="display:none;"
+                    >
+                        No orders found.
+                    </div>
+
+
+                    <table
+                        id="ordersTable"
+                        class="orders-table"
+                        style="display:none;"
+                    >
+
                         <thead>
+
                             <tr>
+
                                 <th>Date</th>
                                 <th>Order ID</th>
                                 <th>Customer</th>
@@ -1021,11 +1543,19 @@
                                 <th>Payment</th>
                                 <th>Status</th>
                                 <th>Details</th>
+
                             </tr>
+
                         </thead>
-                        <tbody id="ordersTableBody"></tbody>
+
+                        <tbody
+                            id="ordersTableBody"
+                        ></tbody>
+
                     </table>
+
                 </div>
+
             </section>
 
         </main>
@@ -1034,18 +1564,417 @@
 
 </div>
 
-<div id="productModalBackdrop" class="modal-backdrop" aria-hidden="true"><div class="order-modal product-modal" role="dialog" aria-modal="true" aria-labelledby="productModalTitle"><div class="modal-header"><h3 id="productModalTitle">Add Product</h3><button id="productModalClose" class="modal-close" type="button" aria-label="Close">&times;</button></div><div class="modal-body"><form id="productForm"><div class="product-form-grid">
-<div class="product-form-group"><label for="productIdInput">Product ID</label><input id="productIdInput" type="text" placeholder="Leave blank to generate"></div><div class="product-form-group"><label for="productNameInput">Product Name *</label><input id="productNameInput" type="text" required></div><div class="product-form-group"><label for="productCategoryInput">Main Category</label><input id="productCategoryInput" type="text"></div><div class="product-form-group"><label for="productSubCategoryInput">Sub Category</label><input id="productSubCategoryInput" type="text"></div><div class="product-form-group"><label for="productCollectionInput">Collection</label><input id="productCollectionInput" type="text"></div><div class="product-form-group"><label for="productPriceInput">Price</label><input id="productPriceInput" type="number" min="0" step="0.01"></div><div class="product-form-group"><label for="productOldPriceInput">Old Price</label><input id="productOldPriceInput" type="number" min="0" step="0.01"></div><div class="product-form-group"><label for="productDiscountInput">Discount</label><input id="productDiscountInput" type="number" min="0" step="0.01"></div><div class="product-form-group"><label for="productStockInput">Stock</label><input id="productStockInput" type="number" min="0" step="1"></div><div class="product-form-group"><label for="productStatusInput">Status</label><select id="productStatusInput"><option value="active">Active</option><option value="inactive">Inactive</option></select></div><div class="product-form-group"><label for="productFeaturedInput">Featured</label><select id="productFeaturedInput"><option value="no">No</option><option value="yes">Yes</option></select></div><div class="product-form-group"><label for="productBadgeInput">Badge</label><input id="productBadgeInput" type="text"></div><div class="product-form-group full"><label>Product Photos</label><div class="product-gallery-manager"><div id="productGalleryList" class="product-gallery-list"></div><div class="product-gallery-upload"><input id="productImageFiles" type="file" accept="image/jpeg,image/png,image/webp,image/gif" multiple><button id="uploadProductImagesButton" class="secondary-btn" type="button">Upload Photos</button></div><div class="product-gallery-help">You can upload multiple photos for one product. The first photo is the primary product photo. Use Set Primary, Replace, or Remove for individual photos. Uploaded photos are stored in your GitHub <code>assets/images/products/</code> folder.</div></div></div><div class="product-form-group full"><label for="productImageInput">Primary Image Path / URL</label><input id="productImageInput" type="text" placeholder="assets/images/products/product.jpg or https://..."></div><div class="product-form-group full"><label for="productSizesInput">Sizes</label><input id="productSizesInput" type="text" placeholder="S, M, L, XL"></div><div class="product-form-group full"><label for="productDescriptionInput">Description</label><textarea id="productDescriptionInput"></textarea></div></div><div id="productFormMessage" class="message"></div><div class="product-form-actions"><button id="productCancelButton" class="secondary-btn" type="button">Cancel</button><button id="productSaveButton" class="primary-btn" type="submit">Save Product</button></div></form></div></div></div>
 
-<div id="orderModalBackdrop" class="modal-backdrop" aria-hidden="true">
-    <div class="order-modal" role="dialog" aria-modal="true" aria-labelledby="orderModalTitle">
+<!-- =====================================================
+     PRODUCT MODAL
+===================================================== -->
+
+<div
+    id="productModalBackdrop"
+    class="modal-backdrop"
+    aria-hidden="true"
+>
+
+    <div
+        class="order-modal product-modal"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="productModalTitle"
+    >
+
         <div class="modal-header">
-            <h3 id="orderModalTitle">Order Details</h3>
-            <button id="orderModalClose" class="modal-close" type="button" aria-label="Close">&times;</button>
+
+            <h3 id="productModalTitle">
+                Add Product
+            </h3>
+
+            <button
+                id="productModalClose"
+                class="modal-close"
+                type="button"
+                aria-label="Close"
+            >
+                &times;
+            </button>
+
         </div>
-        <div id="orderModalBody" class="modal-body"></div>
+
+
+        <div class="modal-body">
+
+            <form id="productForm">
+
+                <div class="product-form-grid">
+
+
+                    <div class="product-form-group">
+
+                        <label for="productIdInput">
+                            Product ID
+                        </label>
+
+                        <input
+                            id="productIdInput"
+                            type="text"
+                            placeholder="Leave blank to generate"
+                        >
+
+                    </div>
+
+
+                    <div class="product-form-group">
+
+                        <label for="productNameInput">
+                            Product Name *
+                        </label>
+
+                        <input
+                            id="productNameInput"
+                            type="text"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="product-form-group">
+
+                        <label for="productCategoryInput">
+                            Main Category
+                        </label>
+
+                        <input
+                            id="productCategoryInput"
+                            type="text"
+                        >
+
+                    </div>
+
+
+                    <div class="product-form-group">
+
+                        <label for="productSubCategoryInput">
+                            Sub Category
+                        </label>
+
+                        <input
+                            id="productSubCategoryInput"
+                            type="text"
+                        >
+
+                    </div>
+
+
+                    <div class="product-form-group">
+
+                        <label for="productCollectionInput">
+                            Collection
+                        </label>
+
+                        <input
+                            id="productCollectionInput"
+                            type="text"
+                        >
+
+                    </div>
+
+
+                    <div class="product-form-group">
+
+                        <label for="productPriceInput">
+                            Price
+                        </label>
+
+                        <input
+                            id="productPriceInput"
+                            type="number"
+                            min="0"
+                            step="0.01"
+                        >
+
+                    </div>
+
+
+                    <div class="product-form-group">
+
+                        <label for="productOldPriceInput">
+                            Old Price
+                        </label>
+
+                        <input
+                            id="productOldPriceInput"
+                            type="number"
+                            min="0"
+                            step="0.01"
+                        >
+
+                    </div>
+
+
+                    <div class="product-form-group">
+
+                        <label for="productDiscountInput">
+                            Discount
+                        </label>
+
+                        <input
+                            id="productDiscountInput"
+                            type="number"
+                            min="0"
+                            step="0.01"
+                        >
+
+                    </div>
+
+
+                    <div class="product-form-group">
+
+                        <label for="productStockInput">
+                            Stock
+                        </label>
+
+                        <input
+                            id="productStockInput"
+                            type="number"
+                            min="0"
+                            step="1"
+                        >
+
+                    </div>
+
+
+                    <div class="product-form-group">
+
+                        <label for="productStatusInput">
+                            Status
+                        </label>
+
+                        <select id="productStatusInput">
+
+                            <option value="active">
+                                Active
+                            </option>
+
+                            <option value="inactive">
+                                Inactive
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="product-form-group">
+
+                        <label for="productFeaturedInput">
+                            Featured
+                        </label>
+
+                        <select id="productFeaturedInput">
+
+                            <option value="no">
+                                No
+                            </option>
+
+                            <option value="yes">
+                                Yes
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="product-form-group">
+
+                        <label for="productBadgeInput">
+                            Badge
+                        </label>
+
+                        <input
+                            id="productBadgeInput"
+                            type="text"
+                        >
+
+                    </div>
+
+
+                    <div class="product-form-group full">
+
+                        <label>
+                            Product Photos
+                        </label>
+
+                        <div class="product-gallery-manager">
+
+                            <div
+                                id="productGalleryList"
+                                class="product-gallery-list"
+                            ></div>
+
+
+                            <div class="product-gallery-upload">
+
+                                <input
+                                    id="productImageFiles"
+                                    type="file"
+                                    accept="image/jpeg,image/png,image/webp,image/gif"
+                                    multiple
+                                >
+
+                                <button
+                                    id="uploadProductImagesButton"
+                                    class="secondary-btn"
+                                    type="button"
+                                >
+                                    Upload Photos
+                                </button>
+
+                            </div>
+
+
+                            <div class="product-gallery-help">
+
+                                You can upload multiple photos
+                                for one product. The first photo
+                                is the primary product photo.
+                                Use Set Primary, Replace, or
+                                Remove for individual photos.
+                                Uploaded photos are stored in
+                                your GitHub
+                                <code>assets/images/products/</code>
+                                folder.
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="product-form-group full">
+
+                        <label for="productImageInput">
+                            Primary Image Path / URL
+                        </label>
+
+                        <input
+                            id="productImageInput"
+                            type="text"
+                            placeholder="assets/images/products/product.jpg or https://..."
+                        >
+
+                    </div>
+
+
+                    <div class="product-form-group full">
+
+                        <label for="productSizesInput">
+                            Sizes
+                        </label>
+
+                        <input
+                            id="productSizesInput"
+                            type="text"
+                            placeholder="S, M, L, XL"
+                        >
+
+                    </div>
+
+
+                    <div class="product-form-group full">
+
+                        <label for="productDescriptionInput">
+                            Description
+                        </label>
+
+                        <textarea
+                            id="productDescriptionInput"
+                        ></textarea>
+
+                    </div>
+
+                </div>
+
+
+                <div
+                    id="productFormMessage"
+                    class="message"
+                ></div>
+
+
+                <div class="product-form-actions">
+
+                    <button
+                        id="productCancelButton"
+                        class="secondary-btn"
+                        type="button"
+                    >
+                        Cancel
+                    </button>
+
+                    <button
+                        id="productSaveButton"
+                        class="primary-btn"
+                        type="submit"
+                    >
+                        Save Product
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
     </div>
+
 </div>
+
+
+<!-- =====================================================
+     ORDER MODAL
+===================================================== -->
+
+<div
+    id="orderModalBackdrop"
+    class="modal-backdrop"
+    aria-hidden="true"
+>
+
+    <div
+        class="order-modal"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="orderModalTitle"
+    >
+
+        <div class="modal-header">
+
+            <h3 id="orderModalTitle">
+                Order Details
+            </h3>
+
+            <button
+                id="orderModalClose"
+                class="modal-close"
+                type="button"
+                aria-label="Close"
+            >
+                &times;
+            </button>
+
+        </div>
+
+        <div
+            id="orderModalBody"
+            class="modal-body"
+        ></div>
+
+    </div>
+
+</div>
+
 
 <script>
 
@@ -1066,77 +1995,167 @@
     ===================================================== */
 
     const loginPage =
-        document.getElementById(
-            "loginPage"
-        );
+        document.getElementById("loginPage");
 
     const adminApp =
-        document.getElementById(
-            "adminApp"
-        );
+        document.getElementById("adminApp");
 
     const loginForm =
-        document.getElementById(
-            "loginForm"
-        );
+        document.getElementById("loginForm");
 
     const loginButton =
-        document.getElementById(
-            "loginButton"
-        );
+        document.getElementById("loginButton");
 
     const adminTokenInput =
-        document.getElementById(
-            "adminToken"
-        );
+        document.getElementById("adminToken");
 
     const loginMessage =
-        document.getElementById(
-            "loginMessage"
-        );
+        document.getElementById("loginMessage");
 
     const logoutButton =
-        document.getElementById(
-            "logoutButton"
-        );
+        document.getElementById("logoutButton");
+
 
     const dashboardSection =
         document.getElementById("dashboardSection");
 
+    const productsSection =
+        document.getElementById("productsSection");
+
     const ordersSection =
         document.getElementById("ordersSection");
 
-    const productsSection = document.getElementById("productsSection");
-    const productsSearch = document.getElementById("productsSearch");
-    const refreshProductsButton = document.getElementById("refreshProductsButton");
-    const addProductButton = document.getElementById("addProductButton");
-    const productsMeta = document.getElementById("productsMeta");
-    const productsLoading = document.getElementById("productsLoading");
-    const productsError = document.getElementById("productsError");
-    const productsEmpty = document.getElementById("productsEmpty");
-    const productsTable = document.getElementById("productsTable");
-    const productsTableBody = document.getElementById("productsTableBody");
-    const productModalBackdrop = document.getElementById("productModalBackdrop");
-    const productModalClose = document.getElementById("productModalClose");
-    const productForm = document.getElementById("productForm");
-    const productModalTitle = document.getElementById("productModalTitle");
-    const productCancelButton = document.getElementById("productCancelButton");
-    const productSaveButton = document.getElementById("productSaveButton");
-    const productFormMessage = document.getElementById("productFormMessage");
-    const productFields={id:document.getElementById("productIdInput"),name:document.getElementById("productNameInput"),category:document.getElementById("productCategoryInput"),subCategory:document.getElementById("productSubCategoryInput"),collection:document.getElementById("productCollectionInput"),price:document.getElementById("productPriceInput"),oldPrice:document.getElementById("productOldPriceInput"),discount:document.getElementById("productDiscountInput"),stock:document.getElementById("productStockInput"),status:document.getElementById("productStatusInput"),featured:document.getElementById("productFeaturedInput"),badge:document.getElementById("productBadgeInput"),image:document.getElementById("productImageInput"),sizes:document.getElementById("productSizesInput"),description:document.getElementById("productDescriptionInput")};
-    const productImageFiles=document.getElementById("productImageFiles");
-    const uploadProductImagesButton=document.getElementById("uploadProductImagesButton");
-    const productGalleryList=document.getElementById("productGalleryList");
-    let productGalleryImages=[];
-    let pendingProductFiles=[];
-    let allProducts=[]; let editingProductId=null;
+
+    const productsSearch =
+        document.getElementById("productsSearch");
+
+    const refreshProductsButton =
+        document.getElementById("refreshProductsButton");
+
+    const addProductButton =
+        document.getElementById("addProductButton");
+
+    const productsMeta =
+        document.getElementById("productsMeta");
+
+    const productsLoading =
+        document.getElementById("productsLoading");
+
+    const productsError =
+        document.getElementById("productsError");
+
+    const productsEmpty =
+        document.getElementById("productsEmpty");
+
+    const productsTable =
+        document.getElementById("productsTable");
+
+    const productsTableBody =
+        document.getElementById("productsTableBody");
+
+
+    const productModalBackdrop =
+        document.getElementById("productModalBackdrop");
+
+    const productModalClose =
+        document.getElementById("productModalClose");
+
+    const productForm =
+        document.getElementById("productForm");
+
+    const productModalTitle =
+        document.getElementById("productModalTitle");
+
+    const productCancelButton =
+        document.getElementById("productCancelButton");
+
+    const productSaveButton =
+        document.getElementById("productSaveButton");
+
+    const productFormMessage =
+        document.getElementById("productFormMessage");
+
+
+    const productFields = {
+
+        id:
+            document.getElementById("productIdInput"),
+
+        name:
+            document.getElementById("productNameInput"),
+
+        category:
+            document.getElementById("productCategoryInput"),
+
+        subCategory:
+            document.getElementById("productSubCategoryInput"),
+
+        collection:
+            document.getElementById("productCollectionInput"),
+
+        price:
+            document.getElementById("productPriceInput"),
+
+        oldPrice:
+            document.getElementById("productOldPriceInput"),
+
+        discount:
+            document.getElementById("productDiscountInput"),
+
+        stock:
+            document.getElementById("productStockInput"),
+
+        status:
+            document.getElementById("productStatusInput"),
+
+        featured:
+            document.getElementById("productFeaturedInput"),
+
+        badge:
+            document.getElementById("productBadgeInput"),
+
+        image:
+            document.getElementById("productImageInput"),
+
+        sizes:
+            document.getElementById("productSizesInput"),
+
+        description:
+            document.getElementById("productDescriptionInput")
+
+    };
+
+
+    const productImageFiles =
+        document.getElementById("productImageFiles");
+
+    const uploadProductImagesButton =
+        document.getElementById(
+            "uploadProductImagesButton"
+        );
+
+    const productGalleryList =
+        document.getElementById(
+            "productGalleryList"
+        );
+
+
+    let productGalleryImages = [];
+
+    let pendingProductFiles = [];
+
+    let allProducts = [];
+
+    let editingProductId = null;
 
 
     const ordersSearch =
         document.getElementById("ordersSearch");
 
     const refreshOrdersButton =
-        document.getElementById("refreshOrdersButton");
+        document.getElementById(
+            "refreshOrdersButton"
+        );
 
     const ordersMeta =
         document.getElementById("ordersMeta");
@@ -1154,16 +2173,26 @@
         document.getElementById("ordersTable");
 
     const ordersTableBody =
-        document.getElementById("ordersTableBody");
+        document.getElementById(
+            "ordersTableBody"
+        );
+
 
     const orderModalBackdrop =
-        document.getElementById("orderModalBackdrop");
+        document.getElementById(
+            "orderModalBackdrop"
+        );
 
     const orderModalClose =
-        document.getElementById("orderModalClose");
+        document.getElementById(
+            "orderModalClose"
+        );
 
     const orderModalBody =
-        document.getElementById("orderModalBody");
+        document.getElementById(
+            "orderModalBody"
+        );
+
 
     let allOrders = [];
 
@@ -1260,6 +2289,7 @@
 
             throw new Error(
                 data.message ||
+                data.error ||
                 "Request failed."
             );
 
@@ -1316,6 +2346,7 @@
 
             throw new Error(
                 data.message ||
+                data.error ||
                 "Invalid admin token."
             );
 
@@ -1370,14 +2401,6 @@
                 );
 
 
-            /*
-             * Backend structure:
-             *
-             * data.dashboard.products
-             * data.dashboard.orders
-             * data.dashboard.sales
-             */
-
             const dashboard =
                 data.dashboard || {};
 
@@ -1388,10 +2411,6 @@
 
             const orders =
                 dashboard.orders || {};
-
-
-            const sales =
-                dashboard.sales || {};
 
 
             document.getElementById(
@@ -1455,338 +2474,4054 @@
 
 
     /* =====================================================
-       ORDERS
+       COMMON HELPERS
     ===================================================== */
 
     function escapeHtml(value) {
+
         return String(value ?? "")
             .replace(/&/g, "&amp;")
             .replace(/</g, "&lt;")
             .replace(/>/g, "&gt;")
             .replace(/"/g, "&quot;")
             .replace(/'/g, "&#039;");
+
     }
+
 
     function formatDate(value) {
+
         if (!value) return "—";
 
-        const date = new Date(value);
-        if (Number.isNaN(date.getTime())) {
+        const date =
+            new Date(value);
+
+
+        if (
+            Number.isNaN(
+                date.getTime()
+            )
+        ) {
+
             return String(value);
+
         }
 
-        return date.toLocaleString("en-GB", {
-            day: "2-digit",
-            month: "short",
-            year: "numeric",
-            hour: "2-digit",
-            minute: "2-digit"
-        });
+
+        return date.toLocaleString(
+            "en-GB",
+            {
+                day: "2-digit",
+                month: "short",
+                year: "numeric",
+                hour: "2-digit",
+                minute: "2-digit"
+            }
+        );
+
     }
+
 
     function formatMoney(value) {
-        const number = Number(value);
-        if (!Number.isFinite(number)) return "৳0";
-        return "৳" + number.toLocaleString("en-BD", {
-            maximumFractionDigits: 2
-        });
+
+        const number =
+            Number(value);
+
+
+        if (
+            !Number.isFinite(number)
+        ) {
+
+            return "৳0";
+
+        }
+
+
+        return "৳" +
+            number.toLocaleString(
+                "en-BD",
+                {
+                    maximumFractionDigits: 2
+                }
+            );
+
     }
+
+
+    /* =====================================================
+       SECTION NAVIGATION
+    ===================================================== */
 
     function showSection(section) {
-        dashboardSection.classList.add("section-hidden");
-        productsSection.classList.add("section-hidden");
-        ordersSection.classList.add("section-hidden");
-        if (section === "dashboard") { dashboardSection.classList.remove("section-hidden"); loadDashboard(); return; }
-        if (section === "products") { productsSection.classList.remove("section-hidden"); loadProducts(); return; }
-        if (section === "orders") { ordersSection.classList.remove("section-hidden"); loadOrders(); }
+
+        dashboardSection.classList.add(
+            "section-hidden"
+        );
+
+        productsSection.classList.add(
+            "section-hidden"
+        );
+
+        ordersSection.classList.add(
+            "section-hidden"
+        );
+
+
+        if (section === "dashboard") {
+
+            dashboardSection.classList.remove(
+                "section-hidden"
+            );
+
+            loadDashboard();
+
+            return;
+
+        }
+
+
+        if (section === "products") {
+
+            productsSection.classList.remove(
+                "section-hidden"
+            );
+
+            loadProducts();
+
+            return;
+
+        }
+
+
+        if (section === "orders") {
+
+            ordersSection.classList.remove(
+                "section-hidden"
+            );
+
+            loadOrders();
+
+        }
+
     }
+
+
+    /* =====================================================
+       ORDERS
+    ===================================================== */
 
     async function loadOrders() {
-        ordersLoading.style.display = "block";
-        ordersError.style.display = "none";
-        ordersEmpty.style.display = "none";
-        ordersTable.style.display = "none";
-        ordersMeta.textContent = "Loading orders...";
+
+        ordersLoading.style.display =
+            "block";
+
+        ordersError.style.display =
+            "none";
+
+        ordersEmpty.style.display =
+            "none";
+
+        ordersTable.style.display =
+            "none";
+
+        ordersMeta.textContent =
+            "Loading orders...";
+
 
         try {
-            const data = await apiRequest("orders");
-            allOrders = Array.isArray(data.orders)
-                ? data.orders
-                : [];
+
+            const data =
+                await apiRequest(
+                    "orders"
+                );
+
+
+            allOrders =
+                Array.isArray(data.orders)
+                    ? data.orders
+                    : [];
+
 
             renderOrders();
+
+
         } catch (error) {
-            console.error("Orders error:", error);
-            ordersLoading.style.display = "none";
+
+            console.error(
+                "Orders error:",
+                error
+            );
+
+
+            ordersLoading.style.display =
+                "none";
+
+
             ordersError.textContent =
-                error.message || "Unable to load orders.";
-            ordersError.style.display = "block";
-            ordersMeta.textContent = "Orders could not be loaded.";
+                error.message ||
+                "Unable to load orders.";
+
+
+            ordersError.style.display =
+                "block";
+
+
+            ordersMeta.textContent =
+                "Orders could not be loaded.";
+
         }
+
     }
+
 
     function getFilteredOrders() {
-        const query = ordersSearch.value.trim().toLowerCase();
 
-        if (!query) return allOrders;
+        const query =
+            ordersSearch.value
+                .trim()
+                .toLowerCase();
 
-        return allOrders.filter(function(order) {
-            return [
-                order.orderId,
-                order.name,
-                order.phone,
-                order.email,
-                order.address,
-                order.payment,
-                order.status
-            ].some(function(value) {
-                return String(value ?? "")
-                    .toLowerCase()
-                    .includes(query);
-            });
-        });
-    }
 
-    function renderOrders() {
-        ordersLoading.style.display = "none";
-        ordersError.style.display = "none";
+        if (!query) {
 
-        const filtered = getFilteredOrders();
-        ordersMeta.textContent =
-            "Showing " + filtered.length + " of " + allOrders.length + " orders";
+            return allOrders;
 
-        ordersTableBody.innerHTML = "";
-
-        if (!filtered.length) {
-            ordersTable.style.display = "none";
-            ordersEmpty.style.display = "block";
-            return;
         }
 
-        ordersEmpty.style.display = "none";
-        ordersTable.style.display = "table";
 
-        filtered.forEach(function(order) {
-            const row = document.createElement("tr");
-            const status = String(order.status || "Pending");
+        return allOrders.filter(
+            function(order) {
 
-            row.innerHTML = `
-                <td class="order-date">${escapeHtml(formatDate(order.date))}</td>
-                <td class="order-id">${escapeHtml(order.orderId || "—")}</td>
-                <td class="order-customer">${escapeHtml(order.name || "—")}</td>
-                <td class="order-phone">${escapeHtml(order.phone || "—")}</td>
-                <td>${escapeHtml(formatMoney(order.total))}</td>
-                <td>${escapeHtml(order.payment || "—")}</td>
-                <td>
-                    <select class="status-select" data-order-id="${escapeHtml(order.orderId || "")}">
-                        ${buildStatusOptions(status)}
-                    </select>
-                </td>
-                <td>
-                    <button class="view-btn" type="button" data-view-order-id="${escapeHtml(order.orderId || "")}">
-                        View
-                    </button>
-                </td>
-            `;
+                return [
 
-            ordersTableBody.appendChild(row);
-        });
+                    order.orderId,
+                    order.name,
+                    order.phone,
+                    order.email,
+                    order.address,
+                    order.payment,
+                    order.status
 
-        ordersTableBody.querySelectorAll(".status-select").forEach(function(select) {
-            select.addEventListener("change", function() {
-                updateOrderStatus(select.dataset.orderId, select.value, select);
-            });
-        });
+                ].some(
+                    function(value) {
 
-        ordersTableBody.querySelectorAll(".view-btn").forEach(function(button) {
-            button.addEventListener("click", function() {
-                openOrderModal(button.dataset.viewOrderId);
-            });
-        });
+                        return String(
+                            value ?? ""
+                        )
+                        .toLowerCase()
+                        .includes(query);
+
+                    }
+                );
+
+            }
+        );
+
     }
 
-    function buildStatusOptions(currentStatus) {
+
+    function renderOrders() {
+
+        ordersLoading.style.display =
+            "none";
+
+        ordersError.style.display =
+            "none";
+
+
+        const filtered =
+            getFilteredOrders();
+
+
+        ordersMeta.textContent =
+            "Showing " +
+            filtered.length +
+            " of " +
+            allOrders.length +
+            " orders";
+
+
+        ordersTableBody.innerHTML =
+            "";
+
+
+        if (!filtered.length) {
+
+            ordersTable.style.display =
+                "none";
+
+            ordersEmpty.style.display =
+                "block";
+
+            return;
+
+        }
+
+
+        ordersEmpty.style.display =
+            "none";
+
+        ordersTable.style.display =
+            "table";
+
+
+        filtered.forEach(
+            function(order) {
+
+                const row =
+                    document.createElement(
+                        "tr"
+                    );
+
+
+                const status =
+                    String(
+                        order.status ||
+                        "Pending"
+                    );
+
+
+                row.innerHTML = `
+
+                    <td class="order-date">
+                        ${escapeHtml(
+                            formatDate(order.date)
+                        )}
+                    </td>
+
+                    <td class="order-id">
+                        ${escapeHtml(
+                            order.orderId || "—"
+                        )}
+                    </td>
+
+                    <td class="order-customer">
+                        ${escapeHtml(
+                            order.name || "—"
+                        )}
+                    </td>
+
+                    <td class="order-phone">
+                        ${escapeHtml(
+                            order.phone || "—"
+                        )}
+                    </td>
+
+                    <td>
+                        ${escapeHtml(
+                            formatMoney(order.total)
+                        )}
+                    </td>
+
+                    <td>
+                        ${escapeHtml(
+                            order.payment || "—"
+                        )}
+                    </td>
+
+                    <td>
+
+                        <select
+                            class="status-select"
+                            data-order-id="${escapeHtml(
+                                order.orderId || ""
+                            )}"
+                        >
+
+                            ${buildStatusOptions(
+                                status
+                            )}
+
+                        </select>
+
+                    </td>
+
+                    <td>
+
+                        <button
+                            class="view-btn"
+                            type="button"
+                            data-view-order-id="${escapeHtml(
+                                order.orderId || ""
+                            )}"
+                        >
+                            View
+                        </button>
+
+                    </td>
+
+                `;
+
+
+                ordersTableBody.appendChild(
+                    row
+                );
+
+            }
+        );
+
+
+        ordersTableBody
+            .querySelectorAll(
+                ".status-select"
+            )
+            .forEach(
+                function(select) {
+
+                    select.addEventListener(
+                        "change",
+                        function() {
+
+                            updateOrderStatus(
+                                select.dataset.orderId,
+                                select.value,
+                                select
+                            );
+
+                        }
+                    );
+
+                }
+            );
+
+
+        ordersTableBody
+            .querySelectorAll(
+                ".view-btn"
+            )
+            .forEach(
+                function(button) {
+
+                    button.addEventListener(
+                        "click",
+                        function() {
+
+                            openOrderModal(
+                                button.dataset
+                                    .viewOrderId
+                            );
+
+                        }
+                    );
+
+                }
+            );
+
+    }
+
+
+    function buildStatusOptions(
+        currentStatus
+    ) {
+
         const statuses = [
+
             "Pending",
             "Confirmed",
             "Processing",
             "Shipped",
             "Delivered",
             "Cancelled"
+
         ];
 
-        const normalizedCurrent = String(currentStatus || "Pending").toLowerCase();
 
-        if (!statuses.some(function(status) {
-            return status.toLowerCase() === normalizedCurrent;
-        })) {
-            statuses.unshift(currentStatus);
+        const normalizedCurrent =
+            String(
+                currentStatus ||
+                "Pending"
+            ).toLowerCase();
+
+
+        if (
+            !statuses.some(
+                function(status) {
+
+                    return status
+                        .toLowerCase() ===
+                        normalizedCurrent;
+
+                }
+            )
+        ) {
+
+            statuses.unshift(
+                currentStatus
+            );
+
         }
 
-        return statuses.map(function(status) {
-            const selected =
-                status.toLowerCase() === normalizedCurrent
-                    ? " selected"
-                    : "";
 
-            return `<option value="${escapeHtml(status)}"${selected}>${escapeHtml(status)}</option>`;
-        }).join("");
+        return statuses
+            .map(
+                function(status) {
+
+                    const selected =
+                        status.toLowerCase() ===
+                        normalizedCurrent
+                            ? " selected"
+                            : "";
+
+
+                    return `
+                        <option
+                            value="${escapeHtml(status)}"
+                            ${selected}
+                        >
+                            ${escapeHtml(status)}
+                        </option>
+                    `;
+
+                }
+            )
+            .join("");
+
     }
 
-    async function updateOrderStatus(orderId, status, selectElement) {
+
+    async function updateOrderStatus(
+        orderId,
+        status,
+        selectElement
+    ) {
+
         if (!orderId) {
-            alert("Order ID is missing.");
+
+            alert(
+                "Order ID is missing."
+            );
+
             return;
+
         }
+
 
         const previousStatus =
-            allOrders.find(function(order) {
-                return String(order.orderId) === String(orderId);
-            })?.status || "Pending";
+            allOrders.find(
+                function(order) {
 
-        selectElement.disabled = true;
+                    return String(
+                        order.orderId
+                    ) ===
+                    String(orderId);
+
+                }
+            )?.status ||
+            "Pending";
+
+
+        selectElement.disabled =
+            true;
+
 
         try {
-            const token = sessionStorage.getItem(ADMIN_TOKEN_KEY);
 
-            const response = await fetch(API_URL, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "text/plain;charset=utf-8"
-                },
-                body: JSON.stringify({
-                    action: "updateOrderStatus",
-                    adminToken: token,
-                    orderId: orderId,
-                    status: status
-                })
-            });
+            const token =
+                sessionStorage.getItem(
+                    ADMIN_TOKEN_KEY
+                );
+
+
+            const response =
+                await fetch(
+                    API_URL,
+                    {
+                        method: "POST",
+
+                        headers: {
+                            "Content-Type":
+                                "text/plain;charset=utf-8"
+                        },
+
+                        body: JSON.stringify({
+
+                            action:
+                                "updateOrderStatus",
+
+                            adminToken:
+                                token,
+
+                            orderId:
+                                orderId,
+
+                            status:
+                                status
+
+                        })
+
+                    }
+                );
+
 
             if (!response.ok) {
-                throw new Error("Server request failed.");
+
+                throw new Error(
+                    "Server request failed."
+                );
+
             }
 
-            const data = await response.json();
+
+            const data =
+                await response.json();
+
 
             if (!data.success) {
-                throw new Error(data.message || "Unable to update order status.");
+
+                throw new Error(
+                    data.message ||
+                    data.error ||
+                    "Unable to update order status."
+                );
+
             }
 
-            const order = allOrders.find(function(item) {
-                return String(item.orderId) === String(orderId);
-            });
+
+            const order =
+                allOrders.find(
+                    function(item) {
+
+                        return String(
+                            item.orderId
+                        ) ===
+                        String(orderId);
+
+                    }
+                );
+
 
             if (order) {
-                order.status = status;
+
+                order.status =
+                    status;
+
             }
 
+
             renderOrders();
-            alert("Order " + orderId + " status updated to " + status + ".");
+
+
+            alert(
+                "Order " +
+                orderId +
+                " status updated to " +
+                status +
+                "."
+            );
+
+
         } catch (error) {
-            console.error("Update order status error:", error);
-            selectElement.value = previousStatus;
-            alert(error.message || "Unable to update order status.");
+
+            console.error(
+                "Update order status error:",
+                error
+            );
+
+
+            selectElement.value =
+                previousStatus;
+
+
+            alert(
+                error.message ||
+                "Unable to update order status."
+            );
+
+
         } finally {
-            selectElement.disabled = false;
+
+            selectElement.disabled =
+                false;
+
         }
+
     }
 
-    function openOrderModal(orderId) {
-        const order = allOrders.find(function(item) {
-            return String(item.orderId) === String(orderId);
-        });
+
+    function openOrderModal(
+        orderId
+    ) {
+
+        const order =
+            allOrders.find(
+                function(item) {
+
+                    return String(
+                        item.orderId
+                    ) ===
+                    String(orderId);
+
+                }
+            );
+
 
         if (!order) {
-            alert("Order not found.");
+
+            alert(
+                "Order not found."
+            );
+
             return;
+
         }
 
-        document.getElementById("orderModalTitle").textContent =
-            "Order " + (order.orderId || "Details");
+
+        document.getElementById(
+            "orderModalTitle"
+        ).textContent =
+            "Order " +
+            (
+                order.orderId ||
+                "Details"
+            );
+
 
         orderModalBody.innerHTML = `
+
             <div class="order-detail-grid">
-                ${detailBox("Date", formatDate(order.date))}
-                ${detailBox("Order ID", order.orderId)}
-                ${detailBox("Customer", order.name)}
-                ${detailBox("Phone", order.phone)}
-                ${detailBox("Email", order.email)}
-                ${detailBox("Payment", order.payment)}
-                ${detailBox("Transaction ID", order.transactionId)}
-                ${detailBox("Quantity", order.quantity)}
-                ${detailBox("Subtotal", formatMoney(order.subtotal))}
-                ${detailBox("Discount", formatMoney(order.discount))}
-                ${detailBox("Delivery", formatMoney(order.delivery))}
-                ${detailBox("Total", formatMoney(order.total))}
-                ${detailBox("Status", order.status)}
+
+                ${detailBox(
+                    "Date",
+                    formatDate(order.date)
+                )}
+
+                ${detailBox(
+                    "Order ID",
+                    order.orderId
+                )}
+
+                ${detailBox(
+                    "Customer",
+                    order.name
+                )}
+
+                ${detailBox(
+                    "Phone",
+                    order.phone
+                )}
+
+                ${detailBox(
+                    "Email",
+                    order.email
+                )}
+
+                ${detailBox(
+                    "Payment",
+                    order.payment
+                )}
+
+                ${detailBox(
+                    "Transaction ID",
+                    order.transactionId
+                )}
+
+                ${detailBox(
+                    "Quantity",
+                    order.quantity
+                )}
+
+                ${detailBox(
+                    "Subtotal",
+                    formatMoney(order.subtotal)
+                )}
+
+                ${detailBox(
+                    "Discount",
+                    formatMoney(order.discount)
+                )}
+
+                ${detailBox(
+                    "Delivery",
+                    formatMoney(order.delivery)
+                )}
+
+                ${detailBox(
+                    "Total",
+                    formatMoney(order.total)
+                )}
+
+                ${detailBox(
+                    "Status",
+                    order.status
+                )}
+
             </div>
 
-            <div class="detail-box" style="margin-bottom:14px;">
-                <div class="detail-label">Address</div>
-                <div class="detail-value">${escapeHtml(order.address || "—")}</div>
+
+            <div
+                class="detail-box"
+                style="margin-bottom:14px;"
+            >
+
+                <div class="detail-label">
+                    Address
+                </div>
+
+                <div class="detail-value">
+                    ${escapeHtml(
+                        order.address || "—"
+                    )}
+                </div>
+
             </div>
 
-            <div class="detail-box" style="margin-bottom:14px;">
-                <div class="detail-label">Products</div>
-                <div class="order-products-box" style="border:none;padding:8px 0 0;margin:0;">${escapeHtml(order.products || "—")}</div>
+
+            <div
+                class="detail-box"
+                style="margin-bottom:14px;"
+            >
+
+                <div class="detail-label">
+                    Products
+                </div>
+
+                <div
+                    class="order-products-box"
+                    style="
+                        border:none;
+                        padding:8px 0 0;
+                        margin:0;
+                    "
+                >
+                    ${escapeHtml(
+                        order.products || "—"
+                    )}
+                </div>
+
             </div>
+
 
             <div class="order-note-box">
-                <strong>Order Note:</strong><br>
-                ${escapeHtml(order.note || "No order note.")}
+
+                <strong>
+                    Order Note:
+                </strong>
+
+                <br>
+
+                ${escapeHtml(
+                    order.note ||
+                    "No order note."
+                )}
+
             </div>
+
         `;
 
-        orderModalBackdrop.classList.add("open");
-        orderModalBackdrop.setAttribute("aria-hidden", "false");
+
+        orderModalBackdrop.classList.add(
+            "open"
+        );
+
+        orderModalBackdrop.setAttribute(
+            "aria-hidden",
+            "false"
+        );
+
     }
 
-    function detailBox(label, value) {
+
+    function detailBox(
+        label,
+        value
+    ) {
+
         return `
+
             <div class="detail-box">
-                <div class="detail-label">${escapeHtml(label)}</div>
-                <div class="detail-value">${escapeHtml(value || "—")}</div>
+
+                <div class="detail-label">
+                    ${escapeHtml(label)}
+                </div>
+
+                <div class="detail-value">
+                    ${escapeHtml(
+                        value || "—"
+                    )}
+                </div>
+
             </div>
+
         `;
+
     }
+
 
     function closeOrderModal() {
-        orderModalBackdrop.classList.remove("open");
-        orderModalBackdrop.setAttribute("aria-hidden", "true");
+
+        orderModalBackdrop.classList.remove(
+            "open"
+        );
+
+        orderModalBackdrop.setAttribute(
+            "aria-hidden",
+            "true"
+        );
+
     }
+
 
     /* =====================================================
        PRODUCTS
     ===================================================== */
-    function showProductFormMessage(message,type="error"){productFormMessage.textContent=message||"";productFormMessage.className="message "+type;}
-    function resolveProductImage(src){const value=String(src||"").trim();if(!value)return "";if(/^https?:\/\//i.test(value))return value;if(value.startsWith("/"))return new URL(value,window.location.origin).href;if(value.startsWith("assets/"))return new URL("../"+value,window.location.href).href;if(value.startsWith("images/"))return new URL("../assets/"+value,window.location.href).href;return new URL("../assets/images/products/"+value,window.location.href).href;}
-    function renderProductGallery(){if(!productGalleryList)return;productGalleryList.innerHTML="";if(!productGalleryImages.length){productGalleryList.innerHTML='<div class="product-gallery-empty">No product photos yet.</div>';return;}productGalleryImages.forEach((src,index)=>{const item=document.createElement("div");item.className="product-gallery-item";const label=index===0?"PRIMARY PHOTO":"PHOTO "+(index+1);item.innerHTML=`<img class="product-gallery-preview" src="${escapeHtml(resolveProductImage(src))}" alt="" onerror="this.style.opacity=.25"><div class="product-gallery-label">${label}</div><div class="product-gallery-actions">${index===0?'<button class="gallery-primary" type="button">Primary</button>':'<button class="gallery-set-primary" type="button">Set Primary</button>'}<button class="gallery-replace" type="button">Replace</button><button class="gallery-remove" type="button">Remove</button></div>`;const buttons=item.querySelectorAll("button");if(index>0)buttons[0].addEventListener("click",()=>setPrimaryProductImage(index));buttons[1].addEventListener("click",()=>replaceProductImage(index));buttons[2].addEventListener("click",()=>removeProductImage(index));productGalleryList.appendChild(item);});}
-    async function persistProductGallery(){if(!editingProductId)return;const d=await postAdminAction({action:"updateProductImages",id:editingProductId,images:productGalleryImages});const updated=d.product;if(updated){const idx=allProducts.findIndex(x=>String(x.id)===String(editingProductId));if(idx>=0)allProducts[idx]=Object.assign({},allProducts[idx],updated);productGalleryImages=Array.isArray(updated.images)?updated.images:productGalleryImages;productFields.image.value=productGalleryImages[0]||"";}renderProductGallery();renderProducts();}
-    async function setPrimaryProductImage(index){if(index<=0||index>=productGalleryImages.length)return;const selected=productGalleryImages[index];productGalleryImages.splice(index,1);productGalleryImages.unshift(selected);productFields.image.value=productGalleryImages[0]||"";if(editingProductId){try{await persistProductGallery();showProductFormMessage("Primary photo updated.","success");}catch(e){showProductFormMessage(e.message||"Unable to set primary photo.");}}else renderProductGallery();}
-    async function removeProductImage(index){const src=productGalleryImages[index];if(!src)return;if(!confirm("Remove this product photo?"))return;try{if(editingProductId && !/^https?:\/\//i.test(src) && String(src).includes("assets/images/products/")){await postAdminAction({action:"deleteImage",path:src});}productGalleryImages.splice(index,1);if(editingProductId)await persistProductGallery();else{productFields.image.value=productGalleryImages[0]||"";renderProductGallery();}}catch(e){showProductFormMessage(e.message||"Unable to remove photo.");}}
-    async function replaceProductImage(index){if(!editingProductId){showProductFormMessage("Save the new product first, then replace photos.");return;}const input=document.createElement("input");input.type="file";input.accept="image/jpeg,image/png,image/webp,image/gif";input.onchange=async()=>{const file=input.files&&input.files[0];if(!file)return;try{showProductFormMessage("Uploading replacement photo...","success");const compressed=await prepareImageFile(file);const d=await postAdminAction({action:"uploadImage",filename:makeProductImageFilename(editingProductId,file.name),base64:compressed});const newPath=d.path||d.image;if(!newPath)throw new Error("Upload did not return an image path.");const oldPath=productGalleryImages[index];productGalleryImages[index]=newPath;if(oldPath&&!/^https?:\/\//i.test(oldPath)&&String(oldPath).includes("assets/images/products/")){try{await postAdminAction({action:"deleteImage",path:oldPath});}catch(cleanErr){console.warn("Old image cleanup failed",cleanErr);}}await persistProductGallery();showProductFormMessage("Photo replaced successfully.","success");}catch(e){showProductFormMessage(e.message||"Unable to replace photo.");}};input.click();}
-    function closeProductModal(){productModalBackdrop.classList.remove("open");productModalBackdrop.setAttribute("aria-hidden","true");productForm.reset();editingProductId=null;productFields.id.disabled=false;productGalleryImages=[];pendingProductFiles=[];renderProductGallery();showProductFormMessage("");}
-    function openProductModal(product){editingProductId=product?String(product.id):null;productModalTitle.textContent=product?"Edit Product":"Add Product";productSaveButton.textContent=product?"Save Changes":"Add Product";productFields.id.disabled=!!product;const values=product||{id:"",name:"",category:"",subCategory:"",collection:"",price:"",oldPrice:"",discount:"",stock:0,status:"active",featured:"no",badge:"",image:"",sizes:"",description:""};Object.keys(productFields).forEach(k=>productFields[k].value=values[k]??"");productGalleryImages=Array.isArray(product&&product.images)?product.images.slice():[];if(!productGalleryImages.length&&values.image)productGalleryImages=[values.image];pendingProductFiles=[];if(productGalleryImages.length)productFields.image.value=productGalleryImages[0]||"";renderProductGallery();productModalBackdrop.classList.add("open");productModalBackdrop.setAttribute("aria-hidden","false");setTimeout(()=>productFields.name.focus(),50);}
-    function getFilteredProducts(){const q=productsSearch.value.trim().toLowerCase();if(!q)return allProducts;return allProducts.filter(p=>[p.id,p.name,p.category,p.subCategory,p.collection,p.badge].some(v=>String(v??"").toLowerCase().includes(q)));}
-    function productImageHtml(p){const src=String(p.image||"").trim();if(!src)return '<span class="no-image">No image</span>';let resolved=src;if(!/^https?:\/\//i.test(src)){if(src.startsWith("/")){resolved=new URL(src,window.location.origin).href;}else if(src.startsWith("assets/")){resolved=new URL("../"+src,window.location.href).href;}else if(src.startsWith("images/")){resolved=new URL("../assets/"+src,window.location.href).href;}else{resolved=new URL("../assets/images/products/"+src,window.location.href).href;}}return `<img class="product-thumb" src="${escapeHtml(resolved)}" alt="" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='inline';"><span class="no-image" style="display:none;">No image</span>`;}
-    function makeProductImageFilename(productId,originalName){const ext=(String(originalName||"").split(".").pop()||"jpg").toLowerCase().replace(/[^a-z0-9]/g,"")||"jpg";const stamp=Date.now().toString(36);return String(productId).replace(/[^a-zA-Z0-9_-]/g,"-")+"-"+stamp+"."+ext;}
-    function prepareImageFile(file){return new Promise((resolve,reject)=>{if(!file||!file.type.startsWith("image/")){reject(new Error("Please select an image file."));return;}const img=new Image();const reader=new FileReader();reader.onload=()=>{img.onload=()=>{const max=1400;let w=img.naturalWidth,h=img.naturalHeight;if(w>max||h>max){const scale=Math.min(max/w,max/h);w=Math.round(w*scale);h=Math.round(h*scale);}const canvas=document.createElement("canvas");canvas.width=w;canvas.height=h;const ctx=canvas.getContext("2d");ctx.drawImage(img,0,0,w,h);resolve(canvas.toDataURL("image/jpeg",0.82));};img.onerror=()=>reject(new Error("Unable to read image."));img.src=reader.result;};reader.onerror=()=>reject(new Error("Unable to read image file."));reader.readAsDataURL(file);});}
-    function previewPendingFiles(){if(!productGalleryList)return;renderProductGallery();if(!pendingProductFiles.length)return;pendingProductFiles.forEach((file,i)=>{const item=document.createElement("div");item.className="product-gallery-item";const url=URL.createObjectURL(file);item.innerHTML=`<img class="product-gallery-preview" src="${escapeHtml(url)}" alt=""><div class="product-gallery-label">NEW PHOTO ${i+1}</div><div class="product-gallery-actions"><button class="gallery-remove" type="button">Remove</button></div>`;item.querySelector("button").addEventListener("click",()=>{pendingProductFiles.splice(i,1);URL.revokeObjectURL(url);previewPendingFiles();});productGalleryList.appendChild(item);});}
-    async function uploadSelectedProductImages(){const files=Array.from(productImageFiles.files||[]);if(!files.length)return;if(!editingProductId){pendingProductFiles=pendingProductFiles.concat(files);productImageFiles.value="";previewPendingFiles();showProductFormMessage(files.length+" photo(s) ready. They will upload when you save the product.","success");return;}uploadProductImagesButton.disabled=true;try{for(const file of files){const compressed=await prepareImageFile(file);const d=await postAdminAction({action:"uploadImage",filename:makeProductImageFilename(editingProductId,file.name),base64:compressed});const path=d.path||d.image;if(!path)throw new Error("Upload did not return an image path.");productGalleryImages.push(path);}await persistProductGallery();productImageFiles.value="";showProductFormMessage(files.length+" photo(s) uploaded successfully.","success");}catch(e){showProductFormMessage(e.message||"Unable to upload photos.");}finally{uploadProductImagesButton.disabled=false;}}
 
-    function renderProducts(){productsLoading.style.display="none";productsError.style.display="none";const filtered=getFilteredProducts();productsMeta.textContent=`Showing ${filtered.length} of ${allProducts.length} products`;productsTableBody.innerHTML="";if(!filtered.length){productsTable.style.display="none";productsEmpty.style.display="block";return;}productsEmpty.style.display="none";productsTable.style.display="table";filtered.forEach(p=>{const row=document.createElement("tr");const status=String(p.status||"active").toLowerCase();const featured=String(p.featured||"no").toLowerCase();const sizes=Array.isArray(p.sizes)?p.sizes.join(", "):String(p.sizes||"");const description=String(p.description||"");row.innerHTML=`<td>${productImageHtml(p)}</td><td class="product-id">${escapeHtml(p.id||"—")}</td><td><div class="product-name">${escapeHtml(p.name||"Unnamed product")}</div></td><td>${escapeHtml(p.category||"—")}</td><td class="product-subcategory">${escapeHtml(p.subCategory||"—")}</td><td class="product-collection">${escapeHtml(p.collection||"—")}</td><td class="product-price">${escapeHtml(formatMoney(p.price))}</td><td class="product-price">${p.oldPrice?escapeHtml(formatMoney(p.oldPrice)):"—"}</td><td>${p.discount?escapeHtml(String(p.discount)+"%"):"—"}</td><td><input class="product-inline-input stock-input" type="number" min="0" step="1" value="${escapeHtml(p.stock??0)}" data-product-id="${escapeHtml(p.id||"")}"></td><td><select class="product-status-select status-product-select" data-product-id="${escapeHtml(p.id||"")}"><option value="active"${status==="active"?" selected":""}>Active</option><option value="inactive"${status!=="active"?" selected":""}>Inactive</option></select></td><td><select class="product-featured-select featured-product-select" data-product-id="${escapeHtml(p.id||"")}"><option value="no"${featured!=="yes"?" selected":""}>No</option><option value="yes"${featured==="yes"?" selected":""}>Yes</option></select></td><td class="product-badge">${escapeHtml(p.badge||"—")}</td><td class="product-sizes">${escapeHtml(sizes||"—")}</td><td class="product-description">${escapeHtml(description||"—")}</td><td><div class="product-actions"><button class="edit-btn" type="button" data-edit-product-id="${escapeHtml(p.id||"")}">Edit</button>${status==="active"?`<button class="danger-btn" type="button" data-delete-product-id="${escapeHtml(p.id||"")}">Deactivate</button>`:`<button class="restore-btn" type="button" data-restore-product-id="${escapeHtml(p.id||"")}">Restore</button>`}</div></td>`;productsTableBody.appendChild(row);});productsTableBody.querySelectorAll(".edit-btn").forEach(b=>b.addEventListener("click",()=>{const p=allProducts.find(x=>String(x.id)===String(b.dataset.editProductId));if(p)openProductModal(p);}));productsTableBody.querySelectorAll(".stock-input").forEach(i=>i.addEventListener("change",()=>updateProductStock(i.dataset.productId,i)));productsTableBody.querySelectorAll(".status-product-select").forEach(i=>i.addEventListener("change",()=>updateProductStatus(i.dataset.productId,i.value,i)));productsTableBody.querySelectorAll(".featured-product-select").forEach(i=>i.addEventListener("change",()=>updateProductFeatured(i.dataset.productId,i.value,i)));productsTableBody.querySelectorAll("[data-delete-product-id]").forEach(b=>b.addEventListener("click",()=>deactivateProduct(b.dataset.deleteProductId,b)));productsTableBody.querySelectorAll("[data-restore-product-id]").forEach(b=>b.addEventListener("click",()=>restoreProduct(b.dataset.restoreProductId,b)));}
-    async function loadProducts(){productsLoading.style.display="block";productsError.style.display="none";productsEmpty.style.display="none";productsTable.style.display="none";productsMeta.textContent="Loading products...";try{const data=await apiRequest("adminproducts");allProducts=Array.isArray(data.products)?data.products:[];renderProducts();}catch(e){console.error("Products error:",e);productsLoading.style.display="none";productsError.textContent=e.message||"Unable to load products.";productsError.style.display="block";productsMeta.textContent="Products could not be loaded.";}}
-    async function postAdminAction(payload){const token=sessionStorage.getItem(ADMIN_TOKEN_KEY);if(!token)throw new Error("Admin session not found.");const r=await fetch(API_URL,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(Object.assign({},payload,{adminToken:token}))});if(!r.ok)throw new Error("Server request failed.");const d=await r.json();if(!d.success)throw new Error(d.message||"Operation failed.");return d;}
-    async function updateProductStock(id,input){const p=allProducts.find(x=>String(x.id)===String(id));if(!p)return;const prev=p.stock??0;const stock=Math.max(0,Number(input.value)||0);input.disabled=true;try{await postAdminAction({action:"updateStock",id,stock});p.stock=stock;}catch(e){input.value=prev;alert(e.message||"Unable to update stock.");}finally{input.disabled=false;}}
-    async function updateProductStatus(id,status,select){const p=allProducts.find(x=>String(x.id)===String(id));if(!p)return;const prev=p.status||"active";select.disabled=true;try{await postAdminAction({action:"updateProductStatus",id,status});p.status=status;renderProducts();}catch(e){select.value=prev;alert(e.message||"Unable to update product status.");}finally{select.disabled=false;}}
-    async function updateProductFeatured(id,featured,select){const p=allProducts.find(x=>String(x.id)===String(id));if(!p)return;const prev=p.featured||"no";select.disabled=true;try{await postAdminAction({action:"updateFeatured",id,featured});p.featured=featured;}catch(e){select.value=prev;alert(e.message||"Unable to update featured status.");}finally{select.disabled=false;}}
-    async function deactivateProduct(id,b){if(!confirm("Deactivate this product? It will remain in the sheet and can be restored."))return;b.disabled=true;try{await postAdminAction({action:"deleteProduct",id});const p=allProducts.find(x=>String(x.id)===String(id));if(p)p.status="inactive";renderProducts();}catch(e){b.disabled=false;alert(e.message||"Unable to deactivate product.");}}
-    async function restoreProduct(id,b){b.disabled=true;try{await postAdminAction({action:"restoreProduct",id});const p=allProducts.find(x=>String(x.id)===String(id));if(p)p.status="active";renderProducts();}catch(e){b.disabled=false;alert(e.message||"Unable to restore product.");}}
-    productForm.addEventListener("submit",async e=>{e.preventDefault();showProductFormMessage("");productSaveButton.disabled=true;const wasEditing=!!editingProductId;productSaveButton.textContent=wasEditing?"Saving...":"Adding...";const payload={name:productFields.name.value.trim(),category:productFields.category.value.trim(),subCategory:productFields.subCategory.value.trim(),collection:productFields.collection.value.trim(),price:Number(productFields.price.value)||0,oldPrice:Number(productFields.oldPrice.value)||"",discount:Number(productFields.discount.value)||0,image:productFields.image.value.trim(),badge:productFields.badge.value.trim(),stock:Math.max(0,Number(productFields.stock.value)||0),status:productFields.status.value,sizes:productFields.sizes.value.trim(),featured:productFields.featured.value,description:productFields.description.value.trim()};if(!payload.name){showProductFormMessage("Product name is required.");productSaveButton.disabled=false;productSaveButton.textContent=wasEditing?"Save Changes":"Add Product";return;}try{let d;if(wasEditing){if(productGalleryImages.length)payload.image=productGalleryImages[0];d=await postAdminAction(Object.assign({action:"updateProduct",id:editingProductId},payload));const u=d.product||Object.assign({id:editingProductId},payload);const idx=allProducts.findIndex(x=>String(x.id)===String(editingProductId));if(idx>=0)allProducts[idx]=Object.assign({},allProducts[idx],u);if(productGalleryImages.length)await persistProductGallery();}else{if(productFields.id.value.trim())payload.id=productFields.id.value.trim();d=await postAdminAction(Object.assign({action:"addProduct"},payload));const created=d.product;if(created){const createdId=String(created.id);allProducts.unshift(created);if(pendingProductFiles.length){const uploaded=[];for(const file of pendingProductFiles){const compressed=await prepareImageFile(file);const up=await postAdminAction({action:"uploadImage",filename:makeProductImageFilename(createdId,file.name),base64:compressed});const path=up.path||up.image;if(path)uploaded.push(path);}if(uploaded.length){await postAdminAction({action:"updateProductImages",id:createdId,images:uploaded});const idx=allProducts.findIndex(x=>String(x.id)===createdId);if(idx>=0){allProducts[idx].images=uploaded;allProducts[idx].image=uploaded[0];}}}}}closeProductModal();renderProducts();loadDashboard();}catch(e){showProductFormMessage(e.message||"Unable to save product.");}finally{productSaveButton.disabled=false;productSaveButton.textContent=wasEditing?"Save Changes":"Add Product";}});
-    addProductButton.addEventListener("click",()=>openProductModal(null));refreshProductsButton.addEventListener("click",loadProducts);productsSearch.addEventListener("input",renderProducts);productModalClose.addEventListener("click",closeProductModal);productCancelButton.addEventListener("click",closeProductModal);productModalBackdrop.addEventListener("click",e=>{if(e.target===productModalBackdrop)closeProductModal();});
-    uploadProductImagesButton.addEventListener("click",uploadSelectedProductImages);
-    productImageFiles.addEventListener("change",()=>{if(!editingProductId)previewPendingFiles();});
-    productFields.image.addEventListener("change",()=>{const value=productFields.image.value.trim();if(value){productGalleryImages=[value];renderProductGallery();}});
+    function showProductFormMessage(
+        message,
+        type = "error"
+    ) {
+
+        productFormMessage.textContent =
+            message || "";
+
+        productFormMessage.className =
+            "message " + type;
+
+    }
+
+
+    function resolveProductImage(
+        src
+    ) {
+
+        const value =
+            String(src || "").trim();
+
+
+        if (!value) {
+
+            return "";
+
+        }
+
+
+        if (
+            /^https?:\/\//i.test(value)
+        ) {
+
+            return value;
+
+        }
+
+
+        if (value.startsWith("/")) {
+
+            return new URL(
+                value,
+                window.location.origin
+            ).href;
+
+        }
+
+
+        if (
+            value.startsWith("assets/")
+        ) {
+
+            return new URL(
+                "../" + value,
+                window.location.href
+            ).href;
+
+        }
+
+
+        if (
+            value.startsWith("images/")
+        ) {
+
+            return new URL(
+                "../assets/" + value,
+                window.location.href
+            ).href;
+
+        }
+
+
+        return new URL(
+            "../assets/images/products/" +
+            value,
+            window.location.href
+        ).href;
+
+    }
+
+
+    function renderProductGallery() {
+
+        if (!productGalleryList) {
+
+            return;
+
+        }
+
+
+        productGalleryList.innerHTML =
+            "";
+
+
+        if (!productGalleryImages.length) {
+
+            productGalleryList.innerHTML =
+                `
+                    <div class="product-gallery-empty">
+                        No product photos yet.
+                    </div>
+                `;
+
+            return;
+
+        }
+
+
+        productGalleryImages.forEach(
+            function(src, index) {
+
+                const item =
+                    document.createElement(
+                        "div"
+                    );
+
+
+                item.className =
+                    "product-gallery-item";
+
+
+                const label =
+                    index === 0
+                        ? "PRIMARY PHOTO"
+                        : "PHOTO " +
+                          (index + 1);
+
+
+                item.innerHTML = `
+
+                    <img
+                        class="product-gallery-preview"
+                        src="${escapeHtml(
+                            resolveProductImage(src)
+                        )}"
+                        alt=""
+                        onerror="this.style.opacity=.25"
+                    >
+
+                    <div
+                        class="product-gallery-label"
+                    >
+                        ${label}
+                    </div>
+
+                    <div
+                        class="product-gallery-actions"
+                    >
+
+                        ${
+                            index === 0
+
+                            ?
+
+                            `
+                                <button
+                                    class="gallery-primary"
+                                    type="button"
+                                >
+                                    Primary
+                                </button>
+                            `
+
+                            :
+
+                            `
+                                <button
+                                    class="gallery-set-primary"
+                                    type="button"
+                                >
+                                    Set Primary
+                                </button>
+                            `
+                        }
+
+
+                        <button
+                            class="gallery-replace"
+                            type="button"
+                        >
+                            Replace
+                        </button>
+
+
+                        <button
+                            class="gallery-remove"
+                            type="button"
+                        >
+                            Remove
+                        </button>
+
+                    </div>
+
+                `;
+
+
+                const buttons =
+                    item.querySelectorAll(
+                        "button"
+                    );
+
+
+                if (index > 0) {
+
+                    buttons[0]
+                        .addEventListener(
+                            "click",
+                            function() {
+
+                                setPrimaryProductImage(
+                                    index
+                                );
+
+                            }
+                        );
+
+                }
+
+
+                buttons[
+                    index === 0 ? 0 : 1
+                ].addEventListener(
+                    "click",
+                    function() {
+
+                        replaceProductImage(
+                            index
+                        );
+
+                    }
+                );
+
+
+                buttons[
+                    index === 0 ? 1 : 2
+                ].addEventListener(
+                    "click",
+                    function() {
+
+                        removeProductImage(
+                            index
+                        );
+
+                    }
+                );
+
+
+                productGalleryList.appendChild(
+                    item
+                );
+
+            }
+        );
+
+    }
+
+
+    async function persistProductGallery() {
+
+        if (!editingProductId) {
+
+            return;
+
+        }
+
+
+        const data =
+            await postAdminAction({
+
+                action:
+                    "updateProductImages",
+
+                id:
+                    editingProductId,
+
+                images:
+                    productGalleryImages
+
+            });
+
+
+        const updated =
+            data.product;
+
+
+        if (updated) {
+
+            const index =
+                allProducts.findIndex(
+                    function(x) {
+
+                        return String(x.id) ===
+                            String(editingProductId);
+
+                    }
+                );
+
+
+            if (index >= 0) {
+
+                allProducts[index] =
+                    Object.assign(
+                        {},
+                        allProducts[index],
+                        updated
+                    );
+
+            }
+
+
+            productGalleryImages =
+                Array.isArray(
+                    updated.images
+                )
+                    ? updated.images
+                    : productGalleryImages;
+
+
+            productFields.image.value =
+                productGalleryImages[0] ||
+                "";
+
+        }
+
+
+        renderProductGallery();
+
+        renderProducts();
+
+    }
+
+
+    async function setPrimaryProductImage(
+        index
+    ) {
+
+        if (
+            index <= 0 ||
+            index >= productGalleryImages.length
+        ) {
+
+            return;
+
+        }
+
+
+        const selected =
+            productGalleryImages[index];
+
+
+        productGalleryImages.splice(
+            index,
+            1
+        );
+
+
+        productGalleryImages.unshift(
+            selected
+        );
+
+
+        productFields.image.value =
+            productGalleryImages[0] ||
+            "";
+
+
+        if (editingProductId) {
+
+            try {
+
+                await persistProductGallery();
+
+
+                showProductFormMessage(
+                    "Primary photo updated.",
+                    "success"
+                );
+
+
+            } catch (error) {
+
+                showProductFormMessage(
+                    error.message ||
+                    "Unable to set primary photo."
+                );
+
+            }
+
+        } else {
+
+            renderProductGallery();
+
+        }
+
+    }
+
+
+    async function removeProductImage(
+        index
+    ) {
+
+        const src =
+            productGalleryImages[index];
+
+
+        if (!src) {
+
+            return;
+
+        }
+
+
+        if (
+            !confirm(
+                "Remove this product photo?"
+            )
+        ) {
+
+            return;
+
+        }
+
+
+        try {
+
+            if (
+                editingProductId &&
+                !/^https?:\/\//i.test(src) &&
+                String(src).includes(
+                    "assets/images/products/"
+                )
+            ) {
+
+                await postAdminAction({
+
+                    action:
+                        "deleteImage",
+
+                    path:
+                        src
+
+                });
+
+            }
+
+
+            productGalleryImages.splice(
+                index,
+                1
+            );
+
+
+            if (editingProductId) {
+
+                await persistProductGallery();
+
+            } else {
+
+                productFields.image.value =
+                    productGalleryImages[0] ||
+                    "";
+
+                renderProductGallery();
+
+            }
+
+
+        } catch (error) {
+
+            showProductFormMessage(
+                error.message ||
+                "Unable to remove photo."
+            );
+
+        }
+
+    }
+
+
+    async function replaceProductImage(
+        index
+    ) {
+
+        if (!editingProductId) {
+
+            showProductFormMessage(
+                "Save the new product first, then replace photos."
+            );
+
+            return;
+
+        }
+
+
+        const input =
+            document.createElement(
+                "input"
+            );
+
+
+        input.type =
+            "file";
+
+        input.accept =
+            "image/jpeg,image/png,image/webp,image/gif";
+
+
+        input.onchange =
+            async function() {
+
+                const file =
+                    input.files &&
+                    input.files[0];
+
+
+                if (!file) {
+
+                    return;
+
+                }
+
+
+                try {
+
+                    showProductFormMessage(
+                        "Uploading replacement photo...",
+                        "success"
+                    );
+
+
+                    const compressed =
+                        await prepareImageFile(
+                            file
+                        );
+
+
+                    const data =
+                        await postAdminAction({
+
+                            action:
+                                "uploadImage",
+
+                            filename:
+                                makeProductImageFilename(
+                                    editingProductId,
+                                    file.name
+                                ),
+
+                            base64:
+                                compressed
+
+                        });
+
+
+                    const newPath =
+                        data.path ||
+                        data.image;
+
+
+                    if (!newPath) {
+
+                        throw new Error(
+                            "Upload did not return an image path."
+                        );
+
+                    }
+
+
+                    const oldPath =
+                        productGalleryImages[index];
+
+
+                    productGalleryImages[index] =
+                        newPath;
+
+
+                    if (
+                        oldPath &&
+                        !/^https?:\/\//i.test(oldPath) &&
+                        String(oldPath).includes(
+                            "assets/images/products/"
+                        )
+                    ) {
+
+                        try {
+
+                            await postAdminAction({
+
+                                action:
+                                    "deleteImage",
+
+                                path:
+                                    oldPath
+
+                            });
+
+                        } catch (cleanupError) {
+
+                            console.warn(
+                                "Old image cleanup failed",
+                                cleanupError
+                            );
+
+                        }
+
+                    }
+
+
+                    await persistProductGallery();
+
+
+                    showProductFormMessage(
+                        "Photo replaced successfully.",
+                        "success"
+                    );
+
+
+                } catch (error) {
+
+                    showProductFormMessage(
+                        error.message ||
+                        "Unable to replace photo."
+                    );
+
+                }
+
+            };
+
+
+        input.click();
+
+    }
+
+
+    function closeProductModal() {
+
+        productModalBackdrop.classList.remove(
+            "open"
+        );
+
+        productModalBackdrop.setAttribute(
+            "aria-hidden",
+            "true"
+        );
+
+
+        productForm.reset();
+
+
+        editingProductId =
+            null;
+
+
+        productFields.id.disabled =
+            false;
+
+
+        productGalleryImages =
+            [];
+
+
+        pendingProductFiles =
+            [];
+
+
+        renderProductGallery();
+
+
+        showProductFormMessage("");
+
+    }
+
+
+    function openProductModal(
+        product
+    ) {
+
+        editingProductId =
+            product
+                ? String(product.id)
+                : null;
+
+
+        productModalTitle.textContent =
+            product
+                ? "Edit Product"
+                : "Add Product";
+
+
+        productSaveButton.textContent =
+            product
+                ? "Save Changes"
+                : "Add Product";
+
+
+        productFields.id.disabled =
+            !!product;
+
+
+        const values =
+            product ||
+            {
+
+                id: "",
+                name: "",
+                category: "",
+                subCategory: "",
+                collection: "",
+                price: "",
+                oldPrice: "",
+                discount: "",
+                stock: 0,
+                status: "active",
+                featured: "no",
+                badge: "",
+                image: "",
+                sizes: "",
+                description: ""
+
+            };
+
+
+        Object.keys(productFields)
+            .forEach(
+                function(key) {
+
+                    productFields[key].value =
+                        values[key] ?? "";
+
+                }
+            );
+
+
+        productGalleryImages =
+            Array.isArray(
+                product &&
+                product.images
+            )
+                ? product.images.slice()
+                : [];
+
+
+        if (
+            !productGalleryImages.length &&
+            values.image
+        ) {
+
+            productGalleryImages =
+                [values.image];
+
+        }
+
+
+        pendingProductFiles =
+            [];
+
+
+        if (productGalleryImages.length) {
+
+            productFields.image.value =
+                productGalleryImages[0] ||
+                "";
+
+        }
+
+
+        renderProductGallery();
+
+
+        productModalBackdrop.classList.add(
+            "open"
+        );
+
+
+        productModalBackdrop.setAttribute(
+            "aria-hidden",
+            "false"
+        );
+
+
+        setTimeout(
+            function() {
+
+                productFields.name.focus();
+
+            },
+            50
+        );
+
+    }
+
+
+    function getFilteredProducts() {
+
+        const query =
+            productsSearch.value
+                .trim()
+                .toLowerCase();
+
+
+        if (!query) {
+
+            return allProducts;
+
+        }
+
+
+        return allProducts.filter(
+            function(product) {
+
+                return [
+
+                    product.id,
+                    product.name,
+                    product.category,
+                    product.subCategory,
+                    product.collection,
+                    product.badge
+
+                ].some(
+                    function(value) {
+
+                        return String(
+                            value ?? ""
+                        )
+                        .toLowerCase()
+                        .includes(query);
+
+                    }
+                );
+
+            }
+        );
+
+    }
+
+
+    function productImageHtml(
+        product
+    ) {
+
+        const src =
+            String(
+                product.image ||
+                ""
+            ).trim();
+
+
+        if (!src) {
+
+            return `
+                <span class="no-image">
+                    No image
+                </span>
+            `;
+
+        }
+
+
+        const resolved =
+            resolveProductImage(
+                src
+            );
+
+
+        return `
+
+            <img
+                class="product-thumb"
+                src="${escapeHtml(resolved)}"
+                alt=""
+                loading="lazy"
+                onerror="
+                    this.style.display='none';
+                    this.nextElementSibling.style.display='inline';
+                "
+            >
+
+            <span
+                class="no-image"
+                style="display:none;"
+            >
+                No image
+            </span>
+
+        `;
+
+    }
+
+
+    function makeProductImageFilename(
+        productId,
+        originalName
+    ) {
+
+        const ext =
+            (
+                String(
+                    originalName ||
+                    ""
+                )
+                .split(".")
+                .pop() ||
+                "jpg"
+            )
+            .toLowerCase()
+            .replace(
+                /[^a-z0-9]/g,
+                ""
+            ) ||
+            "jpg";
+
+
+        const stamp =
+            Date.now().toString(36);
+
+
+        return String(
+            productId
+        )
+        .replace(
+            /[^a-zA-Z0-9_-]/g,
+            "-"
+        ) +
+        "-" +
+        stamp +
+        "." +
+        ext;
+
+    }
+
+
+    function prepareImageFile(
+        file
+    ) {
+
+        return new Promise(
+            function(resolve, reject) {
+
+                if (
+                    !file ||
+                    !file.type.startsWith(
+                        "image/"
+                    )
+                ) {
+
+                    reject(
+                        new Error(
+                            "Please select an image file."
+                        )
+                    );
+
+                    return;
+
+                }
+
+
+                const img =
+                    new Image();
+
+
+                const reader =
+                    new FileReader();
+
+
+                reader.onload =
+                    function() {
+
+                        img.onload =
+                            function() {
+
+                                const max =
+                                    1400;
+
+
+                                let width =
+                                    img.naturalWidth;
+
+                                let height =
+                                    img.naturalHeight;
+
+
+                                if (
+                                    width > max ||
+                                    height > max
+                                ) {
+
+                                    const scale =
+                                        Math.min(
+                                            max / width,
+                                            max / height
+                                        );
+
+
+                                    width =
+                                        Math.round(
+                                            width * scale
+                                        );
+
+
+                                    height =
+                                        Math.round(
+                                            height * scale
+                                        );
+
+                                }
+
+
+                                const canvas =
+                                    document.createElement(
+                                        "canvas"
+                                    );
+
+
+                                canvas.width =
+                                    width;
+
+                                canvas.height =
+                                    height;
+
+
+                                const context =
+                                    canvas.getContext(
+                                        "2d"
+                                    );
+
+
+                                context.drawImage(
+                                    img,
+                                    0,
+                                    0,
+                                    width,
+                                    height
+                                );
+
+
+                                resolve(
+                                    canvas.toDataURL(
+                                        "image/jpeg",
+                                        0.82
+                                    )
+                                );
+
+                            };
+
+
+                        img.onerror =
+                            function() {
+
+                                reject(
+                                    new Error(
+                                        "Unable to read image."
+                                    )
+                                );
+
+                            };
+
+
+                        img.src =
+                            reader.result;
+
+                    };
+
+
+                reader.onerror =
+                    function() {
+
+                        reject(
+                            new Error(
+                                "Unable to read image file."
+                            )
+                        );
+
+                    };
+
+
+                reader.readAsDataURL(
+                    file
+                );
+
+            }
+        );
+
+    }
+
+
+    function previewPendingFiles() {
+
+        if (!productGalleryList) {
+
+            return;
+
+        }
+
+
+        renderProductGallery();
+
+
+        if (!pendingProductFiles.length) {
+
+            return;
+
+        }
+
+
+        pendingProductFiles.forEach(
+            function(file, index) {
+
+                const item =
+                    document.createElement(
+                        "div"
+                    );
+
+
+                item.className =
+                    "product-gallery-item";
+
+
+                const url =
+                    URL.createObjectURL(
+                        file
+                    );
+
+
+                item.innerHTML = `
+
+                    <img
+                        class="product-gallery-preview"
+                        src="${escapeHtml(url)}"
+                        alt=""
+                    >
+
+                    <div
+                        class="product-gallery-label"
+                    >
+                        NEW PHOTO ${index + 1}
+                    </div>
+
+                    <div
+                        class="product-gallery-actions"
+                    >
+
+                        <button
+                            class="gallery-remove"
+                            type="button"
+                        >
+                            Remove
+                        </button>
+
+                    </div>
+
+                `;
+
+
+                item.querySelector(
+                    "button"
+                ).addEventListener(
+                    "click",
+                    function() {
+
+                        pendingProductFiles.splice(
+                            index,
+                            1
+                        );
+
+
+                        URL.revokeObjectURL(
+                            url
+                        );
+
+
+                        previewPendingFiles();
+
+                    }
+                );
+
+
+                productGalleryList.appendChild(
+                    item
+                );
+
+            }
+        );
+
+    }
+
+
+    async function uploadSelectedProductImages() {
+
+        const files =
+            Array.from(
+                productImageFiles.files ||
+                []
+            );
+
+
+        if (!files.length) {
+
+            return;
+
+        }
+
+
+        if (!editingProductId) {
+
+            pendingProductFiles =
+                pendingProductFiles.concat(
+                    files
+                );
+
+
+            productImageFiles.value =
+                "";
+
+
+            previewPendingFiles();
+
+
+            showProductFormMessage(
+                files.length +
+                " photo(s) ready. They will upload when you save the product.",
+                "success"
+            );
+
+
+            return;
+
+        }
+
+
+        uploadProductImagesButton.disabled =
+            true;
+
+
+        try {
+
+            for (
+                const file of files
+            ) {
+
+                const compressed =
+                    await prepareImageFile(
+                        file
+                    );
+
+
+                const data =
+                    await postAdminAction({
+
+                        action:
+                            "uploadImage",
+
+                        filename:
+                            makeProductImageFilename(
+                                editingProductId,
+                                file.name
+                            ),
+
+                        base64:
+                            compressed
+
+                    });
+
+
+                const path =
+                    data.path ||
+                    data.image;
+
+
+                if (!path) {
+
+                    throw new Error(
+                        "Upload did not return an image path."
+                    );
+
+                }
+
+
+                productGalleryImages.push(
+                    path
+                );
+
+            }
+
+
+            await persistProductGallery();
+
+
+            productImageFiles.value =
+                "";
+
+
+            showProductFormMessage(
+                files.length +
+                " photo(s) uploaded successfully.",
+                "success"
+            );
+
+
+        } catch (error) {
+
+            showProductFormMessage(
+                error.message ||
+                "Unable to upload photos."
+            );
+
+
+        } finally {
+
+            uploadProductImagesButton.disabled =
+                false;
+
+        }
+
+    }
+
+
+    /* =====================================================
+       RENDER PRODUCTS
+    ===================================================== */
+
+    function renderProducts() {
+
+        productsLoading.style.display =
+            "none";
+
+        productsError.style.display =
+            "none";
+
+
+        const filtered =
+            getFilteredProducts();
+
+
+        productsMeta.textContent =
+            "Showing " +
+            filtered.length +
+            " of " +
+            allProducts.length +
+            " products";
+
+
+        productsTableBody.innerHTML =
+            "";
+
+
+        if (!filtered.length) {
+
+            productsTable.style.display =
+                "none";
+
+            productsEmpty.style.display =
+                "block";
+
+            return;
+
+        }
+
+
+        productsEmpty.style.display =
+            "none";
+
+        productsTable.style.display =
+            "table";
+
+
+        filtered.forEach(
+            function(product) {
+
+                const row =
+                    document.createElement(
+                        "tr"
+                    );
+
+
+                const status =
+                    String(
+                        product.status ||
+                        "active"
+                    ).toLowerCase();
+
+
+                const featured =
+                    String(
+                        product.featured ||
+                        "no"
+                    ).toLowerCase();
+
+
+                const sizes =
+                    Array.isArray(
+                        product.sizes
+                    )
+                        ? product.sizes.join(
+                            ", "
+                        )
+                        : String(
+                            product.sizes ||
+                            ""
+                        );
+
+
+                const description =
+                    String(
+                        product.description ||
+                        ""
+                    );
+
+
+                let actionButtons;
+
+
+                if (status === "active") {
+
+                    actionButtons = `
+
+                        <button
+                            class="edit-btn"
+                            type="button"
+                            data-edit-product-id="${escapeHtml(
+                                product.id || ""
+                            )}"
+                        >
+                            Edit
+                        </button>
+
+
+                        <button
+                            class="danger-btn"
+                            type="button"
+                            data-delete-product-id="${escapeHtml(
+                                product.id || ""
+                            )}"
+                        >
+                            Deactivate
+                        </button>
+
+                    `;
+
+                } else {
+
+                    actionButtons = `
+
+                        <button
+                            class="edit-btn"
+                            type="button"
+                            data-edit-product-id="${escapeHtml(
+                                product.id || ""
+                            )}"
+                        >
+                            Edit
+                        </button>
+
+
+                        <button
+                            class="restore-btn"
+                            type="button"
+                            data-restore-product-id="${escapeHtml(
+                                product.id || ""
+                            )}"
+                        >
+                            Restore
+                        </button>
+
+
+                        <button
+                            class="permanent-delete-btn"
+                            type="button"
+                            data-permanent-delete-product-id="${escapeHtml(
+                                product.id || ""
+                            )}"
+                        >
+                            Permanent Delete
+                        </button>
+
+                    `;
+
+                }
+
+
+                row.innerHTML = `
+
+                    <td>
+                        ${productImageHtml(product)}
+                    </td>
+
+
+                    <td class="product-id">
+                        ${escapeHtml(
+                            product.id || "—"
+                        )}
+                    </td>
+
+
+                    <td>
+
+                        <div class="product-name">
+                            ${escapeHtml(
+                                product.name ||
+                                "Unnamed product"
+                            )}
+                        </div>
+
+                    </td>
+
+
+                    <td>
+                        ${escapeHtml(
+                            product.category ||
+                            "—"
+                        )}
+                    </td>
+
+
+                    <td class="product-subcategory">
+                        ${escapeHtml(
+                            product.subCategory ||
+                            "—"
+                        )}
+                    </td>
+
+
+                    <td class="product-collection">
+                        ${escapeHtml(
+                            product.collection ||
+                            "—"
+                        )}
+                    </td>
+
+
+                    <td class="product-price">
+                        ${escapeHtml(
+                            formatMoney(
+                                product.price
+                            )
+                        )}
+                    </td>
+
+
+                    <td class="product-price">
+                        ${
+                            product.oldPrice
+                                ? escapeHtml(
+                                    formatMoney(
+                                        product.oldPrice
+                                    )
+                                )
+                                : "—"
+                        }
+                    </td>
+
+
+                    <td>
+                        ${
+                            product.discount
+                                ? escapeHtml(
+                                    String(
+                                        product.discount
+                                    ) + "%"
+                                )
+                                : "—"
+                        }
+                    </td>
+
+
+                    <td>
+
+                        <input
+                            class="product-inline-input stock-input"
+                            type="number"
+                            min="0"
+                            step="1"
+                            value="${escapeHtml(
+                                product.stock ?? 0
+                            )}"
+                            data-product-id="${escapeHtml(
+                                product.id || ""
+                            )}"
+                        >
+
+                    </td>
+
+
+                    <td>
+
+                        <select
+                            class="product-status-select status-product-select"
+                            data-product-id="${escapeHtml(
+                                product.id || ""
+                            )}"
+                        >
+
+                            <option
+                                value="active"
+                                ${
+                                    status === "active"
+                                        ? "selected"
+                                        : ""
+                                }
+                            >
+                                Active
+                            </option>
+
+
+                            <option
+                                value="inactive"
+                                ${
+                                    status !== "active"
+                                        ? "selected"
+                                        : ""
+                                }
+                            >
+                                Inactive
+                            </option>
+
+                        </select>
+
+                    </td>
+
+
+                    <td>
+
+                        <select
+                            class="product-featured-select featured-product-select"
+                            data-product-id="${escapeHtml(
+                                product.id || ""
+                            )}"
+                        >
+
+                            <option
+                                value="no"
+                                ${
+                                    featured !== "yes"
+                                        ? "selected"
+                                        : ""
+                                }
+                            >
+                                No
+                            </option>
+
+
+                            <option
+                                value="yes"
+                                ${
+                                    featured === "yes"
+                                        ? "selected"
+                                        : ""
+                                }
+                            >
+                                Yes
+                            </option>
+
+                        </select>
+
+                    </td>
+
+
+                    <td class="product-badge">
+                        ${escapeHtml(
+                            product.badge ||
+                            "—"
+                        )}
+                    </td>
+
+
+                    <td class="product-sizes">
+                        ${escapeHtml(
+                            sizes || "—"
+                        )}
+                    </td>
+
+
+                    <td class="product-description">
+                        ${escapeHtml(
+                            description ||
+                            "—"
+                        )}
+                    </td>
+
+
+                    <td>
+
+                        <div class="product-actions">
+
+                            ${actionButtons}
+
+                        </div>
+
+                    </td>
+
+                `;
+
+
+                productsTableBody.appendChild(
+                    row
+                );
+
+            }
+        );
+
+
+        /* EDIT */
+
+        productsTableBody
+            .querySelectorAll(
+                ".edit-btn"
+            )
+            .forEach(
+                function(button) {
+
+                    button.addEventListener(
+                        "click",
+                        function() {
+
+                            const product =
+                                allProducts.find(
+                                    function(item) {
+
+                                        return String(
+                                            item.id
+                                        ) ===
+                                        String(
+                                            button.dataset
+                                                .editProductId
+                                        );
+
+                                    }
+                                );
+
+
+                            if (product) {
+
+                                openProductModal(
+                                    product
+                                );
+
+                            }
+
+                        }
+                    );
+
+                }
+            );
+
+
+        /* STOCK */
+
+        productsTableBody
+            .querySelectorAll(
+                ".stock-input"
+            )
+            .forEach(
+                function(input) {
+
+                    input.addEventListener(
+                        "change",
+                        function() {
+
+                            updateProductStock(
+                                input.dataset
+                                    .productId,
+                                input
+                            );
+
+                        }
+                    );
+
+                }
+            );
+
+
+        /* STATUS */
+
+        productsTableBody
+            .querySelectorAll(
+                ".status-product-select"
+            )
+            .forEach(
+                function(select) {
+
+                    select.addEventListener(
+                        "change",
+                        function() {
+
+                            updateProductStatus(
+                                select.dataset
+                                    .productId,
+                                select.value,
+                                select
+                            );
+
+                        }
+                    );
+
+                }
+            );
+
+
+        /* FEATURED */
+
+        productsTableBody
+            .querySelectorAll(
+                ".featured-product-select"
+            )
+            .forEach(
+                function(select) {
+
+                    select.addEventListener(
+                        "change",
+                        function() {
+
+                            updateProductFeatured(
+                                select.dataset
+                                    .productId,
+                                select.value,
+                                select
+                            );
+
+                        }
+                    );
+
+                }
+            );
+
+
+        /* DEACTIVATE */
+
+        productsTableBody
+            .querySelectorAll(
+                "[data-delete-product-id]"
+            )
+            .forEach(
+                function(button) {
+
+                    button.addEventListener(
+                        "click",
+                        function() {
+
+                            deactivateProduct(
+                                button.dataset
+                                    .deleteProductId,
+                                button
+                            );
+
+                        }
+                    );
+
+                }
+            );
+
+
+        /* RESTORE */
+
+        productsTableBody
+            .querySelectorAll(
+                "[data-restore-product-id]"
+            )
+            .forEach(
+                function(button) {
+
+                    button.addEventListener(
+                        "click",
+                        function() {
+
+                            restoreProduct(
+                                button.dataset
+                                    .restoreProductId,
+                                button
+                            );
+
+                        }
+                    );
+
+                }
+            );
+
+
+        /* PERMANENT DELETE */
+
+        productsTableBody
+            .querySelectorAll(
+                "[data-permanent-delete-product-id]"
+            )
+            .forEach(
+                function(button) {
+
+                    button.addEventListener(
+                        "click",
+                        function() {
+
+                            permanentDeleteProduct(
+                                button.dataset
+                                    .permanentDeleteProductId,
+                                button
+                            );
+
+                        }
+                    );
+
+                }
+            );
+
+    }
+
+
+    /* =====================================================
+       LOAD PRODUCTS
+    ===================================================== */
+
+    async function loadProducts() {
+
+        productsLoading.style.display =
+            "block";
+
+        productsError.style.display =
+            "none";
+
+        productsEmpty.style.display =
+            "none";
+
+        productsTable.style.display =
+            "none";
+
+        productsMeta.textContent =
+            "Loading products...";
+
+
+        try {
+
+            const data =
+                await apiRequest(
+                    "adminproducts"
+                );
+
+
+            allProducts =
+                Array.isArray(
+                    data.products
+                )
+                    ? data.products
+                    : [];
+
+
+            renderProducts();
+
+
+        } catch (error) {
+
+            console.error(
+                "Products error:",
+                error
+            );
+
+
+            productsLoading.style.display =
+                "none";
+
+
+            productsError.textContent =
+                error.message ||
+                "Unable to load products.";
+
+
+            productsError.style.display =
+                "block";
+
+
+            productsMeta.textContent =
+                "Products could not be loaded.";
+
+        }
+
+    }
+
+
+    /* =====================================================
+       POST ADMIN ACTION
+    ===================================================== */
+
+    async function postAdminAction(
+        payload
+    ) {
+
+        const token =
+            sessionStorage.getItem(
+                ADMIN_TOKEN_KEY
+            );
+
+
+        if (!token) {
+
+            throw new Error(
+                "Admin session not found."
+            );
+
+        }
+
+
+        const response =
+            await fetch(
+                API_URL,
+                {
+
+                    method:
+                        "POST",
+
+                    headers: {
+
+                        "Content-Type":
+                            "text/plain;charset=utf-8"
+
+                    },
+
+                    body:
+                        JSON.stringify(
+                            Object.assign(
+                                {},
+                                payload,
+                                {
+                                    adminToken:
+                                        token
+                                }
+                            )
+                        )
+
+                }
+            );
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                "Server request failed."
+            );
+
+        }
+
+
+        const data =
+            await response.json();
+
+
+        if (!data.success) {
+
+            throw new Error(
+                data.message ||
+                data.error ||
+                "Operation failed."
+            );
+
+        }
+
+
+        return data;
+
+    }
+
+
+    /* =====================================================
+       PRODUCT STOCK
+    ===================================================== */
+
+    async function updateProductStock(
+        id,
+        input
+    ) {
+
+        const product =
+            allProducts.find(
+                function(item) {
+
+                    return String(
+                        item.id
+                    ) ===
+                    String(id);
+
+                }
+            );
+
+
+        if (!product) {
+
+            return;
+
+        }
+
+
+        const previousStock =
+            product.stock ?? 0;
+
+
+        const stock =
+            Math.max(
+                0,
+                Number(input.value) || 0
+            );
+
+
+        input.disabled =
+            true;
+
+
+        try {
+
+            await postAdminAction({
+
+                action:
+                    "updateStock",
+
+                id:
+                    id,
+
+                stock:
+                    stock
+
+            });
+
+
+            product.stock =
+                stock;
+
+
+        } catch (error) {
+
+            input.value =
+                previousStock;
+
+
+            alert(
+                error.message ||
+                "Unable to update stock."
+            );
+
+
+        } finally {
+
+            input.disabled =
+                false;
+
+        }
+
+    }
+
+
+    /* =====================================================
+       PRODUCT STATUS
+    ===================================================== */
+
+    async function updateProductStatus(
+        id,
+        status,
+        select
+    ) {
+
+        const product =
+            allProducts.find(
+                function(item) {
+
+                    return String(
+                        item.id
+                    ) ===
+                    String(id);
+
+                }
+            );
+
+
+        if (!product) {
+
+            return;
+
+        }
+
+
+        const previousStatus =
+            product.status ||
+            "active";
+
+
+        select.disabled =
+            true;
+
+
+        try {
+
+            await postAdminAction({
+
+                action:
+                    "updateProductStatus",
+
+                id:
+                    id,
+
+                status:
+                    status
+
+            });
+
+
+            product.status =
+                status;
+
+
+            renderProducts();
+
+
+            loadDashboard();
+
+
+        } catch (error) {
+
+            select.value =
+                previousStatus;
+
+
+            alert(
+                error.message ||
+                "Unable to update product status."
+            );
+
+        } finally {
+
+            select.disabled =
+                false;
+
+        }
+
+    }
+
+
+    /* =====================================================
+       PRODUCT FEATURED
+    ===================================================== */
+
+    async function updateProductFeatured(
+        id,
+        featured,
+        select
+    ) {
+
+        const product =
+            allProducts.find(
+                function(item) {
+
+                    return String(
+                        item.id
+                    ) ===
+                    String(id);
+
+                }
+            );
+
+
+        if (!product) {
+
+            return;
+
+        }
+
+
+        const previousFeatured =
+            product.featured ||
+            "no";
+
+
+        select.disabled =
+            true;
+
+
+        try {
+
+            await postAdminAction({
+
+                action:
+                    "updateFeatured",
+
+                id:
+                    id,
+
+                featured:
+                    featured
+
+            });
+
+
+            product.featured =
+                featured;
+
+
+        } catch (error) {
+
+            select.value =
+                previousFeatured;
+
+
+            alert(
+                error.message ||
+                "Unable to update featured status."
+            );
+
+
+        } finally {
+
+            select.disabled =
+                false;
+
+        }
+
+    }
+
+
+    /* =====================================================
+       DEACTIVATE PRODUCT
+    ===================================================== */
+
+    async function deactivateProduct(
+        id,
+        button
+    ) {
+
+        if (
+            !confirm(
+                "Deactivate this product?\n\n" +
+                "The product will remain in the Products sheet " +
+                "and can be restored later."
+            )
+        ) {
+
+            return;
+
+        }
+
+
+        button.disabled =
+            true;
+
+
+        try {
+
+            await postAdminAction({
+
+                action:
+                    "deleteProduct",
+
+                id:
+                    id
+
+            });
+
+
+            const product =
+                allProducts.find(
+                    function(item) {
+
+                        return String(
+                            item.id
+                        ) ===
+                        String(id);
+
+                    }
+                );
+
+
+            if (product) {
+
+                product.status =
+                    "inactive";
+
+            }
+
+
+            renderProducts();
+
+            loadDashboard();
+
+
+        } catch (error) {
+
+            button.disabled =
+                false;
+
+
+            alert(
+                error.message ||
+                "Unable to deactivate product."
+            );
+
+        }
+
+    }
+
+
+    /* =====================================================
+       RESTORE PRODUCT
+    ===================================================== */
+
+    async function restoreProduct(
+        id,
+        button
+    ) {
+
+        button.disabled =
+            true;
+
+
+        try {
+
+            await postAdminAction({
+
+                action:
+                    "restoreProduct",
+
+                id:
+                    id
+
+            });
+
+
+            const product =
+                allProducts.find(
+                    function(item) {
+
+                        return String(
+                            item.id
+                        ) ===
+                        String(id);
+
+                    }
+                );
+
+
+            if (product) {
+
+                product.status =
+                    "active";
+
+            }
+
+
+            renderProducts();
+
+            loadDashboard();
+
+
+        } catch (error) {
+
+            button.disabled =
+                false;
+
+
+            alert(
+                error.message ||
+                "Unable to restore product."
+            );
+
+        }
+
+    }
+
+
+    /* =====================================================
+       PERMANENT DELETE PRODUCT
+    ===================================================== */
+
+    async function permanentDeleteProduct(
+        id,
+        button
+    ) {
+
+        const product =
+            allProducts.find(
+                function(item) {
+
+                    return String(
+                        item.id
+                    ) ===
+                    String(id);
+
+                }
+            );
+
+
+        if (!product) {
+
+            alert(
+                "Product not found."
+            );
+
+            return;
+
+        }
+
+
+        if (
+            String(
+                product.status ||
+                ""
+            ).toLowerCase() !==
+            "inactive"
+        ) {
+
+            alert(
+                "Permanent delete is only available for inactive products."
+            );
+
+            return;
+
+        }
+
+
+        const firstConfirm =
+            confirm(
+
+                "⚠ PERMANENT DELETE\n\n" +
+
+                "Product: " +
+                (
+                    product.name ||
+                    id
+                ) +
+                "\n\n" +
+
+                "This will permanently remove:\n" +
+                "• The product from the Products sheet\n" +
+                "• Its stored product images from GitHub\n\n" +
+
+                "This action CANNOT be undone.\n\n" +
+
+                "Do you want to continue?"
+
+            );
+
+
+        if (!firstConfirm) {
+
+            return;
+
+        }
+
+
+        const typed =
+            prompt(
+
+                "FINAL CONFIRMATION\n\n" +
+
+                "Type DELETE exactly to permanently delete this product."
+
+            );
+
+
+        if (typed !== "DELETE") {
+
+            alert(
+                "Permanent delete cancelled."
+            );
+
+            return;
+
+        }
+
+
+        button.disabled =
+            true;
+
+
+        const originalText =
+            button.textContent;
+
+
+        button.textContent =
+            "Deleting...";
+
+
+        try {
+
+            const data =
+                await postAdminAction({
+
+                    action:
+                        "permanentDeleteProduct",
+
+                    id:
+                        id
+
+                });
+
+
+            /*
+             * Remove the product from the
+             * current browser list immediately.
+             */
+
+            allProducts =
+                allProducts.filter(
+                    function(item) {
+
+                        return String(
+                            item.id
+                        ) !==
+                        String(id);
+
+                    }
+                );
+
+
+            renderProducts();
+
+
+            /*
+             * Refresh dashboard statistics
+             * after permanent deletion.
+             */
+
+            await loadDashboard();
+
+
+            const deletedImageCount =
+                Array.isArray(
+                    data.deletedImages
+                )
+                    ? data.deletedImages.length
+                    : 0;
+
+
+            alert(
+
+                (data.message ||
+                    "Product permanently deleted.") +
+
+                "\n\nProduct ID: " +
+                String(id) +
+
+                "\nImages removed: " +
+                deletedImageCount
+
+            );
+
+
+        } catch (error) {
+
+            console.error(
+                "Permanent delete error:",
+                error
+            );
+
+
+            alert(
+
+                error.message ||
+                "Unable to permanently delete product."
+
+            );
+
+
+            /*
+             * Reload from backend so the
+             * browser list is guaranteed to
+             * match the actual sheet state.
+             */
+
+            await loadProducts();
+
+        } finally {
+
+            button.disabled =
+                false;
+
+            button.textContent =
+                originalText;
+
+        }
+
+    }
+
+
+    /* =====================================================
+       PRODUCT FORM
+    ===================================================== */
+
+    productForm.addEventListener(
+        "submit",
+        async function(event) {
+
+            event.preventDefault();
+
+
+            showProductFormMessage(
+                ""
+            );
+
+
+            productSaveButton.disabled =
+                true;
+
+
+            const wasEditing =
+                !!editingProductId;
+
+
+            productSaveButton.textContent =
+                wasEditing
+                    ? "Saving..."
+                    : "Adding...";
+
+
+            const payload = {
+
+                name:
+                    productFields.name.value.trim(),
+
+                category:
+                    productFields.category.value.trim(),
+
+                subCategory:
+                    productFields.subCategory.value.trim(),
+
+                collection:
+                    productFields.collection.value.trim(),
+
+                price:
+                    Number(
+                        productFields.price.value
+                    ) || 0,
+
+                oldPrice:
+                    Number(
+                        productFields.oldPrice.value
+                    ) || "",
+
+                discount:
+                    Number(
+                        productFields.discount.value
+                    ) || 0,
+
+                image:
+                    productFields.image.value.trim(),
+
+                badge:
+                    productFields.badge.value.trim(),
+
+                stock:
+                    Math.max(
+                        0,
+                        Number(
+                            productFields.stock.value
+                        ) || 0
+                    ),
+
+                status:
+                    productFields.status.value,
+
+                sizes:
+                    productFields.sizes.value.trim(),
+
+                featured:
+                    productFields.featured.value,
+
+                description:
+                    productFields.description.value.trim()
+
+            };
+
+
+            if (!payload.name) {
+
+                showProductFormMessage(
+                    "Product name is required."
+                );
+
+
+                productSaveButton.disabled =
+                    false;
+
+
+                productSaveButton.textContent =
+                    wasEditing
+                        ? "Save Changes"
+                        : "Add Product";
+
+
+                return;
+
+            }
+
+
+            try {
+
+                let data;
+
+
+                /* EDIT */
+
+                if (wasEditing) {
+
+                    if (
+                        productGalleryImages.length
+                    ) {
+
+                        payload.image =
+                            productGalleryImages[0];
+
+                    }
+
+
+                    data =
+                        await postAdminAction(
+                            Object.assign(
+                                {
+                                    action:
+                                        "updateProduct",
+
+                                    id:
+                                        editingProductId
+                                },
+                                payload
+                            )
+                        );
+
+
+                    const updated =
+                        data.product ||
+                        Object.assign(
+                            {
+                                id:
+                                    editingProductId
+                            },
+                            payload
+                        );
+
+
+                    const index =
+                        allProducts.findIndex(
+                            function(item) {
+
+                                return String(
+                                    item.id
+                                ) ===
+                                String(
+                                    editingProductId
+                                );
+
+                            }
+                        );
+
+
+                    if (index >= 0) {
+
+                        allProducts[index] =
+                            Object.assign(
+                                {},
+                                allProducts[index],
+                                updated
+                            );
+
+                    }
+
+
+                    if (
+                        productGalleryImages.length
+                    ) {
+
+                        await persistProductGallery();
+
+                    }
+
+                }
+
+
+                /* ADD */
+
+                else {
+
+                    if (
+                        productFields.id.value.trim()
+                    ) {
+
+                        payload.id =
+                            productFields.id.value.trim();
+
+                    }
+
+
+                    data =
+                        await postAdminAction(
+                            Object.assign(
+                                {
+                                    action:
+                                        "addProduct"
+                                },
+                                payload
+                            )
+                        );
+
+
+                    const created =
+                        data.product;
+
+
+                    if (created) {
+
+                        const createdId =
+                            String(
+                                created.id
+                            );
+
+
+                        allProducts.unshift(
+                            created
+                        );
+
+
+                        /*
+                         * Upload pending photos
+                         * after the product gets its ID.
+                         */
+
+                        if (
+                            pendingProductFiles.length
+                        ) {
+
+                            const uploaded =
+                                [];
+
+
+                            for (
+                                const file
+                                of pendingProductFiles
+                            ) {
+
+                                const compressed =
+                                    await prepareImageFile(
+                                        file
+                                    );
+
+
+                                const upload =
+                                    await postAdminAction({
+
+                                        action:
+                                            "uploadImage",
+
+                                        filename:
+                                            makeProductImageFilename(
+                                                createdId,
+                                                file.name
+                                            ),
+
+                                        base64:
+                                            compressed
+
+                                    });
+
+
+                                const path =
+                                    upload.path ||
+                                    upload.image;
+
+
+                                if (path) {
+
+                                    uploaded.push(
+                                        path
+                                    );
+
+                                }
+
+                            }
+
+
+                            if (
+                                uploaded.length
+                            ) {
+
+                                await postAdminAction({
+
+                                    action:
+                                        "updateProductImages",
+
+                                    id:
+                                        createdId,
+
+                                    images:
+                                        uploaded
+
+                                });
+
+
+                                const index =
+                                    allProducts.findIndex(
+                                        function(item) {
+
+                                            return String(
+                                                item.id
+                                            ) ===
+                                            createdId;
+
+                                        }
+                                    );
+
+
+                                if (index >= 0) {
+
+                                    allProducts[index]
+                                        .images =
+                                        uploaded;
+
+                                    allProducts[index]
+                                        .image =
+                                        uploaded[0];
+
+                                }
+
+                            }
+
+                        }
+
+                    }
+
+                }
+
+
+                closeProductModal();
+
+                renderProducts();
+
+                await loadDashboard();
+
+
+            } catch (error) {
+
+                console.error(
+                    "Save product error:",
+                    error
+                );
+
+
+                showProductFormMessage(
+                    error.message ||
+                    "Unable to save product."
+                );
+
+
+            } finally {
+
+                productSaveButton.disabled =
+                    false;
+
+
+                productSaveButton.textContent =
+                    wasEditing
+                        ? "Save Changes"
+                        : "Add Product";
+
+            }
+
+        }
+    );
+
+
+    /* =====================================================
+       PRODUCT UI EVENTS
+    ===================================================== */
+
+    addProductButton.addEventListener(
+        "click",
+        function() {
+
+            openProductModal(
+                null
+            );
+
+        }
+    );
+
+
+    refreshProductsButton.addEventListener(
+        "click",
+        loadProducts
+    );
+
+
+    productsSearch.addEventListener(
+        "input",
+        renderProducts
+    );
+
+
+    productModalClose.addEventListener(
+        "click",
+        closeProductModal
+    );
+
+
+    productCancelButton.addEventListener(
+        "click",
+        closeProductModal
+    );
+
+
+    productModalBackdrop.addEventListener(
+        "click",
+        function(event) {
+
+            if (
+                event.target ===
+                productModalBackdrop
+            ) {
+
+                closeProductModal();
+
+            }
+
+        }
+    );
+
+
+    uploadProductImagesButton.addEventListener(
+        "click",
+        uploadSelectedProductImages
+    );
+
+
+    productImageFiles.addEventListener(
+        "change",
+        function() {
+
+            if (!editingProductId) {
+
+                previewPendingFiles();
+
+            }
+
+        }
+    );
+
+
+    productFields.image.addEventListener(
+        "change",
+        function() {
+
+            const value =
+                productFields.image.value.trim();
+
+
+            if (value) {
+
+                productGalleryImages =
+                    [value];
+
+
+                renderProductGallery();
+
+            }
+
+        }
+    );
+
 
     /* =====================================================
        LOGIN
@@ -1794,9 +6529,10 @@
 
     loginForm.addEventListener(
         "submit",
-        async function (event) {
+        async function(event) {
 
             event.preventDefault();
+
 
             clearLoginMessage();
 
@@ -1818,6 +6554,7 @@
 
             loginButton.disabled =
                 true;
+
 
             loginButton.textContent =
                 "Signing in...";
@@ -1843,7 +6580,7 @@
 
 
                 setTimeout(
-                    function () {
+                    function() {
 
                         showAdmin();
 
@@ -1893,11 +6630,12 @@
 
     logoutButton.addEventListener(
         "click",
-        function () {
+        function() {
 
             sessionStorage.removeItem(
                 ADMIN_TOKEN_KEY
             );
+
 
             showLogin();
 
@@ -1912,18 +6650,18 @@
     document
         .querySelectorAll(".nav-btn")
         .forEach(
-            function (button) {
+            function(button) {
 
                 button.addEventListener(
                     "click",
-                    function () {
+                    function() {
 
                         document
                             .querySelectorAll(
                                 ".nav-btn"
                             )
                             .forEach(
-                                function (item) {
+                                function(item) {
 
                                     item.classList.remove(
                                         "active"
@@ -1942,11 +6680,27 @@
                             button.dataset.section;
 
 
-                        if (section === "dashboard" || section === "products" || section === "orders") {
-                            showSection(section);
+                        if (
+                            section ===
+                                "dashboard" ||
+                            section ===
+                                "products" ||
+                            section ===
+                                "orders"
+                        ) {
+
+                            showSection(
+                                section
+                            );
+
                             return;
+
                         }
-                        alert("This section will be enabled in the next phase.");
+
+
+                        alert(
+                            "This section will be enabled in the next phase."
+                        );
 
                     }
                 );
@@ -1955,23 +6709,71 @@
         );
 
 
-    ordersSearch.addEventListener("input", renderOrders);
+    /* =====================================================
+       ORDER EVENTS
+    ===================================================== */
 
-    refreshOrdersButton.addEventListener("click", loadOrders);
+    ordersSearch.addEventListener(
+        "input",
+        renderOrders
+    );
 
-    orderModalClose.addEventListener("click", closeOrderModal);
 
-    orderModalBackdrop.addEventListener("click", function(event) {
-        if (event.target === orderModalBackdrop) {
-            closeOrderModal();
+    refreshOrdersButton.addEventListener(
+        "click",
+        loadOrders
+    );
+
+
+    orderModalClose.addEventListener(
+        "click",
+        closeOrderModal
+    );
+
+
+    orderModalBackdrop.addEventListener(
+        "click",
+        function(event) {
+
+            if (
+                event.target ===
+                orderModalBackdrop
+            ) {
+
+                closeOrderModal();
+
+            }
+
         }
-    });
+    );
 
-    document.addEventListener("keydown", function(event) {
-        if (event.key === "Escape") {
-            closeOrderModal();
+
+    document.addEventListener(
+        "keydown",
+        function(event) {
+
+            if (
+                event.key ===
+                "Escape"
+            ) {
+
+                closeOrderModal();
+
+                if (
+                    productModalBackdrop.classList.contains(
+                        "open"
+                    )
+                ) {
+
+                    closeProductModal();
+
+                }
+
+            }
+
         }
-    });
+    );
+
 
     /* =====================================================
        INITIAL SESSION CHECK
