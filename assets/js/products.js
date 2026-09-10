@@ -103,59 +103,162 @@ async function refreshProducts(){
         ){
 
             products =
-            data.products.map(product => ({
+            data.products.map(product => {
 
-                id:
-                Number(product.id),
+                /* =================================
+                   PRODUCT GALLERY
+                ================================= */
 
-                name:
-                product.name || "",
+                let galleryImages = [];
 
-                category:
-                product.category || "Others",
+                if(Array.isArray(product.images)){
 
-                subCategory:
-                product.subCategory || "All",
+                    galleryImages =
+                        product.images
+                        .filter(image =>
+                            image !== null &&
+                            image !== undefined &&
+                            String(image).trim() !== ""
+                        )
+                        .map(image =>
+                            String(image).trim()
+                        );
 
-                collection:
-                product.collection || "",
+                }
 
-                price:
-                Number(product.price) || 0,
+                /*
+                 * Some older/API data may return Images
+                 * as a JSON string instead of an array.
+                 */
+                else if(
+                    typeof product.images === "string" &&
+                    product.images.trim() !== ""
+                ){
 
-                oldPrice:
-                product.oldPrice
-                ? Number(product.oldPrice)
-                : null,
+                    try{
 
-                discount:
-                Number(product.discount) || 0,
+                        const parsedImages =
+                            JSON.parse(product.images);
 
-                image:
-                product.image || "",
+                        if(Array.isArray(parsedImages)){
 
-                badge:
-                product.badge || "",
+                            galleryImages =
+                                parsedImages
+                                .filter(image =>
+                                    image !== null &&
+                                    image !== undefined &&
+                                    String(image).trim() !== ""
+                                )
+                                .map(image =>
+                                    String(image).trim()
+                                );
 
-                stock:
-                Number(product.stock) || 0,
+                        }
 
-                featured:
-                String(product.featured)
-                .toLowerCase(),
+                    }
 
-                description:
-                product.description || "",
+                    catch(error){
 
-                sizes:
+                        console.warn(
+                            "Unable to parse product images:",
+                            product.id,
+                            error
+                        );
 
-                Array.isArray(product.sizes)
+                    }
 
-                ? product.sizes
+                }
 
-                : []
 
-            }));
+
+                /* =================================
+                   PRIMARY IMAGE
+                ================================= */
+
+                const primaryImage =
+                    product.image || "";
+
+
+
+                /*
+                 * Make sure primary image is also
+                 * available inside the gallery.
+                 *
+                 * Do not add it twice.
+                 */
+                if(
+                    primaryImage &&
+                    !galleryImages.includes(primaryImage)
+                ){
+
+                    galleryImages.unshift(
+                        primaryImage
+                    );
+
+                }
+
+
+
+                return {
+
+                    id:
+                    Number(product.id),
+
+                    name:
+                    product.name || "",
+
+                    category:
+                    product.category || "Others",
+
+                    subCategory:
+                    product.subCategory || "All",
+
+                    collection:
+                    product.collection || "",
+
+                    price:
+                    Number(product.price) || 0,
+
+                    oldPrice:
+                    product.oldPrice
+                    ? Number(product.oldPrice)
+                    : null,
+
+                    discount:
+                    Number(product.discount) || 0,
+
+                    /* Primary image */
+                    image:
+                    primaryImage,
+
+                    /* All product images */
+                    images:
+                    galleryImages,
+
+                    badge:
+                    product.badge || "",
+
+                    stock:
+                    Number(product.stock) || 0,
+
+                    featured:
+                    String(product.featured)
+                    .toLowerCase(),
+
+                    description:
+                    product.description || "",
+
+                    sizes:
+
+                    Array.isArray(product.sizes)
+
+                    ? product.sizes
+
+                    : []
+
+                };
+
+            });
 
 
 
@@ -184,6 +287,7 @@ async function refreshProducts(){
     }
 
 }
+
 
 /* =====================================
    GET PRODUCT BY ID
@@ -234,6 +338,7 @@ function getFeaturedProducts(){
     );
 
 }
+
 
 /* =====================================
    GET COLLECTION PRODUCTS
@@ -289,4 +394,3 @@ function searchAllProducts(keyword){
     );
 
 }
-
