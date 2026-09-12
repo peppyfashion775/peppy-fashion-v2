@@ -1765,63 +1765,97 @@ text-align:center;
 @media(max-width:480px){
 
 .container{
-
 width:94%;
-
 }
 
 .section-title{
-
 font-size:28px;
-
 }
 
 .hero-text h1{
-
 font-size:30px;
-
 }
 
+/* =====================================
+   MOBILE PRODUCT GRID
+   2 PRODUCTS PER ROW
+===================================== */
+
 .product-grid{
+grid-template-columns:repeat(2,minmax(0,1fr));
+gap:10px;
+}
 
-grid-template-columns:1fr;
-
+.product-card{
+border-radius:8px;
+box-shadow:0 2px 8px rgba(0,0,0,.06);
 }
 
 .product-image{
+height:190px;
+padding:6px;
+}
 
-height:240px;
+.product-info{
+padding:9px;
+gap:5px;
+}
 
+.product-info h3{
+font-size:14px;
+line-height:1.3;
+}
+
+.category{
+font-size:11px;
+}
+
+.price,
+.new-price{
+font-size:16px;
+}
+
+.old-price{
+font-size:12px;
+}
+
+.discount{
+padding:2px 6px;
+font-size:10px;
+}
+
+.badge{
+padding:3px 7px;
+font-size:10px;
+}
+
+.product-buttons{
+gap:5px;
+}
+
+.product-buttons .btn{
+padding:8px 5px;
+font-size:11px;
 }
 
 .category-grid{
-
 grid-template-columns:1fr;
-
 }
 
 .main-category,
 .sub-category{
-
 justify-content:flex-start;
-
 overflow-x:auto;
-
 padding-bottom:10px;
-
 }
 
 .category-btn,
 .subcategory-btn{
-
 white-space:nowrap;
-
 }
 
 .btn{
-
 width:100%;
-
 }
 
 }
