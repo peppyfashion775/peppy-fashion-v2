@@ -1,1234 +1,147 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
-
-    <title>Peppy Fashion — Admin Panel</title>
-
-    <meta
-        name="robots"
-        content="noindex,nofollow"
-    >
-
-    <style>
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        :root {
-            --primary: #e83e8c;
-            --primary-hover: #d62978;
-            --background: #fff7fb;
-            --card: #ffffff;
-            --border: #f0d6e3;
-            --text: #222222;
-            --muted: #777777;
-            --danger: #dc2626;
-            --success: #16a34a;
-        }
-
-        body {
-            min-height: 100vh;
-            background: var(--background);
-            color: var(--text);
-            font-family:
-                Arial,
-                Helvetica,
-                sans-serif;
-        }
-
-        button,
-        input {
-            font: inherit;
-        }
-
-        button {
-            cursor: pointer;
-        }
-
-        /* =========================
-           LOGIN
-        ========================= */
-
-        .login-page {
-            min-height: 100vh;
-
-            display: flex;
-            align-items: center;
-            justify-content: center;
-
-            padding: 24px;
-        }
-
-        .login-card {
-            width: 100%;
-            max-width: 420px;
-
-            background: var(--card);
-
-            border: 1px solid var(--border);
-            border-radius: 16px;
-
-            padding: 32px;
-
-            box-shadow:
-                0 10px 30px rgba(0, 0, 0, 0.08);
-        }
-
-        .brand {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
-        .brand h1 {
-            font-size: 28px;
-            margin-bottom: 8px;
-        }
-
-        .brand p {
-            color: var(--muted);
-            font-size: 14px;
-        }
-
-        .form-group {
-            margin-bottom: 18px;
-        }
-
-        .form-group label {
-            display: block;
-
-            margin-bottom: 7px;
-
-            font-size: 14px;
-            font-weight: 600;
-        }
-
-        .form-group input {
-            width: 100%;
-
-            padding: 13px 14px;
-
-            border: 1px solid var(--border);
-            border-radius: 8px;
-
-            outline: none;
-
-            transition:
-                border-color 0.2s,
-                box-shadow 0.2s;
-        }
-
-        .form-group input:focus {
-            border-color: var(--primary);
-
-            box-shadow:
-                0 0 0 3px rgba(17, 24, 39, 0.08);
-        }
-
-        .btn {
-            width: 100%;
-
-            border: none;
-            border-radius: 8px;
-
-            padding: 13px 16px;
-
-            background: var(--primary);
-            color: white;
-
-            font-weight: 600;
-
-            transition:
-                background 0.2s,
-                transform 0.1s;
-        }
-
-        .btn:hover {
-            background: var(--primary-hover);
-        }
-
-        .btn:active {
-            transform: scale(0.99);
-        }
-
-        .btn:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-        }
-
-        .message {
-            display: none;
-
-            margin-top: 16px;
-            padding: 11px 13px;
-
-            border-radius: 8px;
-
-            font-size: 14px;
-        }
-
-        .message.error {
-            display: block;
-
-            background: #fef2f2;
-            color: var(--danger);
-
-            border: 1px solid #fecaca;
-        }
-
-        .message.success {
-            display: block;
-
-            background: #f0fdf4;
-            color: var(--success);
-
-            border: 1px solid #bbf7d0;
-        }
-
-        /* =========================
-           ADMIN APP
-        ========================= */
-
-        .admin-app {
-            display: none;
-            min-height: 100vh;
-        }
-
-        .admin-header {
-            height: 64px;
-
-            background: var(--card);
-
-            border-bottom: 1px solid var(--border);
-
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-
-            padding: 0 24px;
-
-            position: sticky;
-            top: 0;
-
-            z-index: 100;
-        }
-
-        .admin-logo {
-            font-size: 20px;
-            font-weight: 700;
-        }
-
-        .admin-logo span {
-            color: var(--muted);
-
-            font-size: 13px;
-            font-weight: 400;
-
-            margin-left: 6px;
-        }
-
-        .logout-btn {
-            border: 1px solid var(--border);
-            background: white;
-
-            border-radius: 7px;
-
-            padding: 8px 14px;
-
-            font-size: 13px;
-            font-weight: 600;
-        }
-
-        .logout-btn:hover {
-            background: #f9fafb;
-        }
-
-        .admin-layout {
-            display: flex;
-
-            min-height:
-                calc(100vh - 64px);
-        }
-
-        /* =========================
-           SIDEBAR
-        ========================= */
-
-        .sidebar {
-            width: 230px;
-
-            background: #111827;
-            color: white;
-
-            padding: 20px 12px;
-        }
-
-        .sidebar-title {
-            padding: 10px 12px;
-
-            font-size: 11px;
-            font-weight: 700;
-
-            text-transform: uppercase;
-
-            color: #9ca3af;
-
-            letter-spacing: 0.08em;
-        }
-
-        .nav-btn {
-            width: 100%;
-
-            display: flex;
-            align-items: center;
-
-            padding: 11px 12px;
-
-            margin-bottom: 4px;
-
-            border: none;
-            border-radius: 7px;
-
-            background: transparent;
-            color: #d1d5db;
-
-            text-align: left;
-
-            font-size: 14px;
-        }
-
-        .nav-btn:hover,
-        .nav-btn.active {
-            background: #1f2937;
-            color: white;
-        }
-
-        /* =========================
-           MAIN
-        ========================= */
-
-        .main-content {
-            flex: 1;
-
-            padding: 28px;
-
-            min-width: 0;
-        }
-
-        .page-title {
-            margin-bottom: 22px;
-        }
-
-        .page-title h2 {
-            font-size: 25px;
-            margin-bottom: 5px;
-        }
-
-        .page-title p {
-            color: var(--muted);
-            font-size: 14px;
-        }
-
-        /* =========================
-           DASHBOARD
-        ========================= */
-
-        .stats-grid {
-            display: grid;
-
-            grid-template-columns:
-                repeat(4, minmax(0, 1fr));
-
-            gap: 16px;
-
-            margin-bottom: 24px;
-        }
-
-        .stat-card {
-            background: var(--card);
-
-            border: 1px solid var(--border);
-            border-radius: 12px;
-
-            padding: 20px;
-        }
-
-        .stat-card .label {
-            color: var(--muted);
-
-            font-size: 13px;
-
-            margin-bottom: 10px;
-        }
-
-        .stat-card .value {
-            font-size: 28px;
-            font-weight: 700;
-        }
-
-        .dashboard-card {
-            background: var(--card);
-
-            border: 1px solid var(--border);
-            border-radius: 12px;
-
-            padding: 22px;
-        }
-
-        .dashboard-card h3 {
-            margin-bottom: 8px;
-            font-size: 18px;
-        }
-
-        .dashboard-card p {
-            color: var(--muted);
-
-            font-size: 14px;
-            line-height: 1.6;
-        }
-
-        .dashboard-status {
-            margin-top: 16px;
-
-            display: inline-flex;
-
-            padding: 7px 10px;
-
-            border-radius: 999px;
-
-            background: #f0fdf4;
-            color: #15803d;
-
-            font-size: 12px;
-            font-weight: 600;
-        }
-
-
-        /* =========================
-           ORDERS
-        ========================= */
-
-        .section-hidden {
-            display: none;
-        }
-
-        .orders-toolbar {
-            display: flex;
-            gap: 12px;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 16px;
-            flex-wrap: wrap;
-        }
-
-        .orders-search {
-            flex: 1;
-            min-width: 240px;
-            padding: 11px 13px;
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            outline: none;
-            background: white;
-        }
-
-        .orders-search:focus {
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(17, 24, 39, 0.08);
-        }
-
-        .refresh-btn {
-            border: 1px solid var(--border);
-            background: white;
-            border-radius: 8px;
-            padding: 10px 14px;
-            font-weight: 600;
-        }
-
-        .refresh-btn:hover {
-            background: #f9fafb;
-        }
-
-        .orders-meta {
-            color: var(--muted);
-            font-size: 13px;
-            margin-bottom: 12px;
-        }
-
-        .orders-table-wrap {
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            overflow-x: auto;
-        }
-
-        .orders-table {
-            width: 100%;
-            min-width: 900px;
-            border-collapse: collapse;
-        }
-
-        .orders-table th,
-        .orders-table td {
-            padding: 12px 14px;
-            border-bottom: 1px solid var(--border);
-            text-align: left;
-            vertical-align: middle;
-            font-size: 13px;
-        }
-
-        .orders-table th {
-            background: #f9fafb;
-            color: #4b5563;
-            font-size: 12px;
-            text-transform: uppercase;
-            letter-spacing: 0.03em;
-        }
-
-        .orders-table tr:last-child td {
-            border-bottom: none;
-        }
-
-        .order-id {
-            font-weight: 700;
-            white-space: nowrap;
-        }
-
-        .order-customer {
-            font-weight: 600;
-        }
-
-        .order-phone,
-        .order-date {
-            white-space: nowrap;
-            color: #4b5563;
-        }
-
-        .status-select {
-            padding: 7px 9px;
-            border: 1px solid var(--border);
-            border-radius: 7px;
-            background: white;
-            min-width: 125px;
-        }
-
-        .view-btn {
-            border: 1px solid var(--border);
-            background: white;
-            border-radius: 7px;
-            padding: 7px 10px;
-            font-size: 12px;
-            font-weight: 600;
-            white-space: nowrap;
-        }
-
-        .view-btn:hover {
-            background: #f9fafb;
-        }
-
-        .orders-empty,
-        .orders-loading,
-        .orders-error {
-            padding: 32px;
-            text-align: center;
-            color: var(--muted);
-        }
-
-        .orders-error {
-            color: var(--danger);
-        }
-
-        /* =========================
-           ORDER MODAL
-        ========================= */
-
-        .modal-backdrop {
-            display: none;
-            position: fixed;
-            inset: 0;
-            background: rgba(17, 24, 39, 0.55);
-            z-index: 300;
-            padding: 20px;
-            overflow-y: auto;
-        }
-
-        .modal-backdrop.open {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .order-modal {
-            width: 100%;
-            max-width: 760px;
-            background: white;
-            border-radius: 14px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.2);
-            overflow: hidden;
-        }
-
-        .modal-header {
-            padding: 18px 20px;
-            border-bottom: 1px solid var(--border);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 12px;
-        }
-
-        .modal-header h3 {
-            font-size: 18px;
-        }
-
-        .modal-close {
-            border: none;
-            background: transparent;
-            font-size: 24px;
-            line-height: 1;
-            color: var(--muted);
-        }
-
-        .modal-body {
-            padding: 20px;
-        }
-
-        .order-detail-grid {
-            display: grid;
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-            gap: 14px;
-            margin-bottom: 18px;
-        }
-
-        .detail-box {
-            border: 1px solid var(--border);
-            border-radius: 9px;
-            padding: 12px;
-        }
-
-        .detail-box .detail-label {
-            color: var(--muted);
-            font-size: 11px;
-            text-transform: uppercase;
-            margin-bottom: 5px;
-        }
-
-        .detail-box .detail-value {
-            font-size: 14px;
-            font-weight: 600;
-            word-break: break-word;
-        }
-
-        .order-products-box {
-            border: 1px solid var(--border);
-            border-radius: 9px;
-            padding: 14px;
-            white-space: pre-wrap;
-            line-height: 1.6;
-            font-size: 13px;
-            margin-bottom: 14px;
-        }
-
-        .order-note-box {
-            background: #f9fafb;
-            border-radius: 9px;
-            padding: 14px;
-            font-size: 13px;
-            line-height: 1.6;
-        }
-
-        @media (max-width: 650px) {
-            .order-detail-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        /* =========================
-           MOBILE
-        ========================= */
-
-        @media (max-width: 900px) {
-
-            .stats-grid {
-                grid-template-columns:
-                    repeat(2, minmax(0, 1fr));
-            }
-
-            .sidebar {
-                width: 200px;
-            }
-        }
-
-        @media (max-width: 650px) {
-
-            .admin-header {
-                padding: 0 16px;
-            }
-
-            .admin-logo span {
-                display: none;
-            }
-
-            .admin-layout {
-                display: block;
-            }
-
-            .sidebar {
-                width: 100%;
-
-                display: flex;
-
-                gap: 6px;
-
-                overflow-x: auto;
-
-                padding: 10px;
-            }
-
-            .sidebar-title {
-                display: none;
-            }
-
-            .nav-btn {
-                width: auto;
-
-                white-space: nowrap;
-
-                margin: 0;
-            }
-
-            .main-content {
-                padding: 18px;
-            }
-
-            .stats-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .login-card {
-                padding: 24px;
-            }
-        }
-
-        .products-toolbar{display:flex;gap:10px;align-items:center;margin-bottom:14px;flex-wrap:wrap}.products-search{flex:1;min-width:240px;padding:12px 14px;border:1px solid #d9dce3;border-radius:8px;font-size:14px;background:#fff}.primary-btn,.secondary-btn,.danger-btn,.restore-btn,.edit-btn{border:0;border-radius:8px;padding:11px 14px;font-size:13px;font-weight:600;cursor:pointer}.primary-btn{background:#111827;color:#fff}.secondary-btn{background:#eef2f7;color:#172033}.danger-btn{background:#fee2e2;color:#991b1b}.restore-btn{background:#dcfce7;color:#166534}.edit-btn{background:#e5e7eb;color:#111827}.primary-btn:disabled,.secondary-btn:disabled,.danger-btn:disabled,.restore-btn:disabled,.edit-btn:disabled{opacity:.6;cursor:not-allowed}.products-meta{font-size:13px;color:#667085;margin:8px 0 12px}.products-table-wrap{background:#fff;border:1px solid #e3e6eb;border-radius:10px;overflow:auto}.products-table{width:100%;min-width:1900px;border-collapse:collapse}.products-table th,.products-table td{padding:11px 12px;border-bottom:1px solid #edf0f3;text-align:left;vertical-align:middle;font-size:13px}.products-table th{background:#f8fafc;font-weight:700;color:#344054;white-space:nowrap}.product-thumb{width:44px;height:44px;border-radius:7px;object-fit:cover;background:#f2f4f7;display:block}.product-name{font-weight:600;color:#111827;max-width:240px}.product-description{max-width:320px;white-space:normal;line-height:1.4;color:#475467}.product-sizes{max-width:180px;white-space:normal}.product-collection,.product-subcategory,.product-badge{white-space:nowrap}.product-price{white-space:nowrap}.no-image{color:#98a2b3;font-size:12px}.product-id{color:#667085;white-space:nowrap}.product-actions{display:flex;gap:6px;flex-wrap:wrap}.product-inline-input,.product-status-select,.product-featured-select{padding:7px 8px;border:1px solid #d9dce3;border-radius:6px;font-size:12px;background:#fff}.product-inline-input{width:75px}.products-loading,.products-error,.products-empty{padding:22px;text-align:center;color:#667085}.products-error{color:#b42318}.product-modal .modal-body{max-height:75vh;overflow:auto}.product-form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.product-form-group{display:flex;flex-direction:column;gap:6px}.product-form-group.full{grid-column:1/-1}.product-form-group label{font-size:12px;font-weight:600;color:#344054}.product-form-group input,.product-form-group select,.product-form-group textarea{width:100%;box-sizing:border-box;padding:10px 11px;border:1px solid #d9dce3;border-radius:7px;font:inherit;background:#fff}.product-form-group textarea{min-height:100px;resize:vertical}.product-gallery-manager{border:1px solid #d9dce3;border-radius:8px;padding:12px;background:#f8fafc}.product-gallery-list{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:10px}.product-gallery-item{width:150px;background:#fff;border:1px solid #e3e6eb;border-radius:8px;padding:8px;position:relative}.product-gallery-preview{width:100%;height:120px;object-fit:cover;border-radius:6px;background:#f2f4f7;display:block}.product-gallery-label{font-size:11px;font-weight:700;color:#344054;margin:6px 0}.product-gallery-actions{display:flex;gap:5px;flex-wrap:wrap}.product-gallery-actions button{border:0;border-radius:6px;padding:6px 8px;font-size:11px;font-weight:600;cursor:pointer}.gallery-primary{background:#111827;color:#fff}.gallery-set-primary{background:#e5e7eb;color:#111827}.gallery-replace{background:#eef2ff;color:#3730a3}.gallery-remove{background:#fee2e2;color:#991b1b}.product-gallery-empty{font-size:12px;color:#667085;padding:8px 0}.product-gallery-upload{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.product-gallery-upload input{max-width:100%}.product-gallery-help{font-size:11px;color:#667085;margin-top:8px;line-height:1.45}.product-form-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:18px}@media(max-width:650px){.product-form-grid{grid-template-columns:1fr}.product-form-group.full{grid-column:auto}}
-
-
-        /* =====================================================
-           PEPPY FASHION — MODERN PINK ADMIN UI
-           UI ONLY — EXISTING ADMIN LOGIC IS UNCHANGED
-        ===================================================== */
-
-        body {
-            background: #fff7fb;
-        }
-
-        .login-page {
-            background:
-                radial-gradient(circle at top, #ffe3f0 0%, #fff7fb 48%, #ffffff 100%);
-        }
-
-        .login-card {
-            border-color: #f0cddd;
-            border-radius: 20px;
-            box-shadow: 0 15px 45px rgba(232, 62, 140, 0.12);
-        }
-
-        .brand h1 {
-            color: #e83e8c;
-            font-weight: 800;
-        }
-
-        .brand p {
-            color: #777777;
-        }
-
-        .form-group input:focus {
-            border-color: #e83e8c;
-            box-shadow: 0 0 0 3px rgba(232, 62, 140, 0.12);
-        }
-
-        .btn {
-            background: #e83e8c;
-            border-radius: 9px;
-        }
-
-        .btn:hover {
-            background: #d62978;
-        }
-
-        .admin-header {
-            background: #ffffff;
-            border-bottom-color: #f0d6e3;
-            box-shadow: 0 2px 12px rgba(232, 62, 140, 0.06);
-        }
-
-        .admin-logo {
-            color: #222222;
-        }
-
-        .admin-logo span {
-            color: #e83e8c;
-        }
-
-        .logout-btn {
-            border-color: #f0cddd;
-            color: #e83e8c;
-            background: #ffffff;
-        }
-
-        .logout-btn:hover {
-            background: #fff0f7;
-        }
-
-        .sidebar {
-            background: #ffffff;
-            color: #444444;
-            border-right: 1px solid #f0d6e3;
-        }
-
-        .sidebar-title {
-            color: #e83e8c;
-        }
-
-        .nav-btn {
-            color: #666666;
-        }
-
-        .nav-btn:hover,
-        .nav-btn.active {
-            background: #fff0f7;
-            color: #e83e8c;
-        }
-
-        .nav-btn.active {
-            box-shadow: inset 3px 0 0 #e83e8c;
-        }
-
-        .main-content {
-            background: #fff7fb;
-        }
-
-        .page-title h2 {
-            color: #222222;
-        }
-
-        .page-title p {
-            color: #777777;
-        }
-
-        .stat-card,
-        .dashboard-card,
-        .orders-table-wrap,
-        .products-table-wrap {
-            border-color: #f0d6e3;
-            border-radius: 14px;
-            box-shadow: 0 5px 18px rgba(232, 62, 140, 0.05);
-        }
-
-        .stat-card .value {
-            color: #e83e8c;
-        }
-
-        .orders-search:focus,
-        .products-search:focus,
-        .status-select:focus,
-        .product-inline-input:focus,
-        .product-status-select:focus,
-        .product-featured-select:focus,
-        .product-form-group input:focus,
-        .product-form-group select:focus,
-        .product-form-group textarea:focus {
-            border-color: #e83e8c;
-            box-shadow: 0 0 0 3px rgba(232, 62, 140, 0.10);
-            outline: none;
-        }
-
-        .refresh-btn {
-            border-color: #f0cddd;
-            color: #e83e8c;
-        }
-
-        .refresh-btn:hover {
-            background: #fff0f7;
-        }
-
-        .primary-btn {
-            background: #e83e8c;
-            color: #ffffff;
-        }
-
-        .primary-btn:hover {
-            background: #d62978;
-        }
-
-        .secondary-btn {
-            background: #fff0f7;
-            color: #d62978;
-        }
-
-        .secondary-btn:hover {
-            background: #ffe1ee;
-        }
-
-        .products-table th,
-        .orders-table th {
-            background: #fff0f7;
-            color: #8b2855;
-        }
-
-        .products-table td,
-        .orders-table td {
-            border-bottom-color: #f5e1e9;
-        }
-
-        .products-table tr:hover td,
-        .orders-table tr:hover td {
-            background: #fffafd;
-        }
-
-        .edit-btn {
-            background: #fff0f7;
-            color: #d62978;
-        }
-
-        .edit-btn:hover {
-            background: #ffe1ee;
-        }
-
-        .status-select:hover,
-        .view-btn:hover {
-            border-color: #e8b8ce;
-            background: #fff7fb;
-        }
-
-        .view-btn {
-            border-color: #f0cddd;
-            color: #d62978;
-        }
-
-        .product-gallery-manager {
-            border-color: #efd2df;
-            background: #fff7fb;
-        }
-
-        .product-gallery-item,
-        .detail-box {
-            border-color: #efd2df;
-        }
-
-        .gallery-primary {
-            background: #e83e8c;
-            color: #ffffff;
-        }
-
-        .gallery-set-primary:hover,
-        .gallery-replace:hover {
-            background: #ffe1ee;
-        }
-
-        .modal-backdrop {
-            background: rgba(86, 28, 57, 0.45);
-        }
-
-        .modal-header {
-            border-bottom-color: #f0d6e3;
-        }
-
-        .modal-header h3 {
-            color: #e83e8c;
-        }
-
-        .modal-close:hover {
-            color: #e83e8c;
-        }
-
-        .order-note-box {
-            background: #fff7fb;
-        }
-
-        .dashboard-status {
-            background: #ecfdf3;
-            color: #15803d;
-        }
-
-        @media (max-width: 650px) {
-            .sidebar {
-                border-right: none;
-                border-bottom-color: #f0d6e3;
-            }
-
-            .nav-btn.active {
-                box-shadow: none;
-            }
-
-            .main-content {
-                background: #fff7fb;
-            }
-        }
-
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Peppy Fashion — Admin Panel</title>
+<meta name="robots" content="noindex,nofollow">
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+ --primary:#e83f8c;--primary-dark:#d72d79;--primary-soft:#fff0f7;--primary-pale:#fff8fb;
+ --background:#f7f8fc;--card:#fff;--border:#e7e8ef;--text:#17233f;--muted:#68738b;
+ --success:#22b573;--warning:#f4a62a;--danger:#dc4b5f;--shadow:0 8px 24px rgba(28,38,64,.06)
+}
+html,body{min-height:100%;font-family:Arial,Helvetica,sans-serif;background:var(--background);color:var(--text)}
+body{overflow-x:hidden}button,input,select,textarea{font:inherit}button{cursor:pointer}
+/* LOGIN */
+.login-page{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;background:linear-gradient(135deg,#fff7fb,#f8f9fd)}
+.login-card{width:100%;max-width:420px;background:#fff;border:1px solid var(--border);border-radius:22px;padding:34px;box-shadow:0 20px 60px rgba(30,40,70,.12)}
+.brand{text-align:center;margin-bottom:28px}.brand img{width:210px;max-width:75%;height:auto;display:block;margin:0 auto 12px}.brand h1{font-size:27px;margin-bottom:5px}.brand p{color:var(--muted);font-size:14px}
+.form-group{margin-bottom:18px}.form-group label{display:block;margin-bottom:7px;font-size:13px;font-weight:700}.form-group input{width:100%;padding:13px 14px;border:1px solid var(--border);border-radius:10px;outline:none;background:#fff}.form-group input:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(232,63,140,.12)}
+.btn{width:100%;border:0;border-radius:10px;padding:13px 16px;background:var(--primary);color:#fff;font-weight:700}.btn:hover{background:var(--primary-dark)}.btn:disabled{opacity:.6;cursor:not-allowed}
+.message{display:none;margin-top:16px;padding:11px 13px;border-radius:9px;font-size:13px}.message.error{display:block;background:#fff1f2;color:#b42335;border:1px solid #fecdd3}.message.success{display:block;background:#effcf6;color:#16794d;border:1px solid #b7efda}
+/* APP */
+.admin-app{display:none;min-height:100vh}.admin-header{height:72px;background:linear-gradient(90deg,#ee4b94,#df347f);color:#fff;display:flex;align-items:center;justify-content:space-between;padding:0 28px;position:sticky;top:0;z-index:100;box-shadow:0 4px 16px rgba(220,47,120,.16)}
+.admin-logo{display:flex;align-items:center;gap:11px;font-size:19px;font-weight:800}.admin-logo img{height:42px;width:42px;object-fit:contain;border-radius:10px;background:#fff;padding:3px}.admin-logo span{font-size:12px;font-weight:500;opacity:.9;margin-left:2px}.header-right{display:flex;align-items:center;gap:16px}.header-date{font-size:12px;opacity:.92;text-align:right;line-height:1.35}.logout-btn{border:1px solid rgba(255,255,255,.4);background:rgba(255,255,255,.13);color:#fff;border-radius:9px;padding:9px 14px;font-size:13px;font-weight:700}.logout-btn:hover{background:rgba(255,255,255,.22)}
+.admin-layout{display:flex;min-height:calc(100vh - 72px)}
+/* SIDEBAR */
+.sidebar{width:260px;flex:0 0 260px;background:linear-gradient(180deg,#fff,#fff7fb);border-right:1px solid var(--border);padding:24px 14px;display:flex;flex-direction:column}.sidebar-brand{padding:4px 12px 22px;border-bottom:1px solid #f0dce6;margin-bottom:16px}.sidebar-brand img{width:185px;max-width:100%;height:auto;display:block}.sidebar-title{padding:8px 12px 9px;font-size:11px;font-weight:800;text-transform:uppercase;color:#a16a84;letter-spacing:.09em}.nav-btn{width:100%;display:flex;align-items:center;gap:13px;padding:12px 14px;margin-bottom:5px;border:0;border-radius:10px;background:transparent;color:#34415e;text-align:left;font-size:14px;font-weight:600;transition:.18s}.nav-btn svg{width:20px;height:20px;stroke:currentColor;flex:none}.nav-btn:hover{background:#fff0f7;color:var(--primary)}.nav-btn.active{background:linear-gradient(90deg,#e9428d,#e23a85);color:#fff;box-shadow:0 7px 18px rgba(227,57,132,.22)}.sidebar-spacer{flex:1}.sidebar-note{background:#fff;border:1px solid #f0dce6;border-radius:12px;padding:13px;margin:12px 6px 0;color:#7b6874;font-size:11px;line-height:1.5}
+/* MAIN */
+.main-content{flex:1;padding:28px;min-width:0}.topbar{display:flex;align-items:flex-start;justify-content:space-between;gap:20px;margin-bottom:24px}.page-title{margin-bottom:22px}.topbar .page-title{margin:0}.page-title h2{font-size:27px;line-height:1.15;margin-bottom:7px}.page-title p{color:var(--muted);font-size:14px}.welcome-pill{display:inline-flex;align-items:center;padding:7px 12px;background:#ffe7f1;color:#d92d78;border-radius:999px;font-size:12px;font-weight:800;margin-bottom:9px}.date-card{background:#fff;border:1px solid var(--border);border-radius:13px;padding:12px 15px;min-width:190px;box-shadow:var(--shadow)}.date-card .date-title{font-size:12px;color:var(--muted);margin-bottom:4px}.date-card strong{font-size:14px}
+/* DASHBOARD */
+.stats-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px;margin-bottom:20px}.stat-card{background:#fff;border:1px solid var(--border);border-radius:14px;padding:19px;box-shadow:var(--shadow);position:relative;overflow:hidden}.stat-card:after{content:"";position:absolute;width:80px;height:80px;border-radius:50%;right:-35px;top:-35px;background:#fff1f7}.stat-top{display:flex;align-items:center;justify-content:space-between;gap:12px}.stat-icon{width:48px;height:48px;border-radius:13px;display:grid;place-items:center;background:#ffe4f0;color:var(--primary)}.stat-icon.green{background:#def8eb;color:#22a96d}.stat-icon.orange{background:#fff0d9;color:#ed9b22}.stat-icon.purple{background:#eee3ff;color:#8754e7}.stat-icon svg{width:24px;height:24px;stroke:currentColor}.stat-card .label{color:#60708d;font-size:13px;margin-top:15px}.stat-card .value{font-size:29px;font-weight:800;margin-top:5px}.stat-foot{font-size:11px;color:#7c879a;margin-top:8px}.stat-foot.good{color:#19a96a}
+.dashboard-grid{display:grid;grid-template-columns:minmax(0,1.7fr) minmax(300px,.9fr);gap:18px}.dashboard-card{background:#fff;border:1px solid var(--border);border-radius:14px;padding:20px;box-shadow:var(--shadow)}.card-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:18px}.card-head h3{font-size:16px}.card-head p{font-size:12px;color:var(--muted);margin-top:4px}.card-icon-title{display:flex;align-items:center;gap:10px}.card-icon{width:34px;height:34px;border-radius:10px;background:#ffe8f2;color:var(--primary);display:grid;place-items:center}.card-icon svg{width:19px;height:19px;stroke:currentColor}.chart-placeholder{height:250px;border-radius:12px;background:linear-gradient(180deg,#fff8fb,#fff);border:1px solid #f5e4eb;position:relative;overflow:hidden;padding:18px}.chart-grid{height:100%;display:flex;flex-direction:column;justify-content:space-between}.chart-line{height:1px;background:#edf0f5;width:100%}.chart-message{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#8b94a5;font-size:13px;text-align:center;padding:30px}.quick-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.quick-action{min-height:104px;border:1px solid #f2dce7;border-radius:12px;background:#fff8fb;color:#263653;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:9px;font-weight:700}.quick-action:hover{border-color:#ef9bc1;background:#fff0f7;color:var(--primary)}.quick-action svg{width:27px;height:27px;stroke:var(--primary)}.dashboard-status{margin-top:18px;display:flex;align-items:center;gap:9px;padding:12px 13px;border-radius:10px;background:#f0fbf6;color:#168253;font-size:12px;font-weight:700}.status-dot{width:8px;height:8px;border-radius:50%;background:#22b573}
+/* SHARED SECTIONS */
+.section-hidden{display:none}.products-toolbar{display:flex;gap:10px;align-items:center;margin-bottom:14px;flex-wrap:wrap}.products-search,.orders-search{flex:1;min-width:240px;padding:12px 14px;border:1px solid var(--border);border-radius:9px;font-size:14px;background:#fff;outline:none}.products-search:focus,.orders-search:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(232,63,140,.1)}.primary-btn,.secondary-btn,.danger-btn,.restore-btn,.edit-btn,.refresh-btn{border:0;border-radius:9px;padding:11px 14px;font-size:13px;font-weight:700;cursor:pointer}.primary-btn{background:var(--primary);color:#fff}.primary-btn:hover{background:var(--primary-dark)}.secondary-btn,.refresh-btn{background:#f1f3f7;color:#26344e}.secondary-btn:hover,.refresh-btn:hover{background:#e8ebf1}.danger-btn{background:#fff0f1;color:#b42335}.restore-btn{background:#eafaf2;color:#16794d}.edit-btn{background:#eef1f6;color:#26344e}.primary-btn:disabled,.secondary-btn:disabled,.danger-btn:disabled,.restore-btn:disabled,.edit-btn:disabled{opacity:.6;cursor:not-allowed}.products-meta,.orders-meta{font-size:13px;color:#667085;margin:8px 0 12px}.products-table-wrap,.orders-table-wrap{background:#fff;border:1px solid var(--border);border-radius:12px;overflow:auto;box-shadow:var(--shadow)}.products-table{width:100%;min-width:1900px;border-collapse:collapse}.products-table th,.products-table td,.orders-table th,.orders-table td{padding:11px 12px;border-bottom:1px solid #edf0f3;text-align:left;vertical-align:middle;font-size:13px}.products-table th,.orders-table th{background:#fafbfc;font-weight:700;color:#344054;white-space:nowrap}.product-thumb{width:44px;height:44px;border-radius:8px;object-fit:cover;background:#f2f4f7;display:block}.product-name{font-weight:600;color:#111827;max-width:240px}.product-description{max-width:320px;white-space:normal;line-height:1.4;color:#475467}.product-sizes{max-width:180px;white-space:normal}.product-collection,.product-subcategory,.product-badge{white-space:nowrap}.product-price{white-space:nowrap}.no-image{color:#98a2b3;font-size:12px}.product-id{color:#667085;white-space:nowrap}.product-actions{display:flex;gap:6px;flex-wrap:wrap}.product-inline-input,.product-status-select,.product-featured-select{padding:7px 8px;border:1px solid #d9dce3;border-radius:6px;font-size:12px;background:#fff}.product-inline-input{width:75px}.products-loading,.products-error,.products-empty,.orders-empty,.orders-loading,.orders-error{padding:22px;text-align:center;color:#667085}.products-error,.orders-error{color:#b42318}
+/* ORDERS */
+.orders-toolbar{display:flex;gap:12px;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap}.orders-table{width:100%;min-width:900px;border-collapse:collapse}.order-id{font-weight:700;white-space:nowrap}.order-customer{font-weight:600}.order-phone,.order-date{white-space:nowrap;color:#4b5563}.status-select{padding:7px 9px;border:1px solid var(--border);border-radius:7px;background:#fff;min-width:125px}.view-btn{border:1px solid var(--border);background:#fff;border-radius:7px;padding:7px 10px;font-size:12px;font-weight:600;white-space:nowrap}.view-btn:hover{background:#f9fafb}
+/* MODALS */
+.modal-backdrop{display:none;position:fixed;inset:0;background:rgba(17,24,39,.58);z-index:300;padding:20px;overflow-y:auto}.modal-backdrop.open{display:flex;align-items:center;justify-content:center}.order-modal{width:100%;max-width:760px;background:#fff;border-radius:15px;box-shadow:0 20px 55px rgba(0,0,0,.22);overflow:hidden}.modal-header{padding:18px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:12px}.modal-header h3{font-size:18px}.modal-close{border:0;background:#f2f4f7;color:#344054;width:34px;height:34px;border-radius:9px;font-size:22px;line-height:1}.modal-body{padding:20px}.product-modal .modal-body{max-height:75vh;overflow:auto}.product-form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.product-form-group{display:flex;flex-direction:column;gap:6px}.product-form-group.full{grid-column:1/-1}.product-form-group label{font-size:12px;font-weight:700;color:#344054}.product-form-group input,.product-form-group select,.product-form-group textarea{width:100%;box-sizing:border-box;padding:10px 11px;border:1px solid #d9dce3;border-radius:7px;font:inherit;background:#fff}.product-form-group textarea{min-height:100px;resize:vertical}.product-gallery-manager{border:1px solid #e4e7ec;border-radius:9px;padding:12px;background:#fafbfc}.product-gallery-list{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:10px}.product-gallery-item{width:150px;background:#fff;border:1px solid #e3e6eb;border-radius:8px;padding:8px;position:relative}.product-gallery-preview{width:100%;height:120px;object-fit:cover;border-radius:6px;background:#f2f4f7;display:block}.product-gallery-label{font-size:11px;font-weight:700;color:#344054;margin:6px 0}.product-gallery-actions{display:flex;gap:5px;flex-wrap:wrap}.product-gallery-actions button{border:0;border-radius:6px;padding:6px 8px;font-size:11px;font-weight:600;cursor:pointer}.gallery-primary{background:#111827;color:#fff}.gallery-set-primary{background:#e5e7eb;color:#111827}.gallery-replace{background:#eef2ff;color:#3730a3}.gallery-remove{background:#fee2e2;color:#991b1b}.product-gallery-empty{font-size:12px;color:#667085;padding:8px 0}.product-gallery-upload{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.product-gallery-upload input{max-width:100%}.product-gallery-help{font-size:11px;color:#667085;margin-top:8px;line-height:1.45}.product-form-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:18px}
+.order-detail-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.detail-box{border:1px solid var(--border);border-radius:10px;padding:12px}.detail-label{font-size:11px;color:var(--muted);margin-bottom:5px}.detail-value{font-size:13px;line-height:1.5}.order-note-box{margin-top:14px;border-radius:10px;background:#fff8fb;border:1px solid #f2dce7;padding:13px;font-size:13px;line-height:1.5}
+/* RESPONSIVE */
+@media(max-width:1100px){.sidebar{width:220px;flex-basis:220px}.stats-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.dashboard-grid{grid-template-columns:1fr}.main-content{padding:22px}}
+@media(max-width:700px){.admin-header{height:64px;padding:0 14px}.admin-logo{font-size:16px}.admin-logo img{height:36px;width:36px}.admin-logo span,.header-date{display:none}.admin-layout{display:block}.sidebar{width:100%;flex-basis:auto;display:flex;flex-direction:row;gap:6px;overflow-x:auto;padding:9px;border-right:0;border-bottom:1px solid var(--border);position:sticky;top:64px;z-index:90}.sidebar-brand,.sidebar-title,.sidebar-spacer,.sidebar-note{display:none}.nav-btn{width:auto;flex:0 0 auto;white-space:nowrap;margin:0;padding:10px 12px}.main-content{padding:17px 13px}.topbar{align-items:flex-start;margin-bottom:18px}.page-title h2{font-size:23px}.date-card{display:none}.stats-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.stat-card{padding:14px}.stat-icon{width:40px;height:40px}.stat-card .value{font-size:22px}.stat-card .label{font-size:11px;margin-top:11px}.stat-foot{font-size:10px}.dashboard-card{padding:15px}.quick-grid{gap:9px}.quick-action{min-height:88px;font-size:12px}.products-search,.orders-search{min-width:100%}.products-toolbar .primary-btn,.products-toolbar .secondary-btn,.orders-toolbar .refresh-btn{flex:1}.product-form-grid{grid-template-columns:1fr}.product-form-group.full{grid-column:auto}.order-detail-grid{grid-template-columns:1fr}.login-card{padding:26px 22px}}
+@media(max-width:420px){.stats-grid{gap:8px}.stat-card{padding:11px}.stat-card .value{font-size:20px}.stat-icon{width:36px;height:36px}.stat-icon svg{width:20px;height:20px}.main-content{padding:14px 10px}}
+</style>
 
 </head>
-
 <body>
 
-<!-- =====================================================
-     LOGIN PAGE
-===================================================== -->
-
-<div
-    id="loginPage"
-    class="login-page"
->
-
+<div id="loginPage" class="login-page">
     <div class="login-card">
-
         <div class="brand">
-
-            <h1>
-                Peppy Fashion
-            </h1>
-
-            <p>
-                Administrator Panel
-            </p>
-
+            <img src="../assets/images/logo/logo.png" alt="Peppy Fashion">
+            <h1>Administrator Panel</h1>
+            <p>Manage your Peppy Fashion store</p>
         </div>
-
         <form id="loginForm">
-
             <div class="form-group">
-
-                <label for="adminToken">
-                    Admin Token
-                </label>
-
-                <input
-                    id="adminToken"
-                    type="password"
-                    placeholder="Enter your admin token"
-                    autocomplete="current-password"
-                    required
-                >
-
+                <label for="adminToken">Admin Token</label>
+                <input id="adminToken" type="password" placeholder="Enter your admin token" autocomplete="current-password" required>
             </div>
-
-            <button
-                id="loginButton"
-                class="btn"
-                type="submit"
-            >
-                Sign In
-            </button>
-
+            <button id="loginButton" class="btn" type="submit">Sign In</button>
         </form>
-
-        <div
-            id="loginMessage"
-            class="message"
-        ></div>
-
+        <div id="loginMessage" class="message"></div>
     </div>
-
 </div>
 
-
-<!-- =====================================================
-     ADMIN APPLICATION
-===================================================== -->
-
-<div
-    id="adminApp"
-    class="admin-app"
->
-
+<div id="adminApp" class="admin-app">
     <header class="admin-header">
-
         <div class="admin-logo">
-
-            Peppy Fashion
-
-            <span>
-                Admin Panel
-            </span>
-
+            <img src="../assets/images/logo/logo.png" alt="Peppy Fashion">
+            <span>Peppy Fashion Admin</span>
         </div>
-
-        <button
-            id="logoutButton"
-            class="logout-btn"
-            type="button"
-        >
-            Logout
-        </button>
-
+        <div class="header-right">
+            <div class="header-date">Administrator<br><strong>Store Management</strong></div>
+            <button id="logoutButton" class="logout-btn" type="button">Logout</button>
+        </div>
     </header>
 
-
     <div class="admin-layout">
-
-        <!-- SIDEBAR -->
-
         <aside class="sidebar">
+            <div class="sidebar-brand"><img src="../assets/images/logo/logo.png" alt="Peppy Fashion"></div>
+            <div class="sidebar-title">Management</div>
 
-            <div class="sidebar-title">
-                Management
-            </div>
-
-            <button
-                class="nav-btn active"
-                data-section="dashboard"
-                type="button"
-            >
+            <button class="nav-btn active" data-section="dashboard" type="button">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 10.5V20h13v-9.5"/><path d="M9.5 20v-5h5v5"/></svg>
                 Dashboard
             </button>
-
-            <button
-                class="nav-btn"
-                data-section="products"
-                type="button"
-            >
+            <button class="nav-btn" data-section="products" type="button">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m7 7 5-4 5 4v4l-5 3-5-3V7Z"/><path d="m3 12 9 5 9-5"/><path d="m3 16 9 5 9-5"/></svg>
                 Products
             </button>
-
-            <button
-                class="nav-btn"
-                data-section="orders"
-                type="button"
-            >
+            <button class="nav-btn" data-section="orders" type="button">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 4h2l2.4 11.2a2 2 0 0 0 2 1.6h7.8a2 2 0 0 0 1.9-1.4L21 8H6"/><circle cx="10" cy="20" r="1"/><circle cx="18" cy="20" r="1"/></svg>
                 Orders
             </button>
-
-            <button
-                class="nav-btn"
-                data-section="store"
-                type="button"
-            >
+            <button class="nav-btn" data-section="store" type="button">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.8 1.8 0 0 0 .36 2l.06.06-1.4 1.4-.06-.06a1.8 1.8 0 0 0-2-.36 1.8 1.8 0 0 0-1.1 1.65V20h-2v-.31A1.8 1.8 0 0 0 12.2 18a1.8 1.8 0 0 0-2.02.36l-.06.06-1.4-1.4.06-.06a1.8 1.8 0 0 0 .36-2 1.8 1.8 0 0 0-1.65-1.1H7v-2h.31A1.8 1.8 0 0 0 9 10.2a1.8 1.8 0 0 0-.36-2l-.06-.06 1.4-1.4.06.06a1.8 1.8 0 0 0 2 .36A1.8 1.8 0 0 0 13.1 5.5V5h2v.31a1.8 1.8 0 0 0 1.1 1.65 1.8 1.8 0 0 0 2-.36l.06-.06 1.4 1.4-.06.06a1.8 1.8 0 0 0-.36 2A1.8 1.8 0 0 0 20.9 11H21v2h-.31A1.8 1.8 0 0 0 19.4 15Z"/></svg>
                 Store Data
             </button>
 
+            <div class="sidebar-spacer"></div>
+            <div class="sidebar-note">Your existing Google Sheet, Apps Script backend and public website remain connected to this Admin Panel.</div>
         </aside>
 
-
-        <!-- MAIN CONTENT -->
-
         <main class="main-content">
-
             <section id="dashboardSection">
-
-                <div class="page-title">
-
-                    <h2>
-                        Dashboard
-                    </h2>
-
-                    <p>
-                        Peppy Fashion store overview
-                    </p>
-
+                <div class="topbar">
+                    <div class="page-title">
+                        <div class="welcome-pill">Welcome Back!</div>
+                        <h2>Welcome to Peppy Fashion Admin</h2>
+                        <p>Manage your products, orders and store operations from here.</p>
+                    </div>
+                    <div class="date-card"><div class="date-title">Today</div><strong id="dashboardDate">Store Dashboard</strong></div>
                 </div>
-
 
                 <div class="stats-grid">
-
-                    <div class="stat-card">
-
-                        <div class="label">
-                            Total Products
-                        </div>
-
-                        <div
-                            id="totalProducts"
-                            class="value"
-                        >
-                            —
-                        </div>
-
-                    </div>
-
-
-                    <div class="stat-card">
-
-                        <div class="label">
-                            Active Products
-                        </div>
-
-                        <div
-                            id="activeProducts"
-                            class="value"
-                        >
-                            —
-                        </div>
-
-                    </div>
-
-
-                    <div class="stat-card">
-
-                        <div class="label">
-                            Out of Stock
-                        </div>
-
-                        <div
-                            id="outOfStock"
-                            class="value"
-                        >
-                            —
-                        </div>
-
-                    </div>
-
-
-                    <div class="stat-card">
-
-                        <div class="label">
-                            Total Orders
-                        </div>
-
-                        <div
-                            id="totalOrders"
-                            class="value"
-                        >
-                            —
-                        </div>
-
-                    </div>
-
+                    <div class="stat-card"><div class="stat-top"><div><div class="label">Total Products</div><div id="totalProducts" class="value">—</div></div><div class="stat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m12 3 8 4.5v9L12 21l-8-4.5v-9L12 3Z"/><path d="m4.5 7.5 7.5 4 7.5-4M12 12v9"/></svg></div></div><div class="stat-foot good">Live product inventory</div></div>
+                    <div class="stat-card"><div class="stat-top"><div><div class="label">Active Products</div><div id="activeProducts" class="value">—</div></div><div class="stat-icon green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m5 12 4 4L19 6"/></svg></div></div><div class="stat-foot good">Currently visible</div></div>
+                    <div class="stat-card"><div class="stat-top"><div><div class="label">Out of Stock</div><div id="outOfStock" class="value">—</div></div><div class="stat-icon orange"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3 2.5 20h19L12 3Z"/><path d="M12 9v5M12 17h.01"/></svg></div></div><div class="stat-foot">Needs attention</div></div>
+                    <div class="stat-card"><div class="stat-top"><div><div class="label">Total Orders</div><div id="totalOrders" class="value">—</div></div><div class="stat-icon purple"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 3h12v18H6z"/><path d="M9 7h6M9 11h6M9 15h4"/></svg></div></div><div class="stat-foot good">Orders in your system</div></div>
                 </div>
 
-
-                <div class="dashboard-card">
-
-                    <h3>
-                        Admin Panel Ready
-                    </h3>
-
-                    <p>
-                        The Admin Panel is connected
-                        to the existing Peppy Fashion
-                        backend. Product management,
-                        order management and store
-                        management will be added
-                        without replacing the existing
-                        customer website.
-                    </p>
-
-                    <div class="dashboard-status">
-                        Backend Connected
+                <div class="dashboard-grid">
+                    <div class="dashboard-card">
+                        <div class="card-head"><div class="card-icon-title"><div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 17 9 11l4 4 8-9"/><path d="M17 6h4v4"/></svg></div><div><h3>Store Overview</h3><p>Live connection to your existing store backend</p></div></div></div>
+                        <div class="chart-placeholder"><div class="chart-grid"><div class="chart-line"></div><div class="chart-line"></div><div class="chart-line"></div><div class="chart-line"></div><div class="chart-line"></div></div><div class="chart-message">Dashboard statistics are connected to your existing Google Sheet and Apps Script backend.</div></div>
+                        <div class="dashboard-status"><span class="status-dot"></span> Backend Connected — your existing website data is being used</div>
                     </div>
 
+                    <div class="dashboard-card">
+                        <div class="card-head"><div class="card-icon-title"><div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v18M3 12h18"/></svg></div><div><h3>Quick Actions</h3><p>Common store tasks</p></div></div></div>
+                        <div class="quick-grid">
+                            <button class="quick-action" type="button" onclick="document.querySelector('.nav-btn[data-section=\'products\']').click();setTimeout(function(){document.getElementById('addProductButton').click();},80)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>Add Product</button>
+                            <button class="quick-action" type="button" onclick="document.querySelector('.nav-btn[data-section=\'orders\']').click()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 4h2l2.4 11.2a2 2 0 0 0 2 1.6h7.8a2 2 0 0 0 1.9-1.4L21 8H6"/><circle cx="10" cy="20" r="1"/><circle cx="18" cy="20" r="1"/></svg>View Orders</button>
+                            <button class="quick-action" type="button" onclick="document.querySelector('.nav-btn[data-section=\'products\']').click()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m12 3 8 4.5v9L12 21l-8-4.5v-9L12 3Z"/><path d="m4.5 7.5 7.5 4 7.5-4"/></svg>Manage Products</button>
+                            <button class="quick-action" type="button" onclick="document.querySelector('.nav-btn[data-section=\'store\']').click()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.8 1.8 0 0 0 .36 2l.06.06-1.4 1.4-.06-.06a1.8 1.8 0 0 0-2-.36 1.8 1.8 0 0 0-1.1 1.65V20h-2v-.31A1.8 1.8 0 0 0 12.2 18a1.8 1.8 0 0 0-2.02.36l-.06.06-1.4-1.4.06-.06a1.8 1.8 0 0 0 .36-2 1.8 1.8 0 0 0-1.65-1.1H7v-2h.31A1.8 1.8 0 0 0 9 10.2a1.8 1.8 0 0 0-.36-2l-.06-.06 1.4-1.4.06.06a1.8 1.8 0 0 0 2 .36A1.8 1.8 0 0 0 13.1 5.5V5h2v.31a1.8 1.8 0 0 0 1.1 1.65 1.8 1.8 0 0 0 2-.36l.06-.06 1.4 1.4-.06.06a1.8 1.8 0 0 0-.36 2A1.8 1.8 0 0 0 20.9 11H21v2h-.31A1.8 1.8 0 0 0 19.4 15Z"/></svg>Store Data</button>
+                        </div>
+                    </div>
                 </div>
-
             </section>
 
-            <!-- PRODUCTS -->
             <section id="productsSection" class="section-hidden">
                 <div class="page-title"><h2>Products</h2><p>Manage products from the existing Peppy Fashion Products sheet</p></div>
                 <div class="products-toolbar"><input id="productsSearch" class="products-search" type="search" placeholder="Search product ID, name, category or collection..." autocomplete="off"><button id="refreshProductsButton" class="secondary-btn" type="button">Refresh Products</button><button id="addProductButton" class="primary-btn" type="button">+ Add Product</button></div>
@@ -1236,60 +149,18 @@
                 <div class="products-table-wrap"><div id="productsLoading" class="products-loading">Loading products...</div><div id="productsError" class="products-error" style="display:none;"></div><div id="productsEmpty" class="products-empty" style="display:none;">No products found.</div><table id="productsTable" class="products-table" style="display:none;"><thead><tr><th>Image</th><th>Product ID</th><th>Product Name</th><th>Main Category</th><th>Sub Category</th><th>Collection</th><th>Price</th><th>Old Price</th><th>Discount</th><th>Stock</th><th>Status</th><th>Featured</th><th>Badge</th><th>Sizes</th><th>Description</th><th>Actions</th></tr></thead><tbody id="productsTableBody"></tbody></table></div>
             </section>
 
-            <!-- ORDERS -->
             <section id="ordersSection" class="section-hidden">
-                <div class="page-title">
-                    <h2>Orders</h2>
-                    <p>Manage orders from the existing Peppy Fashion Orders sheet</p>
-                </div>
-
-                <div class="orders-toolbar">
-                    <input
-                        id="ordersSearch"
-                        class="orders-search"
-                        type="search"
-                        placeholder="Search Order ID, customer, phone or email..."
-                        autocomplete="off"
-                    >
-                    <button id="refreshOrdersButton" class="refresh-btn" type="button">
-                        Refresh Orders
-                    </button>
-                </div>
-
-                <div id="ordersMeta" class="orders-meta">
-                    Loading orders...
-                </div>
-
-                <div class="orders-table-wrap">
-                    <div id="ordersLoading" class="orders-loading">Loading orders...</div>
-                    <div id="ordersError" class="orders-error" style="display:none;"></div>
-                    <div id="ordersEmpty" class="orders-empty" style="display:none;">No orders found.</div>
-                    <table id="ordersTable" class="orders-table" style="display:none;">
-                        <thead>
-                            <tr>
-                                <th>Date</th>
-                                <th>Order ID</th>
-                                <th>Customer</th>
-                                <th>Phone</th>
-                                <th>Total</th>
-                                <th>Payment</th>
-                                <th>Status</th>
-                                <th>Details</th>
-                            </tr>
-                        </thead>
-                        <tbody id="ordersTableBody"></tbody>
-                    </table>
-                </div>
+                <div class="page-title"><h2>Orders</h2><p>Manage orders from the existing Peppy Fashion Orders sheet</p></div>
+                <div class="orders-toolbar"><input id="ordersSearch" class="orders-search" type="search" placeholder="Search Order ID, customer, phone or email..." autocomplete="off"><button id="refreshOrdersButton" class="refresh-btn" type="button">Refresh Orders</button></div>
+                <div id="ordersMeta" class="orders-meta">Loading orders...</div>
+                <div class="orders-table-wrap"><div id="ordersLoading" class="orders-loading">Loading orders...</div><div id="ordersError" class="orders-error" style="display:none;"></div><div id="ordersEmpty" class="orders-empty" style="display:none;">No orders found.</div><table id="ordersTable" class="orders-table" style="display:none;"><thead><tr><th>Date</th><th>Order ID</th><th>Customer</th><th>Phone</th><th>Total</th><th>Payment</th><th>Status</th><th>Details</th></tr></thead><tbody id="ordersTableBody"></tbody></table></div>
             </section>
-
         </main>
-
     </div>
-
 </div>
 
 <div id="productModalBackdrop" class="modal-backdrop" aria-hidden="true"><div class="order-modal product-modal" role="dialog" aria-modal="true" aria-labelledby="productModalTitle"><div class="modal-header"><h3 id="productModalTitle">Add Product</h3><button id="productModalClose" class="modal-close" type="button" aria-label="Close">&times;</button></div><div class="modal-body"><form id="productForm"><div class="product-form-grid">
-<div class="product-form-group"><label for="productIdInput">Product ID</label><input id="productIdInput" type="text" placeholder="Leave blank to generate"></div><div class="product-form-group"><label for="productNameInput">Product Name *</label><input id="productNameInput" type="text" required></div><div class="product-form-group"><label for="productCategoryInput">Main Category</label><input id="productCategoryInput" type="text"></div><div class="product-form-group"><label for="productSubCategoryInput">Sub Category</label><input id="productSubCategoryInput" type="text"></div><div class="product-form-group"><label for="productCollectionInput">Collection</label><input id="productCollectionInput" type="text"></div><div class="product-form-group"><label for="productPriceInput">Price</label><input id="productPriceInput" type="number" min="0" step="0.01"></div><div class="product-form-group"><label for="productOldPriceInput">Old Price</label><input id="productOldPriceInput" type="number" min="0" step="0.01"></div><div class="product-form-group"><label for="productDiscountInput">Discount</label><input id="productDiscountInput" type="number" min="0" step="0.01"></div><div class="product-form-group"><label for="productStockInput">Stock</label><input id="productStockInput" type="number" min="0" step="1"></div><div class="product-form-group"><label for="productStatusInput">Status</label><select id="productStatusInput"><option value="active">Active</option><option value="inactive">Inactive</option></select></div><div class="product-form-group"><label for="productFeaturedInput">Featured</label><select id="productFeaturedInput"><option value="no">No</option><option value="yes">Yes</option></select></div><div class="product-form-group"><label for="productBadgeInput">Badge</label><input id="productBadgeInput" type="text"></div><div class="product-form-group full"><label>Product Photos</label><div class="product-gallery-manager"><div id="productGalleryList" class="product-gallery-list"></div><div class="product-gallery-upload"><input id="productImageFiles" type="file" accept="image/jpeg,image/png,image/webp,image/gif" multiple><button id="uploadProductImagesButton" class="secondary-btn" type="button">Upload Photos</button></div><div class="product-gallery-help">You can upload multiple photos for one product. The first photo is the primary product photo. Use Set Primary, Replace, or Remove for individual photos. New photos are stored in Google Drive in the <code>Peppy Fashion Product Images</code> folder. Existing GitHub photos remain supported.</div></div></div><div class="product-form-group full"><label for="productImageInput">Primary Image Path / URL (Optional)</label><input id="productImageInput" type="text" placeholder="Legacy GitHub path or image URL"><div class="product-gallery-help">For new products, use <strong>Upload Photos</strong> above. This field is kept for existing GitHub images or a manually supplied image URL. Changing it will set that image as the primary photo while keeping the other gallery photos.</div></div><div class="product-form-group full"><label for="productSizesInput">Sizes</label><input id="productSizesInput" type="text" placeholder="S, M, L, XL"></div><div class="product-form-group full"><label for="productDescriptionInput">Description</label><textarea id="productDescriptionInput"></textarea></div></div><div id="productFormMessage" class="message"></div><div class="product-form-actions"><button id="productCancelButton" class="secondary-btn" type="button">Cancel</button><button id="productSaveButton" class="primary-btn" type="submit">Save Product</button></div></form></div></div></div>
+<div class="product-form-group"><label for="productIdInput">Product ID</label><input id="productIdInput" type="text" placeholder="Leave blank to generate"></div><div class="product-form-group"><label for="productNameInput">Product Name *</label><input id="productNameInput" type="text" required></div><div class="product-form-group"><label for="productCategoryInput">Main Category</label><input id="productCategoryInput" type="text"></div><div class="product-form-group"><label for="productSubCategoryInput">Sub Category</label><input id="productSubCategoryInput" type="text"></div><div class="product-form-group"><label for="productCollectionInput">Collection</label><input id="productCollectionInput" type="text"></div><div class="product-form-group"><label for="productPriceInput">Price</label><input id="productPriceInput" type="number" min="0" step="0.01"></div><div class="product-form-group"><label for="productOldPriceInput">Old Price</label><input id="productOldPriceInput" type="number" min="0" step="0.01"></div><div class="product-form-group"><label for="productDiscountInput">Discount</label><input id="productDiscountInput" type="number" min="0" step="0.01"></div><div class="product-form-group"><label for="productStockInput">Stock</label><input id="productStockInput" type="number" min="0" step="1"></div><div class="product-form-group"><label for="productStatusInput">Status</label><select id="productStatusInput"><option value="active">Active</option><option value="inactive">Inactive</option></select></div><div class="product-form-group"><label for="productFeaturedInput">Featured</label><select id="productFeaturedInput"><option value="no">No</option><option value="yes">Yes</option></select></div><div class="product-form-group"><label for="productBadgeInput">Badge</label><input id="productBadgeInput" type="text"></div><div class="product-form-group full"><label>Product Photos</label><div class="product-gallery-manager"><div id="productGalleryList" class="product-gallery-list"></div><div class="product-gallery-upload"><input id="productImageFiles" type="file" accept="image/jpeg,image/png,image/webp,image/gif" multiple><button id="uploadProductImagesButton" class="secondary-btn" type="button">Upload Photos</button></div><div class="product-gallery-help">You can upload multiple photos for one product. The first photo is the primary product photo. Use Set Primary, Replace, or Remove for individual photos. New photos are stored in Google Drive in the <code>Peppy Fashion Product Images</code> folder. Existing GitHub photos remain supported.</div></div></div><div class="product-form-group full"><label for="productImageInput">Primary Image Path / URL</label><input id="productImageInput" type="text" placeholder="assets/images/products/product.jpg or https://..."></div><div class="product-form-group full"><label for="productSizesInput">Sizes</label><input id="productSizesInput" type="text" placeholder="S, M, L, XL"></div><div class="product-form-group full"><label for="productDescriptionInput">Description</label><textarea id="productDescriptionInput"></textarea></div></div><div id="productFormMessage" class="message"></div><div class="product-form-actions"><button id="productCancelButton" class="secondary-btn" type="button">Cancel</button><button id="productSaveButton" class="primary-btn" type="submit">Save Product</button></div></form></div></div></div>
 
 <div id="orderModalBackdrop" class="modal-backdrop" aria-hidden="true">
     <div class="order-modal" role="dialog" aria-modal="true" aria-labelledby="orderModalTitle">
@@ -1513,7 +384,6 @@
         if (!data.success) {
 
             throw new Error(
-                data.error ||
                 data.message ||
                 "Request failed."
             );
@@ -1570,7 +440,6 @@
         if (!data.success) {
 
             throw new Error(
-                data.error ||
                 data.message ||
                 "Invalid admin token."
             );
@@ -2018,7 +887,7 @@
     function resolveProductImage(src){const value=String(src||"").trim();if(!value)return "";if(/^https?:\/\//i.test(value))return value;if(value.startsWith("/"))return new URL(value,window.location.origin).href;if(value.startsWith("assets/"))return new URL("../"+value,window.location.href).href;if(value.startsWith("images/"))return new URL("../assets/"+value,window.location.href).href;return new URL("../assets/images/products/"+value,window.location.href).href;}
     function isDeletableProductImageSource(src){const value=String(src||"").trim();if(!value)return false;if(/^https?:\/\/drive\.google\.com\//i.test(value))return true;if(/^https?:\/\/docs\.google\.com\//i.test(value))return true;if(/^assets\/images\/products\//i.test(value))return true;if(/^images\/products\//i.test(value))return true;return false;}
     function renderProductGallery(){if(!productGalleryList)return;productGalleryList.innerHTML="";if(!productGalleryImages.length){productGalleryList.innerHTML='<div class="product-gallery-empty">No product photos yet.</div>';return;}productGalleryImages.forEach((src,index)=>{const item=document.createElement("div");item.className="product-gallery-item";const label=index===0?"PRIMARY PHOTO":"PHOTO "+(index+1);item.innerHTML=`<img class="product-gallery-preview" src="${escapeHtml(resolveProductImage(src))}" alt="" onerror="this.style.opacity=.25"><div class="product-gallery-label">${label}</div><div class="product-gallery-actions">${index===0?'<button class="gallery-primary" type="button">Primary</button>':'<button class="gallery-set-primary" type="button">Set Primary</button>'}<button class="gallery-replace" type="button">Replace</button><button class="gallery-remove" type="button">Remove</button></div>`;const buttons=item.querySelectorAll("button");if(index>0)buttons[0].addEventListener("click",()=>setPrimaryProductImage(index));buttons[1].addEventListener("click",()=>replaceProductImage(index));buttons[2].addEventListener("click",()=>removeProductImage(index));productGalleryList.appendChild(item);});}
-    async function persistProductGallery(){if(!editingProductId)return;const d=await postAdminAction({action:"updateProductImages",id:editingProductId,rowNumber:allProducts.find(x=>String(x.id)===String(editingProductId))?.rowNumber,images:productGalleryImages});const updated=d.product;if(updated){const idx=allProducts.findIndex(x=>String(x.id)===String(editingProductId));if(idx>=0)allProducts[idx]=Object.assign({},allProducts[idx],updated);productGalleryImages=Array.isArray(updated.images)?updated.images:productGalleryImages;productFields.image.value=productGalleryImages[0]||"";}renderProductGallery();renderProducts();}
+    async function persistProductGallery(){if(!editingProductId)return;const d=await postAdminAction({action:"updateProductImages",id:editingProductId,images:productGalleryImages});const updated=d.product;if(updated){const idx=allProducts.findIndex(x=>String(x.id)===String(editingProductId));if(idx>=0)allProducts[idx]=Object.assign({},allProducts[idx],updated);productGalleryImages=Array.isArray(updated.images)?updated.images:productGalleryImages;productFields.image.value=productGalleryImages[0]||"";}renderProductGallery();renderProducts();}
     async function setPrimaryProductImage(index){if(index<=0||index>=productGalleryImages.length)return;const selected=productGalleryImages[index];productGalleryImages.splice(index,1);productGalleryImages.unshift(selected);productFields.image.value=productGalleryImages[0]||"";if(editingProductId){try{await persistProductGallery();showProductFormMessage("Primary photo updated.","success");}catch(e){showProductFormMessage(e.message||"Unable to set primary photo.");}}else renderProductGallery();}
     async function removeProductImage(index){const src=productGalleryImages[index];if(!src)return;if(!confirm("Remove this product photo?"))return;try{if(editingProductId && isDeletableProductImageSource(src)){await postAdminAction({action:"deleteImage",path:src});}productGalleryImages.splice(index,1);if(editingProductId)await persistProductGallery();else{productFields.image.value=productGalleryImages[0]||"";renderProductGallery();}}catch(e){showProductFormMessage(e.message||"Unable to remove photo.");}}
     async function replaceProductImage(index){if(!editingProductId){showProductFormMessage("Save the new product first, then replace photos.");return;}const input=document.createElement("input");input.type="file";input.accept="image/jpeg,image/png,image/webp,image/gif";input.onchange=async()=>{const file=input.files&&input.files[0];if(!file)return;try{showProductFormMessage("Uploading replacement photo...","success");const compressed=await prepareImageFile(file);const d=await postAdminAction({action:"uploadImage",filename:makeProductImageFilename(editingProductId,file.name),base64:compressed});const newPath=d.path||d.image;if(!newPath)throw new Error("Upload did not return an image path.");const oldPath=productGalleryImages[index];productGalleryImages[index]=newPath;if(oldPath&&isDeletableProductImageSource(oldPath)){try{await postAdminAction({action:"deleteImage",path:oldPath});}catch(cleanErr){console.warn("Old image cleanup failed",cleanErr);}}await persistProductGallery();showProductFormMessage("Photo replaced successfully.","success");}catch(e){showProductFormMessage(e.message||"Unable to replace photo.");}};input.click();}
@@ -2027,14 +896,12 @@
     function getFilteredProducts(){const q=productsSearch.value.trim().toLowerCase();if(!q)return allProducts;return allProducts.filter(p=>[p.id,p.name,p.category,p.subCategory,p.collection,p.badge].some(v=>String(v??"").toLowerCase().includes(q)));}
     function productImageHtml(p){const src=String(p.image||"").trim();if(!src)return '<span class="no-image">No image</span>';let resolved=src;if(!/^https?:\/\//i.test(src)){if(src.startsWith("/")){resolved=new URL(src,window.location.origin).href;}else if(src.startsWith("assets/")){resolved=new URL("../"+src,window.location.href).href;}else if(src.startsWith("images/")){resolved=new URL("../assets/"+src,window.location.href).href;}else{resolved=new URL("../assets/images/products/"+src,window.location.href).href;}}return `<img class="product-thumb" src="${escapeHtml(resolved)}" alt="" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='inline';"><span class="no-image" style="display:none;">No image</span>`;}
     function makeProductImageFilename(productId,originalName){
-        let name=String(originalName||"product-image").trim();
-        name=name.replace(/\.[^.]+$/ ,"");
-        name=name.replace(/[^a-zA-Z0-9_-]/g,"-").replace(/-+/g,"-").replace(/^-+|-+$/g,"").toLowerCase();
-        if(!name) name="product-image";
-        const safeProductId=String(productId||"product").replace(/[^a-zA-Z0-9_-]/g,"-").replace(/-+/g,"-").replace(/^-+|-+$/g,"").toLowerCase() || "product";
-        const unique=Date.now().toString(36)+"-"+Math.random().toString(36).slice(2,7);
-        return safeProductId+"-"+name+"-"+unique+".jpg";
-    }
+    let name=String(originalName||"product-image").trim();
+    name=name.replace(/\\.[^.]+$/,"");
+    name=name.replace(/[^a-zA-Z0-9_-]/g,"-").replace(/-+/g,"-").replace(/^-+|-+$/g,"").toLowerCase();
+    if(!name) name="product-image";
+    return name+".jpg";
+}
     function prepareImageFile(file){return new Promise((resolve,reject)=>{if(!file||!file.type.startsWith("image/")){reject(new Error("Please select an image file."));return;}const img=new Image();const reader=new FileReader();reader.onload=()=>{img.onload=()=>{const max=1400;let w=img.naturalWidth,h=img.naturalHeight;if(w>max||h>max){const scale=Math.min(max/w,max/h);w=Math.round(w*scale);h=Math.round(h*scale);}const canvas=document.createElement("canvas");canvas.width=w;canvas.height=h;const ctx=canvas.getContext("2d");ctx.drawImage(img,0,0,w,h);resolve(canvas.toDataURL("image/jpeg",0.82));};img.onerror=()=>reject(new Error("Unable to read image."));img.src=reader.result;};reader.onerror=()=>reject(new Error("Unable to read image file."));reader.readAsDataURL(file);});}
     function previewPendingFiles(){if(!productGalleryList)return;renderProductGallery();if(!pendingProductFiles.length)return;pendingProductFiles.forEach((file,i)=>{const item=document.createElement("div");item.className="product-gallery-item";const url=URL.createObjectURL(file);item.innerHTML=`<img class="product-gallery-preview" src="${escapeHtml(url)}" alt=""><div class="product-gallery-label">NEW PHOTO ${i+1}</div><div class="product-gallery-actions"><button class="gallery-remove" type="button">Remove</button></div>`;item.querySelector("button").addEventListener("click",()=>{pendingProductFiles.splice(i,1);URL.revokeObjectURL(url);previewPendingFiles();});productGalleryList.appendChild(item);});}
     async function uploadSelectedProductImages(){const files=Array.from(productImageFiles.files||[]);if(!files.length)return;if(!editingProductId){pendingProductFiles=pendingProductFiles.concat(files);productImageFiles.value="";previewPendingFiles();showProductFormMessage(files.length+" photo(s) ready. They will upload when you save the product.","success");return;}uploadProductImagesButton.disabled=true;try{for(const file of files){const compressed=await prepareImageFile(file);const d=await postAdminAction({action:"uploadImage",filename:makeProductImageFilename(editingProductId,file.name),base64:compressed});const path=d.path||d.image;if(!path)throw new Error("Upload did not return an image path.");productGalleryImages.push(path);}await persistProductGallery();productImageFiles.value="";showProductFormMessage(files.length+" photo(s) uploaded successfully.","success");}catch(e){showProductFormMessage(e.message||"Unable to upload photos.");}finally{uploadProductImagesButton.disabled=false;}}
@@ -2042,11 +909,11 @@
     function renderProducts(){productsLoading.style.display="none";productsError.style.display="none";const filtered=getFilteredProducts();productsMeta.textContent=`Showing ${filtered.length} of ${allProducts.length} products`;productsTableBody.innerHTML="";if(!filtered.length){productsTable.style.display="none";productsEmpty.style.display="block";return;}productsEmpty.style.display="none";productsTable.style.display="table";filtered.forEach(p=>{const row=document.createElement("tr");const status=String(p.status||"active").toLowerCase();const featured=String(p.featured||"no").toLowerCase();const sizes=Array.isArray(p.sizes)?p.sizes.join(", "):String(p.sizes||"");const description=String(p.description||"");row.innerHTML=`<td>${productImageHtml(p)}</td><td class="product-id">${escapeHtml(p.id||"—")}</td><td><div class="product-name">${escapeHtml(p.name||"Unnamed product")}</div></td><td>${escapeHtml(p.category||"—")}</td><td class="product-subcategory">${escapeHtml(p.subCategory||"—")}</td><td class="product-collection">${escapeHtml(p.collection||"—")}</td><td class="product-price">${escapeHtml(formatMoney(p.price))}</td><td class="product-price">${p.oldPrice?escapeHtml(formatMoney(p.oldPrice)):"—"}</td><td>${p.discount?escapeHtml(String(p.discount)+"%"):"—"}</td><td><input class="product-inline-input stock-input" type="number" min="0" step="1" value="${escapeHtml(p.stock??0)}" data-product-id="${escapeHtml(p.id||"")}"></td><td><select class="product-status-select status-product-select" data-product-id="${escapeHtml(p.id||"")}"><option value="active"${status==="active"?" selected":""}>Active</option><option value="inactive"${status!=="active"?" selected":""}>Inactive</option></select></td><td><select class="product-featured-select featured-product-select" data-product-id="${escapeHtml(p.id||"")}"><option value="no"${featured!=="yes"?" selected":""}>No</option><option value="yes"${featured==="yes"?" selected":""}>Yes</option></select></td><td class="product-badge">${escapeHtml(p.badge||"—")}</td><td class="product-sizes">${escapeHtml(sizes||"—")}</td><td class="product-description">${escapeHtml(description||"—")}</td><td><div class="product-actions"><button class="edit-btn" type="button" data-edit-product-id="${escapeHtml(p.id||"")}">Edit</button>${status==="active"?`<button class="danger-btn" type="button" data-delete-product-id="${escapeHtml(p.id||"")}">Deactivate</button>`:`<button class="restore-btn" type="button" data-restore-product-id="${escapeHtml(p.id||"")}">Restore</button><button class="danger-btn" type="button" data-permanent-delete-product-id="${escapeHtml(p.id||"")}">Permanent Delete</button>`}</div></td>`;productsTableBody.appendChild(row);});productsTableBody.querySelectorAll(".edit-btn").forEach(b=>b.addEventListener("click",()=>{const p=allProducts.find(x=>String(x.id)===String(b.dataset.editProductId));if(p)openProductModal(p);}));productsTableBody.querySelectorAll(".stock-input").forEach(i=>i.addEventListener("change",()=>updateProductStock(i.dataset.productId,i)));productsTableBody.querySelectorAll(".status-product-select").forEach(i=>i.addEventListener("change",()=>updateProductStatus(i.dataset.productId,i.value,i)));productsTableBody.querySelectorAll(".featured-product-select").forEach(i=>i.addEventListener("change",()=>updateProductFeatured(i.dataset.productId,i.value,i)));productsTableBody.querySelectorAll("[data-delete-product-id]").forEach(b=>b.addEventListener("click",()=>deactivateProduct(b.dataset.deleteProductId,b)));productsTableBody.querySelectorAll("[data-restore-product-id]").forEach(b=>b.addEventListener("click",()=>restoreProduct(b.dataset.restoreProductId,b)));productsTableBody.querySelectorAll("[data-permanent-delete-product-id]").forEach(b=>b.addEventListener("click",()=>permanentDeleteProduct(b.dataset.permanentDeleteProductId,b)));}
     async function loadProducts(){productsLoading.style.display="block";productsError.style.display="none";productsEmpty.style.display="none";productsTable.style.display="none";productsMeta.textContent="Loading products...";try{const data=await apiRequest("adminproducts");allProducts=Array.isArray(data.products)?data.products:[];renderProducts();}catch(e){console.error("Products error:",e);productsLoading.style.display="none";productsError.textContent=e.message||"Unable to load products.";productsError.style.display="block";productsMeta.textContent="Products could not be loaded.";}}
     async function postAdminAction(payload){const token=sessionStorage.getItem(ADMIN_TOKEN_KEY);if(!token)throw new Error("Admin session not found.");const r=await fetch(API_URL,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(Object.assign({},payload,{adminToken:token}))});if(!r.ok)throw new Error("Server request failed.");const d=await r.json();if(!d.success)throw new Error(d.error||d.message||"Operation failed.");return d;}
-    async function updateProductStock(id,input){const p=allProducts.find(x=>String(x.id)===String(id));if(!p)return;const prev=p.stock??0;const stock=Math.max(0,Number(input.value)||0);input.disabled=true;try{await postAdminAction({action:"updateStock",id,stock,rowNumber:p.rowNumber});p.stock=stock;}catch(e){input.value=prev;alert(e.message||"Unable to update stock.");}finally{input.disabled=false;}}
-    async function updateProductStatus(id,status,select){const p=allProducts.find(x=>String(x.id)===String(id));if(!p)return;const prev=p.status||"active";select.disabled=true;try{await postAdminAction({action:"updateProductStatus",id,status,rowNumber:p.rowNumber});p.status=status;renderProducts();}catch(e){select.value=prev;alert(e.message||"Unable to update product status.");}finally{select.disabled=false;}}
-    async function updateProductFeatured(id,featured,select){const p=allProducts.find(x=>String(x.id)===String(id));if(!p)return;const prev=p.featured||"no";select.disabled=true;try{await postAdminAction({action:"updateFeatured",id,featured,rowNumber:p.rowNumber});p.featured=featured;}catch(e){select.value=prev;alert(e.message||"Unable to update featured status.");}finally{select.disabled=false;}}
-    async function deactivateProduct(id,b){if(!confirm("Deactivate this product? It will remain in the sheet and can be restored."))return;b.disabled=true;try{await postAdminAction({action:"deleteProduct",id,rowNumber:allProducts.find(x=>String(x.id)===String(id))?.rowNumber});const p=allProducts.find(x=>String(x.id)===String(id));if(p)p.status="inactive";renderProducts();}catch(e){b.disabled=false;alert(e.message||"Unable to deactivate product.");}}
-    async function restoreProduct(id,b){b.disabled=true;try{await postAdminAction({action:"restoreProduct",id,rowNumber:allProducts.find(x=>String(x.id)===String(id))?.rowNumber});const p=allProducts.find(x=>String(x.id)===String(id));if(p)p.status="active";renderProducts();}catch(e){b.disabled=false;alert(e.message||"Unable to restore product.");}}
+    async function updateProductStock(id,input){const p=allProducts.find(x=>String(x.id)===String(id));if(!p)return;const prev=p.stock??0;const stock=Math.max(0,Number(input.value)||0);input.disabled=true;try{await postAdminAction({action:"updateStock",id,stock});p.stock=stock;}catch(e){input.value=prev;alert(e.message||"Unable to update stock.");}finally{input.disabled=false;}}
+    async function updateProductStatus(id,status,select){const p=allProducts.find(x=>String(x.id)===String(id));if(!p)return;const prev=p.status||"active";select.disabled=true;try{await postAdminAction({action:"updateProductStatus",id,status});p.status=status;renderProducts();}catch(e){select.value=prev;alert(e.message||"Unable to update product status.");}finally{select.disabled=false;}}
+    async function updateProductFeatured(id,featured,select){const p=allProducts.find(x=>String(x.id)===String(id));if(!p)return;const prev=p.featured||"no";select.disabled=true;try{await postAdminAction({action:"updateFeatured",id,featured});p.featured=featured;}catch(e){select.value=prev;alert(e.message||"Unable to update featured status.");}finally{select.disabled=false;}}
+    async function deactivateProduct(id,b){if(!confirm("Deactivate this product? It will remain in the sheet and can be restored."))return;b.disabled=true;try{await postAdminAction({action:"deleteProduct",id});const p=allProducts.find(x=>String(x.id)===String(id));if(p)p.status="inactive";renderProducts();}catch(e){b.disabled=false;alert(e.message||"Unable to deactivate product.");}}
+    async function restoreProduct(id,b){b.disabled=true;try{await postAdminAction({action:"restoreProduct",id});const p=allProducts.find(x=>String(x.id)===String(id));if(p)p.status="active";renderProducts();}catch(e){b.disabled=false;alert(e.message||"Unable to restore product.");}}
     async function permanentDeleteProduct(id,b){
         const product=allProducts.find(x=>String(x.id)===String(id));
         if(!product){alert("Product not found.");return;}
@@ -2065,7 +932,7 @@
         }
         b.disabled=true;
         try{
-            await postAdminAction({action:"permanentDeleteProduct",id,rowNumber:product.rowNumber});
+            await postAdminAction({action:"permanentDeleteProduct",id});
             allProducts=allProducts.filter(x=>String(x.id)!==String(id));
             renderProducts();
             await loadDashboard();
@@ -2079,7 +946,7 @@
     addProductButton.addEventListener("click",()=>openProductModal(null));refreshProductsButton.addEventListener("click",loadProducts);productsSearch.addEventListener("input",renderProducts);productModalClose.addEventListener("click",closeProductModal);productCancelButton.addEventListener("click",closeProductModal);productModalBackdrop.addEventListener("click",e=>{if(e.target===productModalBackdrop)closeProductModal();});
     uploadProductImagesButton.addEventListener("click",uploadSelectedProductImages);
     productImageFiles.addEventListener("change",()=>{if(!editingProductId)previewPendingFiles();});
-    productFields.image.addEventListener("change",()=>{const value=productFields.image.value.trim();if(!value)return;productGalleryImages=productGalleryImages.filter((src)=>String(src||"").trim()!==value);productGalleryImages.unshift(value);renderProductGallery();});
+    productFields.image.addEventListener("change",()=>{const value=productFields.image.value.trim();if(value){productGalleryImages=[value];renderProductGallery();}});
 
     /* =====================================================
        LOGIN
