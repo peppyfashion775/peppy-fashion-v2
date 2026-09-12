@@ -25,13 +25,13 @@
         }
 
         :root {
-            --primary: #111827;
-            --primary-hover: #1f2937;
-            --background: #f3f4f6;
+            --primary: #e83e8c;
+            --primary-hover: #d62978;
+            --background: #fff7fb;
             --card: #ffffff;
-            --border: #e5e7eb;
-            --text: #111827;
-            --muted: #6b7280;
+            --border: #f0d6e3;
+            --text: #222222;
+            --muted: #777777;
             --danger: #dc2626;
             --success: #16a34a;
         }
@@ -718,6 +718,260 @@
         }
 
         .products-toolbar{display:flex;gap:10px;align-items:center;margin-bottom:14px;flex-wrap:wrap}.products-search{flex:1;min-width:240px;padding:12px 14px;border:1px solid #d9dce3;border-radius:8px;font-size:14px;background:#fff}.primary-btn,.secondary-btn,.danger-btn,.restore-btn,.edit-btn{border:0;border-radius:8px;padding:11px 14px;font-size:13px;font-weight:600;cursor:pointer}.primary-btn{background:#111827;color:#fff}.secondary-btn{background:#eef2f7;color:#172033}.danger-btn{background:#fee2e2;color:#991b1b}.restore-btn{background:#dcfce7;color:#166534}.edit-btn{background:#e5e7eb;color:#111827}.primary-btn:disabled,.secondary-btn:disabled,.danger-btn:disabled,.restore-btn:disabled,.edit-btn:disabled{opacity:.6;cursor:not-allowed}.products-meta{font-size:13px;color:#667085;margin:8px 0 12px}.products-table-wrap{background:#fff;border:1px solid #e3e6eb;border-radius:10px;overflow:auto}.products-table{width:100%;min-width:1900px;border-collapse:collapse}.products-table th,.products-table td{padding:11px 12px;border-bottom:1px solid #edf0f3;text-align:left;vertical-align:middle;font-size:13px}.products-table th{background:#f8fafc;font-weight:700;color:#344054;white-space:nowrap}.product-thumb{width:44px;height:44px;border-radius:7px;object-fit:cover;background:#f2f4f7;display:block}.product-name{font-weight:600;color:#111827;max-width:240px}.product-description{max-width:320px;white-space:normal;line-height:1.4;color:#475467}.product-sizes{max-width:180px;white-space:normal}.product-collection,.product-subcategory,.product-badge{white-space:nowrap}.product-price{white-space:nowrap}.no-image{color:#98a2b3;font-size:12px}.product-id{color:#667085;white-space:nowrap}.product-actions{display:flex;gap:6px;flex-wrap:wrap}.product-inline-input,.product-status-select,.product-featured-select{padding:7px 8px;border:1px solid #d9dce3;border-radius:6px;font-size:12px;background:#fff}.product-inline-input{width:75px}.products-loading,.products-error,.products-empty{padding:22px;text-align:center;color:#667085}.products-error{color:#b42318}.product-modal .modal-body{max-height:75vh;overflow:auto}.product-form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.product-form-group{display:flex;flex-direction:column;gap:6px}.product-form-group.full{grid-column:1/-1}.product-form-group label{font-size:12px;font-weight:600;color:#344054}.product-form-group input,.product-form-group select,.product-form-group textarea{width:100%;box-sizing:border-box;padding:10px 11px;border:1px solid #d9dce3;border-radius:7px;font:inherit;background:#fff}.product-form-group textarea{min-height:100px;resize:vertical}.product-gallery-manager{border:1px solid #d9dce3;border-radius:8px;padding:12px;background:#f8fafc}.product-gallery-list{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:10px}.product-gallery-item{width:150px;background:#fff;border:1px solid #e3e6eb;border-radius:8px;padding:8px;position:relative}.product-gallery-preview{width:100%;height:120px;object-fit:cover;border-radius:6px;background:#f2f4f7;display:block}.product-gallery-label{font-size:11px;font-weight:700;color:#344054;margin:6px 0}.product-gallery-actions{display:flex;gap:5px;flex-wrap:wrap}.product-gallery-actions button{border:0;border-radius:6px;padding:6px 8px;font-size:11px;font-weight:600;cursor:pointer}.gallery-primary{background:#111827;color:#fff}.gallery-set-primary{background:#e5e7eb;color:#111827}.gallery-replace{background:#eef2ff;color:#3730a3}.gallery-remove{background:#fee2e2;color:#991b1b}.product-gallery-empty{font-size:12px;color:#667085;padding:8px 0}.product-gallery-upload{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.product-gallery-upload input{max-width:100%}.product-gallery-help{font-size:11px;color:#667085;margin-top:8px;line-height:1.45}.product-form-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:18px}@media(max-width:650px){.product-form-grid{grid-template-columns:1fr}.product-form-group.full{grid-column:auto}}
+
+
+        /* =====================================================
+           PEPPY FASHION — MODERN PINK ADMIN UI
+           UI ONLY — EXISTING ADMIN LOGIC IS UNCHANGED
+        ===================================================== */
+
+        body {
+            background: #fff7fb;
+        }
+
+        .login-page {
+            background:
+                radial-gradient(circle at top, #ffe3f0 0%, #fff7fb 48%, #ffffff 100%);
+        }
+
+        .login-card {
+            border-color: #f0cddd;
+            border-radius: 20px;
+            box-shadow: 0 15px 45px rgba(232, 62, 140, 0.12);
+        }
+
+        .brand h1 {
+            color: #e83e8c;
+            font-weight: 800;
+        }
+
+        .brand p {
+            color: #777777;
+        }
+
+        .form-group input:focus {
+            border-color: #e83e8c;
+            box-shadow: 0 0 0 3px rgba(232, 62, 140, 0.12);
+        }
+
+        .btn {
+            background: #e83e8c;
+            border-radius: 9px;
+        }
+
+        .btn:hover {
+            background: #d62978;
+        }
+
+        .admin-header {
+            background: #ffffff;
+            border-bottom-color: #f0d6e3;
+            box-shadow: 0 2px 12px rgba(232, 62, 140, 0.06);
+        }
+
+        .admin-logo {
+            color: #222222;
+        }
+
+        .admin-logo span {
+            color: #e83e8c;
+        }
+
+        .logout-btn {
+            border-color: #f0cddd;
+            color: #e83e8c;
+            background: #ffffff;
+        }
+
+        .logout-btn:hover {
+            background: #fff0f7;
+        }
+
+        .sidebar {
+            background: #ffffff;
+            color: #444444;
+            border-right: 1px solid #f0d6e3;
+        }
+
+        .sidebar-title {
+            color: #e83e8c;
+        }
+
+        .nav-btn {
+            color: #666666;
+        }
+
+        .nav-btn:hover,
+        .nav-btn.active {
+            background: #fff0f7;
+            color: #e83e8c;
+        }
+
+        .nav-btn.active {
+            box-shadow: inset 3px 0 0 #e83e8c;
+        }
+
+        .main-content {
+            background: #fff7fb;
+        }
+
+        .page-title h2 {
+            color: #222222;
+        }
+
+        .page-title p {
+            color: #777777;
+        }
+
+        .stat-card,
+        .dashboard-card,
+        .orders-table-wrap,
+        .products-table-wrap {
+            border-color: #f0d6e3;
+            border-radius: 14px;
+            box-shadow: 0 5px 18px rgba(232, 62, 140, 0.05);
+        }
+
+        .stat-card .value {
+            color: #e83e8c;
+        }
+
+        .orders-search:focus,
+        .products-search:focus,
+        .status-select:focus,
+        .product-inline-input:focus,
+        .product-status-select:focus,
+        .product-featured-select:focus,
+        .product-form-group input:focus,
+        .product-form-group select:focus,
+        .product-form-group textarea:focus {
+            border-color: #e83e8c;
+            box-shadow: 0 0 0 3px rgba(232, 62, 140, 0.10);
+            outline: none;
+        }
+
+        .refresh-btn {
+            border-color: #f0cddd;
+            color: #e83e8c;
+        }
+
+        .refresh-btn:hover {
+            background: #fff0f7;
+        }
+
+        .primary-btn {
+            background: #e83e8c;
+            color: #ffffff;
+        }
+
+        .primary-btn:hover {
+            background: #d62978;
+        }
+
+        .secondary-btn {
+            background: #fff0f7;
+            color: #d62978;
+        }
+
+        .secondary-btn:hover {
+            background: #ffe1ee;
+        }
+
+        .products-table th,
+        .orders-table th {
+            background: #fff0f7;
+            color: #8b2855;
+        }
+
+        .products-table td,
+        .orders-table td {
+            border-bottom-color: #f5e1e9;
+        }
+
+        .products-table tr:hover td,
+        .orders-table tr:hover td {
+            background: #fffafd;
+        }
+
+        .edit-btn {
+            background: #fff0f7;
+            color: #d62978;
+        }
+
+        .edit-btn:hover {
+            background: #ffe1ee;
+        }
+
+        .status-select:hover,
+        .view-btn:hover {
+            border-color: #e8b8ce;
+            background: #fff7fb;
+        }
+
+        .view-btn {
+            border-color: #f0cddd;
+            color: #d62978;
+        }
+
+        .product-gallery-manager {
+            border-color: #efd2df;
+            background: #fff7fb;
+        }
+
+        .product-gallery-item,
+        .detail-box {
+            border-color: #efd2df;
+        }
+
+        .gallery-primary {
+            background: #e83e8c;
+            color: #ffffff;
+        }
+
+        .gallery-set-primary:hover,
+        .gallery-replace:hover {
+            background: #ffe1ee;
+        }
+
+        .modal-backdrop {
+            background: rgba(86, 28, 57, 0.45);
+        }
+
+        .modal-header {
+            border-bottom-color: #f0d6e3;
+        }
+
+        .modal-header h3 {
+            color: #e83e8c;
+        }
+
+        .modal-close:hover {
+            color: #e83e8c;
+        }
+
+        .order-note-box {
+            background: #fff7fb;
+        }
+
+        .dashboard-status {
+            background: #ecfdf3;
+            color: #15803d;
+        }
+
+        @media (max-width: 650px) {
+            .sidebar {
+                border-right: none;
+                border-bottom-color: #f0d6e3;
+            }
+
+            .nav-btn.active {
+                box-shadow: none;
+            }
+
+            .main-content {
+                background: #fff7fb;
+            }
+        }
 
     </style>
 
