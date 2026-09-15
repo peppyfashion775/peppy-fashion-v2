@@ -2475,3 +2475,352 @@ document.addEventListener(
 
     }
 );
+
+/* ==========================================
+   PEPPY SIZE BEHAVIOR FIX
+   - Free Size = automatic
+   - Other sizes = mandatory picker
+========================================== */
+
+(function () {
+
+    const originalAddToCart =
+        window.addToCart;
+
+
+    if (
+        typeof originalAddToCart !== "function"
+    ) {
+        console.error(
+            "Peppy: Original addToCart function not found."
+        );
+
+        return;
+    }
+
+
+    /* ==========================================
+       GET PRODUCT
+    ========================================== */
+
+    function getProduct(productId) {
+
+        if (
+            typeof getProductById !== "function"
+        ) {
+            return null;
+        }
+
+        return getProductById(productId);
+
+    }
+
+
+    /* ==========================================
+       CHECK FREE SIZE PRODUCT
+    ========================================== */
+
+    function isFreeSizeProduct(product) {
+
+        if (!product) {
+            return false;
+        }
+
+
+        if (
+            !Array.isArray(product.sizes)
+        ) {
+            return false;
+        }
+
+
+        return product.sizes.some(size => {
+
+            return String(size || "")
+                .trim()
+                .toLowerCase()
+                === "free size";
+
+        });
+
+    }
+
+
+    /* ==========================================
+       NEW ADD TO CART
+    ========================================== */
+
+    window.addToCart = function (
+        productId,
+        selectedSize = ""
+    ) {
+
+        const product =
+            getProduct(productId);
+
+
+        if (!product) {
+
+            return originalAddToCart(
+                productId,
+                selectedSize
+            );
+
+        }
+
+
+        const sizes =
+            Array.isArray(product.sizes)
+                ? product.sizes
+                : [];
+
+
+        /* ======================================
+           FREE SIZE
+        ====================================== */
+
+        if (
+            isFreeSizeProduct(product)
+        ) {
+
+            return originalAddToCart(
+                productId,
+                "Free Size"
+            );
+
+        }
+
+
+        /* ======================================
+           PRODUCTS THAT REQUIRE SIZE
+        ====================================== */
+
+        if (
+            sizes.length > 0 &&
+            String(selectedSize || "").trim() === ""
+        ) {
+
+            if (
+                typeof window.openSizePicker ===
+                "function"
+            ) {
+
+                window.openSizePicker(
+                    productId
+                );
+
+            } else {
+
+                alert(
+                    "Please select a size before adding this product to cart."
+                );
+
+            }
+
+
+            return false;
+
+        }
+
+
+        /* ======================================
+           NORMAL PRODUCT
+        ====================================== */
+
+        return originalAddToCart(
+            productId,
+            selectedSize
+        );
+
+    };
+
+
+    /* ==========================================
+       PRODUCT DETAILS ADD TO CART
+    ========================================== */
+
+    window.addCurrentProduct = function (
+        productId
+    ) {
+
+        const product =
+            getProduct(productId);
+
+
+        if (!product) {
+            return;
+        }
+
+
+        const sizes =
+            Array.isArray(product.sizes)
+                ? product.sizes
+                : [];
+
+
+        /* ======================================
+           FREE SIZE
+        ====================================== */
+
+        if (
+            isFreeSizeProduct(product)
+        ) {
+
+            return originalAddToCart(
+                productId,
+                "Free Size"
+            );
+
+        }
+
+
+        /* ======================================
+           REQUIRED SIZE
+        ====================================== */
+
+        const sizeInput =
+            document.getElementById(
+                "selectedSize"
+            );
+
+
+        const selectedSize =
+            sizeInput
+                ? String(
+                    sizeInput.value || ""
+                ).trim()
+                : "";
+
+
+        if (
+            sizes.length > 0 &&
+            selectedSize === ""
+        ) {
+
+            if (
+                typeof window.openSizePicker ===
+                "function"
+            ) {
+
+                window.openSizePicker(
+                    productId
+                );
+
+            } else {
+
+                alert(
+                    "Please select a size before adding this product to cart."
+                );
+
+            }
+
+
+            return false;
+
+        }
+
+
+        return originalAddToCart(
+            productId,
+            selectedSize
+        );
+
+    };
+
+
+    /* ==========================================
+       AUTO SELECT FREE SIZE
+       ON PRODUCT DETAILS PAGE
+    ========================================== */
+
+    function autoSelectFreeSize() {
+
+        const sizeInput =
+            document.getElementById(
+                "selectedSize"
+            );
+
+
+        if (!sizeInput) {
+            return;
+        }
+
+
+        const params =
+            new URLSearchParams(
+                window.location.search
+            );
+
+
+        const productId =
+            Number(
+                params.get("id")
+            );
+
+
+        if (!productId) {
+            return;
+        }
+
+
+        const product =
+            getProduct(productId);
+
+
+        if (
+            !isFreeSizeProduct(product)
+        ) {
+            return;
+        }
+
+
+        const freeSize =
+            product.sizes.find(size => {
+
+                return String(size || "")
+                    .trim()
+                    .toLowerCase()
+                    === "free size";
+
+            });
+
+
+        if (!freeSize) {
+            return;
+        }
+
+
+        sizeInput.value =
+            freeSize;
+
+
+        sizeInput.dispatchEvent(
+            new Event(
+                "change",
+                {
+                    bubbles: true
+                }
+            )
+        );
+
+    }
+
+
+    /* ==========================================
+       RUN AFTER PRODUCT DETAILS LOADS
+    ========================================== */
+
+    document.addEventListener(
+        "DOMContentLoaded",
+        function () {
+
+            setTimeout(
+                autoSelectFreeSize,
+                100
+            );
+
+        }
+    );
+
+
+})();

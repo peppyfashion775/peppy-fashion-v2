@@ -1,7 +1,7 @@
 /* =====================================
    PEPPY MART
    CART SYSTEM
-   UPDATED SIZE VALIDATION
+   UPDATED SIZE + FREE SIZE VALIDATION
 ===================================== */
 
 
@@ -52,28 +52,6 @@ function saveCart(cart) {
 
 
 /* =====================================
-   CHECK PRODUCT SIZE
-===================================== */
-
-function productRequiresSize(product) {
-
-    if (!product) {
-        return false;
-    }
-
-    if (
-        !Array.isArray(product.sizes) ||
-        product.sizes.length === 0
-    ) {
-        return false;
-    }
-
-    return true;
-
-}
-
-
-/* =====================================
    NORMALIZE SIZE
 ===================================== */
 
@@ -87,6 +65,102 @@ function normalizeProductSize(size) {
 
 
 /* =====================================
+   CHECK FREE SIZE
+===================================== */
+
+function isFreeSizeProduct(product) {
+
+    if (!product) {
+        return false;
+    }
+
+    if (
+        !Array.isArray(product.sizes) ||
+        product.sizes.length === 0
+    ) {
+        return false;
+    }
+
+    return product.sizes.some(size => {
+
+        return normalizeProductSize(size) ===
+            "free size";
+
+    });
+
+}
+
+
+/* =====================================
+   CHECK PRODUCT SIZE
+   TRUE = CUSTOMER MUST SELECT SIZE
+   FALSE = NO SIZE SELECTION REQUIRED
+===================================== */
+
+function productRequiresSize(product) {
+
+    if (!product) {
+        return false;
+    }
+
+
+    if (
+        !Array.isArray(product.sizes) ||
+        product.sizes.length === 0
+    ) {
+
+        return false;
+
+    }
+
+
+    /* FREE SIZE DOES NOT REQUIRE SELECTION */
+
+    if (
+        isFreeSizeProduct(product)
+    ) {
+
+        return false;
+
+    }
+
+
+    return true;
+
+}
+
+
+/* =====================================
+   GET FREE SIZE VALUE
+===================================== */
+
+function getFreeSizeValue(product) {
+
+    if (
+        !product ||
+        !Array.isArray(product.sizes)
+    ) {
+
+        return "Free Size";
+
+    }
+
+
+    const freeSize =
+        product.sizes.find(size => {
+
+            return normalizeProductSize(size) ===
+                "free size";
+
+        });
+
+
+    return freeSize || "Free Size";
+
+}
+
+
+/* =====================================
    VALIDATE SELECTED SIZE
 ===================================== */
 
@@ -95,12 +169,35 @@ function isValidProductSize(
     selectedSize
 ) {
 
-    if (!productRequiresSize(product)) {
+    /*
+       Free Size product is always valid.
+    */
+
+    if (
+        isFreeSizeProduct(product)
+    ) {
 
         return true;
 
     }
 
+
+    /*
+       Product without size.
+    */
+
+    if (
+        !productRequiresSize(product)
+    ) {
+
+        return true;
+
+    }
+
+
+    /*
+       Empty size.
+    */
 
     if (
         !selectedSize ||
@@ -113,7 +210,9 @@ function isValidProductSize(
 
 
     const selected =
-        normalizeProductSize(selectedSize);
+        normalizeProductSize(
+            selectedSize
+        );
 
 
     const sizes =
@@ -139,7 +238,9 @@ function addToCart(
     let cart = getCart();
 
 
-    /* FIND PRODUCT */
+    /* =================================
+       FIND PRODUCT
+    ================================= */
 
     let product =
         typeof getProductById === "function"
@@ -176,7 +277,25 @@ function addToCart(
 
 
     /* =================================
-       SIZE CHECK
+       FREE SIZE
+    ================================= */
+
+    if (
+        isFreeSizeProduct(product)
+    ) {
+
+        /*
+           Automatically assign Free Size.
+        */
+
+        selectedSize =
+            getFreeSizeValue(product);
+
+    }
+
+
+    /* =================================
+       REQUIRED SIZE CHECK
     ================================= */
 
     if (
@@ -184,9 +303,8 @@ function addToCart(
     ) {
 
         /*
-           If customer did not select
-           a size, DO NOT automatically
-           select the first size.
+           DO NOT automatically select
+           the first size.
         */
 
         if (
@@ -195,12 +313,12 @@ function addToCart(
         ) {
 
             /*
-               If the size picker exists,
-               open it.
+               Open size picker.
             */
 
             if (
-                typeof openSizePicker === "function"
+                typeof openSizePicker ===
+                "function"
             ) {
 
                 openSizePicker(productId);
@@ -239,12 +357,20 @@ function addToCart(
 
 
     /* =================================
-       FREE SIZE / ONE SIZE
+       FINAL SIZE
     ================================= */
 
     let size = "";
 
+
     if (
+        isFreeSizeProduct(product)
+    ) {
+
+        size =
+            getFreeSizeValue(product);
+
+    } else if (
         productRequiresSize(product)
     ) {
 
@@ -288,18 +414,23 @@ function addToCart(
 
         cart.push({
 
-            id: product.id,
+            id:
+                product.id,
 
-            name: product.name,
+            name:
+                product.name,
 
             price:
                 Number(product.price) || 0,
 
-            image: product.image,
+            image:
+                product.image,
 
-            size: size,
+            size:
+                size,
 
-            quantity: 1
+            quantity:
+                1
 
         });
 
@@ -344,6 +475,7 @@ function removeFromCart(
 
 
     cart = cart.filter(item => !(
+
         Number(item.id) ===
             Number(productId)
 
@@ -355,6 +487,7 @@ function removeFromCart(
         normalizeProductSize(
             size
         )
+
     ));
 
 
@@ -514,6 +647,13 @@ function displayCart() {
                 : "Free Size";
 
 
+        const escapedSize =
+            safeSize.replace(
+                /'/g,
+                "\\'"
+            );
+
+
         cartContainer.innerHTML += `
 
         <div class="cart-item">
@@ -546,7 +686,7 @@ function displayCart() {
                     <button
                         onclick="changeQuantity(
                             ${item.id},
-                            '${String(item.size || "").replace(/'/g, "\\'")}',
+                            '${escapedSize}',
                             'minus'
                         )"
                     >
@@ -562,7 +702,7 @@ function displayCart() {
                     <button
                         onclick="changeQuantity(
                             ${item.id},
-                            '${String(item.size || "").replace(/'/g, "\\'")}',
+                            '${escapedSize}',
                             'plus'
                         )"
                     >
@@ -585,7 +725,7 @@ function displayCart() {
                     class="btn"
                     onclick="removeFromCart(
                         ${item.id},
-                        '${String(item.size || "").replace(/'/g, "\\'")}'
+                        '${escapedSize}'
                     )"
                 >
                     Remove
@@ -714,7 +854,10 @@ function validateCartSizes() {
     let cart = getCart();
 
 
-    if (!cart || cart.length === 0) {
+    if (
+        !cart ||
+        cart.length === 0
+    ) {
 
         return {
 
@@ -734,7 +877,8 @@ function validateCartSizes() {
         i++
     ) {
 
-        const item = cart[i];
+        const item =
+            cart[i];
 
 
         let product =
@@ -756,13 +900,33 @@ function validateCartSizes() {
         }
 
 
-        /*
-           Product requires size
-        */
+        /* =================================
+           FREE SIZE
+        ================================= */
+
+        if (
+            isFreeSizeProduct(product)
+        ) {
+
+            /*
+               Free Size is automatically
+               valid.
+            */
+
+            continue;
+
+        }
+
+
+        /* =================================
+           PRODUCT REQUIRES SIZE
+        ================================= */
 
         if (
             productRequiresSize(product)
         ) {
+
+            /* NO SIZE */
 
             if (
                 !item.size ||
@@ -782,6 +946,8 @@ function validateCartSizes() {
 
             }
 
+
+            /* INVALID SIZE */
 
             if (
                 !isValidProductSize(
@@ -831,7 +997,6 @@ function clearCart() {
 
 
     updateCartCount();
-
 
     displayCart();
 
