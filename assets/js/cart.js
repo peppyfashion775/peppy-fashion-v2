@@ -1,34 +1,47 @@
 /* =====================================
-   PEPPY FASHION V3
+   PEPPY MART
    CART SYSTEM
+   UPDATED SIZE VALIDATION
 ===================================== */
 
 
-/* GET CART */
+/* =====================================
+   GET CART
+===================================== */
 
-function getCart(){
+function getCart() {
 
     let cart = localStorage.getItem("peppyCart");
 
+    if (cart) {
 
-    if(cart){
+        try {
 
-        return JSON.parse(cart);
+            return JSON.parse(cart);
+
+        } catch (error) {
+
+            console.error(
+                "Cart data error:",
+                error
+            );
+
+            return [];
+
+        }
 
     }
-
 
     return [];
 
 }
 
 
+/* =====================================
+   SAVE CART
+===================================== */
 
-
-
-/* SAVE CART */
-
-function saveCart(cart){
+function saveCart(cart) {
 
     localStorage.setItem(
         "peppyCart",
@@ -38,639 +51,804 @@ function saveCart(cart){
 }
 
 
+/* =====================================
+   CHECK PRODUCT SIZE
+===================================== */
 
+function productRequiresSize(product) {
 
-
-/* ADD TO CART */
-
-
-function addToCart(productId, selectedSize = ""){
-
-
-    let cart = getCart();
-
-
-
-    let product = getProductById(productId);
-
-
-
-    if(!product){
-
-        return;
-
+    if (!product) {
+        return false;
     }
 
-
-
-
-    let size = selectedSize;
-
-
-
-    if(product.sizes && product.sizes.length > 0 && !size){
-
-        size = product.sizes[0];
-
+    if (
+        !Array.isArray(product.sizes) ||
+        product.sizes.length === 0
+    ) {
+        return false;
     }
 
-
-
-
-
-    let existing = cart.find(item =>
-
-        item.id === productId &&
-        item.size === size
-
-    );
-
-
-
-
-
-    if(existing){
-
-
-        existing.quantity += 1;
-
-
-    }
-
-    else{
-
-
-        cart.push({
-
-
-            id: product.id,
-
-
-            name: product.name,
-
-
-            price: product.price,
-
-
-            image: product.image,
-
-
-            size: size,
-
-
-            quantity: 1
-
-
-        });
-
-
-    }
-
-
-
-
-
-    saveCart(cart);
-
-
-
-    updateCartCount();
-
-
-
-    alert(
-
-        product.name +
-        " added to cart"
-
-    );
-
+    return true;
 
 }
 
 
+/* =====================================
+   NORMALIZE SIZE
+===================================== */
+
+function normalizeProductSize(size) {
+
+    return String(size || "")
+        .trim()
+        .toLowerCase();
+
+}
 
 
+/* =====================================
+   VALIDATE SELECTED SIZE
+===================================== */
 
-/* REMOVE FROM CART */
+function isValidProductSize(
+    product,
+    selectedSize
+) {
+
+    if (!productRequiresSize(product)) {
+
+        return true;
+
+    }
 
 
-function removeFromCart(productId, size){
+    if (
+        !selectedSize ||
+        String(selectedSize).trim() === ""
+    ) {
 
+        return false;
+
+    }
+
+
+    const selected =
+        normalizeProductSize(selectedSize);
+
+
+    const sizes =
+        product.sizes.map(size =>
+            normalizeProductSize(size)
+        );
+
+
+    return sizes.includes(selected);
+
+}
+
+
+/* =====================================
+   ADD TO CART
+===================================== */
+
+function addToCart(
+    productId,
+    selectedSize = ""
+) {
 
     let cart = getCart();
 
 
+    /* FIND PRODUCT */
+
+    let product =
+        typeof getProductById === "function"
+            ? getProductById(productId)
+            : null;
 
 
-    cart = cart.filter(item => !(
+    if (!product) {
 
-        item.id === productId &&
-        (item.size === size || !item.size)
+        alert(
+            "Product information is not available. Please refresh the page and try again."
+        );
 
-    ));
+        return false;
+
+    }
 
 
+    /* =================================
+       STOCK CHECK
+    ================================= */
+
+    if (
+        Number(product.stock) <= 0
+    ) {
+
+        alert(
+            "Sorry, this product is currently out of stock."
+        );
+
+        return false;
+
+    }
 
 
+    /* =================================
+       SIZE CHECK
+    ================================= */
+
+    if (
+        productRequiresSize(product)
+    ) {
+
+        /*
+           If customer did not select
+           a size, DO NOT automatically
+           select the first size.
+        */
+
+        if (
+            !selectedSize ||
+            String(selectedSize).trim() === ""
+        ) {
+
+            /*
+               If the size picker exists,
+               open it.
+            */
+
+            if (
+                typeof openSizePicker === "function"
+            ) {
+
+                openSizePicker(productId);
+
+            } else {
+
+                alert(
+                    "Please select a size before adding this product to cart."
+                );
+
+            }
+
+            return false;
+
+        }
+
+
+        /* INVALID SIZE */
+
+        if (
+            !isValidProductSize(
+                product,
+                selectedSize
+            )
+        ) {
+
+            alert(
+                "Please select a valid size."
+            );
+
+            return false;
+
+        }
+
+    }
+
+
+    /* =================================
+       FREE SIZE / ONE SIZE
+    ================================= */
+
+    let size = "";
+
+    if (
+        productRequiresSize(product)
+    ) {
+
+        size =
+            String(selectedSize).trim();
+
+    }
+
+
+    /* =================================
+       FIND EXISTING ITEM
+    ================================= */
+
+    let existing =
+        cart.find(item =>
+
+            Number(item.id) ===
+                Number(productId)
+
+            &&
+
+            normalizeProductSize(
+                item.size
+            ) ===
+            normalizeProductSize(
+                size
+            )
+
+        );
+
+
+    /* =================================
+       ADD / UPDATE
+    ================================= */
+
+    if (existing) {
+
+        existing.quantity += 1;
+
+    } else {
+
+        cart.push({
+
+            id: product.id,
+
+            name: product.name,
+
+            price:
+                Number(product.price) || 0,
+
+            image: product.image,
+
+            size: size,
+
+            quantity: 1
+
+        });
+
+    }
+
+
+    /* =================================
+       SAVE
+    ================================= */
 
     saveCart(cart);
 
+
+    /* UPDATE CART COUNT */
+
+    updateCartCount();
+
+
+    /* SUCCESS MESSAGE */
+
+    alert(
+        product.name +
+        " added to cart"
+    );
+
+
+    return true;
+
+}
+
+
+/* =====================================
+   REMOVE FROM CART
+===================================== */
+
+function removeFromCart(
+    productId,
+    size
+) {
+
+    let cart = getCart();
+
+
+    cart = cart.filter(item => !(
+        Number(item.id) ===
+            Number(productId)
+
+        &&
+
+        normalizeProductSize(
+            item.size
+        ) ===
+        normalizeProductSize(
+            size
+        )
+    ));
+
+
+    saveCart(cart);
 
 
     displayCart();
 
-
-
     updateCartCount();
-
 
 }
 
 
+/* =====================================
+   CHANGE QUANTITY
+===================================== */
 
-
-
-/* CHANGE QUANTITY */
-
-
-function changeQuantity(productId, size, action){
-
+function changeQuantity(
+    productId,
+    size,
+    action
+) {
 
     let cart = getCart();
 
 
-
     let item = cart.find(product =>
 
-        product.id === productId &&
-        product.size === size
+        Number(product.id) ===
+            Number(productId)
+
+        &&
+
+        normalizeProductSize(
+            product.size
+        ) ===
+        normalizeProductSize(
+            size
+        )
 
     );
 
 
-
-
-
-    if(!item){
+    if (!item) {
 
         return;
 
     }
 
 
+    /* PLUS */
 
-
-    if(action === "plus"){
-
+    if (action === "plus") {
 
         item.quantity++;
-
 
     }
 
 
+    /* MINUS */
 
+    if (action === "minus") {
 
-
-    if(action === "minus"){
-
-
-        if(item.quantity > 1){
+        if (item.quantity > 1) {
 
             item.quantity--;
 
         }
 
-
     }
-
-
-
 
 
     saveCart(cart);
 
 
-
     displayCart();
-
-
 
     updateCartCount();
 
-
 }
 
-/* DISPLAY CART */
+
+/* =====================================
+   DISPLAY CART
+===================================== */
+
+function displayCart() {
+
+    const cartContainer =
+        document.getElementById(
+            "cartItems"
+        );
 
 
-function displayCart(){
-
-
-    let cartContainer =
-    document.getElementById("cartItems");
-
-
-
-    if(!cartContainer){
+    if (!cartContainer) {
 
         return;
 
     }
 
 
-
-
-
     let cart = getCart();
-
 
 
     cartContainer.innerHTML = "";
 
 
+    /* =================================
+       EMPTY CART
+    ================================= */
 
-
-
-    if(cart.length === 0){
-
-
+    if (cart.length === 0) {
 
         cartContainer.innerHTML = `
 
-
         <div class="empty-cart">
 
-
             <h3>
-
-            Your cart is empty
-
+                Your cart is empty
             </h3>
-
-
 
             <br>
 
-
-
-            <a href="shop.html" class="btn">
-
-            Continue Shopping
-
+            <a
+                href="shop.html"
+                class="btn"
+            >
+                Continue Shopping
             </a>
-
 
         </div>
 
-
         `;
-
 
 
         updateCartTotal();
 
-
-
         return;
-
 
     }
 
 
-
-
-
-
+    /* =================================
+       CART ITEMS
+    ================================= */
 
     cart.forEach(item => {
 
 
+        const safeSize =
+            String(item.size || "");
+
+
+        const sizeText =
+            safeSize !== ""
+                ? safeSize
+                : "Free Size";
+
 
         cartContainer.innerHTML += `
 
-
-
         <div class="cart-item">
 
-
-            <img 
-            src="${item.image}" 
-            alt="${item.name}">
-
-
-
+            <img
+                src="${item.image}"
+                alt="${item.name}"
+            >
 
 
             <div class="cart-details">
 
-
-
                 <h3>
-
-                ${item.name}
-
+                    ${item.name}
                 </h3>
 
 
-
                 <p>
-
-                Size: ${item.size}
-
+                    Size: ${sizeText}
                 </p>
 
 
-
                 <p>
-
-                Price: ৳${item.price}
-
+                    Price: ৳${item.price}
                 </p>
-
-
-
 
 
                 <div class="quantity-box">
 
-
-                    <button 
-                    onclick="changeQuantity(${item.id}, '${item.size}', 'minus')">
-
-                    -
-
+                    <button
+                        onclick="changeQuantity(
+                            ${item.id},
+                            '${String(item.size || "").replace(/'/g, "\\'")}',
+                            'minus'
+                        )"
+                    >
+                        -
                     </button>
-
-
-
 
 
                     <span>
-
-                    ${item.quantity}
-
+                        ${item.quantity}
                     </span>
 
 
-
-
-
-                    <button 
-                    onclick="changeQuantity(${item.id}, '${item.size}', 'plus')">
-
-                    +
-
+                    <button
+                        onclick="changeQuantity(
+                            ${item.id},
+                            '${String(item.size || "").replace(/'/g, "\\'")}',
+                            'plus'
+                        )"
+                    >
+                        +
                     </button>
-
-
 
                 </div>
 
-
-
             </div>
-
-
-
-
-
 
 
             <div>
 
-
-
                 <h3>
-
-                ৳${item.price * item.quantity}
-
+                    ৳${item.price * item.quantity}
                 </h3>
 
 
-
-
-
                 <button
-
-                class="btn"
-
-                onclick="removeFromCart(${item.id}, '${item.size}')">
-
-
-                Remove
-
-
+                    class="btn"
+                    onclick="removeFromCart(
+                        ${item.id},
+                        '${String(item.size || "").replace(/'/g, "\\'")}'
+                    )"
+                >
+                    Remove
                 </button>
-
-
 
             </div>
 
-
-
         </div>
 
-
-
         `;
-
-
 
     });
 
 
-
-
-
     updateCartTotal();
-
 
 }
 
 
+/* =====================================
+   CART TOTAL
+===================================== */
 
-
-
-
-
-
-/* CART TOTAL */
-
-
-function updateCartTotal(){
-
-
+function updateCartTotal() {
 
     let cart = getCart();
-
 
 
     let total = 0;
 
 
-
-
     cart.forEach(item => {
 
-
-
-        total += item.price * item.quantity;
-
-
+        total +=
+            (
+                Number(item.price) || 0
+            )
+            *
+            (
+                Number(item.quantity) || 0
+            );
 
     });
 
 
-
-
+    /* CART SUBTOTAL */
 
     let subtotal =
-    document.getElementById("cartSubtotal");
+        document.getElementById(
+            "cartSubtotal"
+        );
 
 
-
-    if(subtotal){
-
+    if (subtotal) {
 
         subtotal.innerText =
-        "৳" + total;
-
+            "৳" + total;
 
     }
 
 
-
-
+    /* CHECKOUT TOTAL */
 
     let checkoutTotal =
-    document.getElementById("checkoutTotal");
+        document.getElementById(
+            "checkoutTotal"
+        );
 
 
-
-    if(checkoutTotal){
-
+    if (checkoutTotal) {
 
         checkoutTotal.innerText =
-        "৳" + total;
-
+            "৳" + total;
 
     }
-
-
-
 
 
     return total;
 
-
 }
 
 
+/* =====================================
+   CART COUNT
+===================================== */
 
-
-
-
-
-
-/* CART COUNT */
-
-
-function updateCartCount(){
-
-
+function updateCartCount() {
 
     let cart = getCart();
-
 
 
     let count = 0;
 
 
-
     cart.forEach(item => {
 
-
-
-        count += item.quantity;
-
-
+        count +=
+            Number(item.quantity) || 0;
 
     });
 
 
-
-
-
     let cartCount =
-    document.getElementById("cartCount");
+        document.getElementById(
+            "cartCount"
+        );
 
 
+    if (cartCount) {
 
-    if(cartCount){
-
-
-        cartCount.innerText = count;
-
+        cartCount.innerText =
+            count;
 
     }
-
-
 
 }
 
 
+/* =====================================
+   VALIDATE ENTIRE CART
+   USED BEFORE CHECKOUT
+===================================== */
+
+function validateCartSizes() {
+
+    let cart = getCart();
 
 
+    if (!cart || cart.length === 0) {
+
+        return {
+
+            valid: false,
+
+            message:
+                "Your cart is empty."
+
+        };
+
+    }
 
 
+    for (
+        let i = 0;
+        i < cart.length;
+        i++
+    ) {
+
+        const item = cart[i];
 
 
-/* CLEAR CART */
+        let product =
+            typeof getProductById === "function"
+                ? getProductById(item.id)
+                : null;
 
 
-function clearCart(){
+        /*
+           If product data is not
+           available, don't incorrectly
+           reject here.
+        */
+
+        if (!product) {
+
+            continue;
+
+        }
 
 
+        /*
+           Product requires size
+        */
+
+        if (
+            productRequiresSize(product)
+        ) {
+
+            if (
+                !item.size ||
+                String(item.size).trim() === ""
+            ) {
+
+                return {
+
+                    valid: false,
+
+                    message:
+                        "Please select a size for " +
+                        product.name +
+                        " before checkout."
+
+                };
+
+            }
+
+
+            if (
+                !isValidProductSize(
+                    product,
+                    item.size
+                )
+            ) {
+
+                return {
+
+                    valid: false,
+
+                    message:
+                        "Please select a valid size for " +
+                        product.name +
+                        " before checkout."
+
+                };
+
+            }
+
+        }
+
+    }
+
+
+    return {
+
+        valid: true,
+
+        message: ""
+
+    };
+
+}
+
+
+/* =====================================
+   CLEAR CART
+===================================== */
+
+function clearCart() {
 
     localStorage.removeItem(
         "peppyCart"
     );
 
 
-
     updateCartCount();
-
-
-
-}
-
-
-
-
-
-
-
-
-/* LOAD CART */
-
-
-document.addEventListener(
-
-"DOMContentLoaded",
-
-function(){
 
 
     displayCart();
 
-
-
-    updateCartCount();
-
-
-
 }
 
+
+/* =====================================
+   LOAD CART
+===================================== */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+
+        displayCart();
+
+        updateCartCount();
+
+    }
 );

@@ -1,10 +1,20 @@
 /* =====================================
-   PEPPY FASHION V5
+   PEPPY FASHION
+   MAIN WEBSITE SCRIPT
+   UPDATED:
+   - Mandatory Size Selection
+   - Size Picker Modal
+   - Related Products
+===================================== */
+
+
+/* =====================================
    CATEGORY CONFIGURATION
 ===================================== */
 
 let selectedMainCategory = "All";
 let selectedSubCategory = "All";
+
 
 const categoryConfig = {
 
@@ -62,16 +72,17 @@ const categoryConfig = {
 };
 
 
-
 /* =====================================
    MOBILE MENU
 ===================================== */
 
 function toggleMenu() {
 
-    const nav = document.querySelector(".navbar");
+    const nav =
+        document.querySelector(".navbar");
 
     if (!nav) return;
+
 
     if (
         nav.style.display === "flex"
@@ -88,41 +99,54 @@ function toggleMenu() {
 }
 
 
-
 /* =====================================
    CLOSE MENU WHEN CLICK OUTSIDE
 ===================================== */
 
-document.addEventListener("click", function (e) {
+document.addEventListener(
+    "click",
+    function (e) {
 
-    const nav = document.querySelector(".navbar");
-    const menuBtn = document.querySelector(".menu-btn");
+        const nav =
+            document.querySelector(".navbar");
 
-    if (!nav || !menuBtn) return;
+        const menuBtn =
+            document.querySelector(".menu-btn");
 
-    if (
-        window.innerWidth <= 768 &&
-        nav.style.display === "flex" &&
-        !nav.contains(e.target) &&
-        !menuBtn.contains(e.target)
-    ) {
 
-        nav.style.display = "none";
+        if (!nav || !menuBtn) return;
+
+
+        if (
+            window.innerWidth <= 768 &&
+            nav.style.display === "flex" &&
+            !nav.contains(e.target) &&
+            !menuBtn.contains(e.target)
+        ) {
+
+            nav.style.display = "none";
+
+        }
 
     }
-
-});
-
+);
 
 
 /* =====================================
    MAIN CATEGORY
 ===================================== */
 
-function changeCategory(category, button) {
+function changeCategory(
+    category,
+    button
+) {
 
-    selectedMainCategory = category;
-    selectedSubCategory = "All";
+    selectedMainCategory =
+        category;
+
+    selectedSubCategory =
+        "All";
+
 
     document
         .querySelectorAll(".category-btn")
@@ -130,18 +154,19 @@ function changeCategory(category, button) {
             btn.classList.remove("active")
         );
 
+
     if (button) {
 
         button.classList.add("active");
 
     }
 
+
     renderSubCategories();
 
     applyFilters();
 
 }
-
 
 
 /* =====================================
@@ -155,9 +180,12 @@ function renderSubCategories() {
             "subCategoryContainer"
         );
 
+
     if (!area) return;
 
+
     area.innerHTML = "";
+
 
     if (
         selectedMainCategory === "All"
@@ -169,7 +197,20 @@ function renderSubCategories() {
 
     }
 
+
     area.style.display = "flex";
+
+
+    if (
+        !categoryConfig[
+            selectedMainCategory
+        ]
+    ) {
+
+        return;
+
+    }
+
 
     categoryConfig[
         selectedMainCategory
@@ -177,18 +218,25 @@ function renderSubCategories() {
 
         area.innerHTML += `
 
-<button
-class="subcategory-btn ${sub === "All" ? "active" : ""}"
-onclick="changeSubCategory('${sub}',this)">
-${sub}
-</button>
+        <button
+            class="subcategory-btn ${
+                sub === "All"
+                    ? "active"
+                    : ""
+            }"
+            onclick="changeSubCategory(
+                '${sub.replace(/'/g, "\\'")}',
+                this
+            )"
+        >
+            ${sub}
+        </button>
 
-`;
+        `;
 
     });
 
 }
-
 
 
 /* =====================================
@@ -200,20 +248,33 @@ function changeSubCategory(
     button
 ) {
 
-    selectedSubCategory = sub;
+    selectedSubCategory =
+        sub;
+
 
     document
-        .querySelectorAll(".subcategory-btn")
+        .querySelectorAll(
+            ".subcategory-btn"
+        )
         .forEach(btn =>
-            btn.classList.remove("active")
+            btn.classList.remove(
+                "active"
+            )
         );
 
-    button.classList.add("active");
+
+    if (button) {
+
+        button.classList.add(
+            "active"
+        );
+
+    }
+
 
     applyFilters();
 
 }
-
 
 
 /* =====================================
@@ -229,7 +290,6 @@ function normalizeText(text) {
         .replace(/[^a-z0-9]/g, "");
 
 }
-
 
 
 /* =====================================
@@ -248,11 +308,15 @@ function applyFilters() {
 
     }
 
-    let filtered = [...products];
+
+    let filtered = [
+        ...products
+    ];
 
 
-
-    /* MAIN CATEGORY */
+    /* =================================
+       MAIN CATEGORY
+    ================================= */
 
     if (
         selectedMainCategory !== "All"
@@ -263,29 +327,33 @@ function applyFilters() {
                 selectedMainCategory
             );
 
-        filtered = filtered.filter(
-            product => {
+
+        filtered =
+            filtered.filter(product => {
 
                 const productCategory =
                     product.category ||
                     product.Category ||
                     product.mainCategory ||
+                    product.MainCategory ||
                     "";
+
 
                 return (
                     normalizeText(
                         productCategory
-                    ) === selectedCategory
+                    ) ===
+                    selectedCategory
                 );
 
-            }
-        );
+            });
 
     }
 
 
-
-    /* SUB CATEGORY */
+    /* =================================
+       SUB CATEGORY
+    ================================= */
 
     if (
         selectedMainCategory !== "All" &&
@@ -297,8 +365,9 @@ function applyFilters() {
                 selectedSubCategory
             );
 
-        filtered = filtered.filter(
-            product => {
+
+        filtered =
+            filtered.filter(product => {
 
                 const productSubCategory =
                     product.subCategory ||
@@ -307,25 +376,28 @@ function applyFilters() {
                     product["Sub Category"] ||
                     "";
 
+
                 return (
                     normalizeText(
                         productSubCategory
-                    ) === selectedSub
+                    ) ===
+                    selectedSub
                 );
 
-            }
-        );
+            });
 
     }
 
 
-
-    /* SEARCH */
+    /* =================================
+       SEARCH
+    ================================= */
 
     const searchInput =
         document.getElementById(
             "searchInput"
         );
+
 
     if (
         searchInput &&
@@ -337,17 +409,26 @@ function applyFilters() {
                 searchInput.value
             );
 
-        filtered = filtered.filter(
-            product => {
+
+        filtered =
+            filtered.filter(product => {
 
                 const searchableText = [
 
                     product.name,
+
                     product.category,
+
                     product.Category,
+
+                    product.mainCategory,
+
                     product.subCategory,
+
                     product.subcategory,
+
                     product.collection,
+
                     product.badge
 
                 ]
@@ -356,23 +437,25 @@ function applyFilters() {
                     )
                     .join(" ");
 
+
                 return searchableText.includes(
                     keyword
                 );
 
-            }
-        );
+            });
 
     }
 
 
-
-    /* SORT */
+    /* =================================
+       SORT
+    ================================= */
 
     const sort =
         document.getElementById(
             "sortProducts"
         );
+
 
     if (sort) {
 
@@ -417,26 +500,11 @@ function applyFilters() {
     }
 
 
-
-    console.log(
-        "Category:",
-        selectedMainCategory
-    );
-
-    console.log(
-        "Subcategory:",
-        selectedSubCategory
-    );
-
-    console.log(
-        "Products:",
+    displayProducts(
         filtered
     );
 
-    displayProducts(filtered);
-
 }
-
 
 
 /* =====================================
@@ -450,7 +518,6 @@ function searchProducts() {
 }
 
 
-
 /* =====================================
    SORT
 ===================================== */
@@ -460,7 +527,6 @@ function sortProducts() {
     applyFilters();
 
 }
-
 
 
 /* =====================================
@@ -476,8 +542,8 @@ function displayProducts(
             "productContainer"
         );
 
-    if (!container) return;
 
+    if (!container) return;
 
 
     if (
@@ -487,232 +553,233 @@ function displayProducts(
 
         container.innerHTML = `
 
-<div class="empty-products">
+        <div class="empty-products">
 
-<h2>No Products Found</h2>
+            <h2>
+                No Products Found
+            </h2>
 
-<p>
-Try another category or search.
-</p>
+            <p>
+                Try another category or search.
+            </p>
 
-</div>
+        </div>
 
-`;
+        `;
 
         return;
 
     }
 
 
-
     container.innerHTML = "";
 
 
-
-    productList.forEach(product => {
-
-
-        /* =====================================
-           PRICE & DISCOUNT
-        ===================================== */
-
-        const currentPrice =
-            Number(product.price) || 0;
-
-        const discountPercent =
-            Number(product.discount) || 0;
-
-        let originalPrice =
-            Number(product.oldPrice) || 0;
+    productList.forEach(
+        product => {
 
 
+            /* =============================
+               PRICE
+            ============================= */
 
-        /*
-           If oldPrice is missing but
-           discount exists, calculate
-           the original price automatically.
+            const currentPrice =
+                Number(product.price) || 0;
 
-           Example:
 
-           Current Price = 960
-           Discount = 20%
+            const discountPercent =
+                Number(product.discount) || 0;
 
-           Original Price =
-           960 / (1 - 20/100)
-           = 1200
-        */
 
-        if (
-            !originalPrice &&
-            discountPercent > 0 &&
-            currentPrice > 0
-        ) {
+            let originalPrice =
+                Number(product.oldPrice) || 0;
 
-            originalPrice =
-                currentPrice /
-                (
-                    1 -
-                    discountPercent / 100
-                );
+
+            if (
+                !originalPrice &&
+                discountPercent > 0 &&
+                currentPrice > 0
+            ) {
+
+                originalPrice =
+                    currentPrice /
+                    (
+                        1 -
+                        discountPercent / 100
+                    );
+
+            }
+
+
+            /* =============================
+               PRICE HTML
+            ============================= */
+
+            let priceHTML = `
+
+            <h3 class="price">
+                ৳${currentPrice.toFixed(0)}
+            </h3>
+
+            `;
+
+
+            if (
+                discountPercent > 0 &&
+                originalPrice > currentPrice
+            ) {
+
+                priceHTML = `
+
+                <div class="price-group">
+
+                    <span class="new-price">
+                        ৳${currentPrice.toFixed(0)}
+                    </span>
+
+                    <span class="old-price">
+                        ৳${originalPrice.toFixed(0)}
+                    </span>
+
+                    <span class="discount">
+                        -${discountPercent}%
+                    </span>
+
+                </div>
+
+                `;
+
+            }
+
+
+            /* =============================
+               STOCK
+            ============================= */
+
+            let stockHTML = "";
+
+
+            if (
+                Number(product.stock) <= 0
+            ) {
+
+                stockHTML = `
+
+                <span class="out-stock">
+                    Out of Stock
+                </span>
+
+                `;
+
+            }
+
+
+            /* =============================
+               PRODUCT CARD
+            ============================= */
+
+            container.innerHTML += `
+
+            <div class="product-card">
+
+                <div class="product-image">
+
+                    <img
+                        src="${product.image}"
+                        alt="${product.name}"
+                    >
+
+                </div>
+
+
+                <div class="product-info">
+
+                    ${
+                        product.badge
+
+                        ?
+
+                        `<span class="badge">
+                            ${product.badge}
+                        </span>`
+
+                        :
+
+                        ""
+                    }
+
+
+                    <h3>
+                        ${product.name}
+                    </h3>
+
+
+                    <p class="category">
+
+                        ${
+                            product.category ||
+                            product.mainCategory ||
+                            ""
+                        }
+
+                        >
+
+                        ${
+                            product.subCategory ||
+                            ""
+                        }
+
+                    </p>
+
+
+                    ${priceHTML}
+
+
+                    ${stockHTML}
+
+
+                    <div class="product-buttons">
+
+                        <button
+                            class="btn"
+                            onclick="addToCart(
+                                ${product.id}
+                            )"
+                            ${
+                                Number(
+                                    product.stock
+                                ) <= 0
+                                    ? "disabled"
+                                    : ""
+                            }
+                        >
+
+                            Add To Cart
+
+                        </button>
+
+
+                        <a
+                            href="product.html?id=${product.id}"
+                            class="btn btn-secondary"
+                        >
+
+                            View Details
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            `;
 
         }
-
-
-
-        /* =====================================
-           DEFAULT PRICE
-        ===================================== */
-
-        let priceHTML = `
-
-<h3 class="price">
-
-৳${currentPrice.toFixed(0)}
-
-</h3>
-
-`;
-
-
-
-        /* =====================================
-           DISCOUNTED PRICE
-        ===================================== */
-
-        if (
-            discountPercent > 0 &&
-            originalPrice > currentPrice
-        ) {
-
-            priceHTML = `
-
-<div class="price-group">
-
-<span class="new-price">
-
-৳${currentPrice.toFixed(0)}
-
-</span>
-
-<span class="old-price">
-
-৳${originalPrice.toFixed(0)}
-
-</span>
-
-<span class="discount">
-
--${discountPercent}%
-
-</span>
-
-</div>
-
-`;
-
-        }
-
-
-
-        /* =====================================
-           STOCK
-        ===================================== */
-
-        let stockHTML = "";
-
-        if (
-            Number(product.stock) <= 0
-        ) {
-
-            stockHTML =
-
-                `<span class="out-stock">
-                Out of Stock
-                </span>`;
-
-        }
-
-
-
-        /* =====================================
-           PRODUCT CARD
-        ===================================== */
-
-        container.innerHTML += `
-
-<div class="product-card">
-
-<div class="product-image">
-
-<img
-src="${product.image}"
-alt="${product.name}">
-
-</div>
-
-<div class="product-info">
-
-${product.badge ?
-
-    `<span class="badge">
-    ${product.badge}
-    </span>`
-
-    :
-
-    ""
+    );
 
 }
-
-<h3>
-
-${product.name}
-
-</h3>
-
-<p class="category">
-
-${product.category}
->
-${product.subCategory}
-
-</p>
-
-${priceHTML}
-
-${stockHTML}
-
-<div class="product-buttons">
-
-<button
-class="btn"
-onclick="addToCart(${product.id})"
-${Number(product.stock) <= 0 ? "disabled" : ""}>
-
-Add To Cart
-
-</button>
-
-<a
-href="product.html?id=${product.id}"
-class="btn btn-secondary">
-
-View Details
-
-</a>
-
-</div>
-
-</div>
-
-</div>
-
-`;
-
-    });
-
-}
-
 
 
 /* =====================================
@@ -726,20 +793,645 @@ function displayFeaturedProducts() {
             "productContainer"
         );
 
+
     if (!container) return;
 
+
     const featured =
-        products.filter(product =>
-
-            String(product.featured)
-                .toLowerCase() === "yes"
-
+        products.filter(
+            product =>
+                String(
+                    product.featured
+                ).toLowerCase() === "yes"
         );
 
-    displayProducts(featured);
+
+    displayProducts(
+        featured
+    );
 
 }
 
+
+/* =====================================
+   CREATE SIZE PICKER MODAL
+===================================== */
+
+function createSizePickerModal() {
+
+    if (
+        document.getElementById(
+            "sizePickerModal"
+        )
+    ) {
+
+        return;
+
+    }
+
+
+    const style =
+        document.createElement(
+            "style"
+        );
+
+
+    style.id =
+        "peppy-size-picker-style";
+
+
+    style.innerHTML = `
+
+    #sizePickerModal {
+
+        position: fixed;
+
+        inset: 0;
+
+        background: rgba(
+            0,
+            0,
+            0,
+            0.55
+        );
+
+        display: none;
+
+        align-items: center;
+
+        justify-content: center;
+
+        z-index: 99999;
+
+        padding: 20px;
+
+    }
+
+
+    #sizePickerModal.active {
+
+        display: flex;
+
+    }
+
+
+    .peppy-size-box {
+
+        width: 100%;
+
+        max-width: 420px;
+
+        background: #fff;
+
+        border-radius: 14px;
+
+        padding: 24px;
+
+        box-shadow:
+            0 15px 45px
+            rgba(
+                0,
+                0,
+                0,
+                0.25
+            );
+
+        position: relative;
+
+        text-align: center;
+
+    }
+
+
+    .peppy-size-box h3 {
+
+        margin-top: 0;
+
+        margin-bottom: 8px;
+
+    }
+
+
+    .peppy-size-product {
+
+        margin-bottom: 18px;
+
+        font-weight: 600;
+
+    }
+
+
+    .peppy-size-options {
+
+        display: flex;
+
+        flex-wrap: wrap;
+
+        justify-content: center;
+
+        gap: 10px;
+
+        margin: 18px 0;
+
+    }
+
+
+    .peppy-size-option {
+
+        min-width: 58px;
+
+        padding: 10px 14px;
+
+        border: 1px solid #ccc;
+
+        background: #fff;
+
+        border-radius: 7px;
+
+        cursor: pointer;
+
+        font-weight: 600;
+
+    }
+
+
+    .peppy-size-option:hover {
+
+        border-color: #e91e63;
+
+    }
+
+
+    .peppy-size-option.selected {
+
+        background: #e91e63;
+
+        color: #fff;
+
+        border-color: #e91e63;
+
+    }
+
+
+    .peppy-size-actions {
+
+        display: flex;
+
+        gap: 10px;
+
+        justify-content: center;
+
+        margin-top: 18px;
+
+    }
+
+
+    .peppy-size-cancel {
+
+        border: 1px solid #ccc;
+
+        background: #fff;
+
+        padding: 10px 20px;
+
+        border-radius: 7px;
+
+        cursor: pointer;
+
+    }
+
+
+    .peppy-size-confirm {
+
+        border: none;
+
+        background: #e91e63;
+
+        color: #fff;
+
+        padding: 10px 20px;
+
+        border-radius: 7px;
+
+        cursor: pointer;
+
+    }
+
+
+    .peppy-size-confirm:disabled {
+
+        opacity: 0.5;
+
+        cursor: not-allowed;
+
+    }
+
+
+    .peppy-size-close {
+
+        position: absolute;
+
+        right: 12px;
+
+        top: 8px;
+
+        border: none;
+
+        background: transparent;
+
+        font-size: 26px;
+
+        cursor: pointer;
+
+    }
+
+    `;
+
+
+    document.head.appendChild(
+        style
+    );
+
+
+    const modal =
+        document.createElement(
+            "div"
+        );
+
+
+    modal.id =
+        "sizePickerModal";
+
+
+    modal.innerHTML = `
+
+    <div class="peppy-size-box">
+
+        <button
+            class="peppy-size-close"
+            onclick="closeSizePicker()"
+            aria-label="Close"
+        >
+            ×
+        </button>
+
+
+        <h3>
+            Select Size
+        </h3>
+
+
+        <div
+            id="sizePickerProductName"
+            class="peppy-size-product"
+        >
+        </div>
+
+
+        <div
+            id="sizePickerOptions"
+            class="peppy-size-options"
+        >
+        </div>
+
+
+        <div class="peppy-size-actions">
+
+            <button
+                class="peppy-size-cancel"
+                onclick="closeSizePicker()"
+            >
+                Cancel
+            </button>
+
+
+            <button
+                id="sizePickerConfirm"
+                class="peppy-size-confirm"
+                disabled
+                onclick="confirmSizePicker()"
+            >
+                Add To Cart
+            </button>
+
+        </div>
+
+    </div>
+
+    `;
+
+
+    modal.addEventListener(
+        "click",
+        function (e) {
+
+            if (
+                e.target === modal
+            ) {
+
+                closeSizePicker();
+
+            }
+
+        }
+    );
+
+
+    document.body.appendChild(
+        modal
+    );
+
+}
+
+
+/* =====================================
+   SIZE PICKER STATE
+===================================== */
+
+let selectedPickerProductId =
+    null;
+
+let selectedPickerSize =
+    "";
+
+
+/* =====================================
+   OPEN SIZE PICKER
+===================================== */
+
+function openSizePicker(
+    productId
+) {
+
+    createSizePickerModal();
+
+
+    const product =
+        typeof getProductById === "function"
+            ? getProductById(productId)
+            : null;
+
+
+    if (!product) {
+
+        alert(
+            "Product information is not available."
+        );
+
+        return;
+
+    }
+
+
+    if (
+        Number(product.stock) <= 0
+    ) {
+
+        alert(
+            "Sorry, this product is currently out of stock."
+        );
+
+        return;
+
+    }
+
+
+    /*
+       Products without sizes
+       can directly be added.
+    */
+
+    if (
+        !Array.isArray(product.sizes) ||
+        product.sizes.length === 0
+    ) {
+
+        addToCart(
+            product.id,
+            ""
+        );
+
+        return;
+
+    }
+
+
+    selectedPickerProductId =
+        product.id;
+
+    selectedPickerSize =
+        "";
+
+
+    const name =
+        document.getElementById(
+            "sizePickerProductName"
+        );
+
+
+    const options =
+        document.getElementById(
+            "sizePickerOptions"
+        );
+
+
+    const confirm =
+        document.getElementById(
+            "sizePickerConfirm"
+        );
+
+
+    if (name) {
+
+        name.innerText =
+            product.name;
+
+    }
+
+
+    if (options) {
+
+        options.innerHTML =
+            product.sizes
+                .map(
+                    size => `
+
+                    <button
+                        type="button"
+                        class="peppy-size-option"
+                        onclick="selectPickerSize(
+                            '${String(size).replace(
+                                /'/g,
+                                "\\'"
+                            )}',
+                            this
+                        )"
+                    >
+                        ${size}
+                    </button>
+
+                    `
+                )
+                .join("");
+
+    }
+
+
+    if (confirm) {
+
+        confirm.disabled =
+            true;
+
+    }
+
+
+    const modal =
+        document.getElementById(
+            "sizePickerModal"
+        );
+
+
+    if (modal) {
+
+        modal.classList.add(
+            "active"
+        );
+
+    }
+
+}
+
+
+/* =====================================
+   SELECT SIZE FROM PICKER
+===================================== */
+
+function selectPickerSize(
+    size,
+    button
+) {
+
+    selectedPickerSize =
+        String(size || "").trim();
+
+
+    document
+        .querySelectorAll(
+            ".peppy-size-option"
+        )
+        .forEach(btn =>
+            btn.classList.remove(
+                "selected"
+            )
+        );
+
+
+    if (button) {
+
+        button.classList.add(
+            "selected"
+        );
+
+    }
+
+
+    const confirm =
+        document.getElementById(
+            "sizePickerConfirm"
+        );
+
+
+    if (confirm) {
+
+        confirm.disabled =
+            selectedPickerSize === "";
+
+    }
+
+}
+
+
+/* =====================================
+   CONFIRM SIZE PICKER
+===================================== */
+
+function confirmSizePicker() {
+
+    if (
+        !selectedPickerProductId
+    ) {
+
+        return;
+
+    }
+
+
+    if (
+        !selectedPickerSize
+    ) {
+
+        alert(
+            "Please select a size first."
+        );
+
+        return;
+
+    }
+
+
+    const productId =
+        selectedPickerProductId;
+
+
+    const size =
+        selectedPickerSize;
+
+
+    closeSizePicker();
+
+
+    if (
+        typeof addToCart === "function"
+    ) {
+
+        addToCart(
+            productId,
+            size
+        );
+
+    }
+
+}
+
+
+/* =====================================
+   CLOSE SIZE PICKER
+===================================== */
+
+function closeSizePicker() {
+
+    const modal =
+        document.getElementById(
+            "sizePickerModal"
+        );
+
+
+    if (modal) {
+
+        modal.classList.remove(
+            "active"
+        );
+
+    }
+
+
+    selectedPickerProductId =
+        null;
+
+    selectedPickerSize =
+        "";
+
+}
 
 
 /* =====================================
@@ -753,8 +1445,8 @@ function loadSingleProduct() {
             "productDetails"
         );
 
-    if (!container) return;
 
+    if (!container) return;
 
 
     const params =
@@ -762,95 +1454,108 @@ function loadSingleProduct() {
             window.location.search
         );
 
+
     const id =
         Number(
             params.get("id")
         );
 
-    const product =
-        getProductById(id);
 
+    const product =
+        typeof getProductById === "function"
+            ? getProductById(id)
+            : null;
 
 
     if (!product) {
 
         container.innerHTML = `
 
-<h2>
-Product Not Found
-</h2>
+        <h2>
+            Product Not Found
+        </h2>
 
-`;
+        `;
 
         return;
 
     }
 
 
-
-    /* =====================================
+    /* =================================
        SIZE OPTIONS
-    ===================================== */
+    ================================= */
 
     let sizeOptions = "";
 
+
     if (
-        product.sizes &&
+        Array.isArray(product.sizes) &&
         product.sizes.length > 0
     ) {
 
         sizeOptions = `
 
-<div class="form-group">
+        <div class="form-group">
 
-<label>
-Select Size
-</label>
+            <label>
+                Select Size
+            </label>
 
-<select
-id="selectedSize"
-class="form-control">
 
-${product.sizes.map(size => `
+            <select
+                id="selectedSize"
+                class="form-control"
+            >
 
-<option value="${size}">
+                <option
+                    value=""
+                    selected
+                    disabled
+                >
+                    -- Select Size --
+                </option>
 
-${size}
+                ${
+                    product.sizes
+                        .map(
+                            size => `
 
-</option>
+                            <option
+                                value="${size}"
+                            >
+                                ${size}
+                            </option>
 
-`).join("")}
+                            `
+                        )
+                        .join("")
+                }
 
-</select>
+            </select>
 
-</div>
+        </div>
 
-`;
+        `;
 
     }
 
 
-
-    /* =====================================
-       PRICE & DISCOUNT
-    ===================================== */
+    /* =================================
+       PRICE
+    ================================= */
 
     const currentPrice =
         Number(product.price) || 0;
 
+
     const discountPercent =
         Number(product.discount) || 0;
+
 
     let originalPrice =
         Number(product.oldPrice) || 0;
 
-
-
-    /*
-       If oldPrice is missing but
-       discount exists, calculate
-       original price automatically.
-    */
 
     if (
         !originalPrice &&
@@ -868,12 +1573,12 @@ ${size}
     }
 
 
-
-    /* =====================================
-       OLD PRICE + DISCOUNT
-    ===================================== */
+    /* =================================
+       OLD PRICE
+    ================================= */
 
     let oldPrice = "";
+
 
     if (
         discountPercent > 0 &&
@@ -882,124 +1587,182 @@ ${size}
 
         oldPrice = `
 
-<span class="old-price">
+        <span class="old-price">
+            ৳${originalPrice.toFixed(0)}
+        </span>
 
-৳${originalPrice.toFixed(0)}
 
-</span>
+        <span class="discount">
+            -${discountPercent}%
+        </span>
 
-<span class="discount">
-
--${discountPercent}%
-
-</span>
-
-`;
+        `;
 
     }
 
 
+    /* =================================
+       STOCK
+    ================================= */
 
-    /* =====================================
+    let stockHTML = "";
+
+
+    if (
+        Number(product.stock) <= 0
+    ) {
+
+        stockHTML = `
+
+        <p class="out-stock">
+            Out of Stock
+        </p>
+
+        `;
+
+    }
+
+
+    /* =================================
        PRODUCT DETAILS
-    ===================================== */
+    ================================= */
 
     container.innerHTML = `
 
-<div class="product-single">
+    <div class="product-single">
 
-<div>
 
-<img
-src="${product.image}"
-alt="${product.name}">
+        <div>
 
-</div>
+            <img
+                src="${product.image}"
+                alt="${product.name}"
+            >
 
-<div>
+        </div>
 
-${product.badge ?
 
-    `<span class="badge">
+        <div>
 
-    ${product.badge}
+            ${
+                product.badge
 
-    </span>`
+                ?
 
-    :
+                `<span class="badge">
+                    ${product.badge}
+                </span>`
 
-    ""
+                :
+
+                ""
+            }
+
+
+            <h2>
+                ${product.name}
+            </h2>
+
+
+            <p>
+
+                ${
+                    product.category ||
+                    product.mainCategory ||
+                    ""
+                }
+
+                >
+
+                ${
+                    product.subCategory ||
+                    ""
+                }
+
+            </p>
+
+
+            <div class="price-group">
+
+                <span class="new-price">
+                    ৳${currentPrice.toFixed(0)}
+                </span>
+
+                ${oldPrice}
+
+            </div>
+
+
+            ${stockHTML}
+
+
+            ${sizeOptions}
+
+
+            <p>
+                ${product.description || ""}
+            </p>
+
+
+            <button
+                class="btn"
+                onclick="addCurrentProduct(
+                    ${product.id}
+                )"
+                ${
+                    Number(product.stock) <= 0
+                        ? "disabled"
+                        : ""
+                }
+            >
+
+                Add To Cart
+
+            </button>
+
+
+        </div>
+
+
+    </div>
+
+
+    <div
+        id="relatedProductsSection"
+        class="related-products-section"
+    >
+    </div>
+
+    `;
+
+
+    /* =================================
+       RELATED PRODUCTS
+    ================================= */
+
+    renderRelatedProducts(
+        product
+    );
 
 }
-
-<h2>
-
-${product.name}
-
-</h2>
-
-<p>
-
-${product.category}
->
-${product.subCategory}
-
-</p>
-
-
-
-<div class="price-group">
-
-<span class="new-price">
-
-৳${currentPrice.toFixed(0)}
-
-</span>
-
-${oldPrice}
-
-</div>
-
-
-
-${sizeOptions}
-
-<p>
-
-${product.description || ""}
-
-</p>
-
-<button
-class="btn"
-onclick="addCurrentProduct(${product.id})">
-
-Add To Cart
-
-</button>
-
-</div>
-
-</div>
-
-`;
-
-}
-
 
 
 /* =====================================
    ADD CURRENT PRODUCT
 ===================================== */
 
-function addCurrentProduct(id) {
+function addCurrentProduct(
+    id
+) {
 
     let size = "";
+
 
     const sizeInput =
         document.getElementById(
             "selectedSize"
         );
+
 
     if (sizeInput) {
 
@@ -1008,6 +1771,40 @@ function addCurrentProduct(id) {
 
     }
 
+
+    /*
+       IMPORTANT:
+       Do not allow empty size.
+    */
+
+    const product =
+        typeof getProductById === "function"
+            ? getProductById(id)
+            : null;
+
+
+    if (
+        product &&
+        Array.isArray(product.sizes) &&
+        product.sizes.length > 0 &&
+        !size
+    ) {
+
+        alert(
+            "Please select a size before adding to cart."
+        );
+
+        if (sizeInput) {
+
+            sizeInput.focus();
+
+        }
+
+        return;
+
+    }
+
+
     addToCart(
         id,
         size
@@ -1015,6 +1812,501 @@ function addCurrentProduct(id) {
 
 }
 
+
+/* =====================================
+   RELATED PRODUCTS
+===================================== */
+
+function renderRelatedProducts(
+    currentProduct
+) {
+
+    const container =
+        document.getElementById(
+            "relatedProductsSection"
+        );
+
+
+    if (!container) return;
+
+
+    if (
+        !Array.isArray(products) ||
+        products.length === 0
+    ) {
+
+        return;
+
+    }
+
+
+    const currentId =
+        Number(
+            currentProduct.id
+        );
+
+
+    const currentSub =
+        normalizeText(
+            currentProduct.subCategory
+        );
+
+
+    const currentCategory =
+        normalizeText(
+            currentProduct.category ||
+            currentProduct.mainCategory
+        );
+
+
+    const currentCollection =
+        normalizeText(
+            currentProduct.collection
+        );
+
+
+    /*
+       Rank products by similarity.
+    */
+
+    const scored =
+        products
+
+            .filter(
+                product =>
+                    Number(product.id) !==
+                    currentId
+            )
+
+            .map(product => {
+
+                let score = 0;
+
+
+                const sub =
+                    normalizeText(
+                        product.subCategory
+                    );
+
+
+                const category =
+                    normalizeText(
+                        product.category ||
+                        product.mainCategory
+                    );
+
+
+                const collection =
+                    normalizeText(
+                        product.collection
+                    );
+
+
+                if (
+                    currentSub &&
+                    sub === currentSub
+                ) {
+
+                    score += 5;
+
+                }
+
+
+                if (
+                    currentCategory &&
+                    category ===
+                    currentCategory
+                ) {
+
+                    score += 3;
+
+                }
+
+
+                if (
+                    currentCollection &&
+                    collection ===
+                    currentCollection
+                ) {
+
+                    score += 2;
+
+                }
+
+
+                return {
+
+                    product,
+                    score
+
+                };
+
+            });
+
+
+    scored.sort(
+        (a, b) =>
+            b.score - a.score
+    );
+
+
+    /*
+       First choose matching products.
+       If not enough, fill with others.
+    */
+
+    let related =
+        scored
+            .filter(
+                item =>
+                    item.score > 0
+            )
+            .slice(0, 6)
+            .map(
+                item =>
+                    item.product
+            );
+
+
+    if (
+        related.length < 4
+    ) {
+
+        const additional =
+            scored
+
+                .filter(
+                    item =>
+                        !related.some(
+                            product =>
+                                Number(
+                                    product.id
+                                ) ===
+                                Number(
+                                    item.product.id
+                                )
+                        )
+                )
+
+                .slice(
+                    0,
+                    4 - related.length
+                )
+
+                .map(
+                    item =>
+                        item.product
+                );
+
+
+        related =
+            related.concat(
+                additional
+            );
+
+    }
+
+
+    if (
+        related.length === 0
+    ) {
+
+        return;
+
+    }
+
+
+    /* =================================
+       RELATED PRODUCT CARDS
+    ================================= */
+
+    let cards = "";
+
+
+    related.forEach(
+        product => {
+
+            const price =
+                Number(
+                    product.price
+                ) || 0;
+
+
+            const discount =
+                Number(
+                    product.discount
+                ) || 0;
+
+
+            let oldPrice =
+                Number(
+                    product.oldPrice
+                ) || 0;
+
+
+            if (
+                !oldPrice &&
+                discount > 0 &&
+                price > 0
+            ) {
+
+                oldPrice =
+                    price /
+                    (
+                        1 -
+                        discount / 100
+                    );
+
+            }
+
+
+            let priceHTML = `
+
+            <h3 class="price">
+                ৳${price.toFixed(0)}
+            </h3>
+
+            `;
+
+
+            if (
+                discount > 0 &&
+                oldPrice > price
+            ) {
+
+                priceHTML = `
+
+                <div class="price-group">
+
+                    <span class="new-price">
+                        ৳${price.toFixed(0)}
+                    </span>
+
+                    <span class="old-price">
+                        ৳${oldPrice.toFixed(0)}
+                    </span>
+
+                    <span class="discount">
+                        -${discount}%
+                    </span>
+
+                </div>
+
+                `;
+
+            }
+
+
+            const outOfStock =
+                Number(
+                    product.stock
+                ) <= 0;
+
+
+            cards += `
+
+            <div class="product-card">
+
+                <div class="product-image">
+
+                    <img
+                        src="${product.image}"
+                        alt="${product.name}"
+                    >
+
+                </div>
+
+
+                <div class="product-info">
+
+                    ${
+                        product.badge
+
+                        ?
+
+                        `<span class="badge">
+                            ${product.badge}
+                        </span>`
+
+                        :
+
+                        ""
+                    }
+
+
+                    <h3>
+                        ${product.name}
+                    </h3>
+
+
+                    ${priceHTML}
+
+
+                    ${
+                        outOfStock
+
+                        ?
+
+                        `<span class="out-stock">
+                            Out of Stock
+                        </span>`
+
+                        :
+
+                        ""
+                    }
+
+
+                    <div class="product-buttons">
+
+                        <button
+                            class="btn"
+                            onclick="addToCart(
+                                ${product.id}
+                            )"
+                            ${
+                                outOfStock
+                                    ? "disabled"
+                                    : ""
+                            }
+                        >
+                            Add To Cart
+                        </button>
+
+
+                        <a
+                            href="product.html?id=${product.id}"
+                            class="btn btn-secondary"
+                        >
+                            View Details
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            `;
+
+        }
+    );
+
+
+    container.innerHTML = `
+
+    <div class="related-products">
+
+        <h2>
+            You May Also Like
+        </h2>
+
+
+        <div class="product-grid">
+
+            ${cards}
+
+        </div>
+
+    </div>
+
+    `;
+
+
+    /*
+       Small style so the section
+       looks good even if the existing
+       CSS does not have related styles.
+    */
+
+    if (
+        !document.getElementById(
+            "peppy-related-style"
+        )
+    ) {
+
+        const style =
+            document.createElement(
+                "style"
+            );
+
+
+        style.id =
+            "peppy-related-style";
+
+
+        style.innerHTML = `
+
+        .related-products-section {
+
+            margin-top: 50px;
+
+            padding-top: 30px;
+
+            border-top: 1px solid #eee;
+
+        }
+
+
+        .related-products h2 {
+
+            text-align: center;
+
+            margin-bottom: 25px;
+
+        }
+
+
+        .related-products .product-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(
+                    auto-fit,
+                    minmax(
+                        200px,
+                        1fr
+                    )
+                );
+
+            gap: 20px;
+
+        }
+
+
+        @media (
+            max-width: 600px
+        ) {
+
+            .related-products
+            .product-grid {
+
+                grid-template-columns:
+                    repeat(
+                        2,
+                        minmax(
+                            0,
+                            1fr
+                        )
+                    );
+
+                gap: 10px;
+
+            }
+
+        }
+
+        `;
+
+
+        document.head.appendChild(
+            style
+        );
+
+    }
+
+}
 
 
 /* =====================================
@@ -1028,9 +2320,9 @@ function loadCategoryFromURL() {
             window.location.search
         );
 
+
     const category =
         params.get("category");
-
 
 
     if (!category) {
@@ -1044,13 +2336,12 @@ function loadCategoryFromURL() {
     }
 
 
-
     selectedMainCategory =
         category;
 
+
     selectedSubCategory =
         "All";
-
 
 
     document
@@ -1062,6 +2353,7 @@ function loadCategoryFromURL() {
             btn.classList.remove(
                 "active"
             );
+
 
             if (
                 btn.textContent
@@ -1079,13 +2371,11 @@ function loadCategoryFromURL() {
         });
 
 
-
     renderSubCategories();
 
     applyFilters();
 
 }
-
 
 
 /* =====================================
@@ -1095,6 +2385,18 @@ function loadCategoryFromURL() {
 document.addEventListener(
     "DOMContentLoaded",
     async function () {
+
+
+        /* =================================
+           CREATE SIZE PICKER
+        ================================= */
+
+        createSizePickerModal();
+
+
+        /* =================================
+           CART COUNT
+        ================================= */
 
         if (
             typeof updateCartCount ===
@@ -1106,8 +2408,9 @@ document.addEventListener(
         }
 
 
-
-        /* Wait until products are loaded */
+        /* =================================
+           WAIT FOR PRODUCTS
+        ================================= */
 
         if (
             typeof loadProducts ===
@@ -1119,13 +2422,15 @@ document.addEventListener(
         }
 
 
-
-        /* HOME PAGE */
+        /* =================================
+           HOME PAGE
+        ================================= */
 
         if (
             document.getElementById(
                 "productContainer"
             ) &&
+
             window.location.pathname
                 .includes("index")
         ) {
@@ -1135,8 +2440,9 @@ document.addEventListener(
         }
 
 
-
-        /* SHOP PAGE */
+        /* =================================
+           SHOP PAGE
+        ================================= */
 
         else if (
             document.getElementById(
@@ -1153,8 +2459,9 @@ document.addEventListener(
         }
 
 
-
-        /* PRODUCT DETAILS */
+        /* =================================
+           PRODUCT DETAILS PAGE
+        ================================= */
 
         if (
             document.getElementById(
