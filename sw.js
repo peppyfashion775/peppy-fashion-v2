@@ -1,5 +1,5 @@
 /* ==========================================
-   PEPPY FASHION V5
+   PEPPY FASHION V7
    SERVICE WORKER
    - Fresh JS/CSS loading
    - Old cache cleanup
@@ -8,7 +8,7 @@
    - Google Apps Script API bypass
 ========================================== */
 
-const CACHE_NAME = "peppy-fashion-v6";
+const CACHE_NAME = "peppy-fashion-v7";
 
 const urlsToCache = [
     "/peppy-fashion-v2/",
