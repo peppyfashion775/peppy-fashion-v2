@@ -1,714 +1,1232 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Peppy Fashion — Admin Panel</title>
+<meta name="robots" content="noindex,nofollow">
 
-    <meta charset="UTF-8">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+ --primary:#e83f8c;--primary-dark:#d72d79;--primary-soft:#fff0f7;--primary-pale:#fff8fb;
+ --background:#f7f8fc;--card:#fff;--border:#e7e8ef;--text:#17233f;--muted:#68738b;
+ --success:#22b573;--warning:#f4a62a;--danger:#dc4b5f;--shadow:0 8px 24px rgba(28,38,64,.06)
+}
+html,body{min-height:100%;font-family:Arial,Helvetica,sans-serif;background:var(--background);color:var(--text)}
+body{overflow-x:hidden}button,input,select,textarea{font:inherit}button{cursor:pointer}
+/* LOGIN */
+.login-page{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;background:linear-gradient(135deg,#fff7fb,#f8f9fd)}
+.login-card{width:100%;max-width:420px;background:#fff;border:1px solid var(--border);border-radius:22px;padding:34px;box-shadow:0 20px 60px rgba(30,40,70,.12)}
+.brand{text-align:center;margin-bottom:28px}.brand img{width:210px;max-width:75%;height:auto;display:block;margin:0 auto 12px}.brand h1{font-size:27px;margin-bottom:5px}.brand p{color:var(--muted);font-size:14px}
+.form-group{margin-bottom:18px}.form-group label{display:block;margin-bottom:7px;font-size:13px;font-weight:700}.form-group input{width:100%;padding:13px 14px;border:1px solid var(--border);border-radius:10px;outline:none;background:#fff}.form-group input:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(232,63,140,.12)}
+.btn{width:100%;border:0;border-radius:10px;padding:13px 16px;background:var(--primary);color:#fff;font-weight:700}.btn:hover{background:var(--primary-dark)}.btn:disabled{opacity:.6;cursor:not-allowed}
+.message{display:none;margin-top:16px;padding:11px 13px;border-radius:9px;font-size:13px}.message.error{display:block;background:#fff1f2;color:#b42335;border:1px solid #fecdd3}.message.success{display:block;background:#effcf6;color:#16794d;border:1px solid #b7efda}
+/* APP */
+.admin-app{display:none;min-height:100vh}.admin-header{height:72px;background:linear-gradient(90deg,#ee4b94,#df347f);color:#fff;display:flex;align-items:center;justify-content:space-between;padding:0 28px;position:sticky;top:0;z-index:100;box-shadow:0 4px 16px rgba(220,47,120,.16)}
+.admin-logo{display:flex;align-items:center;gap:11px;font-size:19px;font-weight:800}.admin-logo img{height:42px;width:42px;object-fit:contain;border-radius:10px;background:#fff;padding:3px}.admin-logo span{font-size:12px;font-weight:500;opacity:.9;margin-left:2px}.header-right{display:flex;align-items:center;gap:16px}.header-date{font-size:12px;opacity:.92;text-align:right;line-height:1.35}.logout-btn{border:1px solid rgba(255,255,255,.4);background:rgba(255,255,255,.13);color:#fff;border-radius:9px;padding:9px 14px;font-size:13px;font-weight:700}.logout-btn:hover{background:rgba(255,255,255,.22)}
+.admin-layout{display:flex;min-height:calc(100vh - 72px)}
+/* SIDEBAR */
+.sidebar{width:260px;flex:0 0 260px;background:linear-gradient(180deg,#fff,#fff7fb);border-right:1px solid var(--border);padding:24px 14px;display:flex;flex-direction:column}.sidebar-brand{padding:4px 12px 22px;border-bottom:1px solid #f0dce6;margin-bottom:16px}.sidebar-brand img{width:185px;max-width:100%;height:auto;display:block}.sidebar-title{padding:8px 12px 9px;font-size:11px;font-weight:800;text-transform:uppercase;color:#a16a84;letter-spacing:.09em}.nav-btn{width:100%;display:flex;align-items:center;gap:13px;padding:12px 14px;margin-bottom:5px;border:0;border-radius:10px;background:transparent;color:#34415e;text-align:left;font-size:14px;font-weight:600;transition:.18s}.nav-btn svg{width:20px;height:20px;stroke:currentColor;flex:none}.nav-btn:hover{background:#fff0f7;color:var(--primary)}.nav-btn.active{background:linear-gradient(90deg,#e9428d,#e23a85);color:#fff;box-shadow:0 7px 18px rgba(227,57,132,.22)}.sidebar-spacer{flex:1}.sidebar-note{background:#fff;border:1px solid #f0dce6;border-radius:12px;padding:13px;margin:12px 6px 0;color:#7b6874;font-size:11px;line-height:1.5}
+/* MAIN */
+.main-content{flex:1;padding:28px;min-width:0}.topbar{display:flex;align-items:flex-start;justify-content:space-between;gap:20px;margin-bottom:24px}.page-title{margin-bottom:22px}.topbar .page-title{margin:0}.page-title h2{font-size:27px;line-height:1.15;margin-bottom:7px}.page-title p{color:var(--muted);font-size:14px}.welcome-pill{display:inline-flex;align-items:center;padding:7px 12px;background:#ffe7f1;color:#d92d78;border-radius:999px;font-size:12px;font-weight:800;margin-bottom:9px}.date-card{background:#fff;border:1px solid var(--border);border-radius:13px;padding:12px 15px;min-width:190px;box-shadow:var(--shadow)}.date-card .date-title{font-size:12px;color:var(--muted);margin-bottom:4px}.date-card strong{font-size:14px}
+/* DASHBOARD */
+.stats-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px;margin-bottom:20px}.stat-card{background:#fff;border:1px solid var(--border);border-radius:14px;padding:19px;box-shadow:var(--shadow);position:relative;overflow:hidden}.stat-card:after{content:"";position:absolute;width:80px;height:80px;border-radius:50%;right:-35px;top:-35px;background:#fff1f7}.stat-top{display:flex;align-items:center;justify-content:space-between;gap:12px}.stat-icon{width:48px;height:48px;border-radius:13px;display:grid;place-items:center;background:#ffe4f0;color:var(--primary)}.stat-icon.green{background:#def8eb;color:#22a96d}.stat-icon.orange{background:#fff0d9;color:#ed9b22}.stat-icon.purple{background:#eee3ff;color:#8754e7}.stat-icon svg{width:24px;height:24px;stroke:currentColor}.stat-card .label{color:#60708d;font-size:13px;margin-top:15px}.stat-card .value{font-size:29px;font-weight:800;margin-top:5px}.stat-foot{font-size:11px;color:#7c879a;margin-top:8px}.stat-foot.good{color:#19a96a}
+.dashboard-grid{display:grid;grid-template-columns:minmax(0,1.7fr) minmax(300px,.9fr);gap:18px}.dashboard-card{background:#fff;border:1px solid var(--border);border-radius:14px;padding:20px;box-shadow:var(--shadow)}.card-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:18px}.card-head h3{font-size:16px}.card-head p{font-size:12px;color:var(--muted);margin-top:4px}.card-icon-title{display:flex;align-items:center;gap:10px}.card-icon{width:34px;height:34px;border-radius:10px;background:#ffe8f2;color:var(--primary);display:grid;place-items:center}.card-icon svg{width:19px;height:19px;stroke:currentColor}.chart-placeholder{height:250px;border-radius:12px;background:linear-gradient(180deg,#fff8fb,#fff);border:1px solid #f5e4eb;position:relative;overflow:hidden;padding:18px}.chart-grid{height:100%;display:flex;flex-direction:column;justify-content:space-between}.chart-line{height:1px;background:#edf0f5;width:100%}.chart-message{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#8b94a5;font-size:13px;text-align:center;padding:30px}.quick-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.quick-action{min-height:104px;border:1px solid #f2dce7;border-radius:12px;background:#fff8fb;color:#263653;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:9px;font-weight:700}.quick-action:hover{border-color:#ef9bc1;background:#fff0f7;color:var(--primary)}.quick-action svg{width:27px;height:27px;stroke:var(--primary)}.dashboard-status{margin-top:18px;display:flex;align-items:center;gap:9px;padding:12px 13px;border-radius:10px;background:#f0fbf6;color:#168253;font-size:12px;font-weight:700}.status-dot{width:8px;height:8px;border-radius:50%;background:#22b573}
+/* SHARED SECTIONS */
+.section-hidden{display:none}.products-toolbar{display:flex;gap:10px;align-items:center;margin-bottom:14px;flex-wrap:wrap}.products-search,.orders-search{flex:1;min-width:240px;padding:12px 14px;border:1px solid var(--border);border-radius:9px;font-size:14px;background:#fff;outline:none}.products-search:focus,.orders-search:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(232,63,140,.1)}.primary-btn,.secondary-btn,.danger-btn,.restore-btn,.edit-btn,.refresh-btn{border:0;border-radius:9px;padding:11px 14px;font-size:13px;font-weight:700;cursor:pointer}.primary-btn{background:var(--primary);color:#fff}.primary-btn:hover{background:var(--primary-dark)}.secondary-btn,.refresh-btn{background:#f1f3f7;color:#26344e}.secondary-btn:hover,.refresh-btn:hover{background:#e8ebf1}.danger-btn{background:#fff0f1;color:#b42335}.restore-btn{background:#eafaf2;color:#16794d}.edit-btn{background:#eef1f6;color:#26344e}.primary-btn:disabled,.secondary-btn:disabled,.danger-btn:disabled,.restore-btn:disabled,.edit-btn:disabled{opacity:.6;cursor:not-allowed}.products-meta,.orders-meta{font-size:13px;color:#667085;margin:8px 0 12px}.products-table-wrap,.orders-table-wrap{background:#fff;border:1px solid var(--border);border-radius:12px;overflow:auto;box-shadow:var(--shadow)}.products-table{width:100%;min-width:1900px;border-collapse:collapse}.products-table th,.products-table td,.orders-table th,.orders-table td{padding:11px 12px;border-bottom:1px solid #edf0f3;text-align:left;vertical-align:middle;font-size:13px}.products-table th,.orders-table th{background:#fafbfc;font-weight:700;color:#344054;white-space:nowrap}.product-thumb{width:44px;height:44px;border-radius:8px;object-fit:cover;background:#f2f4f7;display:block}.product-name{font-weight:600;color:#111827;max-width:240px}.product-description{max-width:320px;white-space:normal;line-height:1.4;color:#475467}.product-sizes{max-width:180px;white-space:normal}.product-collection,.product-subcategory,.product-badge{white-space:nowrap}.product-price{white-space:nowrap}.no-image{color:#98a2b3;font-size:12px}.product-id{color:#667085;white-space:nowrap}.product-actions{display:flex;gap:6px;flex-wrap:wrap}.product-inline-input,.product-status-select,.product-featured-select{padding:7px 8px;border:1px solid #d9dce3;border-radius:6px;font-size:12px;background:#fff}.product-inline-input{width:75px}.products-loading,.products-error,.products-empty,.orders-empty,.orders-loading,.orders-error{padding:22px;text-align:center;color:#667085}.products-error,.orders-error{color:#b42318}
+/* ORDERS */
+.orders-toolbar{display:flex;gap:12px;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap}.orders-table{width:100%;min-width:900px;border-collapse:collapse}.order-id{font-weight:700;white-space:nowrap}.order-customer{font-weight:600}.order-phone,.order-date{white-space:nowrap;color:#4b5563}.status-select{padding:7px 9px;border:1px solid var(--border);border-radius:7px;background:#fff;min-width:125px}.view-btn{border:1px solid var(--border);background:#fff;border-radius:7px;padding:7px 10px;font-size:12px;font-weight:600;white-space:nowrap}.view-btn:hover{background:#f9fafb}
+/* MODALS */
+.modal-backdrop{display:none;position:fixed;inset:0;background:rgba(17,24,39,.58);z-index:300;padding:20px;overflow-y:auto}.modal-backdrop.open{display:flex;align-items:center;justify-content:center}.order-modal{width:100%;max-width:760px;background:#fff;border-radius:15px;box-shadow:0 20px 55px rgba(0,0,0,.22);overflow:hidden}.modal-header{padding:18px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:12px}.modal-header h3{font-size:18px}.modal-close{border:0;background:#f2f4f7;color:#344054;width:34px;height:34px;border-radius:9px;font-size:22px;line-height:1}.modal-body{padding:20px}.product-modal .modal-body{max-height:75vh;overflow:auto}.product-form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.product-form-group{display:flex;flex-direction:column;gap:6px}.product-form-group.full{grid-column:1/-1}.product-form-group label{font-size:12px;font-weight:700;color:#344054}.product-form-group input,.product-form-group select,.product-form-group textarea{width:100%;box-sizing:border-box;padding:10px 11px;border:1px solid #d9dce3;border-radius:7px;font:inherit;background:#fff}.product-form-group textarea{min-height:100px;resize:vertical}.product-gallery-manager{border:1px solid #e4e7ec;border-radius:9px;padding:12px;background:#fafbfc}.product-gallery-list{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:10px}.product-gallery-item{width:150px;background:#fff;border:1px solid #e3e6eb;border-radius:8px;padding:8px;position:relative}.product-gallery-preview{width:100%;height:120px;object-fit:cover;border-radius:6px;background:#f2f4f7;display:block}.product-gallery-label{font-size:11px;font-weight:700;color:#344054;margin:6px 0}.product-gallery-actions{display:flex;gap:5px;flex-wrap:wrap}.product-gallery-actions button{border:0;border-radius:6px;padding:6px 8px;font-size:11px;font-weight:600;cursor:pointer}.gallery-primary{background:#111827;color:#fff}.gallery-set-primary{background:#e5e7eb;color:#111827}.gallery-replace{background:#eef2ff;color:#3730a3}.gallery-remove{background:#fee2e2;color:#991b1b}.product-gallery-empty{font-size:12px;color:#667085;padding:8px 0}.product-gallery-upload{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.product-gallery-upload input{max-width:100%}.product-gallery-help{font-size:11px;color:#667085;margin-top:8px;line-height:1.45}.product-form-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:18px}
+.order-detail-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.detail-box{border:1px solid var(--border);border-radius:10px;padding:12px}.detail-label{font-size:11px;color:var(--muted);margin-bottom:5px}.detail-value{font-size:13px;line-height:1.5}.order-note-box{margin-top:14px;border-radius:10px;background:#fff8fb;border:1px solid #f2dce7;padding:13px;font-size:13px;line-height:1.5}
+/* RESPONSIVE */
+@media(max-width:1100px){.sidebar{width:220px;flex-basis:220px}.stats-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.dashboard-grid{grid-template-columns:1fr}.main-content{padding:22px}}
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+/* PHYSICAL STORE / POS */
+.store-toolbar{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin-bottom:16px}.store-tabs{display:flex;gap:8px;flex-wrap:wrap}.store-tab{border:1px solid var(--border);background:#fff;color:#344054;border-radius:9px;padding:10px 13px;font-size:13px;font-weight:700}.store-tab.active{background:var(--primary);color:#fff;border-color:var(--primary)}.store-panel{display:none}.store-panel.active{display:block}.store-stat-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin-bottom:18px}.store-mini{background:#fff;border:1px solid var(--border);border-radius:13px;padding:16px;box-shadow:var(--shadow)}.store-mini .label{font-size:12px;color:var(--muted)}.store-mini .value{font-size:24px;font-weight:800;margin-top:5px}.store-grid{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(330px,.85fr);gap:18px}.store-card{background:#fff;border:1px solid var(--border);border-radius:14px;padding:18px;box-shadow:var(--shadow)}.store-card h3{font-size:16px;margin-bottom:14px}.store-form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.store-form-group{display:flex;flex-direction:column;gap:6px}.store-form-group.full{grid-column:1/-1}.store-form-group label{font-size:12px;font-weight:700;color:#344054}.store-form-group input,.store-form-group select,.store-form-group textarea{width:100%;padding:10px 11px;border:1px solid #d9dce3;border-radius:8px;background:#fff}.store-form-group textarea{min-height:72px;resize:vertical}.store-item-row{display:grid;grid-template-columns:2fr 72px 105px 105px 36px;gap:7px;align-items:center;margin-bottom:8px}.store-item-row input,.store-item-row select{width:100%;padding:9px;border:1px solid #d9dce3;border-radius:7px}.store-remove{border:0;background:#fff0f1;color:#b42335;border-radius:7px;height:36px;font-weight:800}.store-totals{margin-top:14px;border-top:1px solid #edf0f3;padding-top:12px}.store-total-line{display:flex;justify-content:space-between;gap:12px;padding:5px 0;font-size:13px}.store-total-line.grand{font-size:17px;font-weight:800;padding-top:9px}.store-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:14px;flex-wrap:wrap}.store-table-wrap{background:#fff;border:1px solid var(--border);border-radius:12px;overflow:auto;box-shadow:var(--shadow)}.store-table{width:100%;min-width:1050px;border-collapse:collapse}.store-table th,.store-table td{padding:10px 12px;border-bottom:1px solid #edf0f3;text-align:left;font-size:12px;vertical-align:middle}.store-table th{background:#fafbfc;font-weight:700;white-space:nowrap}.store-empty{padding:22px;text-align:center;color:#667085}.receipt-preview{border:1px dashed #d6dae3;background:#fff;padding:18px;max-width:420px;margin:0 auto;font-size:12px}.receipt-head{text-align:center;border-bottom:1px dashed #cfd3dc;padding-bottom:12px;margin-bottom:12px}.receipt-head h2{font-size:20px}.receipt-line{display:flex;justify-content:space-between;gap:12px;padding:4px 0}.receipt-items{border-top:1px dashed #cfd3dc;border-bottom:1px dashed #cfd3dc;margin:9px 0;padding:8px 0}.receipt-foot{text-align:center;margin-top:14px;color:#667085}.receipt-print-only{display:none}.store-help{font-size:11px;color:#667085;line-height:1.5;margin-top:8px}.expense-badge{display:inline-block;padding:4px 7px;border-radius:999px;background:#fff0f1;color:#b42335;font-weight:700}
+@media(max-width:700px){.admin-header{height:64px;padding:0 14px}.admin-logo{font-size:16px}.admin-logo img{height:36px;width:36px}.admin-logo span,.header-date{display:none}.admin-layout{display:block}.sidebar{width:100%;flex-basis:auto;display:flex;flex-direction:row;gap:6px;overflow-x:auto;padding:9px;border-right:0;border-bottom:1px solid var(--border);position:sticky;top:64px;z-index:90}.sidebar-brand,.sidebar-title,.sidebar-spacer,.sidebar-note{display:none}.nav-btn{width:auto;flex:0 0 auto;white-space:nowrap;margin:0;padding:10px 12px}.main-content{padding:17px 13px}.topbar{align-items:flex-start;margin-bottom:18px}.page-title h2{font-size:23px}.date-card{display:none}.stats-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.stat-card{padding:14px}.stat-icon{width:40px;height:40px}.stat-card .value{font-size:22px}.stat-card .label{font-size:11px;margin-top:11px}.stat-foot{font-size:10px}.dashboard-card{padding:15px}.quick-grid{gap:9px}.quick-action{min-height:88px;font-size:12px}.products-search,.orders-search{min-width:100%}.products-toolbar .primary-btn,.products-toolbar .secondary-btn,.orders-toolbar .refresh-btn{flex:1}.product-form-grid{grid-template-columns:1fr}.product-form-group.full{grid-column:auto}.order-detail-grid{grid-template-columns:1fr}.login-card{padding:26px 22px}}
+@media(max-width:420px){.stats-grid{gap:8px}.stat-card{padding:11px}.stat-card .value{font-size:20px}.stat-icon{width:36px;height:36px}.stat-icon svg{width:20px;height:20px}.main-content{padding:14px 10px}}
 
-    <title>Peppy Fashion | Home</title>
+/* FINAL PHYSICAL STORE UI */
+.store-shell{display:flex;flex-direction:column;gap:16px}.store-hero{display:flex;align-items:flex-start;justify-content:space-between;gap:18px;background:linear-gradient(135deg,#fff,#fff4f9);border:1px solid #f1dbe6;border-radius:18px;padding:22px}.store-kicker{font-size:10px;letter-spacing:.12em;font-weight:900;color:#d92d78;margin-bottom:5px}.store-hero h2{font-size:28px;margin-bottom:6px}.store-hero p{font-size:13px;color:var(--muted);max-width:760px;line-height:1.55}.store-tabs{display:flex;gap:8px;overflow:auto;padding-bottom:2px}.store-tab{white-space:nowrap;border:1px solid var(--border);background:#fff;color:#344054;border-radius:10px;padding:11px 14px;font-size:13px;font-weight:800}.store-tab.active{background:var(--primary);color:#fff;border-color:var(--primary);box-shadow:0 7px 18px rgba(227,57,132,.2)}.store-panel{display:none}.store-panel.active{display:block}.store-stat-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-bottom:16px}.store-stat-grid-6{grid-template-columns:repeat(6,minmax(0,1fr))}.store-mini{background:#fff;border:1px solid var(--border);border-radius:13px;padding:14px;box-shadow:var(--shadow);min-width:0}.store-mini span{display:block;font-size:11px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.store-mini strong{display:block;font-size:20px;margin-top:6px;overflow:hidden;text-overflow:ellipsis}.store-pos-layout{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(320px,.65fr);gap:16px}.store-grid-2{display:grid;grid-template-columns:minmax(0,1fr) minmax(320px,.85fr);gap:16px;margin-bottom:16px}.store-card{background:#fff;border:1px solid var(--border);border-radius:15px;padding:18px;box-shadow:var(--shadow)}.store-card-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:15px}.store-card h3{font-size:16px}.store-card-head p{font-size:11px;color:var(--muted);margin-top:4px;line-height:1.45}.store-live{font-size:10px;font-weight:900;color:#178653;background:#e9fbf2;border:1px solid #c9f1dc;border-radius:999px;padding:5px 8px}.store-form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.store-form-group{display:flex;flex-direction:column;gap:6px}.store-form-group.full{grid-column:1/-1}.store-form-group label{font-size:11px;font-weight:800;color:#344054}.store-form-group input,.store-form-group select,.store-form-group textarea,.store-filter-row input,.store-filter-row select{width:100%;padding:10px 11px;border:1px solid #d9dce3;border-radius:9px;background:#fff;outline:none}.store-form-group input:focus,.store-form-group select:focus,.store-form-group textarea:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(232,63,140,.08)}.store-form-group textarea{min-height:72px;resize:vertical}.store-add-item{margin-top:9px}.store-item-row{display:grid;grid-template-columns:110px minmax(150px,2fr) 95px 80px 105px 36px;gap:7px;align-items:center;margin-bottom:8px}.store-item-row input,.store-item-row select{width:100%;padding:9px;border:1px solid #d9dce3;border-radius:8px;background:#fff}.store-item-type{font-size:11px;font-weight:800;padding:9px;border-radius:8px;border:1px solid #d9dce3;background:#fff}.store-item-size{min-width:0}.store-item-total{font-weight:800;font-size:12px;text-align:right;white-space:nowrap}.store-remove{border:0;background:#fff0f1;color:#b42335;border-radius:8px;height:36px;font-weight:900}.store-item-stock{font-size:10px;color:#667085;margin-top:-4px}.store-totals-card{margin-top:16px;padding:14px;border-radius:12px;background:#fafbfc;border:1px solid #edf0f3}.store-totals-card>div{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:7px 0;font-size:13px}.store-totals-card .grand{font-size:18px;font-weight:900;border-top:1px dashed #dfe3ea;margin-top:4px;padding-top:12px}.store-totals-card .due{font-size:15px;font-weight:900;color:#b42335}.store-discount-wrap{display:flex;align-items:center;gap:10px}.store-discount-wrap input{width:85px;padding:7px 8px;border:1px solid #d9dce3;border-radius:7px}.store-money-input{max-width:180px;padding:8px;border:1px solid #d9dce3;border-radius:8px;text-align:right}.store-payment-grid{margin-top:14px}.store-actions{display:flex;justify-content:flex-end;gap:8px;flex-wrap:wrap;margin-top:14px}.store-actions-inline{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.store-sticky-actions{position:sticky;bottom:8px;background:rgba(255,255,255,.96);padding-top:10px}.receipt-preview{border:1px dashed #d3d8e2;background:#fff;max-width:390px;margin:0 auto;padding:18px;min-height:300px;font-size:12px}.receipt-placeholder{display:grid;place-items:center;min-height:260px;text-align:center;color:#98a2b3}.receipt-head{text-align:center;border-bottom:1px dashed #cfd3dc;padding-bottom:10px;margin-bottom:10px}.receipt-head img{max-width:120px;max-height:50px;object-fit:contain;margin-bottom:5px}.receipt-head h2{font-size:19px}.receipt-line{display:flex;justify-content:space-between;gap:10px;padding:4px 0}.receipt-items{border-top:1px dashed #cfd3dc;border-bottom:1px dashed #cfd3dc;margin:8px 0;padding:8px 0}.receipt-item{display:grid;grid-template-columns:1fr auto;gap:8px;padding:4px 0}.receipt-foot{text-align:center;margin-top:12px;color:#667085;line-height:1.5}.store-toolbar{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin-bottom:12px}.store-filter-row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.store-filter-row input{min-width:130px}.store-table-wrap{background:#fff;border:1px solid var(--border);border-radius:12px;overflow:auto}.store-table{width:100%;min-width:1080px;border-collapse:collapse}.store-table th,.store-table td{padding:10px 11px;border-bottom:1px solid #edf0f3;text-align:left;font-size:12px;vertical-align:middle}.store-table th{background:#fafbfc;white-space:nowrap;font-weight:800}.store-table td strong{font-weight:800}.store-empty{padding:25px;text-align:center;color:#667085}.store-summary-list{display:flex;flex-direction:column;gap:7px}.store-summary-item{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:9px 10px;background:#fafbfc;border:1px solid #edf0f3;border-radius:9px;font-size:12px}.store-summary-item span{color:#667085}.store-pnl{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}.store-pnl-box{padding:14px;border:1px solid #edf0f3;border-radius:10px;background:#fafbfc}.store-pnl-box span{display:block;color:#667085;font-size:11px}.store-pnl-box strong{display:block;font-size:18px;margin-top:5px}.store-report-toolbar{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap}.store-report-toolbar label{font-size:11px;font-weight:800;color:#344054;display:flex;align-items:center;gap:5px}.store-report-toolbar input{padding:9px;border:1px solid #d9dce3;border-radius:8px}.expense-badge{display:inline-block;padding:4px 7px;border-radius:999px;background:#fff0f1;color:#b42335;font-weight:800}
+@media(max-width:1200px){.store-stat-grid-6{grid-template-columns:repeat(3,minmax(0,1fr))}.store-pos-layout{grid-template-columns:1fr}.store-grid-2{grid-template-columns:1fr}.store-pnl{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:760px){.store-hero{padding:16px;flex-direction:column}.store-hero h2{font-size:22px}.store-tabs{margin:0 -2px}.store-tab{padding:10px 12px}.store-stat-grid,.store-stat-grid-6{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.store-card{padding:14px}.store-form-grid{grid-template-columns:1fr}.store-form-group.full{grid-column:auto}.store-item-row{grid-template-columns:1fr 1fr 1fr;gap:6px;padding:10px;background:#fafbfc;border:1px solid #edf0f3;border-radius:10px}.store-item-row .store-item-type{grid-column:1}.store-item-row .store-item-product{grid-column:2/4}.store-item-row .store-item-size{grid-column:1}.store-item-row .store-item-qty{grid-column:2}.store-item-row .store-item-price{grid-column:3}.store-item-row .store-item-total{grid-column:1/3;text-align:left}.store-item-row .store-remove{grid-column:3}.store-payment-grid{margin-top:10px}.store-toolbar{align-items:stretch}.store-toolbar>.products-search{min-width:100%}.store-filter-row{width:100%}.store-filter-row input,.store-filter-row select{flex:1;min-width:0}.store-report-toolbar{align-items:stretch}.store-report-toolbar .store-filter-row,.store-report-toolbar .store-actions-inline{width:100%}.store-report-toolbar .store-actions-inline button{flex:1}.store-pnl{grid-template-columns:1fr}.receipt-preview{max-width:100%}}
 
-    <meta
-        name="description"
-        content="Peppy Fashion - Quality fashion at affordable prices."
-    >
-
-    <meta
-        name="theme-color"
-        content="#6C3BD0"
-    >
-
-    <link
-        rel="icon"
-        href="assets/images/logo/logo.png"
-    >
-
-    <link
-        rel="apple-touch-icon"
-        href="assets/images/logo/icon-192.png"
-    >
-
-    <link
-        rel="stylesheet"
-        href="assets/css/style.css"
-    >
-
-    <link
-        rel="manifest"
-        href="manifest.json"
-    >
+</style>
 
 </head>
-
-
 <body>
 
-
-<!-- ===========================
-HEADER
-=========================== -->
-
-<header>
-
-    <div class="container header-container">
-
-
-        <div class="logo">
-
-            <a href="index.html">
-
-                <img
-                    src="assets/images/logo/logo.png"
-                    alt="Peppy Fashion Logo"
-                >
-
-            </a>
-
+<div id="loginPage" class="login-page">
+    <div class="login-card">
+        <div class="brand">
+            <img src="../assets/images/logo/logo.png" alt="Peppy Fashion">
+            <h1>Administrator Panel</h1>
+            <p>Manage your Peppy Fashion store</p>
         </div>
-
-
-        <button
-            class="menu-btn"
-            type="button"
-            onclick="toggleMenu()"
-            aria-label="Open Menu"
-        >
-            ☰
-        </button>
-
-
-        <nav
-            class="navbar"
-            id="mainNavbar"
-        >
-
-            <a
-                href="index.html"
-                class="active"
-            >
-                Home
-            </a>
-
-
-            <a href="shop.html">
-                Shop
-            </a>
-
-
-            <a href="cart.html">
-                Cart
-                (<span id="cartCount">0</span>)
-            </a>
-
-
-            <a href="contact.html">
-                Contact
-            </a>
-
-
-            <a href="wishlist.html">
-                ❤️ Wishlist
-            </a>
-
-
-            <a href="account.html">
-                👤 My Account
-            </a>
-
-        </nav>
-
-    </div>
-
-</header>
-
-
-
-<!-- ===========================
-HOME BANNER SLIDER
-=========================== -->
-
-<section
-    class="banner-slider"
-    aria-label="Peppy Fashion Collections"
->
-
-
-    <div class="banner-slides">
-
-
-        <a
-            href="shop.html"
-            class="banner-slide active"
-        >
-
-            <img
-                src="assets/images/banners/banner.jpg"
-                alt="Peppy Fashion Main Banner"
-            >
-
-        </a>
-
-
-        <a
-            href="shop.html?category=Men"
-            class="banner-slide"
-        >
-
-            <img
-                src="assets/images/banners/mens-banner.jpg"
-                alt="Men's Collection"
-            >
-
-        </a>
-
-
-        <a
-            href="shop.html?category=Women"
-            class="banner-slide"
-        >
-
-            <img
-                src="assets/images/banners/womens-banner.jpg"
-                alt="Women's Collection"
-            >
-
-        </a>
-
-
-        <a
-            href="shop.html?category=Kids"
-            class="banner-slide"
-        >
-
-            <img
-                src="assets/images/banners/kids-banner.jpg"
-                alt="Kids' Collection"
-            >
-
-        </a>
-
-
-        <a
-            href="shop.html?category=Sports"
-            class="banner-slide"
-        >
-
-            <img
-                src="assets/images/banners/sports-banner.jpg"
-                alt="Sports Collection"
-            >
-
-        </a>
-
-    </div>
-
-
-
-    <button
-        class="banner-prev"
-        type="button"
-        aria-label="Previous banner"
-    >
-        &#10094;
-    </button>
-
-
-    <button
-        class="banner-next"
-        type="button"
-        aria-label="Next banner"
-    >
-        &#10095;
-    </button>
-
-
-
-    <div class="banner-dots">
-
-
-        <button
-            class="banner-dot active"
-            type="button"
-            aria-label="Banner 1"
-        ></button>
-
-
-        <button
-            class="banner-dot"
-            type="button"
-            aria-label="Banner 2"
-        ></button>
-
-
-        <button
-            class="banner-dot"
-            type="button"
-            aria-label="Banner 3"
-        ></button>
-
-
-        <button
-            class="banner-dot"
-            type="button"
-            aria-label="Banner 4"
-        ></button>
-
-
-        <button
-            class="banner-dot"
-            type="button"
-            aria-label="Banner 5"
-        ></button>
-
-    </div>
-
-</section>
-
-
-
-<!-- ===========================
-SHOP NOW
-=========================== -->
-
-<section class="section shop-now-section">
-
-    <div
-        class="container"
-        style="text-align:center;"
-    >
-
-        <h2 class="section-title">
-            Discover Our Collection
-        </h2>
-
-        <a
-            href="shop.html"
-            class="btn shop-now-btn"
-            style="
-                display:inline-flex;
-                align-items:center;
-                justify-content:center;
-                margin:25px auto 0;
-            "
-        >
-            🛍️ SHOP NOW
-        </a>
-
-    </div>
-
-</section>
-
-
-<!-- ===========================
-FEATURED PRODUCTS
-=========================== -->
-
-<section class="section">
-
-    <div class="container">
-
-
-        <h2 class="section-title">
-            Featured Products
-        </h2>
-
-
-        <div
-            id="productContainer"
-            class="product-grid"
-        >
-
-            <div class="loading-products">
-                Loading Products...
+        <form id="loginForm">
+            <div class="form-group">
+                <label for="adminToken">Admin Token</label>
+                <input id="adminToken" type="password" placeholder="Enter your admin token" autocomplete="current-password" required>
             </div>
-
-        </div>
-
+            <button id="loginButton" class="btn" type="submit">Sign In</button>
+        </form>
+        <div id="loginMessage" class="message"></div>
     </div>
+</div>
 
-</section>
-
-
-
-<!-- ===========================
-ABOUT
-=========================== -->
-
-<section class="section">
-
-    <div class="container">
-
-
-        <div class="contact-box">
-
-
-            <h2>
-                Peppy Fashion
-            </h2>
-
-
-            <p>
-                Your trusted online fashion store.
-            </p>
-
-
-            <p>
-                We provide quality clothing
-                with easy ordering options.
-            </p>
-
-
-            <br>
-
-
-            <p>
-                📍 Shop Location
-            </p>
-
-
-            <p>
-                Shalbahan, Tetulia,
-                Panchagarh, Bangladesh
-            </p>
-
-
+<div id="adminApp" class="admin-app">
+    <header class="admin-header">
+        <div class="admin-logo">
+            <img src="../assets/images/logo/logo.png" alt="Peppy Fashion">
+            <span>Peppy Fashion Admin</span>
         </div>
+        <div class="header-right">
+            <div class="header-date">Administrator<br><strong>Store Management</strong></div>
+            <button id="logoutButton" class="logout-btn" type="button">Logout</button>
+        </div>
+    </header>
 
+    <div class="admin-layout">
+        <aside class="sidebar">
+            <div class="sidebar-brand"><img src="../assets/images/logo/logo.png" alt="Peppy Fashion"></div>
+            <div class="sidebar-title">Management</div>
+
+            <button class="nav-btn active" data-section="dashboard" type="button">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 10.5V20h13v-9.5"/><path d="M9.5 20v-5h5v5"/></svg>
+                Dashboard
+            </button>
+            <button class="nav-btn" data-section="products" type="button">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m7 7 5-4 5 4v4l-5 3-5-3V7Z"/><path d="m3 12 9 5 9-5"/><path d="m3 16 9 5 9-5"/></svg>
+                Products
+            </button>
+            <button class="nav-btn" data-section="orders" type="button">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 4h2l2.4 11.2a2 2 0 0 0 2 1.6h7.8a2 2 0 0 0 1.9-1.4L21 8H6"/><circle cx="10" cy="20" r="1"/><circle cx="18" cy="20" r="1"/></svg>
+                Orders
+            </button>
+            <button class="nav-btn" data-section="store" type="button">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.8 1.8 0 0 0 .36 2l.06.06-1.4 1.4-.06-.06a1.8 1.8 0 0 0-2-.36 1.8 1.8 0 0 0-1.1 1.65V20h-2v-.31A1.8 1.8 0 0 0 12.2 18a1.8 1.8 0 0 0-2.02.36l-.06.06-1.4-1.4.06-.06a1.8 1.8 0 0 0 .36-2 1.8 1.8 0 0 0-1.65-1.1H7v-2h.31A1.8 1.8 0 0 0 9 10.2a1.8 1.8 0 0 0-.36-2l-.06-.06 1.4-1.4.06.06a1.8 1.8 0 0 0 2 .36A1.8 1.8 0 0 0 13.1 5.5V5h2v.31a1.8 1.8 0 0 0 1.1 1.65 1.8 1.8 0 0 0 2-.36l.06-.06 1.4 1.4-.06.06a1.8 1.8 0 0 0-.36 2A1.8 1.8 0 0 0 20.9 11H21v2h-.31A1.8 1.8 0 0 0 19.4 15Z"/></svg>
+                Store Data
+            </button>
+
+            <div class="sidebar-spacer"></div>
+            <div class="sidebar-note">Your existing Google Sheet, Apps Script backend and public website remain connected to this Admin Panel.</div>
+        </aside>
+
+        <main class="main-content">
+            <section id="dashboardSection">
+                <div class="topbar">
+                    <div class="page-title">
+                        <div class="welcome-pill">Welcome Back!</div>
+                        <h2>Welcome to Peppy Fashion Admin</h2>
+                        <p>Manage your products, orders and store operations from here.</p>
+                    </div>
+                    <div class="date-card"><div class="date-title">Today</div><strong id="dashboardDate">Store Dashboard</strong></div>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card"><div class="stat-top"><div><div class="label">Total Products</div><div id="totalProducts" class="value">—</div></div><div class="stat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m12 3 8 4.5v9L12 21l-8-4.5v-9L12 3Z"/><path d="m4.5 7.5 7.5 4 7.5-4M12 12v9"/></svg></div></div><div class="stat-foot good">Live product inventory</div></div>
+                    <div class="stat-card"><div class="stat-top"><div><div class="label">Active Products</div><div id="activeProducts" class="value">—</div></div><div class="stat-icon green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m5 12 4 4L19 6"/></svg></div></div><div class="stat-foot good">Currently visible</div></div>
+                    <div class="stat-card"><div class="stat-top"><div><div class="label">Out of Stock</div><div id="outOfStock" class="value">—</div></div><div class="stat-icon orange"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3 2.5 20h19L12 3Z"/><path d="M12 9v5M12 17h.01"/></svg></div></div><div class="stat-foot">Needs attention</div></div>
+                    <div class="stat-card"><div class="stat-top"><div><div class="label">Total Orders</div><div id="totalOrders" class="value">—</div></div><div class="stat-icon purple"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 3h12v18H6z"/><path d="M9 7h6M9 11h6M9 15h4"/></svg></div></div><div class="stat-foot good">Orders in your system</div></div>
+                </div>
+
+                <div class="dashboard-grid">
+                    <div class="dashboard-card">
+                        <div class="card-head"><div class="card-icon-title"><div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 17 9 11l4 4 8-9"/><path d="M17 6h4v4"/></svg></div><div><h3>Store Overview</h3><p>Live connection to your existing store backend</p></div></div></div>
+                        <div class="chart-placeholder"><div class="chart-grid"><div class="chart-line"></div><div class="chart-line"></div><div class="chart-line"></div><div class="chart-line"></div><div class="chart-line"></div></div><div class="chart-message">Dashboard statistics are connected to your existing Google Sheet and Apps Script backend.</div></div>
+                        <div class="dashboard-status"><span class="status-dot"></span> Backend Connected — your existing website data is being used</div>
+                    </div>
+
+                    <div class="dashboard-card">
+                        <div class="card-head"><div class="card-icon-title"><div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v18M3 12h18"/></svg></div><div><h3>Quick Actions</h3><p>Common store tasks</p></div></div></div>
+                        <div class="quick-grid">
+                            <button class="quick-action" type="button" onclick="document.querySelector('.nav-btn[data-section=\'products\']').click();setTimeout(function(){document.getElementById('addProductButton').click();},80)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>Add Product</button>
+                            <button class="quick-action" type="button" onclick="document.querySelector('.nav-btn[data-section=\'orders\']').click()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 4h2l2.4 11.2a2 2 0 0 0 2 1.6h7.8a2 2 0 0 0 1.9-1.4L21 8H6"/><circle cx="10" cy="20" r="1"/><circle cx="18" cy="20" r="1"/></svg>View Orders</button>
+                            <button class="quick-action" type="button" onclick="document.querySelector('.nav-btn[data-section=\'products\']').click()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m12 3 8 4.5v9L12 21l-8-4.5v-9L12 3Z"/><path d="m4.5 7.5 7.5 4 7.5-4"/></svg>Manage Products</button>
+                            <button class="quick-action" type="button" onclick="document.querySelector('.nav-btn[data-section=\'store\']').click()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.8 1.8 0 0 0 .36 2l.06.06-1.4 1.4-.06-.06a1.8 1.8 0 0 0-2-.36 1.8 1.8 0 0 0-1.1 1.65V20h-2v-.31A1.8 1.8 0 0 0 12.2 18a1.8 1.8 0 0 0-2.02.36l-.06.06-1.4-1.4.06-.06a1.8 1.8 0 0 0 .36-2 1.8 1.8 0 0 0-1.65-1.1H7v-2h.31A1.8 1.8 0 0 0 9 10.2a1.8 1.8 0 0 0-.36-2l-.06-.06 1.4-1.4.06.06a1.8 1.8 0 0 0 2 .36A1.8 1.8 0 0 0 13.1 5.5V5h2v.31a1.8 1.8 0 0 0 1.1 1.65 1.8 1.8 0 0 0 2-.36l.06-.06 1.4 1.4-.06.06a1.8 1.8 0 0 0-.36 2A1.8 1.8 0 0 0 20.9 11H21v2h-.31A1.8 1.8 0 0 0 19.4 15Z"/></svg>Store Data</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="productsSection" class="section-hidden">
+                <div class="page-title"><h2>Products</h2><p>Manage products from the existing Peppy Fashion Products sheet</p></div>
+                <div class="products-toolbar"><input id="productsSearch" class="products-search" type="search" placeholder="Search product ID, name, category or collection..." autocomplete="off"><button id="refreshProductsButton" class="secondary-btn" type="button">Refresh Products</button><button id="addProductButton" class="primary-btn" type="button">+ Add Product</button></div>
+                <div id="productsMeta" class="products-meta">Loading products...</div>
+                <div class="products-table-wrap"><div id="productsLoading" class="products-loading">Loading products...</div><div id="productsError" class="products-error" style="display:none;"></div><div id="productsEmpty" class="products-empty" style="display:none;">No products found.</div><table id="productsTable" class="products-table" style="display:none;"><thead><tr><th>Image</th><th>Product ID</th><th>Product Name</th><th>Main Category</th><th>Sub Category</th><th>Collection</th><th>Price</th><th>Old Price</th><th>Discount</th><th>Stock</th><th>Status</th><th>Featured</th><th>Badge</th><th>Sizes</th><th>Description</th><th>Actions</th></tr></thead><tbody id="productsTableBody"></tbody></table></div>
+            </section>
+
+            <section id="ordersSection" class="section-hidden">
+                <div class="page-title"><h2>Orders</h2><p>Manage orders from the existing Peppy Fashion Orders sheet</p></div>
+                <div class="orders-toolbar"><input id="ordersSearch" class="orders-search" type="search" placeholder="Search Order ID, customer, phone or email..." autocomplete="off"><button id="refreshOrdersButton" class="refresh-btn" type="button">Refresh Orders</button></div>
+                <div id="ordersMeta" class="orders-meta">Loading orders...</div>
+                <div class="orders-table-wrap"><div id="ordersLoading" class="orders-loading">Loading orders...</div><div id="ordersError" class="orders-error" style="display:none;"></div><div id="ordersEmpty" class="orders-empty" style="display:none;">No orders found.</div><table id="ordersTable" class="orders-table" style="display:none;"><thead><tr><th>Date</th><th>Order ID</th><th>Customer</th><th>Phone</th><th>Total</th><th>Payment</th><th>Status</th><th>Details</th></tr></thead><tbody id="ordersTableBody"></tbody></table></div>
+            </section>
+
+            <section id="storeSection" class="section-hidden">
+<div class="store-shell">
+  <div class="store-hero">
+    <div><div class="store-kicker">RETAIL OPERATIONS</div><h2>Physical Shop Management</h2><p>POS, inventory, customers, expenses, purchases, returns and reports — built for counter staff and management.</p></div>
+    <button id="storeRefreshButton" class="secondary-btn" type="button">↻ Refresh</button>
+  </div>
+  <div class="store-tabs" role="tablist">
+    <button class="store-tab active" data-store-tab="sale" type="button">🛒 New Sale</button>
+    <button class="store-tab" data-store-tab="sales" type="button">▤ Sales History</button>
+    <button class="store-tab" data-store-tab="expenses" type="button">৳ Expenses</button>
+    <button class="store-tab" data-store-tab="purchases" type="button">📦 Purchases</button>
+    <button class="store-tab" data-store-tab="returns" type="button">↩ Returns</button>
+    <button class="store-tab" data-store-tab="reports" type="button">▥ Reports</button>
+    <button class="store-tab" data-store-tab="customers" type="button">👥 Customers</button>
+  </div>
+
+  <div id="storeSalePanel" class="store-panel active">
+    <div class="store-stat-grid store-stat-grid-6">
+      <div class="store-mini"><span>Today Sales</span><strong id="storeTodaySales">৳0</strong></div>
+      <div class="store-mini"><span>Transactions</span><strong id="storeTodayTransactions">0</strong></div>
+      <div class="store-mini"><span>Paid</span><strong id="storeTodayPaid">৳0</strong></div>
+      <div class="store-mini"><span>Due</span><strong id="storeTodayDue">৳0</strong></div>
+      <div class="store-mini"><span>Expenses</span><strong id="storeTodayExpenses">৳0</strong></div>
+      <div class="store-mini"><span>Net Cash</span><strong id="storeTodayNet">৳0</strong></div>
     </div>
-
-</section>
-
-
-
-<!-- ===========================
-BOTTOM NAVIGATION
-=========================== -->
-
-<nav class="bottom-nav">
-
-
-    <a
-        href="index.html"
-        class="active"
-    >
-        🏠
-        <span>Home</span>
-    </a>
-
-
-    <a href="shop.html">
-        🛍️
-        <span>Shop</span>
-    </a>
-
-
-    <a href="cart.html">
-        🛒
-        <span>Cart</span>
-    </a>
-
-
-    <a href="contact.html">
-        ☎️
-        <span>Contact</span>
-    </a>
-
-
-</nav>
-
-
-
-<!-- ===========================
-FOOTER
-=========================== -->
-
-<footer>
-
-    <div class="container footer-grid">
-
-
-        <div>
-
-            <h3>
-                Peppy Fashion
-            </h3>
-
-            <p>
-                Modern fashion for everyone.
-            </p>
-
+    <div class="store-pos-layout">
+      <div class="store-card store-pos-card">
+        <div class="store-card-head"><div><h3>New Counter Sale</h3><p>Website products use their current final selling price. Manual products can use any price.</p></div><span class="store-live">● LIVE</span></div>
+        <div class="store-form-grid">
+          <div class="store-form-group"><label>Customer Name</label><input id="storeCustomerName" type="text" placeholder="Walk-in Customer"></div>
+          <div class="store-form-group"><label>Customer Phone</label><input id="storeCustomerPhone" type="tel" inputmode="tel" placeholder="01XXXXXXXXX"></div>
+          <div class="store-form-group full"><label>Items</label><div id="storeItems"></div><button id="storeAddItemButton" class="secondary-btn store-add-item" type="button">+ Add Item</button></div>
         </div>
-
-
-
-        <div>
-
-            <h3>
-                Quick Links
-            </h3>
-
-
-            <p>
-                <a href="index.html">
-                    Home
-                </a>
-            </p>
-
-
-            <p>
-                <a href="shop.html">
-                    Shop
-                </a>
-            </p>
-
-
-            <p>
-                <a href="cart.html">
-                    Cart
-                </a>
-            </p>
-
-
-            <p>
-                <a href="contact.html">
-                    Contact
-                </a>
-            </p>
-
+        <div class="store-totals-card">
+          <div><span>Subtotal</span><strong id="storeSubtotal">৳0</strong></div>
+          <div><span>Discount (%)</span><div class="store-discount-wrap"><input id="storeDiscountPct" type="number" min="0" max="100" step="0.01" value="0"><strong id="storeDiscountView">৳0</strong></div></div>
+          <div class="grand"><span>Total</span><strong id="storeTotal">৳0</strong></div>
+          <div><span>Paid Amount</span><input id="storePaid" class="store-money-input" type="number" min="0" step="0.01" value="0"></div>
+          <div class="due"><span>Due</span><strong id="storeDue">৳0</strong></div>
         </div>
-
-
-
-        <div>
-
-            <h3>
-                Contact
-            </h3>
-
-
-            <p>
-                📍 Shalbahan, Tetulia, Panchagarh
-            </p>
-
-
-            <p>
-                📞 WhatsApp:
-                +8801710868775
-            </p>
-
-
-            <p>
-                ✉ peppyfashionbd@gmail.com
-            </p>
-
+        <div class="store-form-grid store-payment-grid">
+          <div class="store-form-group"><label>Payment Method</label><select id="storePayment"><option>Cash</option><option>bKash</option><option>Nagad</option><option>Card</option><option>Bank Transfer</option><option>Other</option></select></div>
+          <div class="store-form-group"><label>Transaction / Reference</label><input id="storeTransaction" type="text" placeholder="Optional for digital payments"></div>
+          <div class="store-form-group full"><label>Sale Note</label><textarea id="storeSaleNote" placeholder="Optional note"></textarea></div>
         </div>
-
-
+        <div id="storeSaleMessage" class="message"></div>
+        <div class="store-actions store-sticky-actions"><button id="storeClearButton" class="secondary-btn" type="button">Clear</button><button id="storeSaveSaleButton" class="primary-btn" type="button">Save Sale</button></div>
+      </div>
+      <div class="store-card store-receipt-card"><div class="store-card-head"><div><h3>Receipt Preview</h3><p>Saved receipts remain available for reprint and PDF download.</p></div></div><div id="storeReceiptPreview" class="receipt-preview"><div class="receipt-placeholder">Complete and save a sale to generate the receipt.</div></div><div id="storeReceiptActions" class="store-actions" style="display:none"><button id="storePrintReceiptButton" class="secondary-btn" type="button">🖨 Print 80mm</button><button id="storePdfReceiptButton" class="primary-btn" type="button">↓ Download PDF</button></div></div>
     </div>
+  </div>
 
-</footer>
+  <div id="storeSalesPanel" class="store-panel">
+    <div class="store-card"><div class="store-toolbar"><input id="storeSalesSearch" class="products-search" type="search" placeholder="Search receipt, customer, phone, product or transaction"><div class="store-filter-row"><input id="storeSalesFrom" type="date"><input id="storeSalesTo" type="date"><button id="storeSalesRefresh" class="secondary-btn" type="button">Refresh</button></div></div><div id="storeSalesMeta" class="products-meta"></div><div class="store-table-wrap"><table class="store-table"><thead><tr><th>Date</th><th>Receipt</th><th>Customer</th><th>Items</th><th>Total</th><th>Paid</th><th>Due</th><th>Payment</th><th>Cashier</th><th>Actions</th></tr></thead><tbody id="storeSalesBody"></tbody></table><div id="storeSalesEmpty" class="store-empty">No physical sales found.</div></div></div>
+  </div>
 
+  <div id="storeExpensesPanel" class="store-panel">
+    <div class="store-grid-2">
+      <div class="store-card"><div class="store-card-head"><div><h3>Add Expense</h3><p>Salary, bonus, welfare, food and other shop costs.</p></div></div><div class="store-form-grid">
+        <div class="store-form-group"><label>Category</label><select id="storeExpenseCategory"><option>Salary</option><option>Bonus</option><option>Welfare</option><option>Food</option><option>Rent</option><option>Electricity</option><option>Internet</option><option>Transport</option><option>Maintenance</option><option>Marketing</option><option>Packaging</option><option>Other Expense</option></select></div>
+        <div class="store-form-group"><label>Amount</label><input id="storeExpenseAmount" type="number" min="0.01" step="0.01"></div>
+        <div class="store-form-group"><label>Payment Method</label><select id="storeExpensePayment"><option>Cash</option><option>bKash</option><option>Nagad</option><option>Card</option><option>Bank Transfer</option><option>Other</option></select></div>
+        <div class="store-form-group"><label>Reference</label><input id="storeExpenseReference" type="text"></div>
+        <div class="store-form-group full"><label>Description</label><textarea id="storeExpenseDescription"></textarea></div>
+      </div><div id="storeExpenseMessage" class="message"></div><div class="store-actions"><button id="storeSaveExpenseButton" class="primary-btn" type="button">Save Expense</button></div></div>
+      <div class="store-card"><div class="store-card-head"><div><h3>Expense Summary</h3><p>Current loaded period</p></div></div><div id="storeExpenseSummary" class="store-summary-list"></div></div>
+    </div>
+    <div class="store-card store-history-card"><div class="store-toolbar"><input id="storeExpenseSearch" class="products-search" type="search" placeholder="Search category, description or reference"><div class="store-filter-row"><input id="storeExpenseFrom" type="date"><input id="storeExpenseTo" type="date"><button id="storeExpenseRefresh" class="secondary-btn" type="button">Refresh</button></div></div><div class="store-table-wrap"><table class="store-table"><thead><tr><th>Date</th><th>ID</th><th>Category</th><th>Amount</th><th>Payment</th><th>Reference</th><th>Description</th><th>User</th></tr></thead><tbody id="storeExpenseBody"></tbody></table><div id="storeExpenseEmpty" class="store-empty">No expenses found.</div></div></div>
+  </div>
 
+  <div id="storePurchasesPanel" class="store-panel">
+    <div class="store-grid-2"><div class="store-card"><div class="store-card-head"><div><h3>Purchase Stock</h3><p>Record supplier purchases and increase inventory.</p></div></div><div class="store-form-grid">
+      <div class="store-form-group"><label>Supplier</label><input id="storePurchaseSupplier" type="text" placeholder="Supplier name"></div><div class="store-form-group"><label>Supplier Phone</label><input id="storePurchaseSupplierPhone" type="tel"></div>
+      <div class="store-form-group full"><label>Product</label><select id="storePurchaseProduct"></select></div><div class="store-form-group"><label>Size</label><input id="storePurchaseSize" type="text"></div><div class="store-form-group"><label>Quantity</label><input id="storePurchaseQty" type="number" min="1" step="1" value="1"></div>
+      <div class="store-form-group"><label>Cost Price</label><input id="storePurchaseCost" type="number" min="0" step="0.01"></div><div class="store-form-group"><label>Paid</label><input id="storePurchasePaid" type="number" min="0" step="0.01" value="0"></div>
+      <div class="store-form-group"><label>Payment Method</label><select id="storePurchasePayment"><option>Cash</option><option>bKash</option><option>Nagad</option><option>Card</option><option>Bank Transfer</option><option>Other</option></select></div><div class="store-form-group"><label>Reference</label><input id="storePurchaseReference" type="text"></div>
+      <div class="store-form-group full"><label>Note</label><textarea id="storePurchaseNote"></textarea></div>
+    </div><div id="storePurchaseMessage" class="message"></div><div class="store-actions"><button id="storeSavePurchaseButton" class="primary-btn" type="button">Save Purchase</button></div></div><div class="store-card"><div class="store-card-head"><div><h3>Supplier Notes</h3><p>Supplier details are stored with each purchase and can be reused later.</p></div></div><div id="storeSupplierList" class="store-summary-list"></div></div></div>
+    <div class="store-card"><div class="store-toolbar"><input id="storePurchaseSearch" class="products-search" type="search" placeholder="Search supplier, product or reference"><button id="storePurchaseRefresh" class="secondary-btn" type="button">Refresh</button></div><div class="store-table-wrap"><table class="store-table"><thead><tr><th>Date</th><th>Purchase ID</th><th>Supplier</th><th>Product</th><th>Qty</th><th>Cost</th><th>Total</th><th>Paid</th><th>Due</th><th>Actions</th></tr></thead><tbody id="storePurchaseBody"></tbody></table><div id="storePurchaseEmpty" class="store-empty">No purchases found.</div></div></div>
+  </div>
 
-<!-- ===========================
-JAVASCRIPT
-=========================== -->
+  <div id="storeReturnsPanel" class="store-panel">
+    <div class="store-grid-2"><div class="store-card"><div class="store-card-head"><div><h3>Return / Refund</h3><p>Return a physical-shop item against an existing receipt.</p></div></div><div class="store-form-grid">
+      <div class="store-form-group full"><label>Receipt Number</label><input id="storeReturnReceipt" type="text" placeholder="PF-YYYYMMDD-0001"></div><div class="store-form-group full"><label>Product</label><select id="storeReturnProduct"><option value="">Enter receipt first</option></select></div><div class="store-form-group"><label>Quantity</label><input id="storeReturnQty" type="number" min="1" step="1" value="1"></div><div class="store-form-group"><label>Refund Amount</label><input id="storeReturnAmount" type="number" min="0" step="0.01"></div><div class="store-form-group"><label>Refund Method</label><select id="storeReturnPayment"><option>Cash</option><option>bKash</option><option>Nagad</option><option>Card</option><option>Bank Transfer</option><option>Other</option></select></div><div class="store-form-group"><label>Reason</label><input id="storeReturnReason" type="text"></div>
+    </div><div id="storeReturnMessage" class="message"></div><div class="store-actions"><button id="storeFindReturnButton" class="secondary-btn" type="button">Find Receipt</button><button id="storeSaveReturnButton" class="primary-btn" type="button">Save Return</button></div></div><div class="store-card"><div class="store-card-head"><div><h3>Return Rules</h3><p>Stock is restored after a successful return. Refund history stays linked to the original receipt.</p></div></div><div class="store-summary-list"><div class="store-summary-item"><span>Original sale</span><strong>Required</strong></div><div class="store-summary-item"><span>Stock restore</span><strong>Automatic</strong></div><div class="store-summary-item"><span>Refund record</span><strong>Saved</strong></div></div></div></div>
+    <div class="store-card"><div class="store-table-wrap"><table class="store-table"><thead><tr><th>Date</th><th>Return ID</th><th>Receipt</th><th>Product</th><th>Qty</th><th>Refund</th><th>Method</th><th>Reason</th><th>User</th></tr></thead><tbody id="storeReturnBody"></tbody></table><div id="storeReturnEmpty" class="store-empty">No returns found.</div></div></div>
+  </div>
 
-<script src="assets/js/products.js"></script>
+  <div id="storeReportsPanel" class="store-panel">
+    <div class="store-card"><div class="store-report-toolbar"><div class="store-filter-row"><label>From <input id="storeReportFrom" type="date"></label><label>To <input id="storeReportTo" type="date"></label><select id="storeReportPreset"><option value="today">Today</option><option value="week">This Week</option><option value="month">This Month</option><option value="custom">Custom</option></select></div><div class="store-actions-inline"><button id="storeRunReportButton" class="primary-btn" type="button">Run Report</button><button id="storeDownloadReportButton" class="secondary-btn" type="button">↓ Download PDF</button></div></div></div>
+    <div class="store-stat-grid store-stat-grid-6"><div class="store-mini"><span>Sales</span><strong id="reportSales">৳0</strong></div><div class="store-mini"><span>Transactions</span><strong id="reportTransactions">0</strong></div><div class="store-mini"><span>Paid</span><strong id="reportPaid">৳0</strong></div><div class="store-mini"><span>Due</span><strong id="reportDue">৳0</strong></div><div class="store-mini"><span>Expenses</span><strong id="reportExpenses">৳0</strong></div><div class="store-mini"><span>Net</span><strong id="reportNet">৳0</strong></div></div>
+    <div class="store-grid-2"><div class="store-card"><div class="store-card-head"><div><h3>Best Selling Products</h3><p>Quantity sold in selected period</p></div></div><div id="storeBestSellers" class="store-summary-list"></div></div><div class="store-card"><div class="store-card-head"><div><h3>Expense Breakdown</h3><p>Category-wise operating cost</p></div></div><div id="storeReportExpenses" class="store-summary-list"></div></div></div>
+    <div class="store-card"><div class="store-card-head"><div><h3>Profit & Loss Snapshot</h3><p>Uses available cost price / purchase cost data.</p></div></div><div id="storePnl" class="store-pnl"></div></div>
+  </div>
 
-<script src="assets/js/cart.js"></script>
+  <div id="storeCustomersPanel" class="store-panel"><div class="store-card"><div class="store-toolbar"><input id="storeCustomerSearch" class="products-search" type="search" placeholder="Search customer name or phone"><button id="storeCustomerRefresh" class="secondary-btn" type="button">Refresh</button></div><div class="store-table-wrap"><table class="store-table"><thead><tr><th>Customer</th><th>Phone</th><th>Transactions</th><th>Total Sales</th><th>Paid</th><th>Due</th><th>Last Purchase</th></tr></thead><tbody id="storeCustomerBody"></tbody></table><div id="storeCustomerEmpty" class="store-empty">No customer records found.</div></div></div></div>
+</div>
+</section>        </main>
+    </div>
+</div>
 
-<script src="assets/js/script.js"></script>
+<div id="productModalBackdrop" class="modal-backdrop" aria-hidden="true"><div class="order-modal product-modal" role="dialog" aria-modal="true" aria-labelledby="productModalTitle"><div class="modal-header"><h3 id="productModalTitle">Add Product</h3><button id="productModalClose" class="modal-close" type="button" aria-label="Close">&times;</button></div><div class="modal-body"><form id="productForm"><div class="product-form-grid">
+<div class="product-form-group"><label for="productIdInput">Product ID</label><input id="productIdInput" type="text" placeholder="Leave blank to generate"></div><div class="product-form-group"><label for="productNameInput">Product Name *</label><input id="productNameInput" type="text" required></div><div class="product-form-group"><label for="productCategoryInput">Main Category</label><input id="productCategoryInput" type="text"></div><div class="product-form-group"><label for="productSubCategoryInput">Sub Category</label><input id="productSubCategoryInput" type="text"></div><div class="product-form-group"><label for="productCollectionInput">Collection</label><input id="productCollectionInput" type="text"></div><div class="product-form-group"><label for="productPriceInput">Price</label><input id="productPriceInput" type="number" min="0" step="0.01"></div><div class="product-form-group"><label for="productOldPriceInput">Old Price</label><input id="productOldPriceInput" type="number" min="0" step="0.01"></div><div class="product-form-group"><label for="productDiscountInput">Discount</label><input id="productDiscountInput" type="number" min="0" step="0.01"></div><div class="product-form-group"><label for="productStockInput">Stock</label><input id="productStockInput" type="number" min="0" step="1"></div><div class="product-form-group"><label for="productStatusInput">Status</label><select id="productStatusInput"><option value="active">Active</option><option value="inactive">Inactive</option></select></div><div class="product-form-group"><label for="productFeaturedInput">Featured</label><select id="productFeaturedInput"><option value="no">No</option><option value="yes">Yes</option></select></div><div class="product-form-group"><label for="productBadgeInput">Badge</label><input id="productBadgeInput" type="text"></div><div class="product-form-group full"><label>Product Photos</label><div class="product-gallery-manager"><div id="productGalleryList" class="product-gallery-list"></div><div class="product-gallery-upload"><input id="productImageFiles" type="file" accept="image/jpeg,image/png,image/webp,image/gif" multiple><button id="uploadProductImagesButton" class="secondary-btn" type="button">Upload Photos</button></div><div class="product-gallery-help">You can upload multiple photos for one product. The first photo is the primary product photo. Use Set Primary, Replace, or Remove for individual photos. New photos are stored in Google Drive in the <code>Peppy Fashion Product Images</code> folder. Existing GitHub photos remain supported.</div></div></div><div class="product-form-group full"><label for="productImageInput">Primary Image Path / URL</label><input id="productImageInput" type="text" placeholder="assets/images/products/product.jpg or https://..."></div><div class="product-form-group full"><label for="productSizesInput">Sizes</label><input id="productSizesInput" type="text" placeholder="S, M, L, XL"></div><div class="product-form-group full"><label for="productDescriptionInput">Description</label><textarea id="productDescriptionInput"></textarea></div></div><div id="productFormMessage" class="message"></div><div class="product-form-actions"><button id="productCancelButton" class="secondary-btn" type="button">Cancel</button><button id="productSaveButton" class="primary-btn" type="submit">Save Product</button></div></form></div></div></div>
 
-
-
-<!-- ===========================
-BANNER SLIDER
-=========================== -->
+<div id="orderModalBackdrop" class="modal-backdrop" aria-hidden="true">
+    <div class="order-modal" role="dialog" aria-modal="true" aria-labelledby="orderModalTitle">
+        <div class="modal-header">
+            <h3 id="orderModalTitle">Order Details</h3>
+            <button id="orderModalClose" class="modal-close" type="button" aria-label="Close">&times;</button>
+        </div>
+        <div id="orderModalBody" class="modal-body"></div>
+    </div>
+</div>
 
 <script>
 
-document.addEventListener(
-    "DOMContentLoaded",
-    function () {
+    /* =====================================================
+       CONFIGURATION
+    ===================================================== */
+
+    const API_URL =
+        "https://script.google.com/macros/s/AKfycbwbHxHS5GuRH4Lr-L5wTs8aRjXbdgK60CyM0muAjRvhUKZ-1IzeFBGq7y6an9d0Kmg_/exec";
 
 
-        const slides =
-            document.querySelectorAll(
-                ".banner-slide"
+    const ADMIN_TOKEN_KEY =
+        "peppy_admin_token";
+
+
+    /* =====================================================
+       DOM
+    ===================================================== */
+
+    const loginPage =
+        document.getElementById(
+            "loginPage"
+        );
+
+    const adminApp =
+        document.getElementById(
+            "adminApp"
+        );
+
+    const loginForm =
+        document.getElementById(
+            "loginForm"
+        );
+
+    const loginButton =
+        document.getElementById(
+            "loginButton"
+        );
+
+    const adminTokenInput =
+        document.getElementById(
+            "adminToken"
+        );
+
+    const loginMessage =
+        document.getElementById(
+            "loginMessage"
+        );
+
+    const logoutButton =
+        document.getElementById(
+            "logoutButton"
+        );
+
+    const dashboardSection =
+        document.getElementById("dashboardSection");
+
+    const ordersSection = document.getElementById("ordersSection");
+    const storeSection = document.getElementById("storeSection");
+    const storeItems = document.getElementById("storeItems");
+    const storeReceiptPreview = document.getElementById("storeReceiptPreview");
+    let storeSales = [];
+    let storeExpenses = [];
+    let storeProducts = [];
+    let storePurchases = [];
+    let storeReturns = [];
+    let storeCustomers = [];
+    let storeSuppliers = [];
+    let storeLastReceipt = null;
+    let storeLogoDataUrl = null;
+
+    const productsSection = document.getElementById("productsSection");
+    const productsSearch = document.getElementById("productsSearch");
+    const refreshProductsButton = document.getElementById("refreshProductsButton");
+    const addProductButton = document.getElementById("addProductButton");
+    const productsMeta = document.getElementById("productsMeta");
+    const productsLoading = document.getElementById("productsLoading");
+    const productsError = document.getElementById("productsError");
+    const productsEmpty = document.getElementById("productsEmpty");
+    const productsTable = document.getElementById("productsTable");
+    const productsTableBody = document.getElementById("productsTableBody");
+    const productModalBackdrop = document.getElementById("productModalBackdrop");
+    const productModalClose = document.getElementById("productModalClose");
+    const productForm = document.getElementById("productForm");
+    const productModalTitle = document.getElementById("productModalTitle");
+    const productCancelButton = document.getElementById("productCancelButton");
+    const productSaveButton = document.getElementById("productSaveButton");
+    const productFormMessage = document.getElementById("productFormMessage");
+    const productFields={id:document.getElementById("productIdInput"),name:document.getElementById("productNameInput"),category:document.getElementById("productCategoryInput"),subCategory:document.getElementById("productSubCategoryInput"),collection:document.getElementById("productCollectionInput"),price:document.getElementById("productPriceInput"),oldPrice:document.getElementById("productOldPriceInput"),discount:document.getElementById("productDiscountInput"),stock:document.getElementById("productStockInput"),status:document.getElementById("productStatusInput"),featured:document.getElementById("productFeaturedInput"),badge:document.getElementById("productBadgeInput"),image:document.getElementById("productImageInput"),sizes:document.getElementById("productSizesInput"),description:document.getElementById("productDescriptionInput")};
+    const productImageFiles=document.getElementById("productImageFiles");
+    const uploadProductImagesButton=document.getElementById("uploadProductImagesButton");
+    const productGalleryList=document.getElementById("productGalleryList");
+    let productGalleryImages=[];
+    let pendingProductFiles=[];
+    let allProducts=[]; let editingProductId=null;
+
+
+    const ordersSearch =
+        document.getElementById("ordersSearch");
+
+    const refreshOrdersButton =
+        document.getElementById("refreshOrdersButton");
+
+    const ordersMeta =
+        document.getElementById("ordersMeta");
+
+    const ordersLoading =
+        document.getElementById("ordersLoading");
+
+    const ordersError =
+        document.getElementById("ordersError");
+
+    const ordersEmpty =
+        document.getElementById("ordersEmpty");
+
+    const ordersTable =
+        document.getElementById("ordersTable");
+
+    const ordersTableBody =
+        document.getElementById("ordersTableBody");
+
+    const orderModalBackdrop =
+        document.getElementById("orderModalBackdrop");
+
+    const orderModalClose =
+        document.getElementById("orderModalClose");
+
+    const orderModalBody =
+        document.getElementById("orderModalBody");
+
+    let allOrders = [];
+
+
+    /* =====================================================
+       LOGIN MESSAGE
+    ===================================================== */
+
+    function showLoginMessage(
+        message,
+        type = "error"
+    ) {
+
+        loginMessage.textContent =
+            message;
+
+        loginMessage.className =
+            "message " + type;
+
+    }
+
+
+    function clearLoginMessage() {
+
+        loginMessage.textContent =
+            "";
+
+        loginMessage.className =
+            "message";
+
+    }
+
+
+    /* =====================================================
+       API REQUEST
+    ===================================================== */
+
+    async function apiRequest(
+        action,
+        extraParams = {}
+    ) {
+
+        const token =
+            sessionStorage.getItem(
+                ADMIN_TOKEN_KEY
             );
 
 
-        const dots =
-            document.querySelectorAll(
-                ".banner-dot"
-            );
+        if (!token) {
 
-
-        const prevButton =
-            document.querySelector(
-                ".banner-prev"
-            );
-
-
-        const nextButton =
-            document.querySelector(
-                ".banner-next"
-            );
-
-
-        if (!slides.length) return;
-
-
-        let currentSlide = 0;
-
-        let slideTimer;
-
-
-
-        function showSlide(index) {
-
-
-            if (
-                index >= slides.length
-            ) {
-
-                currentSlide = 0;
-
-            }
-
-
-            else if (
-                index < 0
-            ) {
-
-                currentSlide =
-                    slides.length - 1;
-
-            }
-
-
-            else {
-
-                currentSlide = index;
-
-            }
-
-
-
-            slides.forEach(
-                (slide, i) => {
-
-                    slide.classList.toggle(
-                        "active",
-                        i === currentSlide
-                    );
-
-                }
-            );
-
-
-
-            dots.forEach(
-                (dot, i) => {
-
-                    dot.classList.toggle(
-                        "active",
-                        i === currentSlide
-                    );
-
-                }
+            throw new Error(
+                "Admin session not found."
             );
 
         }
 
 
+        const params =
+            new URLSearchParams({
 
-        function nextSlide() {
+                action:
+                    action,
 
-            showSlide(
-                currentSlide + 1
+                adminToken:
+                    token,
+
+                ...extraParams
+
+            });
+
+
+        const response =
+            await fetch(
+                API_URL +
+                "?" +
+                params.toString()
+            );
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                "Server request failed."
             );
 
         }
 
 
+        const data =
+            await response.json();
 
-        function previousSlide() {
 
-            showSlide(
-                currentSlide - 1
+        if (!data.success) {
+
+            throw new Error(
+                data.message ||
+                "Request failed."
             );
 
         }
 
 
+        return data;
 
-        function startSlider() {
+    }
 
-            clearInterval(
-                slideTimer
+
+    /* =====================================================
+       AUTHENTICATION
+    ===================================================== */
+
+    async function verifyAdminToken(
+        token
+    ) {
+
+        const params =
+            new URLSearchParams({
+
+                action:
+                    "dashboard",
+
+                adminToken:
+                    token
+
+            });
+
+
+        const response =
+            await fetch(
+                API_URL +
+                "?" +
+                params.toString()
             );
 
 
-            slideTimer =
-                setInterval(
-                    nextSlide,
-                    3000
+        if (!response.ok) {
+
+            throw new Error(
+                "Unable to connect to backend."
+            );
+
+        }
+
+
+        const data =
+            await response.json();
+
+
+        if (!data.success) {
+
+            throw new Error(
+                data.message ||
+                "Invalid admin token."
+            );
+
+        }
+
+
+        return data;
+
+    }
+
+
+    /* =====================================================
+       SHOW / HIDE ADMIN
+    ===================================================== */
+
+    function showAdmin() {
+
+        loginPage.style.display =
+            "none";
+
+        adminApp.style.display =
+            "block";
+
+    }
+
+
+    function showLogin() {
+
+        adminApp.style.display =
+            "none";
+
+        loginPage.style.display =
+            "flex";
+
+        adminTokenInput.value =
+            "";
+
+    }
+
+
+    /* =====================================================
+       LOAD DASHBOARD
+    ===================================================== */
+
+    async function loadDashboard() {
+
+        try {
+
+            const data =
+                await apiRequest(
+                    "dashboard"
                 );
 
-        }
+
+            /*
+             * Backend structure:
+             *
+             * data.dashboard.products
+             * data.dashboard.orders
+             * data.dashboard.sales
+             */
+
+            const dashboard =
+                data.dashboard || {};
 
 
+            const products =
+                dashboard.products || {};
 
-        if (nextButton) {
 
-            nextButton.addEventListener(
-                "click",
-                function () {
+            const orders =
+                dashboard.orders || {};
 
-                    nextSlide();
 
-                    startSlider();
+            const sales =
+                dashboard.sales || {};
 
-                }
+
+            document.getElementById(
+                "totalProducts"
+            ).textContent =
+                products.total ?? 0;
+
+
+            document.getElementById(
+                "activeProducts"
+            ).textContent =
+                products.active ?? 0;
+
+
+            document.getElementById(
+                "outOfStock"
+            ).textContent =
+                products.outOfStock ?? 0;
+
+
+            document.getElementById(
+                "totalOrders"
+            ).textContent =
+                orders.total ?? 0;
+
+
+        } catch (error) {
+
+            console.error(
+                "Dashboard error:",
+                error
             );
 
+
+            document.getElementById(
+                "totalProducts"
+            ).textContent =
+                "—";
+
+
+            document.getElementById(
+                "activeProducts"
+            ).textContent =
+                "—";
+
+
+            document.getElementById(
+                "outOfStock"
+            ).textContent =
+                "—";
+
+
+            document.getElementById(
+                "totalOrders"
+            ).textContent =
+                "—";
+
         }
 
+    }
 
 
-        if (prevButton) {
+    /* =====================================================
+       ORDERS
+    ===================================================== */
 
-            prevButton.addEventListener(
-                "click",
-                function () {
+    function escapeHtml(value) {
+        return String(value ?? "")
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#039;");
+    }
 
-                    previousSlide();
+    function formatDate(value) {
+        if (!value) return "—";
 
-                    startSlider();
+        const date = new Date(value);
+        if (Number.isNaN(date.getTime())) {
+            return String(value);
+        }
 
-                }
+        return date.toLocaleString("en-GB", {
+            day: "2-digit",
+            month: "short",
+            year: "numeric",
+            hour: "2-digit",
+            minute: "2-digit"
+        });
+    }
+
+    function formatMoney(value) {
+        const number = Number(value);
+        if (!Number.isFinite(number)) return "৳0";
+        return "৳" + number.toLocaleString("en-BD", {
+            maximumFractionDigits: 2
+        });
+    }
+
+    function showSection(section) {
+        dashboardSection.classList.add("section-hidden");
+        productsSection.classList.add("section-hidden");
+        ordersSection.classList.add("section-hidden");
+        storeSection.classList.add("section-hidden");
+        if (section === "dashboard") { dashboardSection.classList.remove("section-hidden"); loadDashboard(); return; }
+        if (section === "products") { productsSection.classList.remove("section-hidden"); loadProducts(); return; }
+        if (section === "orders") { ordersSection.classList.remove("section-hidden"); loadOrders(); return; }
+        if (section === "store") { storeSection.classList.remove("section-hidden"); loadStoreData(); }
+    }
+
+    async function loadOrders() {
+        ordersLoading.style.display = "block";
+        ordersError.style.display = "none";
+        ordersEmpty.style.display = "none";
+        ordersTable.style.display = "none";
+        ordersMeta.textContent = "Loading orders...";
+
+        try {
+            const data = await apiRequest("orders");
+            allOrders = Array.isArray(data.orders)
+                ? data.orders
+                : [];
+
+            renderOrders();
+        } catch (error) {
+            console.error("Orders error:", error);
+            ordersLoading.style.display = "none";
+            ordersError.textContent =
+                error.message || "Unable to load orders.";
+            ordersError.style.display = "block";
+            ordersMeta.textContent = "Orders could not be loaded.";
+        }
+    }
+
+    function getFilteredOrders() {
+        const query = ordersSearch.value.trim().toLowerCase();
+
+        if (!query) return allOrders;
+
+        return allOrders.filter(function(order) {
+            return [
+                order.orderId,
+                order.name,
+                order.phone,
+                order.email,
+                order.address,
+                order.payment,
+                order.status
+            ].some(function(value) {
+                return String(value ?? "")
+                    .toLowerCase()
+                    .includes(query);
+            });
+        });
+    }
+
+    function renderOrders() {
+        ordersLoading.style.display = "none";
+        ordersError.style.display = "none";
+
+        const filtered = getFilteredOrders();
+        ordersMeta.textContent =
+            "Showing " + filtered.length + " of " + allOrders.length + " orders";
+
+        ordersTableBody.innerHTML = "";
+
+        if (!filtered.length) {
+            ordersTable.style.display = "none";
+            ordersEmpty.style.display = "block";
+            return;
+        }
+
+        ordersEmpty.style.display = "none";
+        ordersTable.style.display = "table";
+
+        filtered.forEach(function(order) {
+            const row = document.createElement("tr");
+            const status = String(order.status || "Pending");
+
+            row.innerHTML = `
+                <td class="order-date">${escapeHtml(formatDate(order.date))}</td>
+                <td class="order-id">${escapeHtml(order.orderId || "—")}</td>
+                <td class="order-customer">${escapeHtml(order.name || "—")}</td>
+                <td class="order-phone">${escapeHtml(order.phone || "—")}</td>
+                <td>${escapeHtml(formatMoney(order.total))}</td>
+                <td>${escapeHtml(order.payment || "—")}</td>
+                <td>
+                    <select class="status-select" data-order-id="${escapeHtml(order.orderId || "")}">
+                        ${buildStatusOptions(status)}
+                    </select>
+                </td>
+                <td>
+                    <button class="view-btn" type="button" data-view-order-id="${escapeHtml(order.orderId || "")}">
+                        View
+                    </button>
+                </td>
+            `;
+
+            ordersTableBody.appendChild(row);
+        });
+
+        ordersTableBody.querySelectorAll(".status-select").forEach(function(select) {
+            select.addEventListener("change", function() {
+                updateOrderStatus(select.dataset.orderId, select.value, select);
+            });
+        });
+
+        ordersTableBody.querySelectorAll(".view-btn").forEach(function(button) {
+            button.addEventListener("click", function() {
+                openOrderModal(button.dataset.viewOrderId);
+            });
+        });
+    }
+
+    function buildStatusOptions(currentStatus) {
+        const statuses = [
+            "Pending",
+            "Confirmed",
+            "Processing",
+            "Shipped",
+            "Delivered",
+            "Cancelled"
+        ];
+
+        const normalizedCurrent = String(currentStatus || "Pending").toLowerCase();
+
+        if (!statuses.some(function(status) {
+            return status.toLowerCase() === normalizedCurrent;
+        })) {
+            statuses.unshift(currentStatus);
+        }
+
+        return statuses.map(function(status) {
+            const selected =
+                status.toLowerCase() === normalizedCurrent
+                    ? " selected"
+                    : "";
+
+            return `<option value="${escapeHtml(status)}"${selected}>${escapeHtml(status)}</option>`;
+        }).join("");
+    }
+
+    async function updateOrderStatus(orderId, status, selectElement) {
+        if (!orderId) {
+            alert("Order ID is missing.");
+            return;
+        }
+
+        const previousStatus =
+            allOrders.find(function(order) {
+                return String(order.orderId) === String(orderId);
+            })?.status || "Pending";
+
+        selectElement.disabled = true;
+
+        try {
+            const token = sessionStorage.getItem(ADMIN_TOKEN_KEY);
+
+            const response = await fetch(API_URL, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "text/plain;charset=utf-8"
+                },
+                body: JSON.stringify({
+                    action: "updateOrderStatus",
+                    adminToken: token,
+                    orderId: orderId,
+                    status: status
+                })
+            });
+
+            if (!response.ok) {
+                throw new Error("Server request failed.");
+            }
+
+            const data = await response.json();
+
+            if (!data.success) {
+                throw new Error(data.error || data.message || "Unable to update order status.");
+            }
+
+            const order = allOrders.find(function(item) {
+                return String(item.orderId) === String(orderId);
+            });
+
+            if (order) {
+                order.status = status;
+            }
+
+            renderOrders();
+            alert("Order " + orderId + " status updated to " + status + ".");
+        } catch (error) {
+            console.error("Update order status error:", error);
+            selectElement.value = previousStatus;
+            alert(error.message || "Unable to update order status.");
+        } finally {
+            selectElement.disabled = false;
+        }
+    }
+
+    function openOrderModal(orderId) {
+        const order = allOrders.find(function(item) {
+            return String(item.orderId) === String(orderId);
+        });
+
+        if (!order) {
+            alert("Order not found.");
+            return;
+        }
+
+        document.getElementById("orderModalTitle").textContent =
+            "Order " + (order.orderId || "Details");
+
+        orderModalBody.innerHTML = `
+            <div class="order-detail-grid">
+                ${detailBox("Date", formatDate(order.date))}
+                ${detailBox("Order ID", order.orderId)}
+                ${detailBox("Customer", order.name)}
+                ${detailBox("Phone", order.phone)}
+                ${detailBox("Email", order.email)}
+                ${detailBox("Payment", order.payment)}
+                ${detailBox("Transaction ID", order.transactionId)}
+                ${detailBox("Quantity", order.quantity)}
+                ${detailBox("Subtotal", formatMoney(order.subtotal))}
+                ${detailBox("Discount", formatMoney(order.discount))}
+                ${detailBox("Delivery", formatMoney(order.delivery))}
+                ${detailBox("Total", formatMoney(order.total))}
+                ${detailBox("Status", order.status)}
+            </div>
+
+            <div class="detail-box" style="margin-bottom:14px;">
+                <div class="detail-label">Address</div>
+                <div class="detail-value">${escapeHtml(order.address || "—")}</div>
+            </div>
+
+            <div class="detail-box" style="margin-bottom:14px;">
+                <div class="detail-label">Products</div>
+                <div class="order-products-box" style="border:none;padding:8px 0 0;margin:0;">${escapeHtml(order.products || "—")}</div>
+            </div>
+
+            <div class="order-note-box">
+                <strong>Order Note:</strong><br>
+                ${escapeHtml(order.note || "No order note.")}
+            </div>
+        `;
+
+        orderModalBackdrop.classList.add("open");
+        orderModalBackdrop.setAttribute("aria-hidden", "false");
+    }
+
+    function detailBox(label, value) {
+        return `
+            <div class="detail-box">
+                <div class="detail-label">${escapeHtml(label)}</div>
+                <div class="detail-value">${escapeHtml(value || "—")}</div>
+            </div>
+        `;
+    }
+
+    function closeOrderModal() {
+        orderModalBackdrop.classList.remove("open");
+        orderModalBackdrop.setAttribute("aria-hidden", "true");
+    }
+
+    /* =====================================================
+       PRODUCTS
+    ===================================================== */
+    function showProductFormMessage(message,type="error"){productFormMessage.textContent=message||"";productFormMessage.className="message "+type;}
+    function resolveProductImage(src){const value=String(src||"").trim();if(!value)return "";if(/^https?:\/\//i.test(value))return value;if(value.startsWith("/"))return new URL(value,window.location.origin).href;if(value.startsWith("assets/"))return new URL("../"+value,window.location.href).href;if(value.startsWith("images/"))return new URL("../assets/"+value,window.location.href).href;return new URL("../assets/images/products/"+value,window.location.href).href;}
+    function isDeletableProductImageSource(src){const value=String(src||"").trim();if(!value)return false;if(/^https?:\/\/drive\.google\.com\//i.test(value))return true;if(/^https?:\/\/docs\.google\.com\//i.test(value))return true;if(/^assets\/images\/products\//i.test(value))return true;if(/^images\/products\//i.test(value))return true;return false;}
+    function renderProductGallery(){if(!productGalleryList)return;productGalleryList.innerHTML="";if(!productGalleryImages.length){productGalleryList.innerHTML='<div class="product-gallery-empty">No product photos yet.</div>';return;}productGalleryImages.forEach((src,index)=>{const item=document.createElement("div");item.className="product-gallery-item";const label=index===0?"PRIMARY PHOTO":"PHOTO "+(index+1);item.innerHTML=`<img class="product-gallery-preview" src="${escapeHtml(resolveProductImage(src))}" alt="" onerror="this.style.opacity=.25"><div class="product-gallery-label">${label}</div><div class="product-gallery-actions">${index===0?'<button class="gallery-primary" type="button">Primary</button>':'<button class="gallery-set-primary" type="button">Set Primary</button>'}<button class="gallery-replace" type="button">Replace</button><button class="gallery-remove" type="button">Remove</button></div>`;const buttons=item.querySelectorAll("button");if(index>0)buttons[0].addEventListener("click",()=>setPrimaryProductImage(index));buttons[1].addEventListener("click",()=>replaceProductImage(index));buttons[2].addEventListener("click",()=>removeProductImage(index));productGalleryList.appendChild(item);});}
+    async function persistProductGallery(){if(!editingProductId)return;const d=await postAdminAction({action:"updateProductImages",id:editingProductId,images:productGalleryImages});const updated=d.product;if(updated){const idx=allProducts.findIndex(x=>String(x.id)===String(editingProductId));if(idx>=0)allProducts[idx]=Object.assign({},allProducts[idx],updated);productGalleryImages=Array.isArray(updated.images)?updated.images:productGalleryImages;productFields.image.value=productGalleryImages[0]||"";}renderProductGallery();renderProducts();}
+    async function setPrimaryProductImage(index){if(index<=0||index>=productGalleryImages.length)return;const selected=productGalleryImages[index];productGalleryImages.splice(index,1);productGalleryImages.unshift(selected);productFields.image.value=productGalleryImages[0]||"";if(editingProductId){try{await persistProductGallery();showProductFormMessage("Primary photo updated.","success");}catch(e){showProductFormMessage(e.message||"Unable to set primary photo.");}}else renderProductGallery();}
+    async function removeProductImage(index){const src=productGalleryImages[index];if(!src)return;if(!confirm("Remove this product photo?"))return;try{if(editingProductId && isDeletableProductImageSource(src)){await postAdminAction({action:"deleteImage",path:src});}productGalleryImages.splice(index,1);if(editingProductId)await persistProductGallery();else{productFields.image.value=productGalleryImages[0]||"";renderProductGallery();}}catch(e){showProductFormMessage(e.message||"Unable to remove photo.");}}
+    async function replaceProductImage(index){if(!editingProductId){showProductFormMessage("Save the new product first, then replace photos.");return;}const input=document.createElement("input");input.type="file";input.accept="image/jpeg,image/png,image/webp,image/gif";input.onchange=async()=>{const file=input.files&&input.files[0];if(!file)return;try{showProductFormMessage("Uploading replacement photo...","success");const compressed=await prepareImageFile(file);const d=await postAdminAction({action:"uploadImage",filename:makeProductImageFilename(editingProductId,file.name),base64:compressed});const newPath=d.path||d.image;if(!newPath)throw new Error("Upload did not return an image path.");const oldPath=productGalleryImages[index];productGalleryImages[index]=newPath;if(oldPath&&isDeletableProductImageSource(oldPath)){try{await postAdminAction({action:"deleteImage",path:oldPath});}catch(cleanErr){console.warn("Old image cleanup failed",cleanErr);}}await persistProductGallery();showProductFormMessage("Photo replaced successfully.","success");}catch(e){showProductFormMessage(e.message||"Unable to replace photo.");}};input.click();}
+    function closeProductModal(){productModalBackdrop.classList.remove("open");productModalBackdrop.setAttribute("aria-hidden","true");productForm.reset();editingProductId=null;productFields.id.disabled=false;productGalleryImages=[];pendingProductFiles=[];renderProductGallery();showProductFormMessage("");}
+    function openProductModal(product){editingProductId=product?String(product.id):null;productModalTitle.textContent=product?"Edit Product":"Add Product";productSaveButton.textContent=product?"Save Changes":"Add Product";productFields.id.disabled=!!product;const values=product||{id:"",name:"",category:"",subCategory:"",collection:"",price:"",oldPrice:"",discount:"",stock:0,status:"active",featured:"no",badge:"",image:"",sizes:"",description:""};Object.keys(productFields).forEach(k=>productFields[k].value=values[k]??"");productGalleryImages=Array.isArray(product&&product.images)?product.images.slice():[];if(!productGalleryImages.length&&values.image)productGalleryImages=[values.image];pendingProductFiles=[];if(productGalleryImages.length)productFields.image.value=productGalleryImages[0]||"";renderProductGallery();productModalBackdrop.classList.add("open");productModalBackdrop.setAttribute("aria-hidden","false");setTimeout(()=>productFields.name.focus(),50);}
+    function getFilteredProducts(){const q=productsSearch.value.trim().toLowerCase();if(!q)return allProducts;return allProducts.filter(p=>[p.id,p.name,p.category,p.subCategory,p.collection,p.badge].some(v=>String(v??"").toLowerCase().includes(q)));}
+    function productImageHtml(p){const src=String(p.image||"").trim();if(!src)return '<span class="no-image">No image</span>';let resolved=src;if(!/^https?:\/\//i.test(src)){if(src.startsWith("/")){resolved=new URL(src,window.location.origin).href;}else if(src.startsWith("assets/")){resolved=new URL("../"+src,window.location.href).href;}else if(src.startsWith("images/")){resolved=new URL("../assets/"+src,window.location.href).href;}else{resolved=new URL("../assets/images/products/"+src,window.location.href).href;}}return `<img class="product-thumb" src="${escapeHtml(resolved)}" alt="" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='inline';"><span class="no-image" style="display:none;">No image</span>`;}
+    function makeProductImageFilename(productId,originalName){
+    let name=String(originalName||"product-image").trim();
+    name=name.replace(/\\.[^.]+$/,"");
+    name=name.replace(/[^a-zA-Z0-9_-]/g,"-").replace(/-+/g,"-").replace(/^-+|-+$/g,"").toLowerCase();
+    if(!name) name="product-image";
+    return name+".jpg";
+}
+    function prepareImageFile(file){return new Promise((resolve,reject)=>{if(!file||!file.type.startsWith("image/")){reject(new Error("Please select an image file."));return;}const img=new Image();const reader=new FileReader();reader.onload=()=>{img.onload=()=>{const max=1400;let w=img.naturalWidth,h=img.naturalHeight;if(w>max||h>max){const scale=Math.min(max/w,max/h);w=Math.round(w*scale);h=Math.round(h*scale);}const canvas=document.createElement("canvas");canvas.width=w;canvas.height=h;const ctx=canvas.getContext("2d");ctx.drawImage(img,0,0,w,h);resolve(canvas.toDataURL("image/jpeg",0.82));};img.onerror=()=>reject(new Error("Unable to read image."));img.src=reader.result;};reader.onerror=()=>reject(new Error("Unable to read image file."));reader.readAsDataURL(file);});}
+    function previewPendingFiles(){if(!productGalleryList)return;renderProductGallery();if(!pendingProductFiles.length)return;pendingProductFiles.forEach((file,i)=>{const item=document.createElement("div");item.className="product-gallery-item";const url=URL.createObjectURL(file);item.innerHTML=`<img class="product-gallery-preview" src="${escapeHtml(url)}" alt=""><div class="product-gallery-label">NEW PHOTO ${i+1}</div><div class="product-gallery-actions"><button class="gallery-remove" type="button">Remove</button></div>`;item.querySelector("button").addEventListener("click",()=>{pendingProductFiles.splice(i,1);URL.revokeObjectURL(url);previewPendingFiles();});productGalleryList.appendChild(item);});}
+    async function uploadSelectedProductImages(){const files=Array.from(productImageFiles.files||[]);if(!files.length)return;if(!editingProductId){pendingProductFiles=pendingProductFiles.concat(files);productImageFiles.value="";previewPendingFiles();showProductFormMessage(files.length+" photo(s) ready. They will upload when you save the product.","success");return;}uploadProductImagesButton.disabled=true;try{for(const file of files){const compressed=await prepareImageFile(file);const d=await postAdminAction({action:"uploadImage",filename:makeProductImageFilename(editingProductId,file.name),base64:compressed});const path=d.path||d.image;if(!path)throw new Error("Upload did not return an image path.");productGalleryImages.push(path);}await persistProductGallery();productImageFiles.value="";showProductFormMessage(files.length+" photo(s) uploaded successfully.","success");}catch(e){showProductFormMessage(e.message||"Unable to upload photos.");}finally{uploadProductImagesButton.disabled=false;}}
+
+    function renderProducts(){productsLoading.style.display="none";productsError.style.display="none";const filtered=getFilteredProducts();productsMeta.textContent=`Showing ${filtered.length} of ${allProducts.length} products`;productsTableBody.innerHTML="";if(!filtered.length){productsTable.style.display="none";productsEmpty.style.display="block";return;}productsEmpty.style.display="none";productsTable.style.display="table";filtered.forEach(p=>{const row=document.createElement("tr");const status=String(p.status||"active").toLowerCase();const featured=String(p.featured||"no").toLowerCase();const sizes=Array.isArray(p.sizes)?p.sizes.join(", "):String(p.sizes||"");const description=String(p.description||"");row.innerHTML=`<td>${productImageHtml(p)}</td><td class="product-id">${escapeHtml(p.id||"—")}</td><td><div class="product-name">${escapeHtml(p.name||"Unnamed product")}</div></td><td>${escapeHtml(p.category||"—")}</td><td class="product-subcategory">${escapeHtml(p.subCategory||"—")}</td><td class="product-collection">${escapeHtml(p.collection||"—")}</td><td class="product-price">${escapeHtml(formatMoney(p.price))}</td><td class="product-price">${p.oldPrice?escapeHtml(formatMoney(p.oldPrice)):"—"}</td><td>${p.discount?escapeHtml(String(p.discount)+"%"):"—"}</td><td><input class="product-inline-input stock-input" type="number" min="0" step="1" value="${escapeHtml(p.stock??0)}" data-product-id="${escapeHtml(p.id||"")}"></td><td><select class="product-status-select status-product-select" data-product-id="${escapeHtml(p.id||"")}"><option value="active"${status==="active"?" selected":""}>Active</option><option value="inactive"${status!=="active"?" selected":""}>Inactive</option></select></td><td><select class="product-featured-select featured-product-select" data-product-id="${escapeHtml(p.id||"")}"><option value="no"${featured!=="yes"?" selected":""}>No</option><option value="yes"${featured==="yes"?" selected":""}>Yes</option></select></td><td class="product-badge">${escapeHtml(p.badge||"—")}</td><td class="product-sizes">${escapeHtml(sizes||"—")}</td><td class="product-description">${escapeHtml(description||"—")}</td><td><div class="product-actions"><button class="edit-btn" type="button" data-edit-product-id="${escapeHtml(p.id||"")}">Edit</button>${status==="active"?`<button class="danger-btn" type="button" data-delete-product-id="${escapeHtml(p.id||"")}">Deactivate</button>`:`<button class="restore-btn" type="button" data-restore-product-id="${escapeHtml(p.id||"")}">Restore</button><button class="danger-btn" type="button" data-permanent-delete-product-id="${escapeHtml(p.id||"")}">Permanent Delete</button>`}</div></td>`;productsTableBody.appendChild(row);});productsTableBody.querySelectorAll(".edit-btn").forEach(b=>b.addEventListener("click",()=>{const p=allProducts.find(x=>String(x.id)===String(b.dataset.editProductId));if(p)openProductModal(p);}));productsTableBody.querySelectorAll(".stock-input").forEach(i=>i.addEventListener("change",()=>updateProductStock(i.dataset.productId,i)));productsTableBody.querySelectorAll(".status-product-select").forEach(i=>i.addEventListener("change",()=>updateProductStatus(i.dataset.productId,i.value,i)));productsTableBody.querySelectorAll(".featured-product-select").forEach(i=>i.addEventListener("change",()=>updateProductFeatured(i.dataset.productId,i.value,i)));productsTableBody.querySelectorAll("[data-delete-product-id]").forEach(b=>b.addEventListener("click",()=>deactivateProduct(b.dataset.deleteProductId,b)));productsTableBody.querySelectorAll("[data-restore-product-id]").forEach(b=>b.addEventListener("click",()=>restoreProduct(b.dataset.restoreProductId,b)));productsTableBody.querySelectorAll("[data-permanent-delete-product-id]").forEach(b=>b.addEventListener("click",()=>permanentDeleteProduct(b.dataset.permanentDeleteProductId,b)));}
+    async function loadProducts(){productsLoading.style.display="block";productsError.style.display="none";productsEmpty.style.display="none";productsTable.style.display="none";productsMeta.textContent="Loading products...";try{const data=await apiRequest("adminproducts");allProducts=Array.isArray(data.products)?data.products:[];renderProducts();}catch(e){console.error("Products error:",e);productsLoading.style.display="none";productsError.textContent=e.message||"Unable to load products.";productsError.style.display="block";productsMeta.textContent="Products could not be loaded.";}}
+    async function postAdminAction(payload){const token=sessionStorage.getItem(ADMIN_TOKEN_KEY);if(!token)throw new Error("Admin session not found.");const r=await fetch(API_URL,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(Object.assign({},payload,{adminToken:token}))});if(!r.ok)throw new Error("Server request failed.");const d=await r.json();if(!d.success)throw new Error(d.error||d.message||"Operation failed.");return d;}
+    async function updateProductStock(id,input){const p=allProducts.find(x=>String(x.id)===String(id));if(!p)return;const prev=p.stock??0;const stock=Math.max(0,Number(input.value)||0);input.disabled=true;try{await postAdminAction({action:"updateStock",id,stock});p.stock=stock;}catch(e){input.value=prev;alert(e.message||"Unable to update stock.");}finally{input.disabled=false;}}
+    async function updateProductStatus(id,status,select){const p=allProducts.find(x=>String(x.id)===String(id));if(!p)return;const prev=p.status||"active";select.disabled=true;try{await postAdminAction({action:"updateProductStatus",id,status});p.status=status;renderProducts();}catch(e){select.value=prev;alert(e.message||"Unable to update product status.");}finally{select.disabled=false;}}
+    async function updateProductFeatured(id,featured,select){const p=allProducts.find(x=>String(x.id)===String(id));if(!p)return;const prev=p.featured||"no";select.disabled=true;try{await postAdminAction({action:"updateFeatured",id,featured});p.featured=featured;}catch(e){select.value=prev;alert(e.message||"Unable to update featured status.");}finally{select.disabled=false;}}
+    async function deactivateProduct(id,b){if(!confirm("Deactivate this product? It will remain in the sheet and can be restored."))return;b.disabled=true;try{await postAdminAction({action:"deleteProduct",id});const p=allProducts.find(x=>String(x.id)===String(id));if(p)p.status="inactive";renderProducts();}catch(e){b.disabled=false;alert(e.message||"Unable to deactivate product.");}}
+    async function restoreProduct(id,b){b.disabled=true;try{await postAdminAction({action:"restoreProduct",id});const p=allProducts.find(x=>String(x.id)===String(id));if(p)p.status="active";renderProducts();}catch(e){b.disabled=false;alert(e.message||"Unable to restore product.");}}
+    async function permanentDeleteProduct(id,b){
+        const product=allProducts.find(x=>String(x.id)===String(id));
+        if(!product){alert("Product not found.");return;}
+        if(String(product.status||"").toLowerCase()!=="inactive"){
+            alert("Only inactive products can be permanently deleted.");
+            return;
+        }
+        const confirmed=confirm(
+            "PERMANENT DELETE\\n\\nThis will permanently remove the product from the Products sheet and delete its Google Drive product photos. Legacy GitHub photos will be left untouched.\\n\\nThis cannot be undone. Continue?"
+        );
+        if(!confirmed)return;
+        const typed=prompt('Type DELETE to permanently remove product "'+String(product.name||product.id)+'".');
+        if(typed!=="DELETE"){
+            alert("Permanent delete cancelled. You must type DELETE exactly.");
+            return;
+        }
+        b.disabled=true;
+        try{
+            await postAdminAction({action:"permanentDeleteProduct",id});
+            allProducts=allProducts.filter(x=>String(x.id)!==String(id));
+            renderProducts();
+            await loadDashboard();
+            alert("Product permanently deleted.");
+        }catch(e){
+            b.disabled=false;
+            alert(e.message||"Unable to permanently delete product.");
+        }
+    }
+    productForm.addEventListener("submit",async e=>{e.preventDefault();showProductFormMessage("");productSaveButton.disabled=true;const wasEditing=!!editingProductId;productSaveButton.textContent=wasEditing?"Saving...":"Adding...";const payload={name:productFields.name.value.trim(),category:productFields.category.value.trim(),subCategory:productFields.subCategory.value.trim(),collection:productFields.collection.value.trim(),price:Number(productFields.price.value)||0,oldPrice:Number(productFields.oldPrice.value)||"",discount:Number(productFields.discount.value)||0,image:productFields.image.value.trim(),badge:productFields.badge.value.trim(),stock:Math.max(0,Number(productFields.stock.value)||0),status:productFields.status.value,sizes:productFields.sizes.value.trim(),featured:productFields.featured.value,description:productFields.description.value.trim()};if(!payload.name){showProductFormMessage("Product name is required.");productSaveButton.disabled=false;productSaveButton.textContent=wasEditing?"Save Changes":"Add Product";return;}try{let d;if(wasEditing){if(productGalleryImages.length)payload.image=productGalleryImages[0];d=await postAdminAction(Object.assign({action:"updateProduct",id:editingProductId},payload));const u=d.product||Object.assign({id:editingProductId},payload);const idx=allProducts.findIndex(x=>String(x.id)===String(editingProductId));if(idx>=0)allProducts[idx]=Object.assign({},allProducts[idx],u);if(productGalleryImages.length)await persistProductGallery();}else{if(productFields.id.value.trim())payload.id=productFields.id.value.trim();d=await postAdminAction(Object.assign({action:"addProduct"},payload));const created=d.product;if(created){const createdId=String(created.id);allProducts.unshift(created);if(pendingProductFiles.length){const uploaded=[];for(const file of pendingProductFiles){const compressed=await prepareImageFile(file);const up=await postAdminAction({action:"uploadImage",filename:makeProductImageFilename(createdId,file.name),base64:compressed});const path=up.path||up.image;if(path)uploaded.push(path);}if(uploaded.length){await postAdminAction({action:"updateProductImages",id:createdId,images:uploaded});const idx=allProducts.findIndex(x=>String(x.id)===createdId);if(idx>=0){allProducts[idx].images=uploaded;allProducts[idx].image=uploaded[0];}}}}}closeProductModal();renderProducts();loadDashboard();}catch(e){showProductFormMessage(e.message||"Unable to save product.");}finally{productSaveButton.disabled=false;productSaveButton.textContent=wasEditing?"Save Changes":"Add Product";}});
+    addProductButton.addEventListener("click",()=>openProductModal(null));refreshProductsButton.addEventListener("click",loadProducts);productsSearch.addEventListener("input",renderProducts);productModalClose.addEventListener("click",closeProductModal);productCancelButton.addEventListener("click",closeProductModal);productModalBackdrop.addEventListener("click",e=>{if(e.target===productModalBackdrop)closeProductModal();});
+    uploadProductImagesButton.addEventListener("click",uploadSelectedProductImages);
+    productImageFiles.addEventListener("change",()=>{if(!editingProductId)previewPendingFiles();});
+    productFields.image.addEventListener("change",()=>{const value=productFields.image.value.trim();if(value){productGalleryImages=[value];renderProductGallery();}});
+
+    /* =====================================================
+       LOGIN
+    ===================================================== */
+
+    loginForm.addEventListener(
+        "submit",
+        async function (event) {
+
+            event.preventDefault();
+
+            clearLoginMessage();
+
+
+            const token =
+                adminTokenInput.value.trim();
+
+
+            if (!token) {
+
+                showLoginMessage(
+                    "Please enter your admin token."
+                );
+
+                return;
+
+            }
+
+
+            loginButton.disabled =
+                true;
+
+            loginButton.textContent =
+                "Signing in...";
+
+
+            try {
+
+                await verifyAdminToken(
+                    token
+                );
+
+
+                sessionStorage.setItem(
+                    ADMIN_TOKEN_KEY,
+                    token
+                );
+
+
+                showLoginMessage(
+                    "Login successful.",
+                    "success"
+                );
+
+
+                setTimeout(
+                    function () {
+
+                        showAdmin();
+
+                        loadDashboard();
+
+                    },
+                    250
+                );
+
+
+            } catch (error) {
+
+                console.error(
+                    "Login error:",
+                    error
+                );
+
+
+                showLoginMessage(
+                    error.message ||
+                    "Invalid admin token."
+                );
+
+
+                sessionStorage.removeItem(
+                    ADMIN_TOKEN_KEY
+                );
+
+
+            } finally {
+
+                loginButton.disabled =
+                    false;
+
+                loginButton.textContent =
+                    "Sign In";
+
+            }
+
+        }
+    );
+
+
+    /* =====================================================
+       LOGOUT
+    ===================================================== */
+
+    logoutButton.addEventListener(
+        "click",
+        function () {
+
+            sessionStorage.removeItem(
+                ADMIN_TOKEN_KEY
             );
 
+            showLogin();
+
         }
+    );
 
 
+    /* =====================================================
+       NAVIGATION
+    ===================================================== */
 
-        dots.forEach(
-            (dot, index) => {
+    document
+        .querySelectorAll(".nav-btn")
+        .forEach(
+            function (button) {
 
-                dot.addEventListener(
+                button.addEventListener(
                     "click",
                     function () {
 
-                        showSlide(index);
+                        document
+                            .querySelectorAll(
+                                ".nav-btn"
+                            )
+                            .forEach(
+                                function (item) {
 
-                        startSlider();
+                                    item.classList.remove(
+                                        "active"
+                                    );
+
+                                }
+                            );
+
+
+                        button.classList.add(
+                            "active"
+                        );
+
+
+                        const section =
+                            button.dataset.section;
+
+
+                        if (section === "dashboard" || section === "products" || section === "orders" || section === "store") {
+                            showSection(section);
+                            return;
+                        }
+
 
                     }
                 );
@@ -717,67 +1235,121 @@ document.addEventListener(
         );
 
 
+    ordersSearch.addEventListener("input", renderOrders);
 
-        showSlide(0);
+    refreshOrdersButton.addEventListener("click", loadOrders);
 
-        startSlider();
+    orderModalClose.addEventListener("click", closeOrderModal);
 
+    orderModalBackdrop.addEventListener("click", function(event) {
+        if (event.target === orderModalBackdrop) {
+            closeOrderModal();
+        }
+    });
 
+    document.addEventListener("keydown", function(event) {
+        if (event.key === "Escape") {
+            closeOrderModal();
+        }
+    });
+
+    /* =====================================================
+       FINAL PHYSICAL STORE / POS
+    ===================================================== */
+    const STORE_TZ_LOCALE = "en-BD";
+    function storeMoney(v){return formatMoney(Number(v)||0);}
+    function storeMsg(id,msg,type="error"){const el=document.getElementById(id);if(!el)return;el.textContent=msg||"";el.className="message "+(msg?type:"");}
+    function storeDateKey(v){const d=new Date(v);if(Number.isNaN(d.getTime()))return "";return d.toLocaleDateString("en-CA");}
+    function storeTodayKey(){return storeDateKey(new Date());}
+    function storeFinalPrice(p){const base=Number(p.price)||0;const discount=Number(p.discount)||0;const explicitFinal=Number(p.finalPrice);if(Number.isFinite(explicitFinal)&&explicitFinal>=0)return explicitFinal;return discount>0?Math.max(0,base-(base*discount/100)):base;}
+    function storeSizes(p){const raw=p&&p.sizes!==undefined?p.sizes:"";if(Array.isArray(raw))return raw.map(String).filter(Boolean);return String(raw||"").split(/[,|]/).map(x=>x.trim()).filter(Boolean);}
+    function storeProductOptions(selected=""){return '<option value="">Select product...</option>'+storeProducts.filter(p=>String(p.status||"active").toLowerCase()==="active").map(p=>`<option value="${escapeHtml(p.id)}"${String(p.id)===String(selected)?" selected":""}>${escapeHtml(p.name||p.id)} — ${escapeHtml(storeMoney(storeFinalPrice(p)))} · Stock ${escapeHtml(p.stock??0)}</option>`).join("");}
+    function storeSizeOptions(p,selected=""){const sizes=storeSizes(p);return '<option value="">'+(sizes.length?'Select size':'No size')+'</option>'+sizes.map(x=>`<option value="${escapeHtml(x)}"${x===selected?' selected':''}>${escapeHtml(x)}</option>`).join("");}
+    function addStoreItem(item={}){
+      const row=document.createElement("div");row.className="store-item-row";
+      const type=item.type||"website";
+      row.innerHTML=`<select class="store-item-type"><option value="website"${type==='website'?' selected':''}>Website</option><option value="manual"${type==='manual'?' selected':''}>Manual</option></select><select class="store-item-product">${storeProductOptions(item.id||"")}</select><input class="store-item-manual-name" type="text" placeholder="Manual product name" value="${escapeHtml(item.name||"")}" style="display:${type==='manual'?'block':'none'}"><select class="store-item-size"><option value="">Size</option></select><input class="store-item-qty" type="number" min="1" step="1" value="${escapeHtml(item.quantity||1)}"><input class="store-item-price" type="number" min="0" step="0.01" value="${escapeHtml(item.price??"")}" placeholder="Price"><div class="store-item-total">৳0</div><button class="store-remove" type="button">×</button>`;
+      const t=row.querySelector('.store-item-type'),sel=row.querySelector('.store-item-product'),name=row.querySelector('.store-item-manual-name'),size=row.querySelector('.store-item-size'),qty=row.querySelector('.store-item-qty'),price=row.querySelector('.store-item-price');
+      function sync(){const manual=t.value==='manual';sel.style.display=manual?'none':'block';name.style.display=manual?'block':'none';if(!manual){const p=storeProducts.find(x=>String(x.id)===String(sel.value));if(p){price.value=storeFinalPrice(p);size.innerHTML=storeSizeOptions(p,item.size||"");}}else{size.innerHTML='<option value="">Size</option>';}updateStoreTotals();}
+      t.addEventListener('change',()=>{item={};sync();});
+      sel.addEventListener('change',()=>{const p=storeProducts.find(x=>String(x.id)===String(sel.value));if(p){price.value=storeFinalPrice(p);size.innerHTML=storeSizeOptions(p);name.value="";}updateStoreTotals();});
+      qty.addEventListener('input',updateStoreTotals);price.addEventListener('input',updateStoreTotals);name.addEventListener('input',updateStoreTotals);size.addEventListener('change',updateStoreTotals);row.querySelector('.store-remove').addEventListener('click',()=>{row.remove();updateStoreTotals();});storeItems.appendChild(row);sync();
     }
-);
+    function getStoreItems(){return Array.from(storeItems.querySelectorAll('.store-item-row')).map(row=>{const type=row.querySelector('.store-item-type').value,id=row.querySelector('.store-item-product').value,p=storeProducts.find(x=>String(x.id)===String(id)),name=type==='manual'?row.querySelector('.store-item-manual-name').value.trim():(p?p.name:'');return {type,id:type==='manual'?'':id,name,size:row.querySelector('.store-item-size').value.trim(),quantity:Math.max(1,Math.floor(Number(row.querySelector('.store-item-qty').value)||1)),price:Math.max(0,Number(row.querySelector('.store-item-price').value)||0)};}).filter(x=>x.name&&x.quantity>0);}
+    function updateStoreTotals(){let subtotal=0;storeItems.querySelectorAll('.store-item-row').forEach(row=>{const q=Math.max(0,Number(row.querySelector('.store-item-qty').value)||0),pr=Math.max(0,Number(row.querySelector('.store-item-price').value)||0),t=q*pr;subtotal+=t;row.querySelector('.store-item-total').textContent=storeMoney(t);});const pct=Math.min(100,Math.max(0,Number(document.getElementById('storeDiscountPct').value)||0)),discount=subtotal*pct/100,total=Math.max(0,subtotal-discount),paid=Math.max(0,Number(document.getElementById('storePaid').value)||0),due=Math.max(0,total-paid);document.getElementById('storeSubtotal').textContent=storeMoney(subtotal);document.getElementById('storeDiscountView').textContent=storeMoney(discount);document.getElementById('storeTotal').textContent=storeMoney(total);document.getElementById('storeDue').textContent=storeMoney(due);return {subtotal,discountPct:pct,discount,total,paid,due};}
+    function clearStoreSale(){document.getElementById('storeCustomerName').value='';document.getElementById('storeCustomerPhone').value='';document.getElementById('storeDiscountPct').value=0;document.getElementById('storePaid').value=0;document.getElementById('storeTransaction').value='';document.getElementById('storeSaleNote').value='';storeItems.innerHTML='';addStoreItem();storeMsg('storeSaleMessage','');storeReceiptPreview.innerHTML='<div class="receipt-placeholder">Complete and save a sale to generate the receipt.</div>';document.getElementById('storeReceiptActions').style.display='none';storeLastReceipt=null;}
+    function buildReceiptHtml(sale){const items=(sale.items||[]).map(i=>`<div class="receipt-item"><span>${escapeHtml(i.name)}${i.size?' · '+escapeHtml(i.size):''} × ${escapeHtml(i.quantity)}</span><strong>${storeMoney(Number(i.price)*Number(i.quantity))}</strong></div>`).join('');return `<div class="receipt-head">${storeLogoDataUrl?`<img src="${storeLogoDataUrl}" alt="Peppy Fashion">`:''}<h2>Peppy Fashion</h2><div>Physical Store Receipt</div><div style="margin-top:6px">Receipt: <strong>${escapeHtml(sale.receiptNo)}</strong><br>${escapeHtml(formatDate(sale.date))}</div></div><div class="receipt-line"><span>Customer</span><strong>${escapeHtml(sale.customerName||'Walk-in Customer')}</strong></div>${sale.customerPhone?`<div class="receipt-line"><span>Phone</span><strong>${escapeHtml(sale.customerPhone)}</strong></div>`:''}<div class="receipt-items">${items}</div><div class="receipt-line"><span>Subtotal</span><strong>${storeMoney(sale.subtotal)}</strong></div><div class="receipt-line"><span>Discount (${Number(sale.discountPct||0).toFixed(2)}%)</span><strong>${storeMoney(sale.discount)}</strong></div><div class="receipt-line" style="font-size:16px"><span>Total</span><strong>${storeMoney(sale.total)}</strong></div><div class="receipt-line"><span>Paid</span><strong>${storeMoney(sale.paid)}</strong></div><div class="receipt-line"><span>Due</span><strong>${storeMoney(sale.due)}</strong></div><div class="receipt-line"><span>Payment</span><strong>${escapeHtml(sale.payment||'Cash')}</strong></div>${sale.transactionId?`<div class="receipt-line"><span>Reference</span><strong>${escapeHtml(sale.transactionId)}</strong></div>`:''}${sale.cashier?`<div class="receipt-line"><span>Cashier</span><strong>${escapeHtml(sale.cashier)}</strong></div>`:''}<div class="receipt-foot">Thank you for shopping with Peppy Fashion.<br>Please keep this receipt for your records.</div>`;}
+    function printStoreReceipt(sale){const html=buildReceiptHtml(sale);const w=window.open('','_blank','width=520,height=760');if(!w){alert('Please allow pop-ups to print the receipt.');return;}w.document.write(`<!doctype html><html><head><title>${escapeHtml(sale.receiptNo)}</title><style>@page{size:80mm auto;margin:4mm}body{font-family:Arial,sans-serif;font-size:12px;color:#111;margin:0}.receipt{max-width:72mm;margin:auto}.receipt-head{text-align:center;border-bottom:1px dashed #777;padding-bottom:8px;margin-bottom:8px}.receipt-head img{max-width:120px;max-height:45px;object-fit:contain}.receipt-head h2{margin:3px 0;font-size:18px}.receipt-line{display:flex;justify-content:space-between;gap:8px;padding:3px 0}.receipt-items{border-top:1px dashed #777;border-bottom:1px dashed #777;margin:7px 0;padding:6px 0}.receipt-item{display:grid;grid-template-columns:1fr auto;gap:8px;padding:3px 0}.receipt-foot{text-align:center;margin-top:10px;color:#555;line-height:1.45}</style></head><body><div class="receipt">${html}</div><script>window.onload=function(){window.print();};<\/script></body></html>`);w.document.close();}
+    async function imageToDataUrl(){if(storeLogoDataUrl)return storeLogoDataUrl;try{const r=await fetch('../assets/images/logo/logo.png');const b=await r.blob();storeLogoDataUrl=await new Promise((resolve,reject)=>{const fr=new FileReader();fr.onload=()=>resolve(fr.result);fr.onerror=reject;fr.readAsDataURL(b);});}catch(e){storeLogoDataUrl=null;}return storeLogoDataUrl;}
+    async function downloadPdfFromServer(action,payload,filename){try{await imageToDataUrl();const d=await postAdminAction(Object.assign({action},payload||{},storeLogoDataUrl?{logoDataUrl:storeLogoDataUrl}:{}));if(!d.pdfBase64)throw new Error('PDF data was not returned.');const bytes=Uint8Array.from(atob(d.pdfBase64),c=>c.charCodeAt(0));const blob=new Blob([bytes],{type:'application/pdf'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=filename;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);}catch(e){alert(e.message||'Unable to generate PDF.');}}
+    async function saveStoreSale(){const items=getStoreItems();if(!items.length){storeMsg('storeSaleMessage','Add at least one valid product.');return;}const totals=updateStoreTotals();if(totals.total<=0){storeMsg('storeSaleMessage','Sale total must be greater than zero.');return;}if(totals.paid>totals.total){storeMsg('storeSaleMessage','Paid amount cannot be greater than total.');return;}const payload={action:'createStoreSale',customerName:document.getElementById('storeCustomerName').value.trim()||'Walk-in Customer',customerPhone:document.getElementById('storeCustomerPhone').value.trim(),items,discountPct:totals.discountPct,payment:document.getElementById('storePayment').value,paid:totals.paid,transactionId:document.getElementById('storeTransaction').value.trim(),note:document.getElementById('storeSaleNote').value.trim()};const b=document.getElementById('storeSaveSaleButton');b.disabled=true;b.textContent='Saving...';try{const d=await postAdminAction(payload);storeLastReceipt=d.sale;await imageToDataUrl();storeReceiptPreview.innerHTML=buildReceiptHtml(d.sale);document.getElementById('storeReceiptActions').style.display='flex';storeMsg('storeSaleMessage','Sale saved successfully. Receipt '+d.sale.receiptNo+' is ready.','success');clearStoreSale();storeLastReceipt=d.sale;storeReceiptPreview.innerHTML=buildReceiptHtml(d.sale);document.getElementById('storeReceiptActions').style.display='flex';await loadStoreData();}catch(e){storeMsg('storeSaleMessage',e.message||'Unable to save sale.');}finally{b.disabled=false;b.textContent='Save Sale';}}
+    function saleMatchesDate(s,from,to){const k=storeDateKey(s.date);return (!from||k>=from)&&(!to||k<=to);}
+    function renderStoreSales(){const q=(document.getElementById('storeSalesSearch').value||'').trim().toLowerCase(),from=document.getElementById('storeSalesFrom').value,to=document.getElementById('storeSalesTo').value;const list=storeSales.filter(s=>saleMatchesDate(s,from,to)&&[s.receiptNo,s.customerName,s.customerPhone,s.payment,s.transactionId,...(s.items||[]).map(i=>i.name)].some(v=>String(v||'').toLowerCase().includes(q)));document.getElementById('storeSalesMeta').textContent=`Showing ${list.length} of ${storeSales.length} physical sales`;const body=document.getElementById('storeSalesBody');body.innerHTML='';document.getElementById('storeSalesEmpty').style.display=list.length?'none':'block';list.forEach(s=>{const tr=document.createElement('tr');tr.innerHTML=`<td>${escapeHtml(formatDate(s.date))}</td><td><strong>${escapeHtml(s.receiptNo)}</strong></td><td>${escapeHtml(s.customerName||'Walk-in Customer')}<br><small>${escapeHtml(s.customerPhone||'')}</small></td><td>${escapeHtml((s.items||[]).map(i=>`${i.name}${i.size?' · '+i.size:''} ×${i.quantity}`).join(', '))}</td><td>${storeMoney(s.total)}</td><td>${storeMoney(s.paid)}</td><td>${storeMoney(s.due)}</td><td>${escapeHtml(s.payment||'')}</td><td>${escapeHtml(s.cashier||'')}</td><td><button class="edit-btn" type="button" data-print="1">Print</button> <button class="secondary-btn" type="button" data-pdf="1">PDF</button></td>`;tr.querySelector('[data-print]').addEventListener('click',()=>printStoreReceipt(s));tr.querySelector('[data-pdf]').addEventListener('click',()=>downloadPdfFromServer('createStoreReceiptPdf',{sale:s},`${s.receiptNo}.pdf`));body.appendChild(tr);});}
+    function renderStoreExpenses(){const q=(document.getElementById('storeExpenseSearch').value||'').trim().toLowerCase(),from=document.getElementById('storeExpenseFrom').value,to=document.getElementById('storeExpenseTo').value,list=storeExpenses.filter(e=>saleMatchesDate(e,from,to)&&[e.category,e.description,e.reference,e.expenseId].some(v=>String(v||'').toLowerCase().includes(q)));const body=document.getElementById('storeExpenseBody');body.innerHTML='';document.getElementById('storeExpenseEmpty').style.display=list.length?'none':'block';list.forEach(e=>{const tr=document.createElement('tr');tr.innerHTML=`<td>${escapeHtml(formatDate(e.date))}</td><td>${escapeHtml(e.expenseId)}</td><td><span class="expense-badge">${escapeHtml(e.category)}</span></td><td>${storeMoney(e.amount)}</td><td>${escapeHtml(e.payment||'')}</td><td>${escapeHtml(e.reference||'')}</td><td>${escapeHtml(e.description||'')}</td><td>${escapeHtml(e.user||'')}</td>`;body.appendChild(tr);});const sums={};list.forEach(e=>sums[e.category]=(sums[e.category]||0)+Number(e.amount||0));document.getElementById('storeExpenseSummary').innerHTML=Object.keys(sums).sort().map(k=>`<div class="store-summary-item"><span>${escapeHtml(k)}</span><strong>${storeMoney(sums[k])}</strong></div>`).join('')||'<div class="store-empty">No expenses in this period.</div>';}
+    function renderPurchases(){const q=(document.getElementById('storePurchaseSearch').value||'').toLowerCase(),body=document.getElementById('storePurchaseBody');const list=storePurchases.filter(x=>[x.purchaseId,x.supplier,x.productName,x.reference].some(v=>String(v||'').toLowerCase().includes(q)));body.innerHTML='';document.getElementById('storePurchaseEmpty').style.display=list.length?'none':'block';list.forEach(x=>{const tr=document.createElement('tr');tr.innerHTML=`<td>${escapeHtml(formatDate(x.date))}</td><td>${escapeHtml(x.purchaseId)}</td><td>${escapeHtml(x.supplier)}</td><td>${escapeHtml(x.productName)}${x.size?' · '+escapeHtml(x.size):''}</td><td>${escapeHtml(x.quantity)}</td><td>${storeMoney(x.costPrice)}</td><td>${storeMoney(x.totalCost)}</td><td>${storeMoney(x.paid)}</td><td>${storeMoney(x.due)}</td><td>—</td>`;body.appendChild(tr);});const suppliers={};storePurchases.forEach(x=>suppliers[x.supplier]=(suppliers[x.supplier]||0)+1);document.getElementById('storeSupplierList').innerHTML=Object.keys(suppliers).sort().map(k=>`<div class="store-summary-item"><span>${escapeHtml(k)}</span><strong>${suppliers[k]} purchase(s)</strong></div>`).join('')||'<div class="store-empty">No supplier records.</div>';}
+    function populatePurchaseProducts(){const el=document.getElementById('storePurchaseProduct');el.innerHTML='<option value="">Select product...</option>'+storeProducts.filter(p=>String(p.status||'active').toLowerCase()==='active').map(p=>`<option value="${escapeHtml(p.id)}">${escapeHtml(p.name)} · Stock ${escapeHtml(p.stock??0)}</option>`).join('');}
+    function renderReturns(){const body=document.getElementById('storeReturnBody');body.innerHTML='';document.getElementById('storeReturnEmpty').style.display=storeReturns.length?'none':'block';storeReturns.forEach(x=>{const tr=document.createElement('tr');tr.innerHTML=`<td>${escapeHtml(formatDate(x.date))}</td><td>${escapeHtml(x.returnId)}</td><td>${escapeHtml(x.receiptNo)}</td><td>${escapeHtml(x.productName)}${x.size?' · '+escapeHtml(x.size):''}</td><td>${escapeHtml(x.quantity)}</td><td>${storeMoney(x.refundAmount)}</td><td>${escapeHtml(x.payment)}</td><td>${escapeHtml(x.reason)}</td><td>${escapeHtml(x.user||'')}</td>`;body.appendChild(tr);});}
+    function renderCustomers(){const q=(document.getElementById('storeCustomerSearch').value||'').toLowerCase(),map={};storeSales.forEach(s=>{const key=s.customerPhone||s.customerName||'Walk-in Customer';if(!map[key])map[key]={name:s.customerName||'Walk-in Customer',phone:s.customerPhone||'',count:0,total:0,paid:0,due:0,last:s.date};map[key].count++;map[key].total+=Number(s.total||0);map[key].paid+=Number(s.paid||0);map[key].due+=Number(s.due||0);if(new Date(s.date)>new Date(map[key].last))map[key].last=s.date;});const list=Object.values(map).filter(x=>(x.name+' '+x.phone).toLowerCase().includes(q)).sort((a,b)=>b.total-a.total),body=document.getElementById('storeCustomerBody');body.innerHTML='';document.getElementById('storeCustomerEmpty').style.display=list.length?'none':'block';list.forEach(x=>{const tr=document.createElement('tr');tr.innerHTML=`<td><strong>${escapeHtml(x.name)}</strong></td><td>${escapeHtml(x.phone||'—')}</td><td>${x.count}</td><td>${storeMoney(x.total)}</td><td>${storeMoney(x.paid)}</td><td>${storeMoney(x.due)}</td><td>${escapeHtml(formatDate(x.last))}</td>`;body.appendChild(tr);});}
+    function getReportRange(){const preset=document.getElementById('storeReportPreset').value,today=new Date(),end=storeDateKey(today);let start=end;if(preset==='week'){const d=new Date(today);d.setDate(d.getDate()-d.getDay());start=storeDateKey(d);}else if(preset==='month'){start=storeDateKey(new Date(today.getFullYear(),today.getMonth(),1));}else if(preset==='custom'){start=document.getElementById('storeReportFrom').value||end;}document.getElementById('storeReportFrom').value=start;document.getElementById('storeReportTo').value=document.getElementById('storeReportTo').value||end;return {from:start,to:document.getElementById('storeReportTo').value||end};}
+    function runStoreReport(){const r=getReportRange(),sales=storeSales.filter(x=>saleMatchesDate(x,r.from,r.to)),expenses=storeExpenses.filter(x=>saleMatchesDate(x,r.from,r.to)),salesTotal=sales.reduce((a,x)=>a+Number(x.total||0),0),paid=sales.reduce((a,x)=>a+Number(x.paid||0),0),due=sales.reduce((a,x)=>a+Number(x.due||0),0),expTotal=expenses.reduce((a,x)=>a+Number(x.amount||0),0);document.getElementById('reportSales').textContent=storeMoney(salesTotal);document.getElementById('reportTransactions').textContent=sales.length;document.getElementById('reportPaid').textContent=storeMoney(paid);document.getElementById('reportDue').textContent=storeMoney(due);document.getElementById('reportExpenses').textContent=storeMoney(expTotal);document.getElementById('reportNet').textContent=storeMoney(salesTotal-expTotal);const best={};sales.forEach(s=>(s.items||[]).forEach(i=>{const k=i.name||'Unknown';best[k]=(best[k]||0)+Number(i.quantity||0);}));document.getElementById('storeBestSellers').innerHTML=Object.entries(best).sort((a,b)=>b[1]-a[1]).slice(0,10).map((x,i)=>`<div class="store-summary-item"><span>#${i+1} ${escapeHtml(x[0])}</span><strong>${x[1]} sold</strong></div>`).join('')||'<div class="store-empty">No sales.</div>';const eb={};expenses.forEach(e=>eb[e.category]=(eb[e.category]||0)+Number(e.amount||0));document.getElementById('storeReportExpenses').innerHTML=Object.entries(eb).sort((a,b)=>b[1]-a[1]).map(x=>`<div class="store-summary-item"><span>${escapeHtml(x[0])}</span><strong>${storeMoney(x[1])}</strong></div>`).join('')||'<div class="store-empty">No expenses.</div>';const cogs=sales.reduce((sum,s)=>(sum+(s.items||[]).reduce((a,i)=>a+Number(i.costPrice||0)*Number(i.quantity||0),0)),0),gross=salesTotal-cogs,net=gross-expTotal;document.getElementById('storePnl').innerHTML=`<div class="store-pnl-box"><span>Revenue</span><strong>${storeMoney(salesTotal)}</strong></div><div class="store-pnl-box"><span>COGS</span><strong>${storeMoney(cogs)}</strong></div><div class="store-pnl-box"><span>Gross Profit</span><strong>${storeMoney(gross)}</strong></div><div class="store-pnl-box"><span>Net Profit</span><strong>${storeMoney(net)}</strong></div>`;return {from:r.from,to:r.to,sales,expenses,salesTotal,paid,due,expTotal,cogs,gross,net};}
+    async function saveStoreExpense(){const amount=Number(document.getElementById('storeExpenseAmount').value)||0;if(amount<=0){storeMsg('storeExpenseMessage','Enter a valid expense amount.');return;}const b=document.getElementById('storeSaveExpenseButton');b.disabled=true;try{await postAdminAction({action:'createStoreExpense',category:document.getElementById('storeExpenseCategory').value,amount,payment:document.getElementById('storeExpensePayment').value,reference:document.getElementById('storeExpenseReference').value.trim(),description:document.getElementById('storeExpenseDescription').value.trim()});storeMsg('storeExpenseMessage','Expense saved successfully.','success');document.getElementById('storeExpenseAmount').value='';document.getElementById('storeExpenseReference').value='';document.getElementById('storeExpenseDescription').value='';await loadStoreData();}catch(e){storeMsg('storeExpenseMessage',e.message||'Unable to save expense.');}finally{b.disabled=false;}}
+    async function saveStorePurchase(){const id=document.getElementById('storePurchaseProduct').value;if(!id){storeMsg('storePurchaseMessage','Select a product.');return;}const qty=Math.max(1,Math.floor(Number(document.getElementById('storePurchaseQty').value)||0)),cost=Math.max(0,Number(document.getElementById('storePurchaseCost').value)||0),paid=Math.max(0,Number(document.getElementById('storePurchasePaid').value)||0);if(cost<=0){storeMsg('storePurchaseMessage','Enter a valid cost price.');return;}if(paid>qty*cost){storeMsg('storePurchaseMessage','Paid cannot exceed purchase total.');return;}const b=document.getElementById('storeSavePurchaseButton');b.disabled=true;try{await postAdminAction({action:'createStorePurchase',supplier:document.getElementById('storePurchaseSupplier').value.trim(),supplierPhone:document.getElementById('storePurchaseSupplierPhone').value.trim(),productId:id,size:document.getElementById('storePurchaseSize').value.trim(),quantity:qty,costPrice:cost,paid,payment:document.getElementById('storePurchasePayment').value,reference:document.getElementById('storePurchaseReference').value.trim(),note:document.getElementById('storePurchaseNote').value.trim()});storeMsg('storePurchaseMessage','Purchase saved and stock increased.','success');document.getElementById('storePurchaseQty').value=1;document.getElementById('storePurchaseCost').value='';document.getElementById('storePurchasePaid').value=0;document.getElementById('storePurchaseReference').value='';document.getElementById('storePurchaseNote').value='';await loadStoreData();}catch(e){storeMsg('storePurchaseMessage',e.message||'Unable to save purchase.');}finally{b.disabled=false;}}
+    function findReturnReceipt(){const receipt=document.getElementById('storeReturnReceipt').value.trim().toLowerCase(),sale=storeSales.find(x=>String(x.receiptNo).toLowerCase()===receipt);const sel=document.getElementById('storeReturnProduct');if(!sale){sel.innerHTML='<option value="">Receipt not found</option>';storeMsg('storeReturnMessage','Receipt not found.');return;}sel.innerHTML=(sale.items||[]).map((i,idx)=>`<option value="${idx}">${escapeHtml(i.name)}${i.size?' · '+escapeHtml(i.size):''} — Qty ${i.quantity}</option>`).join('');storeMsg('storeReturnMessage','Receipt loaded. Select item and refund amount.','success');document.getElementById('storeReturnProduct').dataset.receipt=receipt;}
+    async function saveStoreReturn(){const receipt=document.getElementById('storeReturnReceipt').value.trim(),sale=storeSales.find(x=>String(x.receiptNo).toLowerCase()===receipt.toLowerCase()),idx=Number(document.getElementById('storeReturnProduct').value),qty=Math.max(1,Math.floor(Number(document.getElementById('storeReturnQty').value)||0)),refund=Math.max(0,Number(document.getElementById('storeReturnAmount').value)||0);if(!sale||!sale.items[idx]){storeMsg('storeReturnMessage','Find a valid receipt first.');return;}if(qty>Number(sale.items[idx].quantity)){storeMsg('storeReturnMessage','Return quantity exceeds sold quantity.');return;}const b=document.getElementById('storeSaveReturnButton');b.disabled=true;try{await postAdminAction({action:'createStoreReturn',receiptNo:sale.receiptNo,item:sale.items[idx],quantity:qty,refundAmount:refund,payment:document.getElementById('storeReturnPayment').value,reason:document.getElementById('storeReturnReason').value.trim()});storeMsg('storeReturnMessage','Return saved and stock restored.','success');await loadStoreData();}catch(e){storeMsg('storeReturnMessage',e.message||'Unable to save return.');}finally{b.disabled=false;}}
+    async function loadStoreData(){try{const [s,e,p,pu,r]=await Promise.all([apiRequest('storeSales'),apiRequest('storeExpenses'),apiRequest('adminproducts'),apiRequest('storepurchases'),apiRequest('storereturns')]);storeSales=Array.isArray(s.sales)?s.sales:[];storeExpenses=Array.isArray(e.expenses)?e.expenses:[];storeProducts=Array.isArray(p.products)?p.products:[];storePurchases=Array.isArray(pu.purchases)?pu.purchases:[];storeReturns=Array.isArray(r.returns)?r.returns:[];const today=storeTodayKey(),ts=storeSales.filter(x=>storeDateKey(x.date)===today),te=storeExpenses.filter(x=>storeDateKey(x.date)===today);document.getElementById('storeTodaySales').textContent=storeMoney(ts.reduce((a,x)=>a+Number(x.total||0),0));document.getElementById('storeTodayTransactions').textContent=ts.length;document.getElementById('storeTodayPaid').textContent=storeMoney(ts.reduce((a,x)=>a+Number(x.paid||0),0));document.getElementById('storeTodayDue').textContent=storeMoney(ts.reduce((a,x)=>a+Number(x.due||0),0));document.getElementById('storeTodayExpenses').textContent=storeMoney(te.reduce((a,x)=>a+Number(x.amount||0),0));document.getElementById('storeTodayNet').textContent=storeMoney(ts.reduce((a,x)=>a+Number(x.total||0),0)-te.reduce((a,x)=>a+Number(x.amount||0),0));populatePurchaseProducts();renderStoreSales();renderStoreExpenses();renderPurchases();renderReturns();renderCustomers();runStoreReport();if(!storeItems.children.length)addStoreItem();}catch(e){console.error('Store data error',e);storeMsg('storeSaleMessage',e.message||'Unable to load store data.');}}
+    document.getElementById('storeAddItemButton').addEventListener('click',()=>addStoreItem());document.getElementById('storeClearButton').addEventListener('click',clearStoreSale);document.getElementById('storeSaveSaleButton').addEventListener('click',saveStoreSale);document.getElementById('storeRefreshButton').addEventListener('click',loadStoreData);document.getElementById('storeSalesRefresh').addEventListener('click',renderStoreSales);document.getElementById('storeExpenseRefresh').addEventListener('click',renderStoreExpenses);document.getElementById('storePurchaseRefresh').addEventListener('click',renderPurchases);document.getElementById('storeCustomerRefresh').addEventListener('click',renderCustomers);document.getElementById('storeFindReturnButton').addEventListener('click',findReturnReceipt);document.getElementById('storeSaveReturnButton').addEventListener('click',saveStoreReturn);document.getElementById('storeSaveExpenseButton').addEventListener('click',saveStoreExpense);document.getElementById('storeSavePurchaseButton').addEventListener('click',saveStorePurchase);document.getElementById('storeRunReportButton').addEventListener('click',runStoreReport);document.getElementById('storeDownloadReportButton').addEventListener('click',()=>{const r=runStoreReport();downloadPdfFromServer('createStoreReportPdf',{report:r,from:r.from,to:r.to},`Peppy-Fashion-Report-${r.from}-to-${r.to}.pdf`);});document.getElementById('storePrintReceiptButton').addEventListener('click',()=>{if(storeLastReceipt)printStoreReceipt(storeLastReceipt);});document.getElementById('storePdfReceiptButton').addEventListener('click',()=>{if(storeLastReceipt)downloadPdfFromServer('createStoreReceiptPdf',{sale:storeLastReceipt},`${storeLastReceipt.receiptNo}.pdf`);});['storeSalesSearch','storeSalesFrom','storeSalesTo'].forEach(id=>document.getElementById(id).addEventListener('input',renderStoreSales));['storeExpenseSearch','storeExpenseFrom','storeExpenseTo'].forEach(id=>document.getElementById(id).addEventListener('input',renderStoreExpenses));document.getElementById('storePurchaseSearch').addEventListener('input',renderPurchases);document.getElementById('storeCustomerSearch').addEventListener('input',renderCustomers);document.getElementById('storeDiscountPct').addEventListener('input',updateStoreTotals);document.getElementById('storePaid').addEventListener('input',updateStoreTotals);document.getElementById('storeReportPreset').addEventListener('change',()=>{if(document.getElementById('storeReportPreset').value!=='custom')runStoreReport();});document.querySelectorAll('.store-tab').forEach(t=>t.addEventListener('click',()=>{document.querySelectorAll('.store-tab').forEach(x=>x.classList.remove('active'));document.querySelectorAll('.store-panel').forEach(x=>x.classList.remove('active'));t.classList.add('active');document.getElementById('store'+t.dataset.storeTab.charAt(0).toUpperCase()+t.dataset.storeTab.slice(1)+'Panel').classList.add('active');}));
+    /* =====================================================
+       INITIAL SESSION CHECK
+    ===================================================== */
 
-</script>
+    (async function init() {
+
+        const savedToken =
+            sessionStorage.getItem(
+                ADMIN_TOKEN_KEY
+            );
 
 
+        if (!savedToken) {
 
-<!-- ===========================
-SERVICE WORKER
-=========================== -->
+            showLogin();
 
-<script>
-
-if ("serviceWorker" in navigator) {
-
-
-    window.addEventListener(
-        "load",
-        function () {
-
-
-            navigator.serviceWorker
-                .register("sw.js")
-                .then(
-                    () => {
-
-                        console.log(
-                            "Service Worker Registered"
-                        );
-
-                    }
-                )
-                .catch(
-                    error => {
-
-                        console.log(
-                            "Service Worker Error:",
-                            error
-                        );
-
-                    }
-                );
-
+            return;
 
         }
-    );
 
-}
+
+        try {
+
+            await verifyAdminToken(
+                savedToken
+            );
+
+
+            showAdmin();
+
+            loadDashboard();
+
+
+        } catch (error) {
+
+            console.warn(
+                "Saved admin session expired or invalid."
+            );
+
+
+            sessionStorage.removeItem(
+                ADMIN_TOKEN_KEY
+            );
+
+
+            showLogin();
+
+        }
+
+    })();
 
 </script>
-
-
-
-<script src="assets/js/pwa.js"></script>
-
 
 </body>
 
