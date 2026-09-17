@@ -8,7 +8,7 @@
    - Google Apps Script API bypass
 ========================================== */
 
-const CACHE_NAME = "peppy-fashion-v7";
+const CACHE_NAME = "peppy-fashion-v10";
 
 const urlsToCache = [
     "/peppy-fashion-v2/",
