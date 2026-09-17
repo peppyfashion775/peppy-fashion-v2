@@ -8,13 +8,16 @@ let products = [];
 const GOOGLE_SCRIPT_URL =
 "https://script.google.com/macros/s/AKfycbyJQKb2dFFZvo765SCMbK_y3cef2opsujzzzJr4HsuvZbSBgsU3fZ-06qgDATHVr4nb3A/exec";
 
-const CACHE_KEY = "peppy_products_v7";
+const CACHE_KEY = "peppy_products_v10";
 
 function productNumber(value) {
     if (typeof value === "number") return Number.isFinite(value) ? value : 0;
     const text = String(value ?? "").trim().replace(/,/g, "").replace(/[৳$%]/g, "");
-    const n = Number(text);
-    return Number.isFinite(n) ? n : 0;
+    const direct = Number(text);
+    if (Number.isFinite(direct)) return direct;
+    const match = text.match(/-?\d+(?:\.\d+)?/);
+    const extracted = match ? Number(match[0]) : 0;
+    return Number.isFinite(extracted) ? extracted : 0;
 }
 
 function syncCartProductPrices() {
@@ -133,7 +136,7 @@ async function refreshProducts(){
             data.products.map(product => ({
 
                 id:
-                Number(product.id),
+                String(product.id ?? "").trim(),
 
                 name:
                 product.name || "",
@@ -215,7 +218,7 @@ function getProductById(id){
 
     return products.find(product =>
 
-        Number(product.id) === Number(id)
+        String(product.id).trim() === String(id).trim()
 
     );
 
