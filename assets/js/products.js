@@ -8,7 +8,37 @@ let products = [];
 const GOOGLE_SCRIPT_URL =
 "https://script.google.com/macros/s/AKfycbyJQKb2dFFZvo765SCMbK_y3cef2opsujzzzJr4HsuvZbSBgsU3fZ-06qgDATHVr4nb3A/exec";
 
-const CACHE_KEY = "peppy_products";
+const CACHE_KEY = "peppy_products_v10";
+
+function productNumber(value) {
+    if (typeof value === "number") return Number.isFinite(value) ? value : 0;
+    const text = String(value ?? "").trim().replace(/,/g, "").replace(/[৳$%]/g, "");
+    const direct = Number(text);
+    if (Number.isFinite(direct)) return direct;
+    const match = text.match(/-?\d+(?:\.\d+)?/);
+    const extracted = match ? Number(match[0]) : 0;
+    return Number.isFinite(extracted) ? extracted : 0;
+}
+
+function syncCartProductPrices() {
+    try {
+        const raw = localStorage.getItem("peppyCart");
+        if (!raw) return;
+        const cart = JSON.parse(raw);
+        if (!Array.isArray(cart)) return;
+        let changed = false;
+        cart.forEach(item => {
+            const p = products.find(x => String(x.id) === String(item.id));
+            if (p && productNumber(item.price) !== p.price) {
+                item.price = p.price;
+                changed = true;
+            }
+        });
+        if (changed) localStorage.setItem("peppyCart", JSON.stringify(cart));
+    } catch (e) {
+        console.warn("Unable to sync cart prices:", e);
+    }
+}
 
 
 
@@ -75,7 +105,7 @@ async function refreshProducts(){
     try{
 
         const response =
-        await fetch(API_URL, { cache: "no-store" });
+        await fetch(GOOGLE_SCRIPT_URL, { cache: "no-store" });
 
 
 
@@ -106,7 +136,7 @@ async function refreshProducts(){
             data.products.map(product => ({
 
                 id:
-                Number(product.id),
+                String(product.id ?? "").trim(),
 
                 name:
                 product.name || "",
@@ -121,15 +151,15 @@ async function refreshProducts(){
                 product.collection || "",
 
                 price:
-                Number(product.price) || 0,
+                productNumber(product.price),
 
                 oldPrice:
                 product.oldPrice
-                ? Number(product.oldPrice)
+                ? productNumber(product.oldPrice)
                 : null,
 
                 discount:
-                Number(product.discount) || 0,
+                productNumber(product.discount),
 
                 image:
                 product.image || "",
@@ -138,7 +168,7 @@ async function refreshProducts(){
                 product.badge || "",
 
                 stock:
-                Number(product.stock) || 0,
+                productNumber(product.stock),
 
                 featured:
                 String(product.featured)
@@ -159,13 +189,8 @@ async function refreshProducts(){
 
 
 
-            localStorage.setItem(
-
-                CACHE_KEY,
-
-                JSON.stringify(products)
-
-            );
+            localStorage.setItem(CACHE_KEY, JSON.stringify(products));
+            syncCartProductPrices();
 
         }
 
@@ -193,7 +218,7 @@ function getProductById(id){
 
     return products.find(product =>
 
-        Number(product.id) === Number(id)
+        String(product.id).trim() === String(id).trim()
 
     );
 
