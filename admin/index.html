@@ -285,9 +285,10 @@ body{overflow-x:hidden}button,input,select,textarea{font:inherit}button{cursor:p
        CONFIGURATION
     ===================================================== */
 
-    const API_URL =
-        "https://script.google.com/macros/s/AKfycbwbHxHS5GuRH4Lr-L5wTs8aRjXbdgK60CyM0muAjRvhUKZ-1IzeFBGq7y6an9d0Kmg_/exec";
+   const GOOGLE_SCRIPT_URL =
+"https://script.google.com/macros/s/AKfycbyJQKb2dFFZvo765SCMbK_y3cef2opsujzzzJr4HsuvZbSBgsU3fZ-06qgDATHVr4nb3A/exec";
 
+    const API_URL = GOOGLE_SCRIPT_URL;
 
     const ADMIN_TOKEN_KEY =
         "peppy_admin_token";
@@ -482,7 +483,8 @@ body{overflow-x:hidden}button,input,select,textarea{font:inherit}button{cursor:p
             await fetch(
                 API_URL +
                 "?" +
-                params.toString()
+                params.toString(),
+                { cache: "no-store" }
             );
 
 
@@ -538,7 +540,8 @@ body{overflow-x:hidden}button,input,select,textarea{font:inherit}button{cursor:p
             await fetch(
                 API_URL +
                 "?" +
-                params.toString()
+                params.toString(),
+                { cache: "no-store" }
             );
 
 
