@@ -1874,8 +1874,8 @@ function renderRelatedProducts(
 
             .filter(
                 product =>
-                    String(product.id).trim() !==
-                    String(currentId).trim()
+                    Number(product.id) !==
+                    currentId
             )
 
             .map(product => {

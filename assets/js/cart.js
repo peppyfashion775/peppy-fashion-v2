@@ -387,8 +387,8 @@ function addToCart(
     let existing =
         cart.find(item =>
 
-            String(item.id).trim() ===
-                String(productId).trim()
+            Number(item.id) ===
+                Number(productId)
 
             &&
 
@@ -516,8 +516,8 @@ function changeQuantity(
 
     let item = cart.find(product =>
 
-        String(product.id).trim() ===
-            String(productId).trim()
+        Number(product.id) ===
+            Number(productId)
 
         &&
 
