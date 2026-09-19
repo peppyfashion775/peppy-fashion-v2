@@ -501,7 +501,7 @@
 ===================================== */
 
 const GOOGLE_SCRIPT_URL =
-"https://script.google.com/macros/s/AKfycbyJQKb2dFFZvo765SCMbK_y3cef2opsujzzzJr4HsuvZbSBgsU3fZ-06qgDATHVr4nb3A/exec";
+"https://script.google.com/macros/s/AKfycbwbHxHS5GuRH4Lr-L5wTs8aRjXbdgK60CyM0muAjRvhUKZ-1IzeFBGq7y6an9d0Kmg_/exec";
 
 
 /* =====================================
@@ -525,12 +525,6 @@ async function loadCheckout() {
     */
 
     if (
-        typeof refreshProducts === "function"
-    ) {
-
-        await refreshProducts();
-
-    } else if (
         typeof loadProducts === "function"
     ) {
 
@@ -1002,55 +996,76 @@ function calculateCheckout() {
    PROMO CODE
 ===================================== */
 
-async function applyPromo() {
+function applyPromo() {
 
-    const input = document.getElementById("promoCode");
-    const code = input ? input.value.trim().toUpperCase() : "";
 
-    // Promo is calculated directly from the current checkout cart.
-    // No product API call is needed here.
-    const cart = typeof getCart === "function" ? getCart() : [];
+    let code =
+        document.getElementById(
+            "promoCode"
+        )
+        .value
+        .trim()
+        .toUpperCase();
 
-    if (!cart.length) {
+
+    if (
+        code === "PEPPY10"
+    ) {
+
+
+        let cart =
+            getCart();
+
+
+        let subtotal = 0;
+
+
+        cart.forEach(
+            item => {
+
+                subtotal +=
+                    (
+                        Number(item.price) ||
+                        0
+                    )
+                    *
+                    (
+                        Number(item.quantity) ||
+                        0
+                    );
+
+            }
+        );
+
+
+        discountAmount =
+            Math.round(
+                subtotal * 0.10
+            );
+
+
+        alert(
+            "Promo Code Applied: 10% Off"
+        );
+
+
+    } else {
+
+
         discountAmount = 0;
-        calculateCheckout();
-        alert("Your cart is empty.");
-        return;
+
+
+        alert(
+            "Invalid Promo Code"
+        );
+
     }
 
-    if (code !== "PEPPY10") {
-        discountAmount = 0;
-        calculateCheckout();
-        alert("Invalid Promo Code");
-        return;
-    }
 
-    // Always use the latest product prices. This also repairs old cart
-    // items that were saved with a 0 price.
-    let subtotal = 0;
-    cart.forEach(item => {
-        const product = typeof getProductById === "function"
-            ? getProductById(item.id)
-            : null;
-        const price = product
-            ? (typeof productNumber === "function"
-                ? productNumber(product.price)
-                : Number(product.price) || 0)
-            : (typeof productNumber === "function"
-                ? productNumber(item.price)
-                : Number(item.price) || 0);
-        item.price = price;
-        subtotal += price * (Number(item.quantity) || 0);
-    });
-
-    if (typeof saveCart === "function") {
-        saveCart(cart);
-    }
-
-    discountAmount = Math.round(subtotal * 0.10);
     calculateCheckout();
-    alert("Promo Code Applied: 10% Off");
+
 }
+
 
 
 /* =====================================
@@ -1059,8 +1074,7 @@ async function applyPromo() {
 
 async function placeOrder() {
 
-    // Use the cart already displayed on checkout. Do not make another
-    // product API request here; it can block a valid order submission.
+
     let cart =
         getCart();
 
@@ -1270,22 +1284,28 @@ async function placeOrder() {
     try {
 
 
-        // Use a simple form-encoded POST so the browser does not send
-        // a CORS preflight to Google Apps Script.
-        const payload = new URLSearchParams();
-        payload.set("payload", JSON.stringify(order));
-
         await fetch(
             GOOGLE_SCRIPT_URL,
             {
-                method: "POST",
-                mode: "no-cors",
-                cache: "no-store",
+
+                method:
+                    "POST",
+
+                mode:
+                    "no-cors",
+
                 headers: {
+
                     "Content-Type":
-                        "application/x-www-form-urlencoded;charset=UTF-8"
+                        "application/json"
+
                 },
-                body: payload.toString()
+
+                body:
+                    JSON.stringify(
+                        order
+                    )
+
             }
         );
 
