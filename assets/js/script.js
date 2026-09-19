@@ -687,6 +687,8 @@ function displayProducts(
                     <img
                         src="${product.image}"
                         alt="${product.name}"
+                        loading="lazy"
+                        decoding="async"
                     >
 
                 </div>
@@ -1637,6 +1639,7 @@ function loadSingleProduct() {
             <img
                 src="${product.image}"
                 alt="${product.name}"
+                decoding="async"
             >
 
         </div>
@@ -2112,6 +2115,8 @@ function renderRelatedProducts(
                     <img
                         src="${product.image}"
                         alt="${product.name}"
+                        loading="lazy"
+                        decoding="async"
                     >
 
                 </div>

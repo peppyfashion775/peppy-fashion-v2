@@ -4,6 +4,7 @@
 ===================================== */
 
 let products = [];
+let productsLoadPromise = null;
 
 const GOOGLE_SCRIPT_URL =
 "https://script.google.com/macros/s/AKfycbyJQKb2dFFZvo765SCMbK_y3cef2opsujzzzJr4HsuvZbSBgsU3fZ-06qgDATHVr4nb3A/exec";
@@ -47,52 +48,47 @@ function syncCartProductPrices() {
 ===================================== */
 async function loadProducts(){
 
-    if(products.length > 0){
+    if (products.length > 0) {
         return products;
     }
 
-    let cachedProducts =
-        localStorage.getItem(CACHE_KEY);
+    if (productsLoadPromise) {
+        return productsLoadPromise;
+    }
 
-    if(cachedProducts){
+    let cachedProducts = localStorage.getItem(CACHE_KEY);
 
-        try{
+    if (cachedProducts) {
+        try {
+            products = JSON.parse(cachedProducts);
 
-            products =
-                JSON.parse(cachedProducts);
-
-            // Refresh in background
+            // Refresh in the background. Cached data is used immediately so
+            // the page does not wait for Google Apps Script on every visit.
             refreshProducts().then(() => {
-
-                // Re-render shop after fresh data arrives
-                if(
-                    typeof applyFilters === "function" &&
-                    document.getElementById("productContainer")
-                ){
+                if (typeof applyFilters === "function" &&
+                    document.getElementById("productContainer")) {
                     applyFilters();
                 }
-
+                if (typeof calculateCheckout === "function" &&
+                    document.getElementById("checkoutSubtotal")) {
+                    calculateCheckout();
+                }
             });
 
             return products;
-
-        }
-
-        catch(error){
-
-            console.error(
-                "Invalid cached products:",
-                error
-            );
-
+        } catch (error) {
+            console.error("Invalid cached products:", error);
             localStorage.removeItem(CACHE_KEY);
-
         }
-
     }
 
-    return await refreshProducts();
+    productsLoadPromise = refreshProducts();
 
+    try {
+        return await productsLoadPromise;
+    } finally {
+        productsLoadPromise = null;
+    }
 }
 
 
@@ -104,8 +100,18 @@ async function refreshProducts(){
 
     try{
 
-        const response =
-        await fetch(GOOGLE_SCRIPT_URL, { cache: "no-store" });
+        const controller = new AbortController();
+        const timeout = setTimeout(() => controller.abort(), 12000);
+
+        let response;
+        try {
+            response = await fetch(GOOGLE_SCRIPT_URL, {
+                cache: "no-store",
+                signal: controller.signal
+            });
+        } finally {
+            clearTimeout(timeout);
+        }
 
 
 

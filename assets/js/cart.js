@@ -227,6 +227,45 @@ function isValidProductSize(
 
 
 /* =====================================
+   REPAIR CART PRICES FROM CURRENT PRODUCTS
+===================================== */
+
+function syncCartWithProducts() {
+
+    const cart = getCart();
+    if (!Array.isArray(cart) || !cart.length) return cart;
+
+    let changed = false;
+
+    cart.forEach(item => {
+        const product =
+            typeof getProductById === "function"
+                ? getProductById(item.id)
+                : null;
+
+        if (product) {
+            const price = Number(product.price) || 0;
+            if (Number(item.price) !== price) {
+                item.price = price;
+                changed = true;
+            }
+
+            if (isFreeSizeProduct(product)) {
+                const freeSize = getFreeSizeValue(product);
+                if (String(item.size || "") !== String(freeSize)) {
+                    item.size = freeSize;
+                    changed = true;
+                }
+            }
+        }
+    });
+
+    if (changed) saveCart(cart);
+    return cart;
+}
+
+
+/* =====================================
    ADD TO CART
 ===================================== */
 
