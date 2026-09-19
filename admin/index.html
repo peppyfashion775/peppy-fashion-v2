@@ -288,8 +288,6 @@ body{overflow-x:hidden}button,input,select,textarea{font:inherit}button{cursor:p
    const GOOGLE_SCRIPT_URL =
 "https://script.google.com/macros/s/AKfycbyJQKb2dFFZvo765SCMbK_y3cef2opsujzzzJr4HsuvZbSBgsU3fZ-06qgDATHVr4nb3A/exec";
 
-    const API_URL = GOOGLE_SCRIPT_URL;
-
     const ADMIN_TOKEN_KEY =
         "peppy_admin_token";
 
@@ -481,10 +479,9 @@ body{overflow-x:hidden}button,input,select,textarea{font:inherit}button{cursor:p
 
         const response =
             await fetch(
-                API_URL +
+                GOOGLE_SCRIPT_URL +
                 "?" +
-                params.toString(),
-                { cache: "no-store" }
+                params.toString()
             );
 
 
@@ -538,10 +535,9 @@ body{overflow-x:hidden}button,input,select,textarea{font:inherit}button{cursor:p
 
         const response =
             await fetch(
-                API_URL +
+                GOOGLE_SCRIPT_URL +
                 "?" +
-                params.toString(),
-                { cache: "no-store" }
+                params.toString()
             );
 
 
@@ -897,7 +893,7 @@ body{overflow-x:hidden}button,input,select,textarea{font:inherit}button{cursor:p
         try {
             const token = sessionStorage.getItem(ADMIN_TOKEN_KEY);
 
-            const response = await fetch(API_URL, {
+            const response = await fetch(GOOGLE_SCRIPT_URL, {
                 method: "POST",
                 headers: {
                     "Content-Type": "text/plain;charset=utf-8"
@@ -1031,7 +1027,7 @@ body{overflow-x:hidden}button,input,select,textarea{font:inherit}button{cursor:p
 
     function renderProducts(){productsLoading.style.display="none";productsError.style.display="none";const filtered=getFilteredProducts();productsMeta.textContent=`Showing ${filtered.length} of ${allProducts.length} products`;productsTableBody.innerHTML="";if(!filtered.length){productsTable.style.display="none";productsEmpty.style.display="block";return;}productsEmpty.style.display="none";productsTable.style.display="table";filtered.forEach(p=>{const row=document.createElement("tr");const status=String(p.status||"active").toLowerCase();const featured=String(p.featured||"no").toLowerCase();const sizes=Array.isArray(p.sizes)?p.sizes.join(", "):String(p.sizes||"");const description=String(p.description||"");row.innerHTML=`<td>${productImageHtml(p)}</td><td class="product-id">${escapeHtml(p.id||"—")}</td><td><div class="product-name">${escapeHtml(p.name||"Unnamed product")}</div></td><td>${escapeHtml(p.category||"—")}</td><td class="product-subcategory">${escapeHtml(p.subCategory||"—")}</td><td class="product-collection">${escapeHtml(p.collection||"—")}</td><td class="product-price">${escapeHtml(formatMoney(p.price))}</td><td class="product-price">${p.oldPrice?escapeHtml(formatMoney(p.oldPrice)):"—"}</td><td>${p.discount?escapeHtml(String(p.discount)+"%"):"—"}</td><td><input class="product-inline-input stock-input" type="number" min="0" step="1" value="${escapeHtml(p.stock??0)}" data-product-id="${escapeHtml(p.id||"")}"></td><td><select class="product-status-select status-product-select" data-product-id="${escapeHtml(p.id||"")}"><option value="active"${status==="active"?" selected":""}>Active</option><option value="inactive"${status!=="active"?" selected":""}>Inactive</option></select></td><td><select class="product-featured-select featured-product-select" data-product-id="${escapeHtml(p.id||"")}"><option value="no"${featured!=="yes"?" selected":""}>No</option><option value="yes"${featured==="yes"?" selected":""}>Yes</option></select></td><td class="product-badge">${escapeHtml(p.badge||"—")}</td><td class="product-sizes">${escapeHtml(sizes||"—")}</td><td class="product-description">${escapeHtml(description||"—")}</td><td><div class="product-actions"><button class="edit-btn" type="button" data-edit-product-id="${escapeHtml(p.id||"")}">Edit</button>${status==="active"?`<button class="danger-btn" type="button" data-delete-product-id="${escapeHtml(p.id||"")}">Deactivate</button>`:`<button class="restore-btn" type="button" data-restore-product-id="${escapeHtml(p.id||"")}">Restore</button><button class="danger-btn" type="button" data-permanent-delete-product-id="${escapeHtml(p.id||"")}">Permanent Delete</button>`}</div></td>`;productsTableBody.appendChild(row);});productsTableBody.querySelectorAll(".edit-btn").forEach(b=>b.addEventListener("click",()=>{const p=allProducts.find(x=>String(x.id)===String(b.dataset.editProductId));if(p)openProductModal(p);}));productsTableBody.querySelectorAll(".stock-input").forEach(i=>i.addEventListener("change",()=>updateProductStock(i.dataset.productId,i)));productsTableBody.querySelectorAll(".status-product-select").forEach(i=>i.addEventListener("change",()=>updateProductStatus(i.dataset.productId,i.value,i)));productsTableBody.querySelectorAll(".featured-product-select").forEach(i=>i.addEventListener("change",()=>updateProductFeatured(i.dataset.productId,i.value,i)));productsTableBody.querySelectorAll("[data-delete-product-id]").forEach(b=>b.addEventListener("click",()=>deactivateProduct(b.dataset.deleteProductId,b)));productsTableBody.querySelectorAll("[data-restore-product-id]").forEach(b=>b.addEventListener("click",()=>restoreProduct(b.dataset.restoreProductId,b)));productsTableBody.querySelectorAll("[data-permanent-delete-product-id]").forEach(b=>b.addEventListener("click",()=>permanentDeleteProduct(b.dataset.permanentDeleteProductId,b)));}
     async function loadProducts(){productsLoading.style.display="block";productsError.style.display="none";productsEmpty.style.display="none";productsTable.style.display="none";productsMeta.textContent="Loading products...";try{const data=await apiRequest("adminproducts");allProducts=Array.isArray(data.products)?data.products:[];renderProducts();}catch(e){console.error("Products error:",e);productsLoading.style.display="none";productsError.textContent=e.message||"Unable to load products.";productsError.style.display="block";productsMeta.textContent="Products could not be loaded.";}}
-    async function postAdminAction(payload){const token=sessionStorage.getItem(ADMIN_TOKEN_KEY);if(!token)throw new Error("Admin session not found.");const r=await fetch(API_URL,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(Object.assign({},payload,{adminToken:token}))});if(!r.ok)throw new Error("Server request failed.");const d=await r.json();if(!d.success)throw new Error(d.error||d.message||"Operation failed.");return d;}
+    async function postAdminAction(payload){const token=sessionStorage.getItem(ADMIN_TOKEN_KEY);if(!token)throw new Error("Admin session not found.");const r=await fetch(GOOGLE_SCRIPT_URL,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(Object.assign({},payload,{adminToken:token}))});if(!r.ok)throw new Error("Server request failed.");const d=await r.json();if(!d.success)throw new Error(d.error||d.message||"Operation failed.");return d;}
     async function updateProductStock(id,input){const p=allProducts.find(x=>String(x.id)===String(id));if(!p)return;const prev=p.stock??0;const stock=Math.max(0,Number(input.value)||0);input.disabled=true;try{await postAdminAction({action:"updateStock",id,stock});p.stock=stock;}catch(e){input.value=prev;alert(e.message||"Unable to update stock.");}finally{input.disabled=false;}}
     async function updateProductStatus(id,status,select){const p=allProducts.find(x=>String(x.id)===String(id));if(!p)return;const prev=p.status||"active";select.disabled=true;try{await postAdminAction({action:"updateProductStatus",id,status});p.status=status;renderProducts();}catch(e){select.value=prev;alert(e.message||"Unable to update product status.");}finally{select.disabled=false;}}
     async function updateProductFeatured(id,featured,select){const p=allProducts.find(x=>String(x.id)===String(id));if(!p)return;const prev=p.featured||"no";select.disabled=true;try{await postAdminAction({action:"updateFeatured",id,featured});p.featured=featured;}catch(e){select.value=prev;alert(e.message||"Unable to update featured status.");}finally{select.disabled=false;}}
