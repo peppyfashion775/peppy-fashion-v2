@@ -1,1592 +1,397 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
     <meta charset="UTF-8">
-
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Checkout | Peppy Fashion</title>
-
-    <link
-        rel="stylesheet"
-        href="assets/css/style.css"
-    >
-
+    <link rel="stylesheet" href="assets/css/style.css">
 </head>
-
-
 <body>
 
-
 <!-- HEADER -->
-
 <header>
-
     <div class="container header-container">
-
         <div class="logo">
-
-            <img
-                src="assets/images/logo/logo.png"
-                alt="Peppy Fashion Logo"
-            >
-
+            <img src="assets/images/logo/logo.png" alt="Peppy Fashion Logo">
         </div>
-
-
-        <button
-            class="menu-btn"
-            onclick="toggleMenu()"
-        >
-            ☰
-        </button>
-
-
+        <button class="menu-btn" onclick="toggleMenu()">☰</button>
         <nav class="navbar">
-
-            <a href="index.html">
-                Home
-            </a>
-
-            <a href="shop.html">
-                Shop
-            </a>
-
-            <a href="cart.html">
-                Cart
-                (<span id="cartCount">0</span>)
-            </a>
-
-            <a href="contact.html">
-                Contact
-            </a>
-
+            <a href="index.html">Home</a>
+            <a href="shop.html">Shop</a>
+            <a href="cart.html">Cart (<span id="cartCount">0</span>)</a>
+            <a href="contact.html">Contact</a>
         </nav>
-
     </div>
-
 </header>
 
-
-
 <!-- CHECKOUT -->
-
 <section class="section">
-
     <div class="container checkout-container">
-
-        <h1 class="section-title">
-            Checkout
-        </h1>
-
+        <h1 class="section-title">Checkout</h1>
 
         <form id="checkoutForm">
-
-
-            <!-- NAME -->
-
             <div class="form-group">
-
-                <label>
-                    Full Name *
-                </label>
-
-                <input
-                    type="text"
-                    id="customerName"
-                    class="form-control"
-                    placeholder="Enter your name"
-                    required
-                >
-
+                <label>Full Name *</label>
+                <input type="text" id="customerName" class="form-control" placeholder="Enter your name" required>
             </div>
 
-
-
-            <!-- PHONE -->
-
             <div class="form-group">
-
-                <label>
-                    Phone Number *
-                </label>
-
-                <input
-                    type="tel"
-                    id="customerPhone"
-                    class="form-control"
-                    placeholder="01XXXXXXXXX"
-                    required
-                >
-
+                <label>Phone Number *</label>
+                <input type="tel" id="customerPhone" class="form-control" placeholder="01XXXXXXXXX" required>
             </div>
 
-
-
-            <!-- EMAIL -->
-
             <div class="form-group">
-
-                <label>
-                    Email Address (For order confirmation)
-                </label>
-
-                <input
-                    type="email"
-                    id="customerEmail"
-                    class="form-control"
-                    placeholder="yourname@gmail.com"
-                >
-
+                <label>Email Address (For order confirmation)</label>
+                <input type="email" id="customerEmail" class="form-control" placeholder="yourname@gmail.com">
             </div>
 
-
-
-            <!-- ADDRESS -->
-
             <div class="form-group">
-
-                <label>
-                    Full Address *
-                </label>
-
-                <textarea
-                    id="customerAddress"
-                    class="form-control"
-                    placeholder="Village, Union, Upazila, District"
-                    required
-                ></textarea>
-
+                <label>Full Address *</label>
+                <textarea id="customerAddress" class="form-control" placeholder="Village, Union, Upazila, District" required></textarea>
             </div>
-
-
 
             <!-- DELIVERY AREA -->
-
             <div class="form-group">
-
-                <label>
-                    Delivery Area *
-                </label>
-
-                <select
-                    id="deliveryArea"
-                    class="form-control"
-                    onchange="calculateCheckout()"
-                >
-
-                    <option value="100">
-                        Inside Panchagarh - ৳100
-                    </option>
-
-                    <option value="150">
-                        All Over Bangladesh - ৳150
-                    </option>
-
+                <label>Delivery Area *</label>
+                <select id="deliveryArea" class="form-control" onchange="calculateCheckout()">
+                    <option value="100">Inside Panchagarh - ৳100</option>
+                    <option value="150">All Over Bangladesh - ৳150</option>
                 </select>
-
             </div>
-
-
 
             <!-- PROMO CODE -->
-
             <div class="form-group">
-
-                <label>
-                    Promo Code
-                </label>
-
-                <div
-                    style="
-                        display:flex;
-                        gap:10px;
-                    "
-                >
-
-                    <input
-                        type="text"
-                        id="promoCode"
-                        class="form-control"
-                        placeholder="Enter promo code"
-                    >
-
-
-                    <button
-                        type="button"
-                        class="btn"
-                        onclick="applyPromo()"
-                    >
-                        Apply
-                    </button>
-
+                <label>Promo Code</label>
+                <div style="display: flex; gap: 10px;">
+                    <input type="text" id="promoCode" class="form-control" placeholder="Enter promo code">
+                    <button type="button" class="btn" onclick="applyPromo()">Apply</button>
                 </div>
-
             </div>
-
-
-
-            <!-- ORDER NOTE -->
 
             <div class="form-group">
-
-                <label>
-                    Order Note (Optional)
-                </label>
-
-                <input
-                    type="text"
-                    id="orderNote"
-                    class="form-control"
-                    placeholder="Any special instructions?"
-                >
-
+                <label>Order Note (Optional)</label>
+                <input type="text" id="orderNote" class="form-control" placeholder="Any special instructions?">
             </div>
-
-
 
             <!-- ORDER SUMMARY -->
-
-            <h2>
-                Order Summary
-            </h2>
-
-
+            <h2>Order Summary</h2>
             <div id="checkoutItems"></div>
 
-
-
             <div class="cart-summary">
-
-
                 <div class="summary-row">
-
-                    <span>
-                        Subtotal
-                    </span>
-
-                    <strong id="checkoutSubtotal">
-                        ৳0
-                    </strong>
-
+                    <span>Subtotal</span>
+                    <strong id="checkoutSubtotal">৳0</strong>
                 </div>
 
-
-
                 <div class="summary-row">
-
-                    <span>
-                        Discount
-                    </span>
-
-                    <strong id="checkoutDiscount">
-                        ৳0
-                    </strong>
-
+                    <span>Discount</span>
+                    <strong id="checkoutDiscount">৳0</strong>
                 </div>
 
-
-
                 <div class="summary-row">
-
-                    <span>
-                        Delivery Charge
-                    </span>
-
-                    <strong id="checkoutDelivery">
-                        ৳100
-                    </strong>
-
+                    <span>Delivery Charge</span>
+                    <strong id="checkoutDelivery">৳100</strong>
                 </div>
 
-
-
                 <div class="summary-row">
-
-                    <h3>
-                        Grand Total
-                    </h3>
-
-                    <h3
-                        id="checkoutTotal"
-                        style="color:#e63946;"
-                    >
-                        ৳100
-                    </h3>
-
+                    <h3>Grand Total</h3>
+                    <h3 id="checkoutTotal" style="color: #e63946;">৳100</h3>
                 </div>
-
-
             </div>
-
-
 
             <!-- PAYMENT METHOD -->
-
             <div class="form-group">
-
-                <label>
-                    Payment Method
-                </label>
-
-
-                <select
-                    id="paymentMethod"
-                    class="form-control"
-                >
-
-                    <option value="Cash on Delivery">
-                        Cash On Delivery
-                    </option>
-
-                    <option value="bKash">
-                        bKash
-                    </option>
-
-                    <option value="Nagad">
-                        Nagad
-                    </option>
-
-                    <option value="Rocket">
-                        Rocket
-                    </option>
-
+                <label>Payment Method</label>
+                <select id="paymentMethod" class="form-control">
+                    <option value="Cash on Delivery">Cash On Delivery</option>
+                    <option value="bKash">bKash</option>
+                    <option value="Nagad">Nagad</option>
+                    <option value="Rocket">Rocket</option>
                 </select>
-
             </div>
 
-
-
-            <!-- ORDER BUTTON -->
-
-            <button
-                type="button"
-                class="btn"
-                style="width:100%;"
-                onclick="placeOrder()"
-            >
-
-                Place Order
-
-            </button>
-
-
-            <br>
-            <br>
-
-
-            <!-- WHATSAPP -->
-
-            <button
-                type="button"
-                class="btn"
-                style="
-                    width:100%;
-                    background-color:#25D366;
-                "
-                onclick="orderViaWhatsApp()"
-            >
-
-                Order Via WhatsApp
-
-            </button>
-
-
+            <!-- ORDER BUTTONS -->
+            <button type="button" class="btn" style="width:100%;" onclick="placeOrder()">Place Order</button>
+            <br><br>
+            <button type="button" class="btn" style="width:100%; background-color: #25D366;" onclick="orderViaWhatsApp()">Order Via WhatsApp</button>
         </form>
-
     </div>
-
 </section>
 
-
-
 <!-- FOOTER -->
-
 <footer>
-
     <div class="container footer-grid">
-
-
         <div>
-
-            <h3>
-                Peppy Fashion
-            </h3>
-
-            <p>
-                Your trusted online fashion store.
-            </p>
-
+            <h3>Peppy Fashion</h3>
+            <p>Your trusted online fashion store.</p>
         </div>
-
-
-
         <div>
-
-            <h3>
-                Quick Links
-            </h3>
-
-            <p>
-                <a href="index.html">
-                    Home
-                </a>
-            </p>
-
-            <p>
-                <a href="shop.html">
-                    Shop
-                </a>
-            </p>
-
-            <p>
-                <a href="cart.html">
-                    Cart
-                </a>
-            </p>
-
+            <h3>Quick Links</h3>
+            <p><a href="index.html">Home</a></p>
+            <p><a href="shop.html">Shop</a></p>
+            <p><a href="cart.html">Cart</a></p>
         </div>
-
-
-
         <div>
-
-            <h3>
-                Contact
-            </h3>
-
-            <p>
-                📍 Shalbahan, Tetulia, Panchagarh
-            </p>
-
-            <p>
-                📞 WhatsApp: +8801710868775
-            </p>
-
-            <p>
-                ✉ Email: peppyfashionbd@gmail.com
-            </p>
-
+            <h3>Contact</h3>
+            <p>📍 Shalbahan, Tetulia, Panchagarh</p>
+            <p>📞 WhatsApp: +8801710868775</p>
+            <p>✉ Email: peppyfashionbd@gmail.com</p>
         </div>
-
-
     </div>
-
 </footer>
 
-
-
-<!-- =====================================
-     JAVASCRIPT FILES
-===================================== -->
-
 <script src="assets/js/products.js"></script>
-
 <script src="assets/js/cart.js"></script>
-
 <script src="assets/js/script.js"></script>
 
-
-
 <script>
-
-
-/* =====================================
-   GOOGLE APPS SCRIPT
-===================================== */
-
-const GOOGLE_SCRIPT_URL =
-"https://script.google.com/macros/s/AKfycbyJQKb2dFFZvo765SCMbK_y3cef2opsujzzzJr4HsuvZbSBgsU3fZ-06qgDATHVr4nb3A/exec";
-
-
-/* =====================================
-   DISCOUNT
-===================================== */
+const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwbHxHS5GuRH4Lr-L5wTs8aRjXbdgK60CyM0muAjRvhUKZ-1IzeFBGq7y6an9d0Kmg_/exec";
 
 let discountAmount = 0;
 
-
-
 /* =====================================
-   LOAD CHECKOUT
+   CHECKOUT CART PRICE SAFETY
 ===================================== */
 
-/* =====================================
-   CHECKOUT PRICE SYNC
-===================================== */
+async function getCheckoutCart(){
+    let cart = getCart();
 
-function syncCheckoutCartPrices(cart) {
+    if(cart.length === 0){
+        return cart;
+    }
 
-    if (!Array.isArray(cart)) return [];
+    // Make sure the latest product data is available before calculating prices.
+    if(typeof loadProducts === "function"){
+        await loadProducts();
+    }
 
+    // Repair old/stale cart entries by matching them with the current product.
     let changed = false;
 
-    cart.forEach(item => {
+    cart = cart.map(item => {
+        const product = typeof getProductById === "function"
+            ? getProductById(item.id)
+            : null;
 
-        const product =
-            typeof getProductById === "function"
-                ? getProductById(item.id)
-                : null;
+        if(product && Number(product.price) > 0){
+            const currentPrice = Number(product.price);
 
-        if (product) {
-
-            const freshPrice =
-                typeof productNumber === "function"
-                    ? productNumber(product.price)
-                    : Number(product.price) || 0;
-
-            if (Number(item.price) !== freshPrice) {
-                item.price = freshPrice;
+            if(Number(item.price) !== currentPrice){
                 changed = true;
-            }
-
-            if (
-                typeof isFreeSizeProduct === "function" &&
-                isFreeSizeProduct(product) &&
-                typeof getFreeSizeValue === "function"
-            ) {
-                const freeSize = getFreeSizeValue(product);
-                if (String(item.size || "") !== String(freeSize)) {
-                    item.size = freeSize;
-                    changed = true;
-                }
+                return {
+                    ...item,
+                    id: Number(item.id),
+                    price: currentPrice,
+                    quantity: Math.max(1, Number(item.quantity) || 1)
+                };
             }
         }
 
+        return {
+            ...item,
+            id: Number(item.id),
+            price: Number(item.price) || 0,
+            quantity: Math.max(1, Number(item.quantity) || 1)
+        };
     });
 
-    if (changed && typeof saveCart === "function") {
+    // If a stale/zero price was found, force a fresh API refresh once.
+    if(cart.some(item => Number(item.price) <= 0) && typeof refreshProducts === "function"){
+        try{
+            await refreshProducts();
+
+            cart = cart.map(item => {
+                const product = typeof getProductById === "function"
+                    ? getProductById(item.id)
+                    : null;
+
+                if(product && Number(product.price) > 0){
+                    changed = true;
+                    return {
+                        ...item,
+                        id: Number(item.id),
+                        price: Number(product.price),
+                        quantity: Math.max(1, Number(item.quantity) || 1)
+                    };
+                }
+
+                return item;
+            });
+        }catch(error){
+            console.error("Checkout product refresh failed:", error);
+        }
+    }
+
+    if(changed){
         saveCart(cart);
     }
 
     return cart;
 }
 
-
-async function loadCheckout() {
-
-
-    /*
-       Make sure product data is loaded
-       before validating cart sizes.
-    */
-
-    if (typeof loadProducts === "function") {
-        await loadProducts();
-    }
-
-
-    let cart =
-        typeof getCart === "function"
-            ? getCart()
-            : [];
-
-    cart = syncCheckoutCartPrices(cart);
-
-    // If an old cart item still has no usable price/product match, make one
-    // fresh API request. This fixes old carts without adding an API request
-    // on every normal checkout visit.
-    const needsFreshProducts = cart.some(item => {
-        const product =
-            typeof getProductById === "function"
-                ? getProductById(item.id)
-                : null;
-        return !product || (Number(item.price) || 0) <= 0;
-    });
-
-    if (needsFreshProducts && typeof refreshProducts === "function") {
-        await refreshProducts();
-        cart = syncCheckoutCartPrices(cart);
-    }
-
-
-    let area =
-        document.getElementById(
-            "checkoutItems"
-        );
-
-
-    if (!area) {
-
-        return;
-
-    }
-
+function renderCheckoutItems(cart){
+    let area = document.getElementById("checkoutItems");
+    if(!area) return;
 
     area.innerHTML = "";
 
-
-    /* =================================
-       EMPTY CART
-    ================================= */
-
-    if (
-        cart.length === 0
-    ) {
-
-        area.innerHTML = `
-
-        <p>
-            Your cart is empty.
-        </p>
-
-        `;
-
-
-        calculateCheckout();
-
+    if(cart.length === 0){
+        area.innerHTML = "<p>Your cart is empty</p>";
         return;
-
     }
 
+    cart.forEach(item => {
+        const price = Number(item.price) || 0;
+        const quantity = Math.max(1, Number(item.quantity) || 1);
+        const lineTotal = price * quantity;
 
-    /* =================================
-       VALIDATE CART
-    ================================= */
-
-    const validation =
-        validateCheckoutSizes(
-            cart
-        );
-
-
-    /*
-       Don't automatically remove
-       invalid cart items.
-
-       Instead, warn the customer.
-    */
-
-    if (
-        !validation.valid
-    ) {
-
-        area.innerHTML = `
-
-        <div
-            style="
-                padding:15px;
-                margin-bottom:15px;
-                border-radius:8px;
-                background:#fff3cd;
-                border:1px solid #ffeeba;
-                color:#856404;
-            "
-        >
-
-            <strong>
-                Size Selection Required
-            </strong>
-
-            <p style="margin-bottom:0;">
-                ${validation.message}
-            </p>
-
-        </div>
-
-        `;
-
-    }
-
-
-    /* =================================
-       DISPLAY ITEMS
-    ================================= */
-
-    cart.forEach(
-        item => {
-
-
-            let sizeText =
-                item.size &&
-                String(item.size).trim() !== ""
-
-                    ?
-
-                    item.size
-
-                    :
-
-                    "Size Not Selected";
-
-
-            area.innerHTML += `
-
-            <div
-                class="summary-row"
-                style="
-                    align-items:center;
-                "
-            >
-
-                <span>
-
-                    <strong>
-                        ${item.name}
-                    </strong>
-
-                    <br>
-
-                    Size:
-                    <span
-                        style="
-                            ${
-                                sizeText ===
-                                "Size Not Selected"
-
-                                ?
-
-                                "color:#e63946;font-weight:600;"
-
-                                :
-
-                                ""
-                            }
-                        "
-                    >
-                        ${sizeText}
-                    </span>
-
-                    <br>
-
-                    Qty:
-                    ${item.quantity}
-
-                </span>
-
-
-                <strong>
-                    ৳${
-                        Number(item.price) *
-                        Number(item.quantity)
-                    }
-                </strong>
-
-            </div>
-
-            `;
-
-        }
-    );
-
-
-    calculateCheckout();
-
+        area.innerHTML += `
+        <div class="summary-row">
+            <span>
+                ${item.name}<br>
+                Size: ${item.size || 'N/A'}<br>
+                Qty: ${quantity}
+            </span>
+            <strong>৳${lineTotal}</strong>
+        </div>`;
+    });
 }
 
-
-
-/* =====================================
-   VALIDATE CART SIZES
-===================================== */
-
-function validateCheckoutSizes(
-    cart
-) {
-
-
-    if (
-        !Array.isArray(cart) ||
-        cart.length === 0
-    ) {
-
-        return {
-
-            valid:false,
-
-            message:
-                "Your cart is empty."
-
-        };
-
-    }
-
-
-    /*
-       Check every cart item.
-    */
-
-    for (
-        let i = 0;
-        i < cart.length;
-        i++
-    ) {
-
-
-        const item =
-            cart[i];
-
-
-        const product =
-            typeof getProductById === "function"
-                ? getProductById(
-                    item.id
-                )
-                : null;
-
-
-        /*
-           If product cannot be found,
-           don't block the customer here.
-        */
-
-        if (!product) {
-
-            continue;
-
-        }
-
-
-        /*
-           Product has size options.
-        */
-
-        if (
-            Array.isArray(
-                product.sizes
-            ) &&
-            product.sizes.length > 0
-        ) {
-
-
-            /* NO SIZE */
-
-            if (
-                !item.size ||
-                String(
-                    item.size
-                ).trim() === ""
-            ) {
-
-                return {
-
-                    valid:false,
-
-                    message:
-                        "Please select a size for \"" +
-                        product.name +
-                        "\" before placing your order."
-
-                };
-
-            }
-
-
-            /* INVALID SIZE */
-
-            const selectedSize =
-                String(
-                    item.size
-                )
-                .trim()
-                .toLowerCase();
-
-
-            const validSizes =
-                product.sizes.map(
-                    size =>
-                        String(size)
-                            .trim()
-                            .toLowerCase()
-                );
-
-
-            if (
-                !validSizes.includes(
-                    selectedSize
-                )
-            ) {
-
-                return {
-
-                    valid:false,
-
-                    message:
-                        "The selected size for \"" +
-                        product.name +
-                        "\" is no longer available. Please select a valid size."
-
-                };
-
-            }
-
-        }
-
-    }
-
-
-    return {
-
-        valid:true,
-
-        message:""
-
-    };
-
+async function loadCheckout(){
+    const cart = await getCheckoutCart();
+    renderCheckoutItems(cart);
+    calculateCheckout(cart);
 }
 
-
-
-/* =====================================
-   CALCULATE CHECKOUT
-===================================== */
-
-function calculateCheckout() {
-
-
-    let cart =
-        typeof getCart === "function"
-            ? getCart()
-            : [];
-
-
-    cart = syncCheckoutCartPrices(cart);
-
+function calculateCheckout(cart = getCart()){
     let subtotal = 0;
 
     cart.forEach(item => {
-        const price =
-            Number(item.price) || 0;
-        const quantity =
-            Number(item.quantity) || 0;
-
+        const price = Number(item.price) || 0;
+        const quantity = Math.max(1, Number(item.quantity) || 1);
         subtotal += price * quantity;
     });
 
+    const deliverySelect = document.getElementById("deliveryArea");
+    const delivery = deliverySelect ? Number(deliverySelect.value) || 0 : 0;
+    const total = Math.max(0, subtotal - discountAmount + delivery);
 
-    const deliveryElement =
-        document.getElementById(
-            "deliveryArea"
-        );
+    document.getElementById("checkoutSubtotal").innerText = "৳" + subtotal;
+    document.getElementById("checkoutDiscount").innerText = "৳" + discountAmount;
+    document.getElementById("checkoutDelivery").innerText = "৳" + delivery;
+    document.getElementById("checkoutTotal").innerText = "৳" + total;
 
-
-    let delivery = 0;
-
-
-    if (deliveryElement) {
-
-        delivery =
-            Number(
-                deliveryElement.value
-            ) || 0;
-
-    }
-
-
-    let total =
-        Math.max(
-            0,
-            subtotal -
-            discountAmount +
-            delivery
-        );
-
-
-    const subtotalElement =
-        document.getElementById(
-            "checkoutSubtotal"
-        );
-
-
-    const discountElement =
-        document.getElementById(
-            "checkoutDiscount"
-        );
-
-
-    const deliveryElementDisplay =
-        document.getElementById(
-            "checkoutDelivery"
-        );
-
-
-    const totalElement =
-        document.getElementById(
-            "checkoutTotal"
-        );
-
-
-    if (subtotalElement) {
-
-        subtotalElement.innerText =
-            "৳" + subtotal;
-
-    }
-
-
-    if (discountElement) {
-
-        discountElement.innerText =
-            "৳" + discountAmount;
-
-    }
-
-
-    if (
-        deliveryElementDisplay
-    ) {
-
-        deliveryElementDisplay.innerText =
-            "৳" + delivery;
-
-    }
-
-
-    if (totalElement) {
-
-        totalElement.innerText =
-            "৳" + total;
-
-    }
-
-
-    return total;
-
+    return { subtotal, delivery, total };
 }
 
+async function applyPromo() {
+    const code = document.getElementById("promoCode").value.trim().toUpperCase();
+    const cart = await getCheckoutCart();
 
+    if(code === "PEPPY10"){
+        let subtotal = 0;
 
-/* =====================================
-   PROMO CODE
-===================================== */
+        cart.forEach(item => {
+            subtotal += (Number(item.price) || 0) * (Math.max(1, Number(item.quantity) || 1));
+        });
 
-function applyPromo() {
+        discountAmount = Math.round(subtotal * 0.10);
+        alert("Promo Code Applied: 10% Off");
 
-    const input = document.getElementById("promoCode");
-    const code = input ? input.value.trim().toUpperCase() : "";
-
-    let cart = typeof getCart === "function" ? getCart() : [];
-    cart = syncCheckoutCartPrices(cart);
-
-    if (!cart.length) {
+    }else{
         discountAmount = 0;
-        calculateCheckout();
-        alert("Your cart is empty.");
-        return;
-    }
-
-    if (code !== "PEPPY10") {
-        discountAmount = 0;
-        calculateCheckout();
         alert("Invalid Promo Code");
-        return;
     }
 
-    const subtotal = cart.reduce((sum, item) => {
-        return sum + (Number(item.price) || 0) * (Number(item.quantity) || 0);
-    }, 0);
-
-    discountAmount = Math.round(subtotal * 0.10);
-
-    if (typeof saveCart === "function") {
-        saveCart(cart);
-    }
-
-    calculateCheckout();
-    alert("Promo Code Applied: 10% Off");
+    calculateCheckout(cart);
 }
 
+async function placeOrder(){
+    const cart = await getCheckoutCart();
 
-
-/* =====================================
-   PLACE ORDER
-===================================== */
-
-async function placeOrder() {
-
-    // Use the cart already displayed on checkout. Do not make another
-    // product API request here; it can block a valid order submission.
-    let cart =
-        getCart();
-
-    cart = syncCheckoutCartPrices(cart);
-
-    /* =================================
-       EMPTY CART
-    ================================= */
-
-    if (
-        cart.length === 0
-    ) {
-
-        alert(
-            "Your cart is empty."
-        );
-
+    if(cart.length === 0){
+        alert("Your cart is empty");
         return;
-
     }
 
+    const name = document.getElementById("customerName").value;
+    const phone = document.getElementById("customerPhone").value;
+    const address = document.getElementById("customerAddress").value;
+    const email = document.getElementById("customerEmail").value.trim();
 
-    /*
-       IMPORTANT:
-       Validate sizes BEFORE
-       collecting/submitting order.
-    */
-
-    const validation =
-        validateCheckoutSizes(
-            cart
-        );
-
-
-    if (
-        !validation.valid
-    ) {
-
-        alert(
-            validation.message
-        );
-
+    if(email !== "" && !email.includes("@")){
+        alert("Please enter a valid email address.");
         return;
-
     }
 
-
-    /* =================================
-       CUSTOMER INFORMATION
-    ================================= */
-
-    let name =
-        document.getElementById(
-            "customerName"
-        ).value.trim();
-
-
-    let phone =
-        document.getElementById(
-            "customerPhone"
-        ).value.trim();
-
-
-    let address =
-        document.getElementById(
-            "customerAddress"
-        ).value.trim();
-
-
-    let email =
-        document.getElementById(
-            "customerEmail"
-        ).value.trim();
-
-
-    /* =================================
-       EMAIL VALIDATION
-    ================================= */
-
-    if (
-        email !== "" &&
-        !email.includes("@")
-    ) {
-
-        alert(
-            "Please enter a valid email address."
-        );
-
+    if(!name || !phone || !address){
+        alert("Please fill in required fields (Name, Phone, Address)");
         return;
-
     }
 
+    const totals = calculateCheckout(cart);
 
-    /* =================================
-       REQUIRED FIELDS
-    ================================= */
-
-    if (
-        !name ||
-        !phone ||
-        !address
-    ) {
-
-        alert(
-            "Please fill in required fields (Name, Phone, Address)."
-        );
-
-        return;
-
-    }
-
-
-    /* =================================
-       TOTAL
-    ================================= */
-
-    const total =
-        calculateCheckout();
-
-
-    /* =================================
-       ORDER ID
-    ================================= */
-
-    const orderId =
-        "PF" +
-        new Date()
-            .toISOString()
-            .replace(
-                /[-:T]/g,
-                ""
-            )
-            .slice(
-                2,
-                14
-            );
-
-
-    /* =================================
-       ORDER OBJECT
-    ================================= */
-
-    let order = {
-
-        orderId:
-            orderId,
-
-        name:
-            name,
-
-        phone:
-            phone,
-
-        email:
-            email,
-
-        address:
-            address,
-
-        items:
-            JSON.stringify(cart),
-
-        subtotal:
-            document
-                .getElementById(
-                    "checkoutSubtotal"
-                )
-                .innerText
-                .replace(
-                    "৳",
-                    ""
-                ),
-
-        discount:
-            discountAmount,
-
-        delivery:
-            document
-                .getElementById(
-                    "deliveryArea"
-                )
-                .value,
-
-        total:
-            String(total),
-
-        payment:
-            document
-                .getElementById(
-                    "paymentMethod"
-                )
-                .value,
-
-        note:
-            document
-                .getElementById(
-                    "orderNote"
-                )
-                .value
-
+    const order = {
+        orderId: "PF" + new Date().toISOString().replace(/[-:T]/g, "").slice(2, 14),
+        name: name,
+        phone: phone,
+        email: email,
+        address: address,
+        items: JSON.stringify(cart),
+        subtotal: totals.subtotal,
+        discount: discountAmount,
+        delivery: totals.delivery,
+        total: totals.total,
+        payment: document.getElementById("paymentMethod").value,
+        note: document.getElementById("orderNote").value
     };
 
+    try{
+        await fetch(GOOGLE_SCRIPT_URL, {
+            method: "POST",
+            mode: "no-cors",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(order)
+        });
 
-    /* =================================
-       SEND ORDER
-    ================================= */
-
-    try {
-
-
-        // Simple form-encoded POST: no custom header and therefore no
-        // browser preflight. The Apps Script doPost() reads parameter
-        // "payload" and processes the same order object.
-        const payload = new URLSearchParams();
-        payload.set("payload", JSON.stringify(order));
-
-        const response = await fetch(
-            GOOGLE_SCRIPT_URL,
-            {
-                method: "POST",
-                cache: "no-store",
-                headers: {
-                    "Content-Type":
-                        "application/x-www-form-urlencoded;charset=UTF-8"
-                },
-                body: payload.toString()
-            }
-        );
-
-        if (!response.ok) {
-            throw new Error("Order server returned HTTP " + response.status);
-        }
-
-        let result = null;
-        try {
-            result = await response.json();
-        } catch (parseError) {
-            // Some Apps Script deployments return an opaque/redirected
-            // response. The request itself has already completed.
-        }
-
-        if (result && result.success === false) {
-            throw new Error(result.error || result.message || "Order was rejected.");
-        }
-
-        alert(
-            "Order Successfully Placed!\nOrder ID: " +
-            order.orderId
-        );
-
-
+        alert("Order Successfully Placed!\nOrder ID: " + order.orderId);
         clearCart();
+        window.location.href = "index.html";
 
-
-        window.location.href =
-            "index.html";
-
-
+    }catch(error){
+        console.error(error);
+        alert("Order failed. Please try again.");
     }
-
-    catch (error) {
-
-
-        console.error(
-            "Order Error:",
-            error
-        );
-
-
-        alert(
-            "Order failed. Please try again."
-        );
-
-    }
-
 }
 
+async function orderViaWhatsApp(){
+    const cart = await getCheckoutCart();
 
-
-/* =====================================
-   WHATSAPP ORDER
-===================================== */
-
-function orderViaWhatsApp() {
-
-
-    let cart =
-        getCart();
-
-
-    /* =================================
-       EMPTY CART
-    ================================= */
-
-    if (
-        cart.length === 0
-    ) {
-
-        alert(
-            "Your cart is empty."
-        );
-
+    if(cart.length === 0){
+        alert("Your cart is empty");
         return;
-
     }
 
+    const totals = calculateCheckout(cart);
+    let message = "New Peppy Fashion Order%0A%0A";
 
-    /*
-       VALIDATE SIZE BEFORE
-       OPENING WHATSAPP.
-    */
+    cart.forEach(item => {
+        const price = Number(item.price) || 0;
+        const quantity = Math.max(1, Number(item.quantity) || 1);
+        message += `${item.name} | Size: ${item.size || 'N/A'} | Qty: ${quantity} | Price: ৳${price * quantity}%0A`;
+    });
 
-    const validation =
-        validateCheckoutSizes(
-            cart
-        );
+    message += `%0ASubtotal: ৳${totals.subtotal}`;
+    message += `%0ADelivery: ৳${totals.delivery}`;
+    message += `%0ATotal: ৳${totals.total}`;
 
-
-    if (
-        !validation.valid
-    ) {
-
-        alert(
-            validation.message
-        );
-
-        return;
-
-    }
-
-
-    /* =================================
-       CUSTOMER INFORMATION
-    ================================= */
-
-    const name =
-        document.getElementById(
-            "customerName"
-        ).value.trim();
-
-
-    const phone =
-        document.getElementById(
-            "customerPhone"
-        ).value.trim();
-
-
-    const address =
-        document.getElementById(
-            "customerAddress"
-        ).value.trim();
-
-
-    if (
-        !name ||
-        !phone ||
-        !address
-    ) {
-
-        alert(
-            "Please fill in Name, Phone and Address before ordering via WhatsApp."
-        );
-
-        return;
-
-    }
-
-
-    /* =================================
-       CREATE MESSAGE
-    ================================= */
-
-    let message =
-        "New Peppy Fashion Order\n\n";
-
-
-    message +=
-        "Name: " +
-        name +
-        "\n";
-
-
-    message +=
-        "Phone: " +
-        phone +
-        "\n";
-
-
-    message +=
-        "Address: " +
-        address +
-        "\n\n";
-
-
-    message +=
-        "Products:\n";
-
-
-    cart.forEach(
-        item => {
-
-            message +=
-                item.name +
-                " | Size: " +
-                (
-                    item.size ||
-                    "N/A"
-                ) +
-                " | Qty: " +
-                item.quantity +
-                "\n";
-
-        }
-    );
-
-
-    message +=
-        "\nTotal: " +
-        document
-            .getElementById(
-                "checkoutTotal"
-            )
-            .innerText;
-
-
-    /* =================================
-       OPEN WHATSAPP
-    ================================= */
-
-    window.open(
-
-        "https://wa.me/8801710868775?text=" +
-        encodeURIComponent(
-            message
-        ),
-
-        "_blank"
-
-    );
-
+    window.open("https://wa.me/8801710868775?text=" + message, "_blank");
 }
 
-
-
-/* =====================================
-   PAGE LOAD
-===================================== */
-
-document.addEventListener(
-    "DOMContentLoaded",
-    async function () {
-
-
-        /*
-           Wait for product data first.
-        */
-
-        if (
-            typeof loadProducts ===
-            "function"
-        ) {
-
-            await loadProducts();
-
-        }
-
-
-        loadCheckout();
-
-
-        if (
-            typeof updateCartCount ===
-            "function"
-        ) {
-
-            updateCartCount();
-
-        }
-
-    }
-);
-
-
+document.addEventListener("DOMContentLoaded", function(){
+    loadCheckout();
+});
 </script>
 
-
 </body>
-
 </html>
