@@ -516,6 +516,58 @@ let discountAmount = 0;
    LOAD CHECKOUT
 ===================================== */
 
+/* =====================================
+   CHECKOUT PRICE SYNC
+===================================== */
+
+function syncCheckoutCartPrices(cart) {
+
+    if (!Array.isArray(cart)) return [];
+
+    let changed = false;
+
+    cart.forEach(item => {
+
+        const product =
+            typeof getProductById === "function"
+                ? getProductById(item.id)
+                : null;
+
+        if (product) {
+
+            const freshPrice =
+                typeof productNumber === "function"
+                    ? productNumber(product.price)
+                    : Number(product.price) || 0;
+
+            if (Number(item.price) !== freshPrice) {
+                item.price = freshPrice;
+                changed = true;
+            }
+
+            if (
+                typeof isFreeSizeProduct === "function" &&
+                isFreeSizeProduct(product) &&
+                typeof getFreeSizeValue === "function"
+            ) {
+                const freeSize = getFreeSizeValue(product);
+                if (String(item.size || "") !== String(freeSize)) {
+                    item.size = freeSize;
+                    changed = true;
+                }
+            }
+        }
+
+    });
+
+    if (changed && typeof saveCart === "function") {
+        saveCart(cart);
+    }
+
+    return cart;
+}
+
+
 async function loadCheckout() {
 
 
@@ -524,12 +576,33 @@ async function loadCheckout() {
        before validating cart sizes.
     */
 
-    // Product data is loaded once during DOMContentLoaded.
-    // Do not refresh the API again here; duplicate requests make checkout slow.
+    if (typeof loadProducts === "function") {
+        await loadProducts();
+    }
+
+
     let cart =
         typeof getCart === "function"
             ? getCart()
             : [];
+
+    cart = syncCheckoutCartPrices(cart);
+
+    // If an old cart item still has no usable price/product match, make one
+    // fresh API request. This fixes old carts without adding an API request
+    // on every normal checkout visit.
+    const needsFreshProducts = cart.some(item => {
+        const product =
+            typeof getProductById === "function"
+                ? getProductById(item.id)
+                : null;
+        return !product || (Number(item.price) || 0) <= 0;
+    });
+
+    if (needsFreshProducts && typeof refreshProducts === "function") {
+        await refreshProducts();
+        cart = syncCheckoutCartPrices(cart);
+    }
 
 
     let area =
@@ -872,25 +945,18 @@ function calculateCheckout() {
             : [];
 
 
+    cart = syncCheckoutCartPrices(cart);
+
     let subtotal = 0;
 
+    cart.forEach(item => {
+        const price =
+            Number(item.price) || 0;
+        const quantity =
+            Number(item.quantity) || 0;
 
-    cart.forEach(
-        item => {
-
-            subtotal +=
-                (
-                    Number(item.price) ||
-                    0
-                )
-                *
-                (
-                    Number(item.quantity) ||
-                    0
-                );
-
-        }
-    );
+        subtotal += price * quantity;
+    });
 
 
     const deliveryElement =
@@ -989,11 +1055,13 @@ function calculateCheckout() {
    PROMO CODE
 ===================================== */
 
-async function applyPromo() {
+function applyPromo() {
 
     const input = document.getElementById("promoCode");
     const code = input ? input.value.trim().toUpperCase() : "";
-    const cart = typeof getCart === "function" ? getCart() : [];
+
+    let cart = typeof getCart === "function" ? getCart() : [];
+    cart = syncCheckoutCartPrices(cart);
 
     if (!cart.length) {
         discountAmount = 0;
@@ -1009,35 +1077,20 @@ async function applyPromo() {
         return;
     }
 
-    // Use the already-loaded product data. No new API request.
-    let subtotal = 0;
+    const subtotal = cart.reduce((sum, item) => {
+        return sum + (Number(item.price) || 0) * (Number(item.quantity) || 0);
+    }, 0);
 
-    cart.forEach(item => {
-        const product = typeof getProductById === "function"
-            ? getProductById(item.id)
-            : null;
-
-        const price = product
-            ? (typeof productNumber === "function"
-                ? productNumber(product.price)
-                : Number(product.price) || 0)
-            : (typeof productNumber === "function"
-                ? productNumber(item.price)
-                : Number(item.price) || 0);
-
-        item.price = price;
-        subtotal += price * (Number(item.quantity) || 0);
-    });
+    discountAmount = Math.round(subtotal * 0.10);
 
     if (typeof saveCart === "function") {
         saveCart(cart);
     }
 
-    discountAmount = Math.round(subtotal * 0.10);
     calculateCheckout();
-
     alert("Promo Code Applied: 10% Off");
 }
+
 
 
 /* =====================================
@@ -1051,6 +1104,7 @@ async function placeOrder() {
     let cart =
         getCart();
 
+    cart = syncCheckoutCartPrices(cart);
 
     /* =================================
        EMPTY CART
@@ -1186,27 +1240,6 @@ async function placeOrder() {
 
 
     /* =================================
-       SYNC CART PRICES
-    ================================= */
-
-    cart.forEach(item => {
-        const product = typeof getProductById === "function"
-            ? getProductById(item.id)
-            : null;
-
-        if (product) {
-            item.price = typeof productNumber === "function"
-                ? productNumber(product.price)
-                : Number(product.price) || 0;
-        }
-    });
-
-    if (typeof saveCart === "function") {
-        saveCart(cart);
-    }
-
-
-    /* =================================
        ORDER OBJECT
     ================================= */
 
@@ -1278,16 +1311,16 @@ async function placeOrder() {
     try {
 
 
-        // Use a simple form-encoded POST so the browser does not send
-        // a CORS preflight to Google Apps Script.
+        // Simple form-encoded POST: no custom header and therefore no
+        // browser preflight. The Apps Script doPost() reads parameter
+        // "payload" and processes the same order object.
         const payload = new URLSearchParams();
         payload.set("payload", JSON.stringify(order));
 
-        await fetch(
+        const response = await fetch(
             GOOGLE_SCRIPT_URL,
             {
                 method: "POST",
-                mode: "no-cors",
                 cache: "no-store",
                 headers: {
                     "Content-Type":
@@ -1297,6 +1330,21 @@ async function placeOrder() {
             }
         );
 
+        if (!response.ok) {
+            throw new Error("Order server returned HTTP " + response.status);
+        }
+
+        let result = null;
+        try {
+            result = await response.json();
+        } catch (parseError) {
+            // Some Apps Script deployments return an opaque/redirected
+            // response. The request itself has already completed.
+        }
+
+        if (result && result.success === false) {
+            throw new Error(result.error || result.message || "Order was rejected.");
+        }
 
         alert(
             "Order Successfully Placed!\nOrder ID: " +
