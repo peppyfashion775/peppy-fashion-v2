@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Peppy Fashion — Admin Panel</title>
+<title>Peppy Fashion — Admin Command Center</title>
 <meta name="robots" content="noindex,nofollow">
 
 <style>
@@ -53,6 +53,14 @@ body{overflow-x:hidden}button,input,select,textarea{font:inherit}button{cursor:p
 @media(max-width:1200px){.store-stat-grid-6{grid-template-columns:repeat(3,minmax(0,1fr))}.store-pos-layout{grid-template-columns:1fr}.store-grid-2{grid-template-columns:1fr}.store-pnl{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:760px){.store-hero{padding:16px;flex-direction:column}.store-hero h2{font-size:22px}.store-tabs{margin:0 -2px}.store-tab{padding:10px 12px}.store-stat-grid,.store-stat-grid-6{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.store-card{padding:14px}.store-form-grid{grid-template-columns:1fr}.store-form-group.full{grid-column:auto}.store-item-row{grid-template-columns:1fr 1fr 1fr;gap:6px;padding:10px;background:#fafbfc;border:1px solid #edf0f3;border-radius:10px}.store-item-row .store-item-type{grid-column:1}.store-item-row .store-item-product{grid-column:2/4}.store-item-row .store-item-size{grid-column:1}.store-item-row .store-item-qty{grid-column:2}.store-item-row .store-item-price{grid-column:3}.store-item-row .store-item-total{grid-column:1/3;text-align:left}.store-item-row .store-remove{grid-column:3}.store-payment-grid{margin-top:10px}.store-toolbar{align-items:stretch}.store-toolbar>.products-search{min-width:100%}.store-filter-row{width:100%}.store-filter-row input,.store-filter-row select{flex:1;min-width:0}.store-report-toolbar{align-items:stretch}.store-report-toolbar .store-filter-row,.store-report-toolbar .store-actions-inline{width:100%}.store-report-toolbar .store-actions-inline button{flex:1}.store-pnl{grid-template-columns:1fr}.receipt-preview{max-width:100%}}
 
+
+/* PREMIUM ADMIN UPGRADE */
+.header-tools{display:flex;align-items:center;gap:10px}.icon-btn{width:40px;height:40px;border:1px solid rgba(255,255,255,.35);background:rgba(255,255,255,.12);color:#fff;border-radius:11px;display:grid;place-items:center;position:relative}.icon-btn svg{width:19px;height:19px}.notif-badge{position:absolute;right:-3px;top:-3px;min-width:18px;height:18px;padding:0 5px;border-radius:99px;background:#fff;color:#d72d79;font-size:10px;font-weight:800;display:grid;place-items:center;border:2px solid #e83f8c}.mobile-menu{display:none}.nav-count{margin-left:auto;min-width:20px;padding:2px 6px;border-radius:999px;background:#ffe1ed;color:#c52a6e;font-size:10px;text-align:center}.nav-btn.active .nav-count{background:rgba(255,255,255,.2);color:#fff}
+.dashboard-highlight{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-bottom:18px}.highlight-card{background:#fff;border:1px solid var(--border);border-radius:14px;padding:16px;box-shadow:var(--shadow);display:flex;align-items:center;justify-content:space-between}.highlight-card .small{font-size:12px;color:var(--muted);margin-bottom:5px}.highlight-card strong{font-size:22px}.highlight-card .mini-icon{width:40px;height:40px;border-radius:12px;background:#fff0f7;color:var(--primary);display:grid;place-items:center}.highlight-card .mini-icon svg{width:20px;height:20px}
+.order-filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}.order-filter{border:1px solid var(--border);background:#fff;color:#55627a;border-radius:999px;padding:7px 11px;font-size:12px;font-weight:700}.order-filter.active{background:#ffe6f1;color:#c92d70;border-color:#f4b4d0}.orders-toolbar{display:flex;gap:10px;align-items:center;margin-bottom:10px;flex-wrap:wrap}.orders-toolbar .orders-search{margin:0}
+.customer-table{width:100%;border-collapse:collapse}.customer-table th,.customer-table td{padding:12px;border-bottom:1px solid #edf0f3;text-align:left;font-size:13px}.customer-table th{background:#fafbfc;color:#344054}.customer-avatar{width:34px;height:34px;border-radius:50%;background:#ffe5f0;color:#c72d70;display:grid;place-items:center;font-weight:800}.customer-name-wrap{display:flex;align-items:center;gap:10px}.customer-table-wrap{background:#fff;border:1px solid var(--border);border-radius:12px;overflow:auto;box-shadow:var(--shadow)}
+@media(max-width:1050px){.sidebar{width:220px;flex-basis:220px}.stats-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.dashboard-grid{grid-template-columns:1fr}.dashboard-highlight{grid-template-columns:1fr 1fr}}
+@media(max-width:760px){.admin-header{padding:0 14px}.mobile-menu{display:grid}.admin-logo span{display:none}.header-date{display:none}.sidebar{position:fixed;left:-280px;top:72px;bottom:0;z-index:150;width:270px;transition:left .22s;box-shadow:12px 0 30px rgba(20,25,45,.12)}.sidebar.open{left:0}.main-content{padding:18px 14px}.stats-grid{grid-template-columns:1fr 1fr;gap:10px}.stat-card{padding:14px}.stat-card .value{font-size:23px}.dashboard-highlight{grid-template-columns:1fr}.topbar{align-items:stretch}.date-card{min-width:0}.page-title h2{font-size:23px}.products-search,.orders-search{min-width:0}.quick-grid{grid-template-columns:1fr 1fr}}
 </style>
 
 </head>
@@ -78,11 +86,13 @@ body{overflow-x:hidden}button,input,select,textarea{font:inherit}button{cursor:p
 
 <div id="adminApp" class="admin-app">
     <header class="admin-header">
+        <button id="mobileMenuButton" class="icon-btn mobile-menu" type="button" aria-label="Open menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button>
         <div class="admin-logo">
             <img src="../assets/images/logo/logo.png" alt="Peppy Fashion">
             <span>Peppy Fashion Admin</span>
         </div>
         <div class="header-right">
+            <div class="header-tools"><button id="notificationButton" class="icon-btn" type="button" title="Notifications"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/><path d="M10 21h4"/></svg><span id="notificationBadge" class="notif-badge" style="display:none">0</span></button></div>
             <div class="header-date">Administrator<br><strong>Store Management</strong></div>
             <button id="logoutButton" class="logout-btn" type="button">Logout</button>
         </div>
@@ -104,6 +114,10 @@ body{overflow-x:hidden}button,input,select,textarea{font:inherit}button{cursor:p
             <button class="nav-btn" data-section="orders" type="button">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 4h2l2.4 11.2a2 2 0 0 0 2 1.6h7.8a2 2 0 0 0 1.9-1.4L21 8H6"/><circle cx="10" cy="20" r="1"/><circle cx="18" cy="20" r="1"/></svg>
                 Orders
+            </button>
+            <button class="nav-btn" data-section="customers" type="button">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="8" r="3"/><path d="M3 20c0-3.2 2.4-5 6-5s6 1.8 6 5"/><path d="M16 11c2.8 0 5 1.6 5 4.5M16 5.5a2.7 2.7 0 0 1 0 5.2"/></svg>
+                Customers <span id="customerNavCount" class="nav-count">0</span>
             </button>
             <button class="nav-btn" data-section="store" type="button">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.8 1.8 0 0 0 .36 2l.06.06-1.4 1.4-.06-.06a1.8 1.8 0 0 0-2-.36 1.8 1.8 0 0 0-1.1 1.65V20h-2v-.31A1.8 1.8 0 0 0 12.2 18a1.8 1.8 0 0 0-2.02.36l-.06.06-1.4-1.4.06-.06a1.8 1.8 0 0 0 .36-2 1.8 1.8 0 0 0-1.65-1.1H7v-2h.31A1.8 1.8 0 0 0 9 10.2a1.8 1.8 0 0 0-.36-2l-.06-.06 1.4-1.4.06.06a1.8 1.8 0 0 0 2 .36A1.8 1.8 0 0 0 13.1 5.5V5h2v.31a1.8 1.8 0 0 0 1.1 1.65 1.8 1.8 0 0 0 2-.36l.06-.06 1.4 1.4-.06.06a1.8 1.8 0 0 0-.36 2A1.8 1.8 0 0 0 20.9 11H21v2h-.31A1.8 1.8 0 0 0 19.4 15Z"/></svg>
@@ -130,6 +144,12 @@ body{overflow-x:hidden}button,input,select,textarea{font:inherit}button{cursor:p
                     <div class="stat-card"><div class="stat-top"><div><div class="label">Active Products</div><div id="activeProducts" class="value">—</div></div><div class="stat-icon green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m5 12 4 4L19 6"/></svg></div></div><div class="stat-foot good">Currently visible</div></div>
                     <div class="stat-card"><div class="stat-top"><div><div class="label">Out of Stock</div><div id="outOfStock" class="value">—</div></div><div class="stat-icon orange"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3 2.5 20h19L12 3Z"/><path d="M12 9v5M12 17h.01"/></svg></div></div><div class="stat-foot">Needs attention</div></div>
                     <div class="stat-card"><div class="stat-top"><div><div class="label">Total Orders</div><div id="totalOrders" class="value">—</div></div><div class="stat-icon purple"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 3h12v18H6z"/><path d="M9 7h6M9 11h6M9 15h4"/></svg></div></div><div class="stat-foot good">Orders in your system</div></div>
+                </div>
+
+                <div class="dashboard-highlight">
+                    <div class="highlight-card"><div><div class="small">Pending Orders</div><strong id="pendingOrders">0</strong></div><div class="mini-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div></div>
+                    <div class="highlight-card"><div><div class="small">Delivered Orders</div><strong id="deliveredOrders">0</strong></div><div class="mini-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m5 12 4 4L19 6"/></svg></div></div>
+                    <div class="highlight-card"><div><div class="small">Customer Base</div><strong id="dashboardCustomers">0</strong></div><div class="mini-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="8" r="3"/><path d="M3 20c0-3.2 2.4-5 6-5s6 1.8 6 5"/><path d="M16 11c2.8 0 5 1.6 5 4.5"/></svg></div></div>
                 </div>
 
                 <div class="dashboard-grid">
@@ -160,9 +180,16 @@ body{overflow-x:hidden}button,input,select,textarea{font:inherit}button{cursor:p
 
             <section id="ordersSection" class="section-hidden">
                 <div class="page-title"><h2>Orders</h2><p>Manage orders from the existing Peppy Fashion Orders sheet</p></div>
-                <div class="orders-toolbar"><input id="ordersSearch" class="orders-search" type="search" placeholder="Search Order ID, customer, phone or email..." autocomplete="off"><button id="refreshOrdersButton" class="refresh-btn" type="button">Refresh Orders</button></div>
+                <div class="order-filters" id="orderFilters"><button class="order-filter active" data-order-filter="All" type="button">All</button><button class="order-filter" data-order-filter="Pending" type="button">Pending</button><button class="order-filter" data-order-filter="Confirmed" type="button">Confirmed</button><button class="order-filter" data-order-filter="Processing" type="button">Processing</button><button class="order-filter" data-order-filter="Shipped" type="button">Shipped</button><button class="order-filter" data-order-filter="Delivered" type="button">Delivered</button><button class="order-filter" data-order-filter="Cancelled" type="button">Cancelled</button></div><div class="orders-toolbar"><input id="ordersSearch" class="orders-search" type="search" placeholder="Search Order ID, customer, phone or email..." autocomplete="off"><button id="refreshOrdersButton" class="refresh-btn" type="button">Refresh Orders</button></div>
                 <div id="ordersMeta" class="orders-meta">Loading orders...</div>
                 <div class="orders-table-wrap"><div id="ordersLoading" class="orders-loading">Loading orders...</div><div id="ordersError" class="orders-error" style="display:none;"></div><div id="ordersEmpty" class="orders-empty" style="display:none;">No orders found.</div><table id="ordersTable" class="orders-table" style="display:none;"><thead><tr><th>Date</th><th>Order ID</th><th>Customer</th><th>Phone</th><th>Total</th><th>Payment</th><th>Status</th><th>Details</th></tr></thead><tbody id="ordersTableBody"></tbody></table></div>
+            </section>
+
+            <section id="customersSection" class="section-hidden">
+                <div class="topbar"><div class="page-title"><h2>Customers</h2><p>Customer profiles are built from your existing order data.</p></div><button id="refreshCustomersButton" class="refresh-btn" type="button">Refresh Customers</button></div>
+                <div class="products-toolbar"><input id="customersSearch" class="products-search" type="search" placeholder="Search customer name, phone or email..." autocomplete="off"></div>
+                <div id="customersMeta" class="orders-meta">Loading customers...</div>
+                <div class="customer-table-wrap"><div id="customersEmpty" class="products-empty" style="display:none;padding:24px">No customers found.</div><table id="customersTable" class="customer-table"><thead><tr><th>Customer</th><th>Phone</th><th>Email</th><th>Orders</th><th>Total Spent</th><th>Last Order</th></tr></thead><tbody id="customersTableBody"></tbody></table></div>
             </section>
 
             <section id="storeSection" class="section-hidden">
@@ -336,6 +363,17 @@ body{overflow-x:hidden}button,input,select,textarea{font:inherit}button{cursor:p
 
     const ordersSection = document.getElementById("ordersSection");
     const storeSection = document.getElementById("storeSection");
+    const customersSection = document.getElementById("customersSection");
+    const customersSearch = document.getElementById("customersSearch");
+    const customersTableBody = document.getElementById("customersTableBody");
+    const customersMeta = document.getElementById("customersMeta");
+    const customersEmpty = document.getElementById("customersEmpty");
+    const customerNavCount = document.getElementById("customerNavCount");
+    const notificationBadge = document.getElementById("notificationBadge");
+    const mobileMenuButton = document.getElementById("mobileMenuButton");
+    const sidebar = document.querySelector(".sidebar");
+    let customerRows = [];
+    let activeOrderFilter = "All";
     const storeItems = document.getElementById("storeItems");
     const storeReceiptPreview = document.getElementById("storeReceiptPreview");
     let storeSales = [];
@@ -659,6 +697,21 @@ body{overflow-x:hidden}button,input,select,textarea{font:inherit}button{cursor:p
             ).textContent =
                 orders.total ?? 0;
 
+            try {
+                const orderData = await apiRequest("orders");
+                allOrders = Array.isArray(orderData.orders) ? orderData.orders : [];
+                const pending = allOrders.filter(o => String(o.status||"Pending").toLowerCase()==="pending").length;
+                const delivered = allOrders.filter(o => String(o.status||"").toLowerCase()==="delivered").length;
+                customerRows = getCustomerRows();
+                document.getElementById("pendingOrders").textContent = pending;
+                document.getElementById("deliveredOrders").textContent = delivered;
+                document.getElementById("dashboardCustomers").textContent = customerRows.length;
+                customerNavCount.textContent = customerRows.length;
+                const alerts = pending + Number(products.outOfStock||0);
+                notificationBadge.textContent = alerts;
+                notificationBadge.style.display = alerts ? "grid" : "none";
+            } catch (_) {}
+
 
         } catch (error) {
 
@@ -738,10 +791,12 @@ body{overflow-x:hidden}button,input,select,textarea{font:inherit}button{cursor:p
         dashboardSection.classList.add("section-hidden");
         productsSection.classList.add("section-hidden");
         ordersSection.classList.add("section-hidden");
+        customersSection.classList.add("section-hidden");
         storeSection.classList.add("section-hidden");
         if (section === "dashboard") { dashboardSection.classList.remove("section-hidden"); loadDashboard(); return; }
         if (section === "products") { productsSection.classList.remove("section-hidden"); loadProducts(); return; }
         if (section === "orders") { ordersSection.classList.remove("section-hidden"); loadOrders(); return; }
+        if (section === "customers") { customersSection.classList.remove("section-hidden"); loadCustomers(); return; }
         if (section === "store") { storeSection.classList.remove("section-hidden"); loadStoreData(); }
     }
 
@@ -771,24 +826,36 @@ body{overflow-x:hidden}button,input,select,textarea{font:inherit}button{cursor:p
 
     function getFilteredOrders() {
         const query = ordersSearch.value.trim().toLowerCase();
-
-        if (!query) return allOrders;
-
         return allOrders.filter(function(order) {
-            return [
-                order.orderId,
-                order.name,
-                order.phone,
-                order.email,
-                order.address,
-                order.payment,
-                order.status
-            ].some(function(value) {
-                return String(value ?? "")
-                    .toLowerCase()
-                    .includes(query);
-            });
+            const status = String(order.status || "Pending").trim().toLowerCase();
+            const filterOk = activeOrderFilter === "All" || status === activeOrderFilter.toLowerCase();
+            if (!filterOk) return false;
+            if (!query) return true;
+            return [order.orderId,order.name,order.phone,order.email,order.address,order.payment,order.status].some(function(value){return String(value ?? "").toLowerCase().includes(query);});
         });
+    }
+
+    function getCustomerRows(){
+        const map = new Map();
+        allOrders.forEach(function(o){
+            const key = String(o.phone || o.email || o.name || "Unknown").trim().toLowerCase();
+            if(!map.has(key)) map.set(key,{name:o.name||"Unknown",phone:o.phone||"—",email:o.email||"—",orders:0,total:0,last:o.date||""});
+            const c=map.get(key); c.orders += 1; c.total += Number(o.total)||0;
+            if(new Date(o.date||0) > new Date(c.last||0)) c.last=o.date||c.last;
+        });
+        return Array.from(map.values()).sort((a,b)=>b.total-a.total);
+    }
+    function renderCustomers(){
+        const q=(customersSearch.value||"").trim().toLowerCase();
+        const filtered=customerRows.filter(c=>[c.name,c.phone,c.email].some(v=>String(v).toLowerCase().includes(q)));
+        customersMeta.textContent=`Showing ${filtered.length} of ${customerRows.length} customers`;
+        customersEmpty.style.display=filtered.length?"none":"block";
+        customersTableBody.innerHTML="";
+        filtered.forEach(c=>{const tr=document.createElement("tr"); const initial=escapeHtml(String(c.name).trim().charAt(0).toUpperCase()||"?"); tr.innerHTML=`<td><div class="customer-name-wrap"><span class="customer-avatar">${initial}</span><strong>${escapeHtml(c.name)}</strong></div></td><td>${escapeHtml(c.phone)}</td><td>${escapeHtml(c.email)}</td><td>${c.orders}</td><td>${escapeHtml(formatMoney(c.total))}</td><td>${escapeHtml(formatDate(c.last))}</td>`; customersTableBody.appendChild(tr);});
+    }
+    async function loadCustomers(){
+        customersMeta.textContent="Loading customers...";
+        try{const data=allOrders.length?{orders:allOrders}:await apiRequest("orders"); allOrders=Array.isArray(data.orders)?data.orders:allOrders; customerRows=getCustomerRows(); renderCustomers(); customerNavCount.textContent=customerRows.length; document.getElementById("dashboardCustomers").textContent=customerRows.length;}catch(e){customersMeta.textContent=e.message||"Unable to load customers.";}
     }
 
     function renderOrders() {
@@ -1221,7 +1288,7 @@ body{overflow-x:hidden}button,input,select,textarea{font:inherit}button{cursor:p
                             button.dataset.section;
 
 
-                        if (section === "dashboard" || section === "products" || section === "orders" || section === "store") {
+                        if (section === "dashboard" || section === "products" || section === "orders" || section === "customers" || section === "store") {
                             showSection(section);
                             return;
                         }
@@ -1251,6 +1318,13 @@ body{overflow-x:hidden}button,input,select,textarea{font:inherit}button{cursor:p
             closeOrderModal();
         }
     });
+
+    document.querySelectorAll(".order-filter").forEach(function(btn){btn.addEventListener("click",function(){document.querySelectorAll(".order-filter").forEach(b=>b.classList.remove("active"));btn.classList.add("active");activeOrderFilter=btn.dataset.orderFilter||"All";renderOrders();});});
+    customersSearch.addEventListener("input", renderCustomers);
+    document.getElementById("refreshCustomersButton").addEventListener("click", loadCustomers);
+    mobileMenuButton.addEventListener("click", function(){sidebar.classList.toggle("open");});
+    document.getElementById("notificationButton").addEventListener("click", function(){document.querySelector('.nav-btn[data-section="orders"]').click();sidebar.classList.remove("open");});
+    document.querySelectorAll(".nav-btn").forEach(function(btn){btn.addEventListener("click",function(){sidebar.classList.remove("open");});});
 
     /* =====================================================
        FINAL PHYSICAL STORE / POS
